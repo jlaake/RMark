@@ -1,0 +1,20 @@
+/*Killdeer nest data at MidAmerican Energy Ponds, 1988; Nest i.d., Day found, Day before last, Last day, Fate (0=hatch, 1=depredated), Number, Occasions=40 Groups=1 */
+Nest survival group=1;				
+/*A*/	1	9	9	0	1;
+/*B*/	5	5	9	1	1;
+/*C*/	5	40	40	0	1;
+/*D*/	9	32	32	0	1;
+/*E*/	7	8	8	0	1;
+/*F*/	3	15	15	0	1;
+/*G*/	8	32	32	0	1;
+/*H*/	14	14	16	1	1;
+/*I*/	8	14	14	0	1;
+/*J*/	13	14	14	0	1;
+/*K*/	14	33	33	0	1;
+/*L*/	15	37	37	0	1;
+/*M*/	16	37	40	1	1;
+/*N*/	16	28	32	1	1;
+/*O*/	16	17	17	0	1;
+/*P*/	21	28	33	1	1;
+/*Q*/	23	33	34	1	1;
+/*R*/	27	29	29	0	1;

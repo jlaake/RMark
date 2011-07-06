@@ -1,0 +1,102 @@
+\name{edwards.eberhardt}
+\alias{edwards.eberhardt}
+\docType{data}
+\title{Rabbit capture-recapture data}
+\description{
+A capture-recapture data set on rabbits derived from Edwards and Eberhardt (1967) that accompanies 
+MARK as an example analysis using the closed population models. 
+}
+\usage{data(edwards.eberhardt)}
+\format{
+  A data frame with 76 observations on the following variable.
+  \describe{
+    \item{ch}{a character vector}
+  }
+}
+\details{
+This data set is used in MARK to illustrate the various closed population models including "Closed", "HetClosed",
+"FullHet","Huggins","HugHet", and "FullHugHet".  The first 3 include N in the likelihood whereas the last 3 are
+based on the Huggins approach which does not use N in the likelihood.  The Het... and FullHet... models are based
+on the Pledger mixture model approach. Some of the examples demonstrate the use of the \code{share} argument in the 
+\code{model.parameters} list for parameter \code{p} which allows sharing common values for \code{p} and \code{c}.   
+}
+\source{
+Edwards, W.R. and  L.L. Eberhardt 1967.  Estimating cottontail abundance from live trapping data. J. Wildl. Manage. 31:87-96.
+}
+\examples{
+#
+# get data
+#
+data(edwards.eberhardt)
+#
+# create function that defines and runs the analyses as defined in 
+# MARK example dbf file
+#
+run.edwards.eberhardt=function()
+{
+#
+#  Define parameter models
+#
+pdotshared=list(formula=~1,share=TRUE)
+ptimeshared=list(formula=~time,share=TRUE)
+ptime.c=list(formula=~time+c,share=TRUE)
+ptimemixtureshared=list(formula=~time+mixture,share=TRUE)
+pmixture=list(formula=~mixture)
+#
+# Run assortment of models
+#
+#
+#   Capture Closed models
+#
+#  constant p=c
+ee.closed.m0                    =mark(edwards.eberhardt,model="Closed",
+                   model.parameters=list(p=pdotshared))
+#  constant p and constant c but different
+ee.closed.m0c                   =mark(edwards.eberhardt,model="Closed")
+#  time varying p=c
+ee.closed.mt                    =mark(edwards.eberhardt,model="Closed",
+                   model.parameters=list(p=ptimeshared))
+#  time varying p + additive c (that is recapture prob is additive 
+#  difference from cap prob at same time)
+ee.closed.mtc                   =mark(edwards.eberhardt,model="Closed",
+                   model.parameters=list(p=ptime.c))
+#
+#  Closed heterogeneity models
+#
+#  2 mixtures Mh2
+ee.closed.Mh2                   =mark(edwards.eberhardt,model="HetClosed",
+                   model.parameters=list(p=pmixture))
+#  Closed Mth2 - p different for time; mixture additive
+ee.closed.Mth2.additive         =mark(edwards.eberhardt,model="FullHet",
+                   model.parameters=list(p=ptimemixtureshared),adjust=TRUE)
+#
+#    Huggins models
+#
+# p=c constant over time
+ee.huggins.m0                   =mark(edwards.eberhardt,model="Huggins",
+                   model.parameters=list(p=pdotshared))
+# p constant c constant but different; this is default model for Huggins
+ee.huggins.m0.c                 =mark(edwards.eberhardt,model="Huggins")
+# Huggins Mt
+ee.huggins.Mt                   =mark(edwards.eberhardt,model="Huggins",
+                   model.parameters=list(p=ptimeshared),adjust=TRUE)
+#
+#    Huggins heterogeneity models
+#
+#  Mh2 - p different for mixture
+ee.huggins.Mh2                  =mark(edwards.eberhardt,model="HugHet",
+                   model.parameters=list(p=pmixture))
+#  Huggins Mth2 - p different for time; mixture additive
+ee.huggins.Mth2.additive        =mark(edwards.eberhardt,model="HugFullHet",
+                   model.parameters=list(p=ptimemixtureshared),adjust=TRUE)
+#
+# Return model table and list of models
+#
+return(collect.models() )
+}
+#
+# fit models in mark by calling function created above
+#
+ee.results=run.edwards.eberhardt()
+}
+\keyword{datasets}

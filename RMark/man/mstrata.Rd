@@ -1,0 +1,84 @@
+\name{mstrata}
+\alias{mstrata}
+\docType{data}
+\title{ Multistrata example data}
+\description{
+An example data set which appears to be simulated data that accompanies MARK as an example analysis using the Multistrata model.
+}
+\usage{data(mstrata)}
+\format{
+  A data frame with 255 observations on the following 2 variables.
+  \describe{
+    \item{ch}{a character vector containing the encounter history of each bird with strata}
+    \item{freq}{the number of birds with that capture history}
+  }
+}
+\details{
+This is a data set that accompanies program MARK as an example for the Multistrata model.
+The models created by RMark are all "Parm-specific" models by default. The sin link is not
+allowed because all models are specified via the design matrix. Although you can set
+links for the parameters, usually the default values are preferable.  See \code{\link{make.mark.model}}
+for additional help building formula for Psi using the remove.intercept argument.
+}
+\examples{
+data(mstrata)
+run.mstrata=function()
+{
+#
+# Process data
+#
+mstrata.processed=process.data(mstrata,model="Multistrata")
+#
+# Create default design data
+#
+mstrata.ddl=make.design.data(mstrata.processed)
+#
+#  Define range of models for S; note that the betas will differ from the output
+#  in MARK for the ~stratum = S(s) because the design matrix is defined using
+#  treatment contrasts for factors so the intercept is stratum A and the other
+#  two estimates represent the amount that survival for B abd C differ from A.
+#  You can use force the approach used in MARK with the formula ~-1+stratum which
+#  creates 3 separate Betas - one for A,B and C.
+#
+S.stratum=list(formula=~stratum)
+S.stratumxtime=list(formula=~stratum*time)
+#
+#  Define range of models for p
+#
+p.stratum=list(formula=~stratum)
+#
+#  Define range of models for Psi; what is denoted as s for Psi
+#  in the Mark example for Psi is accomplished by -1+stratum:tostratum which
+#  nests tostratum within stratum.  Likewise, to get s*t as noted in MARK you
+#  want ~-1+stratum:tostratum:time with time nested in tostratum nested in
+#  stratum.
+#
+Psi.s=list(formula=~-1+stratum:tostratum)
+Psi.sxtime=list(formula=~-1+stratum:tostratum:time)
+#
+# Create model list and run assortment of models
+#
+model.list=create.model.list("Multistrata")
+#
+# Add on specific models that are paired with fixed p's to remove confounding
+#
+p.stratumxtime=list(formula=~stratum*time)
+p.stratumxtime.fixed=list(formula=~stratum*time,fixed=list(time=4,value=1))
+model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
+  Psi="Psi.sxtime"))
+model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
+#
+# Run the list of models
+#
+mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl)
+#
+# Return model table and list of models
+#
+return(mstrata.results)
+}
+mstrata.results=run.mstrata()
+mstrata.results
+
+
+}
+\keyword{datasets}

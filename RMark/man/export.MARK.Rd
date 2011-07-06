@@ -1,0 +1,97 @@
+\name{export.MARK}
+\alias{export.MARK}
+\title{Export data and models for import in MARK}
+\description{
+Creates a .Rinp, .inp and optionally renamed output files that can be imported into MARK to create
+a new MARK project with all the data and output files.
+}
+\usage{
+export.MARK(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",
+             ind.covariates=NULL)
+}
+\arguments{
+  \item{x}{processed data list used to build models}
+  \item{project.name}{character string to be used for prefix of filenames and for MARK project name}
+  \item{model}{either a single mark model or a marklist}
+  \item{replace}{if TRUE it will replace any existing files}
+  \item{chat}{user-specified chat value if desired}
+  \item{title}{MARK project title string}
+  \item{ind.covariates}{vector of character strings specifying names of individual covariates}
+}
+\details{
+After running this function to export the data and models to the working directory, start 
+program MARK and select the File/RMARK Import menu item.  Navigate to the working directory and
+select the "project.name".Rinp file.  MARK will take over and create the project files and will import 
+any specified model output files.
+
+DO NOT use a "project name" that is the same as a filename you use as input (*.inp) to RMark because
+this function will create a file "project name".inp and it would over-write your
+existing file and the format could change. If you try this, the code will return an error that the filename
+is invalid because the file already exists.
+}
+\value{None}
+\author{Jeff Laake}
+\seealso{\code{\link{export.chdata}}, \code{\link{export.model}}}
+\examples{
+data(mstrata)
+run.mstrata=function()
+{
+#
+# Process data
+#
+mstrata.processed=process.data(mstrata,model="Multistrata")
+#
+# Create default design data
+#
+mstrata.ddl=make.design.data(mstrata.processed)
+#
+#  Define range of models for S; note that the betas will differ from the output
+#  in MARK for the ~stratum = S(s) because the design matrix is defined using
+#  treatment contrasts for factors so the intercept is stratum A and the other
+#  two estimates represent the amount that survival for B abd C differ from A.
+#  You can use force the approach used in MARK with the formula ~-1+stratum which
+#  creates 3 separate Betas - one for A,B and C.
+#
+S.stratum=list(formula=~stratum)
+S.stratumxtime=list(formula=~stratum*time)
+#
+#  Define range of models for p
+#
+p.stratum=list(formula=~stratum)
+#
+#  Define range of models for Psi; what is denoted as s for Psi
+#  in the Mark example for Psi is accomplished by -1+stratum:tostratum which
+#  nests tostratum within stratum.  Likewise, to get s*t as noted in MARK you
+#  want ~-1+stratum:tostratum:time with time nested in tostratum nested in
+#  stratum.
+#
+Psi.s=list(formula=~-1+stratum:tostratum)
+Psi.sxtime=list(formula=~-1+stratum:tostratum:time)
+#
+# Create model list and run assortment of models
+#
+model.list=create.model.list("Multistrata")
+#
+# Add on specific models that are paired with fixed p's to remove confounding
+#
+p.stratumxtime=list(formula=~stratum*time)
+p.stratumxtime.fixed=list(formula=~stratum*time,fixed=list(time=4,value=1))
+model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
+             Psi="Psi.sxtime"))
+model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
+#
+# Run the list of models
+#
+mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl)
+#
+# Export data and models for import to MARK
+#
+export.MARK(mstrata.processed,"mstrata",mstrata.results)
+#
+# Return model table and list of models
+#
+return(mstrata.results)
+}
+mstrata.results=run.mstrata()
+}
+\keyword{utility}

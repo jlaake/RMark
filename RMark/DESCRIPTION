@@ -1,0 +1,82 @@
+Package: RMark
+Version: 2.0.6
+Date: 2011-07-01
+Title: R Code for MARK Analysis
+Author: Jeff Laake <jeff.laake@noaa.gov>
+Description: This package provides an interface to the
+    software package MARK developed by Gary White. MARK is
+    freely available at
+    (http://www.phidot.org/software/mark/download/) but is
+    not open source.
+SystemRequirements: notepad.exe, mark.exe and rel_32.exe
+    (see README.txt)
+Depends:
+    R (>= 2.13.0),
+    msm,
+    nlme,
+    plotrix
+LazyLoad: yes
+License: GPL version 2 or later
+Maintainer: Jeff Laake <Jeff.Laake@noaa.gov>
+Collate:
+    'add.design.data.R'
+    'adjust.chat.R'
+    'adjust.parameter.count.R'
+    'cleanup.R'
+    'collect.model.names.R'
+    'collect.models.R'
+    'compute.design.data.R'
+    'compute.link.R'
+    'compute.links.from.reals.R'
+    'compute.real.R'
+    'convert.inp.r'
+    'convert.link.to.real.r'
+    'covariate.predictions.r'
+    'deltamethod.r'
+    'deriv.inverse.link.R'
+    'export.chdata.R'
+    'export.MARK.r'
+    'export.model.r'
+    'extract.mark.output.R'
+    'fill.covariates.R'
+    'find.covariates.R'
+    'get.link.R'
+    'get.real.R'
+    'import.chdata.R'
+    'inverse.link.R'
+    'make.design.data.R'
+    'make.mark.model.R'
+    'make.time.factor.r'
+    'mark.R'
+    'mark.wrapper.R'
+    'merge.design.covariates.r'
+    'merge.mark.r'
+    'model.average.default.r'
+    'model.average.list.r'
+    'model.average.marklist.R'
+    'model.average.R'
+    'model.table.R'
+    'PIMS.R'
+    'popan.r'
+    'print.mark.R'
+    'print.summary.mark.R'
+    'process.ch.R'
+    'process.data.R'
+    'read.mark.binary.linux.R'
+    'read.mark.binary.R'
+    'release.gof.R'
+    'remove.mark.r'
+    'rerun.mark.R'
+    'run.mark.model.R'
+    'run.models.R'
+    'setup.model.R'
+    'setup.parameters.R'
+    'store.r'
+    'summary.ch.r'
+    'summary.mark.R'
+    'TransitionMatrix.R'
+    'utility.r'
+    'valid.parameters.R'
+    'var.components.R'
+    'var.components.reml.r'
+    'zzz.R'

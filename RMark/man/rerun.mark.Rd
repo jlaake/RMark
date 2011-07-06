@@ -1,0 +1,121 @@
+\name{rerun.mark}
+\alias{rerun.mark}
+\title{Runs a previous MARK model with new starting values}
+\description{
+Runs a previous MARK model with new starting values but without specifying the model parameter
+formulas.  This function is most useful with \code{mark.wrapper} in which a list of models is
+analyzed and the set of formulas are not specified for each model.
+}
+\usage{
+rerun.mark(model,data,ddl,initial,output=TRUE,title="",
+            invisible=TRUE,adjust=TRUE,se=FALSE,simplify=TRUE,
+            filename=NULL, prefix="mark",default.fixed=TRUE,
+            silent=FALSE,retry=0,realvcv=FALSE,external=FALSE)
+
+}
+\arguments{
+  \item{model}{previously run MARK model}
+  \item{data}{processed dataframe used with model}
+  \item{ddl}{design data list used with model}
+  \item{initial}{vector of initial values for beta parameters or previously run model object of similar structure}
+  \item{output}{If TRUE produces summary of model input and model output}
+  \item{title}{ Optional title for the MARK analysis output}
+  \item{invisible}{if TRUE, exectution of MARK.EXE is hidden from view}
+  \item{adjust}{if TRUE, adjusts number of parameters (npar) to number of columns in design matrix, modifies AIC 
+                and records both}
+  \item{se}{if TRUE, se and confidence intervals are shown in summary sent to screen}
+  \item{simplify}{if TRUE, simplifies PIM structure to match unique number of rows in design matrix}
+  \item{filename}{base filename for files created by MARK.EXE. Files are named filename.*.}
+  \item{prefix}{base filename prefix for files created by MARK.EXE; the files are named prefixnnn.*}
+  \item{default.fixed}{if TRUE, real parameters for which the design data have been deleted are fixed to default values}
+  \item{silent}{if TRUE, errors that are encountered are suppressed}
+  \item{retry}{number of reanalyses to perform with new starting values when one or more parameters are singular}
+  \item{realvcv}{if TRUE the vcv matrix of the real parameters is extracted and stored in the model results}
+  \item{external}{if TRUE the mark object is saved externally rather than in the workspace; the filename is kept in its place}
+
+}
+\details{
+This is a simple function that restarts an analysis with MARK typically using another model
+for initial values of the beta parameters.  The processed dataframe (\code{data}) and design
+data list (\code{ddl}) must be specified but the \code{model.parameters} are extracted from
+\code{model}.  \code{initial} values are not optional otherwise this would be no different than
+the original call to \code{mark}. More complete definitions of the arguments can be found in
+\code{\link{mark}} or \code{\link{run.mark.model}} or \code{\link{make.mark.model}}.
+}
+\value{
+model: MARK model object with the base filename stored in \code{output} and the extracted \code{results} from the output
+file appended onto list; see \code{\link{mark}} for a detailed description  of a \code{mark} object.
+}
+\author{Jeff Laake}
+\seealso{ \code{\link{make.mark.model}}, \code{\link{run.models}}, 
+\code{\link{extract.mark.output}},
+\code{\link{adjust.parameter.count}}, \code{\link{mark}}, \code{\link{cleanup}}}
+\examples{
+#
+# The following example will not run because the data are not included in the
+# examples.  It illustrates the use of rerun.mark with mark.wrapper.  With this
+# particular data set the POPAN models were having difficulty converging.  After
+# running the set of models using mark.wrapper and looking at the results it
+# was clear that in several instances the model did not converge.  This is easiest
+# to discern by comparing nested models in the model.table.  If one model 
+# is nested within another,then the deviance of the model with more
+# parameters should be as good or better than the smaller model.  If that 
+# is not the case then the model that converged can be used for initial 
+# values in a call to rerun.mark for the model that did not converge.
+#
+
+#do.nat=function()
+#{
+#Phi.ageclass=list(formula=~ageclass)
+#Phi.dot=list(formula=~1)
+#p.area=list(formula=~area)
+#p.timebin.plus.area=list(formula=~timebin+area)
+#p.timebin.x.area=list(formula=~-1+timebin:area)
+#pent.ageclass=list(formula=~ageclass)
+#pent.ageclass.plus.EN=list(formula=~ageclass+EN)
+#pent.ageclass.plus.diffEN=list(formula=~ageclass+EN92+EN97+EN02)
+#cml=create.model.list("POPAN")
+#nat=mark.wrapper(cml,data=zc.proc,ddl=zc.ddl,
+#  invisible=FALSE,initial=1,retry=2)
+#return(nat)
+#}
+#nat=do.nat()
+# model list
+#            Phi                   p                      pent
+#1  Phi.ageclass              p.area             pent.ageclass
+#2  Phi.ageclass              p.area pent.ageclass.plus.diffEN
+#3  Phi.ageclass              p.area     pent.ageclass.plus.EN
+#4  Phi.ageclass p.timebin.plus.area             pent.ageclass
+#5  Phi.ageclass p.timebin.plus.area pent.ageclass.plus.diffEN
+#6  Phi.ageclass p.timebin.plus.area     pent.ageclass.plus.EN
+#7  Phi.ageclass    p.timebin.x.area             pent.ageclass
+#8  Phi.ageclass    p.timebin.x.area pent.ageclass.plus.diffEN
+#9  Phi.ageclass    p.timebin.x.area     pent.ageclass.plus.EN
+#10      Phi.dot              p.area             pent.ageclass
+#11      Phi.dot              p.area pent.ageclass.plus.diffEN
+#12      Phi.dot              p.area     pent.ageclass.plus.EN
+#13      Phi.dot p.timebin.plus.area             pent.ageclass
+#14      Phi.dot p.timebin.plus.area pent.ageclass.plus.diffEN
+#15      Phi.dot p.timebin.plus.area     pent.ageclass.plus.EN
+#16      Phi.dot    p.timebin.x.area             pent.ageclass
+#17      Phi.dot    p.timebin.x.area pent.ageclass.plus.diffEN
+#18      Phi.dot    p.timebin.x.area     pent.ageclass.plus.EN
+#
+# use model 9 as starting values for model 7
+#nat[[7]]= rerun.mark(nat[[7]],data=zc.proc,ddl=zc.ddl,initial=nat[[9]])
+# use model 3 as starting values for model 1
+#nat[[1]]= rerun.mark(nat[[1]],data=zc.proc,ddl=zc.ddl,initial=nat[[3]])
+# use model 14 as starting values for model 15
+#nat[[15]]= rerun.mark(nat[[15]],data=zc.proc,ddl=zc.ddl,initial=nat[[14]])
+# use model 5 as starting values for model 6
+#nat[[6]]= rerun.mark(nat[[6]],data=zc.proc,ddl=zc.ddl,initial=nat[[5]])
+# use model 10 as starting values for model 11
+#nat[[11]]= rerun.mark(nat[[11]],data=zc.proc,ddl=zc.ddl,initial=nat[[10]])
+# use model 10 as starting values for model 12
+#nat[[12]]= rerun.mark(nat[[12]],data=zc.proc,ddl=zc.ddl,initial=nat[[10]])
+# reconstruct model table with new results
+#nat$model.table=model.table(nat[1:18])
+# show new model table
+#nat
+}
+\keyword{ model}

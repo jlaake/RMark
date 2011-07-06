@@ -1,0 +1,20 @@
+"inverse.link" <-
+function(x,link)
+{
+switch(link,
+logit=1/(1+exp(-x)),
+log=exp(x),
+loglog=exp(-exp(-x)),
+cloglog=1-exp(-exp(x)),
+identity=x,
+mlogit=1/(1+sum(exp(-x))),
+sin=(sin(x)+1)/2,
+Logit=1/(1+exp(-x)),
+Log=exp(x),
+LogLog=exp(-exp(-x)),
+CLogLog=1-exp(-exp(x)),
+Identity=x,
+MLogit=1/(1+sum(exp(-x))),
+Sin=(sin(x)+1)/2
+)
+}

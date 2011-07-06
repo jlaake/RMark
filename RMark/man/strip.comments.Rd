@@ -1,0 +1,21 @@
+\name{strip.comments}
+\alias{strip.comments}
+\title{Strip comments}
+\description{
+ Read in file and strip out comments and blank lines.
+}
+\usage{
+strip.comments(inp.filename,use.comments=TRUE,header=TRUE)
+}
+\arguments{
+  \item{inp.filename}{name of input file; inp extension is assumed and does not need to be specified}
+  \item{use.comments}{if TRUE values within /* and */ on data lines are used as row.names for the RMark dataframe.
+                      Only use this option if they are unique values.}
+  \item{header}{if TRUE, input file has header line with field names}
+}
+\value{
+\item{rn}{row names}
+\item{out.filename}{output filename}
+}
+\author{Jeff Laake}
+\keyword{utility}

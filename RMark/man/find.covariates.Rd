@@ -1,0 +1,42 @@
+\name{find.covariates}
+\alias{find.covariates}
+\title{Find covariates in MARK design matrix}
+\description{
+Finds and extracts cells in MARK design matrix containing covariates. Computes mean values of the covariates and 
+assigns those as default values.  Returns dataframe that can be edited to replace default values which
+are then inserted into the design matrix with \code{\link{fill.covariates}} to enable computation of estimates of
+real parameters with \code{\link{compute.real}}.
+}
+\usage{
+find.covariates(model, data, usemean=TRUE)
+}
+\arguments{
+  \item{model}{MARK model object}
+  \item{data}{dataframe used to construct MARK model object; not processed data list}
+  \item{usemean}{logical; if TRUE uses mean value of covariate for default and otherwise uses 0}
+}
+\details{
+The design matrix for a MARK model with individual covariates contains entries with the covariate names used in the model.
+In computing the real parameters for the encounter history of an individual it replaces instances of 
+covariate names with the individual covariate values.  This function finds all of the cells in the design matrix 
+that contain individidual covariates and constructs a dataframe of the name of the real parameter, 
+the position (row, col) in the design matrix and a default value for the covariate. The default field value
+is assigned to one of three values in the following priority order: 1) the mean value for the covariates in
+data (if data is not NULL), 2) the mean values used in the MARK output (if data=NULL,usemean=TRUE), 3) 0 (if usemean=FALSE
+and data=NULL). The values can also be modified using \code{fc=edit(fc)} where \code{fc} is the value from
+this function.
+}
+\value{
+A dataframe with the following fields 
+  \item{rnames}{name of real parameter}
+  \item{row}{row number in design matrix (equivalent to \code{parm.indices} in call to \code{\link{compute.real}}}
+  \item{col}{column number in design matrix}
+  \item{var}{name of covariate}
+  \item{value}{value for covariate}
+}
+\author{Jeff Laake}
+\seealso{ \code{\link{fill.covariates}},  \code{\link{compute.real}} }
+\examples{
+# see examples in fill.covariates
+}
+\keyword{utility}

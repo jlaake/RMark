@@ -1,0 +1,234 @@
+\name{mallard}
+\alias{mallard}
+\docType{data}
+\title{Mallard nest survival example}
+\description{
+A nest survival data set on mallards.  The data set and analysis is described by Rotella et al.(2004).}
+\usage{data(mallard)}
+\format{
+  A data frame with 565 observations on the following 13 variables.
+  \describe{
+    \item{FirstFound}{the day the nest was first found}
+    \item{LastPresent}{the last day that chicks were present}
+    \item{LastChecked}{the last day the nest was checked}
+    \item{Fate}{the fate of the nest; 0=hatch and 1 depredated}
+    \item{Freq}{the frequency of nests with this data; always 1 in this example}
+    \item{Robel}{Robel reading of vegetation thickness}
+    \item{PpnGrass}{proportion grass in vicinity of nest}
+    \item{Native}{dummy 0/1 variable; 1 if native vegetation}
+    \item{Planted}{dummy 0/1 variable; 1 if planted vegetation}
+    \item{Wetland}{dummy 0/1 variable; 1 if wetland vegetation}
+    \item{Roadside}{dummy 0/1 variable; 1 if roadside vegetation}
+    \item{AgeFound}{age of nest in days the day the nest was found}
+    \item{AgeDay1}{age of nest at beginning of study}
+  }
+}
+\details{
+The first 5 fields must be named as they are shown for nest survival models.  \code{Freq} and the
+remaining fields are optional.  See \code{\link{killdeer}} for more
+description of the nest survival data structure and the use of the special field \code{AgeDay1}.
+The habitat variables \code{Native},\code{Planted},\code{Wetland},\code{Roadside} were originally
+coded as 0/1 dummy variables to enable easier modelling with MARK.  A better alternative in RMark is to
+create a single variable \code{habitat} with values of \code{"Native"},\code{"Planted"}, \code{"Wetland"},
+and \code{"Roadside"}. Then the Hab model in the example below would become:
+
+\preformatted{
+Hab=mark(mallard,nocc=90,model="Nest", 
+  model.parameters=list(S=list(formula=~habitat)), groups="habitat")
+}
+For this example, that doesn't make a big difference but if you have more than one factor and you
+want to construct an interaction or you have a factor with many levels, then it is more
+efficient to use factor variables rather than dummy variables.
+}
+\source{
+Rotella, J.J., S. J. Dinsmore, T.L. Shaffer.  2004.  Modeling nest-survival data:
+   a comparison of recently developed methods that can be implemented in MARK and SAS.
+   Animal Biodiversity and Conservation 27:187-204.
+}
+\examples{
+# Read in data, which are in a simple text file that
+# looks like a MARK input file but (1) with no comments or semicolons and
+# (2) with a 1st row that contains column labels
+# mallard=read.table("mallard.txt",header=TRUE)
+# The mallard data set is also incuded with RMark and can be retrieved with
+# data(mallard)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Example of use of RMark for modeling nest survival data -   #
+# Mallard nests example                                       #
+# The example runs the 9 models that are used in the Nest     #
+# Survival chapter of the Gentle Introduction to MARK and that# 
+# appear in Table 3 (page 198) of                             #
+# Rotella, J.J., S. J. Dinsmore, T.L. Shaffer.  2004.         #
+# Modeling nest-survival data: a comparison of recently       #
+# developed methods that can be implemented in MARK and SAS.  #
+#   Animal Biodiversity and Conservation 27:187-204.          #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+library(RMark)
+library(plotrix)  # used to put axis breaks on graphs
+
+# Retrieve data
+data(mallard)
+
+# Treat dummy variables for habitat types as factors
+mallard$Native=factor(mallard$Native)
+mallard$Planted=factor(mallard$Planted)
+mallard$Wetland=factor(mallard$Wetland)
+mallard$Roadside=factor(mallard$Roadside)
+
+# Examine a summary of the dataset
+summary(mallard)
+
+# Write a function for evaluating a set of competing models
+run.mallard=function()
+{
+# 1. A model of constant daily survival rate (DSR)
+Dot=mark(mallard,nocc=90,model="Nest",
+ model.parameters=list(S=list(formula=~1)))
+
+# 2. DSR varies by habitat type - treats habitats as factors
+#  and the output provides S-hats for each habitat type
+Hab=mark(mallard,nocc=90,model="Nest",
+  model.parameters=list(S=list(formula=~Native+Planted+Wetland)),
+  groups=c("Native","Planted","Wetland"))
+
+# 3. DSR varies with vegetation thickness (Robel reading)
+# Note: coefficients are estimated using the actual covariate
+# values. They are not based on standardized covariate values.
+Robel=mark(mallard,nocc=90,model="Nest",
+  model.parameters=list(S=list(formula=~Robel)))
+
+# 4. DSR varies with the amount of native vegetation in the surrounding area
+# Note: coefficients are estimated using the actual covariate
+# values. They are not based on standardized covariate values.
+PpnGr=mark(mallard,nocc=90,model="Nest",
+   model.parameters=list(S=list(formula=~PpnGrass)))
+
+# 5. DSR follows a trend through time
+TimeTrend=mark(mallard,nocc=90,model="Nest",
+   model.parameters=list(S=list(formula=~Time)))
+
+# 6. DSR varies with nest age
+Age=mark(mallard,nocc=90,model="Nest",
+   model.parameters=list(S=list(formula=~NestAge)))
+
+# 7. DSR varies with nest age & habitat type
+AgeHab=mark(mallard,nocc=90,model="Nest",
+  model.parameters=list(S=list(formula=~NestAge+Native+Planted+Wetland)),
+  groups=c("Native","Planted","Wetland"))
+
+# 8. DSR varies with nest age & vegetation thickness
+AgeRobel=mark(mallard,nocc=90,model="Nest",
+  model.parameters=list(S=list(formula=~NestAge+Robel)))
+
+# 9. DSR varies with nest age & amount of native vegetation in surrounding area
+AgePpnGrass=mark(mallard,nocc=90,model="Nest",
+  model.parameters=list(S=list(formula=~NestAge+PpnGrass)))
+
+#
+# Return model table and list of models
+#
+return(collect.models() )
+}
+# This runs the 9 models above and takes a minute or 2
+mallard.results=run.mallard()  
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Examine table of model-selection results #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+mallard.results                        # print model-selection table to screen
+options(width=100)                     # set page width to 100 characters
+sink("results.table.txt")              # capture screen output to file
+print.marklist(mallard.results)        # send output to file
+sink()                                 # return output to screen
+# remove # to see output in notepad                                            
+# system("notepad results.table.txt",invisible=FALSE,wait=FALSE) 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Examine output for constant DSR model #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Remove # to see output
+# mallard.results$Dot                  # print MARK output to designated text editor
+mallard.results$Dot$results$beta       # view estimated beta for model in R
+mallard.results$Dot$results$real       # view estimated DSR estimate in R
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Examine output for 'DSR by habitat' model #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Remove # to see output
+# mallard.results$Hab                  # print MARK output to designated text editor
+mallard.results$Hab$design.matrix      # view the design matrix that was used
+mallard.results$Hab$results$beta       # view estimated beta for model in R
+mallard.results$Hab$results$beta.vcv   # view variance-covariance matrix for beta's
+mallard.results$Hab$results$real       # view the estimates of Daily Survival Rate
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Examine output for best model #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Remove # to see output
+# mallard.results$AgePpnGrass            # print MARK output to designated text editor
+mallard.results$AgePpnGrass$results$beta # view estimated beta's in R
+mallard.results$AgePpnGrass$results$beta.vcv # view estimated var-cov matrix in R
+
+# To obtain estimates of DSR for various values of 'NestAge' and 'PpnGrass'
+#   some work additional work is needed.
+
+# Store model results in object with simpler name
+AgePpnGrass=mallard.results$AgePpnGrass
+# Build design matrix with ages and ppn grass values of interest
+# Relevant ages are age 1 to 35 for mallards
+# For ppngrass, use a value of 0.5
+fc=find.covariates(AgePpnGrass,mallard)
+fc$value[1:35]=1:35                    # assign 1:35 to 1st 35 nest ages
+fc$value[fc$var=="PpnGrass"]=0.1       # assign new value to PpnGrass
+design=fill.covariates(AgePpnGrass,fc) # fill design matrix with values
+# extract 1st 35 rows of output
+AgePpn.survival=compute.real(AgePpnGrass,design=design)[1:35,] 
+# insert covariate columns
+AgePpn.survival=cbind(design[1:35,c(2:3)],AgePpn.survival)     
+colnames(AgePpn.survival)=c("Age","PpnGrass","DSR","seDSR","lclDSR","uclDSR")
+AgePpn.survival       # view estimates of DSR for each age and PpnGrass combo
+
+# Plot results
+with(data=AgePpn.survival,plot(Age,DSR,'l',ylim=c(0.88,1)))
+grid()
+axis.break(axis=2,breakpos=0.879,style='slash')
+with(data=AgePpn.survival,points(Age,lclDSR,'l',lty=3))
+with(data=AgePpn.survival,points(Age,uclDSR,'l',lty=3))
+
+# assign 17 to 1st 50 nest ages
+fc$value[1:89]=17                     
+# assign range of values to PpnGrass
+fc$value[fc$var=="PpnGrass"]=seq(0.01,0.99,length=89) 
+design=fill.covariates(AgePpnGrass,fc) # fill design matrix with values
+AgePpn.survival=compute.real(AgePpnGrass,design=design)
+# insert covariate columns
+AgePpn.survival=cbind(design[,c(2:3)],AgePpn.survival)     
+colnames(AgePpn.survival)=
+    c("Age","PpnGrass","DSR","seDSR","lclDSR","uclDSR")
+# view estimates of DSR for each age and PpnGrass combo    
+AgePpn.survival   
+
+# Plot results
+# open new graphics window for new plot
+dev.new()                          
+with(data=AgePpn.survival,plot(PpnGrass,DSR,'l',ylim=c(0.88,1)))
+grid()
+axis.break(axis=2,breakpos=0.879,style='slash')
+with(data=AgePpn.survival,points(PpnGrass,lclDSR,'l',lty=3))
+with(data=AgePpn.survival,points(PpnGrass,uclDSR,'l',lty=3))
+# The following removes all objects from the .Rdata file.  If you wanted 
+# to do further calculations in another session you would want to remove 
+# the next line. Cleaning up objects as shown in this script is good programming 
+# practice and a good idea as long as the computations are not time consuming.  
+# However, if your analysis is taking several hours or days in MARK then 
+# clearly you'll want to hang onto the resulting objects in R and you 
+# won't want to use the following command. t has been commented out for
+# this example.
+# rm(list=ls(all=TRUE))
+# The next line deletes orphaned output files from MARK.  
+# ?cleanup will give a more complete description of this function.
+cleanup(ask=FALSE)
+}
+\keyword{datasets}
+\author{Jay Rotella}

@@ -35,19 +35,42 @@ function(data, filename, covariates=NULL, replace=FALSE)
 #
 # Output data portion of MARK input file:
 #
-  ch=data$data$ch
-  zz=as.data.frame(ch)
-  zz=cbind(zz,data$freq)
-  if(!is.null(covariates))
+  if(data$model!="Nest")
   {
-     if(covariates=="all")
-        zz=data.frame(cbind(zz,data$data[,-1])) 
-     else
-        zz=data.frame(cbind(zz,data$data[,covariates])) 
-  }
+     ch=data$data$ch
+     zz=as.data.frame(ch)
+     zz=cbind(zz,data$freq)
+     if(!is.null(covariates))
+     {
+        if(covariates[1]=="all")
+           zz=data.frame(cbind(zz,data$data[,-1])) 
+        else
+           zz=data.frame(cbind(zz,data$data[,covariates])) 
+     }
 #  
-# This outputs capture history, frequency and any covariates
+#    This outputs capture history, frequency and any covariates
 #
-  write.table(zz,file=outfile,eol=";\n",sep=" ",col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
+	 write.table(zz,file=outfile,eol=";\n",sep=" ",col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
+ } else
+#	 
+#    Output nest survival model
+#
+ {
+	 
+	 zz=data$data[,1:5]
+	 if(!is.null(covariates))
+	 {
+		 if(covariates[1]=="all")
+			 zz=data.frame(cbind(zz,data$data[,-(1:5)])) 
+		 else
+			 zz=data.frame(cbind(zz,data$data[,covariates])) 
+	 }
+	 if(is.null(data$group.covariates)) ng=1 else ng=nrow(data$group.covariates)
+	 for(i in 1:ng)
+	 {
+		write(paste("Nest survival group =",i,";"),file=outfile,append=TRUE)
+		write.table(zz[zz$group==i,],file=outfile,eol=";\n",sep=" ",col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
+	 }	 
+  }
   invisible()
 }

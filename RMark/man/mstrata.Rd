@@ -79,6 +79,15 @@ return(mstrata.results)
 mstrata.results=run.mstrata()
 mstrata.results
 
-
+# Example of reverse Multistratum model
+data(mstrata)
+mod=mark(mstrata,model="Multistrata")
+mod.rev=mark(mstrata,model="Multistrata",reverse=TRUE)
+Psilist=get.real(mod,"Psi",vcv=TRUE)
+Psilist.rev=get.real(mod.rev,"Psi",vcv=TRUE)
+Psivalues=Psilist$estimates
+Psivalues.rev=Psilist.rev$estimates
+TransitionMatrix(Psivalues[Psivalues$time==1,])
+TransitionMatrix(Psivalues.rev[Psivalues.rev$occ==1,])
 }
 \keyword{datasets}

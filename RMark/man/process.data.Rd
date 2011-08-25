@@ -11,7 +11,7 @@ between capture occasions (if not 1), and 3) create an age structure for the dat
 process.data(data, begin.time = 1, model = "CJS", mixtures = 1, 
              groups = NULL,allgroups=FALSE, age.var = NULL, 
              initial.ages = c(0),age.unit = 1, time.intervals = NULL, 
-             nocc=NULL, strata.labels=NULL, counts=NULL)
+             nocc=NULL, strata.labels=NULL, counts=NULL, reverse=FALSE)
 }
 \arguments{
   \item{data}{A data frame with at least one field named \code{ch} which is the capture (encounter) history stored 
@@ -34,6 +34,7 @@ process.data(data, begin.time = 1, model = "CJS", mixtures = 1,
   \item{strata.labels}{vector of single character values used in capture history(ch) for ORDMS models; it can contain 
            one more value beyond what is in ch for an unobservable state}
   \item{counts}{named list of numeric vectors (one group) or matrices (>1 group) containing counts for mark-resight models}
+  \item{reverse}{if set to TRUE, will reverse timing of transition (Psi) and survival (S) in Multistratum models}
 }
 \details{
 For examples of \code{data}, see \code{\link{dipper}},\code{\link{edwards.eberhardt}},\code{\link{example.data}}.

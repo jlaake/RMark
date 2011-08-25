@@ -46,7 +46,7 @@ remove.unused.occasions=function(data,ddl)
 		if(parameters[[parameter]]$type !="Triang")stop("\nDoes not work for parameters with non-triangular PIM\n")
 		ch=data$data$ch
 		if(data$model=="Multistrata")
-			ch=gsub("[A-Z]","1",ch)
+			ch=gsub("[1-9 a-z A-Z]","1",ch)
 #
 #    Loop over groups
 #
@@ -87,6 +87,13 @@ remove.unused.occasions=function(data,ddl)
           number.of.groups=dim(data$freq)[2])
   parameters=parameters[par.list]
   model.list=setup.model(data$model,data$nocc,data$mixtures)
+# If reverse, set remove.unused=TRUE  
+  if(data$reverse)
+  {
+	  remove.unused=TRUE
+	  temp=parameters[["Psi"]]$subtract.stratum
+	  if(!is.null(temp) && any(temp!=data$strata.labels)) stop("Cannot set subtract.stratum and use reverse\n")
+  }
 #
 # Create a data matrix for the each parameter in the model with age, year and cohort for each index
 # This data matrix (design.data) is used below to create the design matrix from the formulas
@@ -208,7 +215,7 @@ if(is.null(model.list$stype) | model.list$stype=="mark")
    {
       ch=data$data$ch
       if(data$model=="Multistrata")
-        ch=gsub("[A-Z]","1",ch)
+        ch=gsub("[A-Z a-z 1-9]","1",ch)
       if(anyTriang)
       {
 #
@@ -239,12 +246,15 @@ if(is.null(model.list$stype) | model.list$stype=="mark")
               if(parameters[[i]]$type =="Triang"&&parameters[[i]]$pim.type=="all")
               {
                  if(number.of.groups==1)
-                    full.design.data[[i]]=full.design.data[[i]][!(as.numeric(full.design.data[[i]]$cohort)%in%remove.cohort),]
+					 full.design.data[[i]]=full.design.data[[i]][!(full.design.data[[i]]$occ.cohort%in%remove.cohort),]
+#				 full.design.data[[i]]=full.design.data[[i]][!(as.numeric(full.design.data[[i]]$cohort)%in%remove.cohort),]
                  else
                  {
 #          modified 7 Apr 08 to handle different begin.times between groups
-                    full.design.data[[i]]=full.design.data[[i]][!(as.numeric(full.design.data[[i]]$group)==j &
-                             as.numeric(factor(full.design.data[[i]]$cohort,levels=unique(full.design.data[[i]]$cohort[as.numeric(full.design.data[[i]]$group)==j ])))%in%remove.cohort),]
+				full.design.data[[i]]=full.design.data[[i]][!(as.numeric(full.design.data[[i]]$group)==j &
+									full.design.data[[i]]$occ.cohort%in%remove.cohort),]
+#				full.design.data[[i]]=full.design.data[[i]][!(as.numeric(full.design.data[[i]]$group)==j &
+#                             as.numeric(factor(full.design.data[[i]]$cohort,levels=unique(full.design.data[[i]]$cohort[as.numeric(full.design.data[[i]]$group)==j ])))%in%remove.cohort),]
 #          modified 10 Aug to remove unused levels created in removing cohorts                    
                     full.design.data[[i]]$cohort=factor(full.design.data[[i]]$cohort)
                     full.design.data[[i]]$age=factor(full.design.data[[i]]$age)
@@ -254,6 +264,13 @@ if(is.null(model.list$stype) | model.list$stype=="mark")
            }                             
         }
      }
+#    if reverse Multistrata model, remove design data for S,Psi and p for added occasions/intervals
+     if(data$reverse)
+	 {
+		 full.design.data[["S"]]=full.design.data[["S"]][!full.design.data[["S"]]$occ%in%seq(1,data$nocc-1,2),]
+		 full.design.data[["p"]]=full.design.data[["p"]][!full.design.data[["p"]]$occ%in%seq(1,data$nocc-1,2),]
+		 full.design.data[["Psi"]]=full.design.data[["Psi"]][!full.design.data[["Psi"]]$occ%in%seq(2,data$nocc-1,2),]
+	 }
      if(anySquare)
      {
         for(i in 1:length(parameters))
@@ -267,8 +284,14 @@ if(is.null(model.list$stype) | model.list$stype=="mark")
            }
         }
      }
-     
+#    drop any unused factor levels after removing design data
+     for(i in 1:length(parameters))full.design.data[[i]]=droplevels(full.design.data[[i]])
    }
+#  Delete occ.cohort which is only used to remove unused cohorts if any
+   if(data$reverse)
+      for(i in 1:length(parameters))
+	      full.design.data[[i]]$occ.cohort=NULL
+#  make pim type assignments and return results
    pimtypes=pimtypes[!null.design.data]
    names(pimtypes)=names(parameters)
    full.design.data$pimtypes=pimtypes

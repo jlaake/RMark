@@ -69,7 +69,10 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
         num.rows=1
      }
   }
-  time.intervals=data$time.intervals[data$time.intervals>0]
+  if(setup.model(data$model,data$nocc)$robust)
+     time.intervals=data$time.intervals[data$time.intervals>0]
+  else
+     time.intervals=data$time.intervals
   number.of.groups=dim(data$freq)[2]
   design.data=NULL
   nsubtract.stratum=match(subtract.stratum,strata.labels)
@@ -153,8 +156,8 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
        {
           if(pim.type=="all")
           {
-             add.design.data=cbind(rep(j,ncol),rep(cohort,ncol),ages,times)
-             dd.names=c("group","cohort","age","time")
+             add.design.data=cbind(rep(j,ncol),rep(cohort,ncol),ages,times,(i-1)+1:ncol,rep(i,ncol))
+             dd.names=c("group","cohort","age","time","occ","occ.cohort")
           }
           else
             if(pim.type=="time")
@@ -255,5 +258,7 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
          design.data[paste("to",label,sep="")]=0
          design.data[design.data$tostratum==label,paste("to",label,sep="")]=1
       }
+#  Remove occ field unless this is a Multistrata model
+   if(data$model!="Multistrata")design.data$occ=NULL
    return(design.data)
 }

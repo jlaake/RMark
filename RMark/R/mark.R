@@ -2,7 +2,7 @@
 function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),covariates=NULL,initial=NULL,
 design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
 invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,simplify=TRUE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
-realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL)
+realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE)
 {
 # -----------------------------------------------------------------------------------------------------------------------
 # mark -  a single function that processes data, creates the design data, makes the mark model and runs it.
@@ -65,7 +65,7 @@ if(is.null(data$data))
    }
    data.proc=process.data(data,begin.time=begin.time, model=model,mixtures=mixtures, 
                           groups = groups, age.var = age.var, initial.ages = initial.ages, 
-                          age.unit = age.unit, time.intervals = time.intervals,nocc=nocc)
+                          age.unit = age.unit, time.intervals = time.intervals,nocc=nocc,reverse=reverse)
 }   
 else
    data.proc=data

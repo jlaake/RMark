@@ -1,4 +1,4 @@
-export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",ind.covariates=NULL)
+export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",ind.covariates="all")
 {
 # exports model and data files for import into the MARK interface
 #
@@ -30,19 +30,34 @@ export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",i
   }
   write(setup.model(x$model, nchar(x$data$ch[1]), x$mixtures)$etype,file=filename)
   write(x$mixtures,file=filename,append=TRUE)
-  write(nchar(x$data$ch[1]),file=filename,append=TRUE)
+  write(x$nocc,file=filename,append=TRUE)
   if(is.null(ind.covariates))
   {
     write("0",file=filename,append=TRUE)  
   } else
   {
-    if(all(ind.covariates%in%names(x$data)))
-    {
-       write(length(ind.covariates),file=filename,append=TRUE)
-       write(matrix(ind.covariates,ncol=1),file=filename,append=TRUE)
-    } else
-       stop("One or more of the ind.covariates values were not found in the data")
-  }  
+	if(ind.covariates[1]=="all")
+	{
+		ind.covariates=names(x$data)
+		if(x$model=="Nest")
+			ind.covariates=ind.covariates[!ind.covariates%in%c("FirstFound","LastPresent","LastChecked","Fate","freq")]
+		else
+			ind.covariates=ind.covariates[!ind.covariates%in%c("ch","freq")]	
+	}
+	if(length(ind.covariates)==0)
+	{
+		ind.covariates=NULL
+		write("0",file=filename,append=TRUE)  
+	} else
+	{
+       if(all(ind.covariates%in%names(x$data)))
+       {
+          write(length(ind.covariates),file=filename,append=TRUE)
+          write(matrix(ind.covariates,ncol=1),file=filename,append=TRUE)
+       } else
+          stop("One or more of the ind.covariates values were not found in the data")
+    } 
+  }
   write(x$nstrata,file=filename,append=TRUE)
   if(is.null(x$strata.labels))
     x$strata.labels=rep("NA",x$nstrata)

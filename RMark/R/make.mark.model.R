@@ -565,7 +565,10 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   par.list=setup.parameters(data$model,check=TRUE)
   parameters=setup.parameters(data$model,parameters,nocc,number.of.groups=number.of.groups)
   parameters=parameters[par.list]
+  temp.rev=data$reverse
+  data$reverse=FALSE
   full.ddl=make.design.data(data,parameters=ddl$pimtypes)
+  data$reverse=temp.rev
   parameters=parameters[names(parameters)%in%names(full.ddl)]
   for(j in names(parameters))
   {
@@ -783,8 +786,10 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   }
   if(mixtures!=1)
       string=paste(string," mixtures =",mixtures)
+  time.int=data$time.intervals
+  if(data$reverse)time.int[time.int==0]=1
   string=paste(string," ICMeans NoHist hist=",dim(zz)[1],
-           ";\n time interval ",paste(data$time.intervals,collapse=" "),";")
+           ";\n time interval ",paste(time.int,collapse=" "),";")
   if(etype=="Multistrata"|etype=="ORDMS"|etype=="MSLiveDead"|etype=="CRDMS")string=paste(string,"\n strata=",paste(data$strata.labels[1:data$nstrata],collapse=" "),";",sep="")
   if(!is.null(covariates))
   {
@@ -1350,17 +1355,15 @@ create.agenest.var=function(data,init.agevar,time.intervals)
         {
           if(parx=="Psi")
           {
-              logit.numbers = max.logit.number+1:(length(full.ddl[[parx]]$stratum)/(nstrata*(nstrata-1)*number.of.groups))
-              max.logit.number=max(c(max.logit.number,logit.numbers))
+              logit.numbers = max.logit.number+1:(nrow(full.ddl[[parx]])/(nstrata*(nstrata-1)*number.of.groups))
               logits.per.group=nstrata*length(logit.numbers)
               for (k in 1:number.of.groups)
               {
                  if(k>1)logit.numbers=logit.numbers+logits.per.group
-                 for (j in 1:nstrata)
-                 {
-                   string=c(string,paste("mlogit(",rep(logit.numbers+(j-1)*length(logit.numbers),(nstrata-1)),")",sep=""))
-                 }
-              }
+                 for (j in 1:nstrata)	 
+                   string=c(string,paste("mlogit(",rep(logit.numbers+(j-1)*length(logit.numbers),(nstrata-1)),")",sep="")) 
+			  }
+			  max.logit.number=max.logit.number+logits.per.group*number.of.groups
            }
            else
            {
@@ -1402,6 +1405,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
 # write out labels for real parameters
 #
+
   labstring=NULL
   rnames=NULL
   ipos=0
@@ -1414,8 +1418,10 @@ create.agenest.var=function(data,init.agevar,time.intervals)
     if(!is.null(full.ddl[[parx]]$tostratum)) stratum.strings=paste(stratum.strings," to",full.ddl[[parx]]$tostratum,sep="")
     strings=paste(param.names[i],stratum.strings," g",full.ddl[[parx]]$group,sep="")
     if(!is.null(full.ddl[[parx]]$cohort))strings=paste(strings," c",full.ddl[[parx]]$cohort,sep="")
-    if(!is.null(full.ddl[[parx]]$age))strings=paste(strings," a",full.ddl[[parx]]$age,sep="")
-    if(model.list$robust && parameters[[parx]]$secondary)
+	if(!is.null(full.ddl[[parx]]$occ.cohort))strings=paste(strings," c",full.ddl[[parx]]$occ.cohort,sep="")
+	if(!is.null(full.ddl[[parx]]$age))strings=paste(strings," a",full.ddl[[parx]]$age,sep="")
+	if(!is.null(full.ddl[[parx]]$occ))strings=paste(strings," o",full.ddl[[parx]]$occ,sep="")
+	if(model.list$robust && parameters[[parx]]$secondary)
        strings=paste(strings," s",full.ddl[[parx]]$session,sep="")
     if(!is.null(full.ddl[[parx]]$time))strings=paste(strings," t",full.ddl[[parx]]$time,sep="")
     if(mixtures >1 && !is.null(parameters[[i]]$mix) &&parameters[[i]]$mix)

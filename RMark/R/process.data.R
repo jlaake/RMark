@@ -1,6 +1,6 @@
 "process.data" <-
 function(data,begin.time=1,model="CJS",mixtures=1,groups=NULL,allgroups=FALSE,age.var=NULL,
-initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,counts=NULL)
+initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,counts=NULL,reverse=FALSE)
 {
 # -----------------------------------------------------------------------------------------------------------------
 #
@@ -10,7 +10,7 @@ initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,co
 #
 #  Arguments: 
 #
-#  data			            - data frame with at least one field ch which is the
+#  data			        - data frame with at least one field ch which is the
 #                         capture history stored as a character string
 #                         data can also have a field freq which is the frequency
 #                         of that capture history; it can also have individual covariates
@@ -27,7 +27,8 @@ initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,co
 #                          must be specified
 #  strata.labels        - vector of single character labels for strata in ORDMS or CRDMS
 #  counts               - list of numeric vectors (one group) or matrices (>1 group) 
-#              	           containing counts for mark-resight models	
+#              	           containing counts for mark-resight models
+#  reverse              - only valid for Multistrata model; reverses timing of movement and survival
 #
 #  Value: result (list with the following elements)
 #
@@ -57,6 +58,20 @@ initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,co
    return(list(nocc=nocc,nocc.secondary=nocc.secondary))
 }
    dataname=substitute(data)
+#
+#  handle Multistrata reversal if needed
+#
+   if(reverse)
+   {
+	   if(model!="Multistrata")
+		   stop("reverse can only be set TRUE for the Multistrata model")
+	   else
+	   {
+		   if(is.null(time.intervals))time.intervals=rep(1,nchar(data$ch[1])-1)
+		   data$ch=sapply(strsplit(data$ch,""),paste,collapse="0") 
+		   time.intervals=as.vector(matrix(c(rep(0,length(time.intervals)),time.intervals),ncol=length(time.intervals),nrow=2,byrow=TRUE))
+	   }
+   }
 #
 #   If model="Nest" a completely different structure is used.  No ch is used; fate used instead
 #
@@ -240,7 +255,7 @@ if(number.of.factors==0)
                    freq=matrix(data$freq,ncol=1,dimnames=list(1:number.of.ch,"group1")),
                    nocc=nocc, nocc.secondary=nocc.secondary,time.intervals=time.intervals,begin.time=begin.time,
                    age.unit=1,initial.ages=initial.ages[1],group.covariates=NULL,nstrata=nstrata,
-                   strata.labels=strata.labels,counts=counts))
+                   strata.labels=strata.labels,counts=counts,reverse=reverse))
    }
    else
    {
@@ -254,7 +269,7 @@ if(number.of.factors==0)
                    freq=matrix(rep(1,number.of.ch),ncol=1,dimnames=list(1:number.of.ch,"group1")),
                    nocc=nocc,  nocc.secondary=nocc.secondary, time.intervals=time.intervals,begin.time=begin.time,
                    age.unit=1,initial.ages=initial.ages[1],group.covariates=NULL,nstrata=nstrata,
-                   strata.labels=strata.labels,counts=counts))
+                   strata.labels=strata.labels,counts=counts,reverse=reverse))
    }
 }
 #
@@ -388,6 +403,6 @@ else
                    nocc=nocc, nocc.secondary=nocc.secondary, time.intervals=time.intervals,begin.time=begin.time,
                    age.unit=age.unit,initial.ages=init.ages,
                    group.covariates=group.covariates,nstrata=nstrata,
-                   strata.labels=strata.labels,counts=counts))
+                   strata.labels=strata.labels,counts=counts,reverse=reverse))
 }
 }

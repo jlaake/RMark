@@ -14,7 +14,7 @@ mark(data, ddl = NULL, begin.time = 1, model.name = NULL,
      simplify=TRUE, filename=NULL, prefix="mark", 
      default.fixed=TRUE, silent=FALSE, retry=0, options=NULL,
      brief=FALSE, realvcv=FALSE, delete=FALSE, external=FALSE,
-     profile.int=FALSE,chat=NULL)
+     profile.int=FALSE,chat=NULL,reverse=FALSE)
 }
 \arguments{
   \item{data}{ Either the raw data which is a dataframe with at least one column named ch (a character field containing the capture history) or a processed dataframe }
@@ -52,6 +52,7 @@ mark(data, ddl = NULL, begin.time = 1, model.name = NULL,
   \item{external}{if TRUE the mark object is saved externally rather than in the workspace; the filename is kept in its place}
   \item{profile.int}{if TRUE will compute profile intervals for each real parameter; or you can specify a vector of real parameter indices}
   \item{chat}{value of chat used for profile intervals}
+  \item{reverse}{if set to TRUE, will reverse timing of transition (Psi) and survival (S) in Multistratum models}
 }
 \details{
 This function acts as an interface to the FORTRAN program MARK written by Gary White (\url{http://www.cnr.colostate.edu/~gwhite/mark/mark.htm}).

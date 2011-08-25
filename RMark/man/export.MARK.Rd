@@ -7,18 +7,21 @@ a new MARK project with all the data and output files.
 }
 \usage{
 export.MARK(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",
-             ind.covariates=NULL)
+             ind.covariates="all")
 }
 \arguments{
   \item{x}{processed data list used to build models}
-  \item{project.name}{character string to be used for prefix of filenames and for MARK project name}
+  \item{project.name}{character string to be used for prefix of filenames and for MARK project name; do not use "." in the filename}
   \item{model}{either a single mark model or a marklist}
   \item{replace}{if TRUE it will replace any existing files}
   \item{chat}{user-specified chat value if desired}
   \item{title}{MARK project title string}
-  \item{ind.covariates}{vector of character strings specifying names of individual covariates}
+  \item{ind.covariates}{vector of character strings specifying names of individual covariates or "all" to use all present}
 }
 \details{
+If you use Nest model and NestAge covariate you should use the processed data list (model$data) from a model using NestAge in the
+formula because the necessary individual covariates are added to the processed data list.  Also, use default of ind.covariates="all".
+
 After running this function to export the data and models to the working directory, start 
 program MARK and select the File/RMARK Import menu item.  Navigate to the working directory and
 select the "project.name".Rinp file.  MARK will take over and create the project files and will import 
@@ -86,7 +89,7 @@ mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl)
 #
 # Export data and models for import to MARK
 #
-export.MARK(mstrata.processed,"mstrata",mstrata.results)
+export.MARK(mstrata.processed,"mstrata",mstrata.results,replace=TRUE)
 #
 # Return model table and list of models
 #

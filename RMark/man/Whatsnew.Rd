@@ -4,6 +4,19 @@
 \description{A good place to look for new changes.  Often I'll add changes here but don't always get to it in the documentation 
 for awhile.  They are ordered from newest to oldest.}
 \details{
+Version 2.0.7 (25 August 2011)
+\itemize{
+\item Change to \code{\link{make.mark.model}} to fix bug in which mlogits were incorrectly assigned in ORDMS model when both Psi and pent used
+mlogit links. Thanks to Glenn Stauffer for identifying and tracking down this error. 
+\item Fixed \code{\link{export.chdata}} and \code{\link{export.MARK}} so Nest survival models can be exported.  Also changed default of argument ind.covariates to "all" which will use all
+individual covariates in the data in the file sent to MARK.  Thanks to Jay Rotella for his help.
+\item Made change to \code{\link{process.data}} and \code{\link{mark}} to include a new argument reverse, which if set to TRUE with model="Multistratum"
+will reverse the timing of transition and survival. See \code{\link{mstrata}} for an example of a reverse multistratum model.
+\item Made change to \code{\link{make.design.data}} to allow for zero time intervals in non-robust design model.  This was needed to allow use of the 
+reverse time structure in multi-state models. In addition, for the reverse multistate model the function now adds an occasion (occ) field to the design data
+because the time field will be constant when with a 0 time interval.  The row names of the design matrix and real parameters was extended for this model to
+include occasion (o) and occasion cohort (oc) to create unique labels because cohort and time are not unique with 0 time intervals.   
+} 
 Version 2.0.6 (1 July 2011)
 \itemize{
 \item Change to MR resight examples so the output does not appear in notepad which was causing problem

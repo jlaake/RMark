@@ -1,5 +1,5 @@
 "mark" <-
-function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),covariates=NULL,initial=NULL,
+function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,
 design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
 invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,simplify=TRUE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
 realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE)
@@ -17,7 +17,6 @@ realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FA
 #  model                - type of c-r model (eg CJS, Burnham, Barker) 
 #  title                - a title for the analysis 
 #  model.parameters     - list of parameter model specifications
-#  covariates           - list of covariate names used in added components that are not specified in formulae
 #  initial              - vector of initial values for beta parameters
 #  design.parameters    - specification of any grouping variables for design data for each parameter
 #  right                - if TRUE, any intervals created in design.parameters are closed on the right and open on left and vice-versa if FALSE
@@ -85,7 +84,7 @@ while(i<=retry & !converge)
 #
    if(is.list(model.parameters))
    {
-      model<-make.mark.model(data.proc,title=title,covariates=covariates,parameters=model.parameters,
+      model<-make.mark.model(data.proc,title=title,parameters=model.parameters,
              ddl=ddl,initial=initial,call=match.call(),simplify=simplify,default.fixed=default.fixed,
              model.name=model.name,options=options,profile.int=profile.int,chat=chat)
       model$model.parameters=model.parameters

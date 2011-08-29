@@ -103,8 +103,6 @@ remove.unused.occasions=function(data,ddl)
 # 10 Jan 06 ; added pim.type argument in call to compute.design.data
 #
 full.design.data=vector("list",length=length(parameters))
-if(is.null(model.list$stype) | model.list$stype=="mark")
-{
    pimtypes=vector("list",length=length(parameters))
    anyTriang=FALSE
    anySquare=FALSE
@@ -296,7 +294,6 @@ if(is.null(model.list$stype) | model.list$stype=="mark")
    names(pimtypes)=names(parameters)
    full.design.data$pimtypes=pimtypes
    return(full.design.data)
-}
 }
 
         

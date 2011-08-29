@@ -1,12 +1,12 @@
 "make.mark.model" <-
-function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,covariates=NULL,call=NULL,
+function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,
             simplify=TRUE,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL)
 {
 # -----------------------------------------------------------------------------------------------------------------------
 #
 # make.mark.model -   creates a MARK model object that contains an input file, design matrix
 #                     and design data for MARK.  It is constructed from a data frame, formulas for design matrix
-#                     and optional design components,fixed parameters, and initial values
+#                     ,fixed parameters, and initial values
 #
 # Arguments:
 #
@@ -16,7 +16,6 @@ function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,covari
 # title            - a title for the analysis
 # model.name       - optional model name
 # initial          - vector of initial values for beta parameters or name of a MARK model object with output
-# covariates       - list of covariate names used in added components that are not specified in formulae
 # call             - can be used to pass function call when this function is called from another function (eg mark)
 # simplify         - if TRUE, simplifies PIM structure to match unique number of rows in design matrix
 # default.fixed    - if TRUE, default fixed values are assigned to any parameters missing from the full design data
@@ -148,11 +147,11 @@ function(model){
 #   {
 #      new.indices[mlogit.parameters]=max(new.indices[mlogit.parameters])*(mlogit.list$structure-1)+
 #                                     new.indices[mlogit.parameters] + max(new.indices)
- #
- #    The following code was added to adjust for different model structures within
- #    a stratum across tostratum.  Without it the mlogit structure doesn't not work
- #    for models with sum tostratum interactions.
- #
+#
+#    The following code was added to adjust for different model structures within
+#    a stratum across tostratum.  Without it the mlogit structure doesn't not work
+#    for models with sum tostratum interactions.
+#
 #      for (i in 1:max(mlogit.list$structure))
 #      {
 #         mm=matrix(new.indices[mlogit.parameters][mlogit.list$structure==i],ncol=mlogit.list$ncol)
@@ -264,7 +263,7 @@ function(model)
 #  Beginning of simplify.pim.structure function; it recreates input for
 #  MARK and uses an outfile like make.mark.model
 #
-outfile="mxxx.tmp"
+outfile=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
 #
 # Use realign.pims to simplify PIM structure
 #
@@ -524,7 +523,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
 # Outfile is assigned a temporary name
 #
-  outfile="mxxx.tmp"
+  outfile=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
 #
 #  check to make sure all entered as lists
 #
@@ -545,7 +544,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(length(parameters)>0)
   for(i in 1:length(parameters))
      for(j in 1:length(names(parameters[[i]])))
-        if(!(names(parameters[[i]])[j]%in%c("fixed","formula","component","component.name","link","share","remove.intercept","default")))
+        if(!(names(parameters[[i]])[j]%in%c("fixed","formula","link","share","remove.intercept","default")))
         {
            cat("\nInvalid model specification for parameter ",names(parameters)[i],".\nUnrecognized element ",names(parameters[[i]])[j])
            stop()
@@ -555,9 +554,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
   ch=data$data$ch
   mixtures=data$mixtures
-  poolpandc=FALSE
-  poolgammas=FALSE
-  pool.ps=FALSE
   nocc=data$nocc
   nocc.secondary=data$nocc.secondary
   nstrata=data$nstrata
@@ -578,42 +574,15 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   }
   for(i in 1:length(parameters))
   {
-     if(names(parameters)[i]!="p2" &names(parameters)[i]!="c" & names(parameters)[i]!="GammaPrime")
-     {
-        if(is.null(parameters[[i]]$formula))parameters[[i]]$formula=~1
-        if((parameters[[i]]$formula==~group) & number.of.groups==1)parameters[[i]]$formula=~1
-     }
-     else
 #
-#    The following handles sharing of p and c in closed models and gamma in robust models;
-#    if p&c not shared it sets default c model to ~1
+#     For parameters that can be possibly shared, see if they are not shared and if not then create
+#     default formula if one not specified
 #
-     {
-        if(names(parameters)[i]=="c")
-           if(!parameters$p$share)
-           {
-              if(is.null(parameters$c$formula))parameters$c$formula=~1
-              poolpandc=FALSE
-           }
-           else
-              poolpandc=TRUE
-        if(names(parameters)[i]=="p2")
-           if(!parameters$p1$share)
-           {
-              if(is.null(parameters$p2$formula))parameters$p2$formula=~1
-              pool.ps=FALSE
-           }
-           else
-              pool.ps=TRUE
-        if(names(parameters)[i]=="GammaPrime")
-           if(!parameters$GammaDoublePrime$share)
-           {
-              if(is.null(parameters$GammaPrime$formula))parameters$GammaPrime$formula=~1
-              poolgammas=FALSE
-           }
-           else
-              poolgammas=TRUE
-     }
+	  if(!is.null(parameters[[i]]$share)&&!parameters[[i]]$share)
+      {
+		  shared_par=parameters[[i]]$pair
+	      if(is.null(parameters[[shared_par]]$formula))parameters[[shared_par]]$formula=~1
+	  }
 #
 #     Test validity of link functions
 # 
@@ -651,65 +620,37 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # In the design data for p a covariate "c" is added to the recapture parameters and for
 # a covariate emigrate for the gammaDoublePrime parameters.
 #
-  if(!is.null(parameters$p))
-     if(!is.null(parameters$c))
-        if(poolpandc)
-        {
-           if(dim(ddl$p)[2]==dim(ddl$c)[2])
-           {
-              ddl$p=rbind(ddl$p,ddl$c)
-              ddl$p$c=c(rep(0,(dim(ddl$p)[1]-dim(ddl$c)[1])),rep(1,dim(ddl$c)[1]))
-              row.names(ddl$p)=1:dim(ddl$p)[1]
-           }
-           else
-           {
-              cat("Error: for a shared p&c model, their design data columns must match\n. If you add design data to p it must also be added to c.\n")
-              cat("Columns of p: ",names(ddl$p),"\n") 
-              cat("Columns of c: ",names(ddl$c),"\n")
-              stop("Function terminated\n") 
-           }
-        }
-  if(!is.null(parameters$p1))
-     if(!is.null(parameters$p2))
-        if(pool.ps)
-        {
-           if(dim(ddl$p1)[2]==dim(ddl$p2)[2])
-           {
-              ddl$p1=rbind(ddl$p1,ddl$p2)
-              ddl$p1$p2=c(rep(0,(dim(ddl$p1)[1]-dim(ddl$p2)[1])),rep(1,dim(ddl$p2)[1]))
-              row.names(ddl$p1)=1:dim(ddl$p1)[1]
-           }
-           else
-           {
-              cat("Error: for a shared p1&p2 model, their design data columns must match\n. If you add design data to p1 it must also be added to p2.\n")
-              cat("Columns of p1: ",names(ddl$p1),"\n")
-              cat("Columns of p2: ",names(ddl$p2),"\n")
-              stop("Function terminated\n")
-           }
-        }
-  if(!is.null(parameters$GammaDoublePrime))
-     if(!is.null(parameters$GammaPrime))
-        if(poolgammas)
-        {
-           if(dim(ddl$GammaDoublePrime)[2]==dim(ddl$GammaPrime)[2])
-           {
-              ddl$GammaDoublePrime=rbind(ddl$GammaDoublePrime,ddl$GammaPrime)
-              ddl$GammaDoublePrime$emigrate=c(rep(1,(dim(ddl$GammaDoublePrime)[1]-dim(ddl$GammaPrime)[1])),rep(0,dim(ddl$GammaPrime)[1]))
-              row.names(ddl$GammaDoublePrime)=1:dim(ddl$GammaDoublePrime)[1]
-           }
-           else
-           {
-              cat("Error: for a shared Gamma model, their design data columns must match\n. If you add design data to GammaPrime it must also be added to GammaDoublePrime.\n")
-              cat("Columns of GammaPrime: ",names(ddl$GammaPrime),"\n")
-              cat("Columns of GammaDoublePrime: ",names(ddl$GammaDoublePrime),"\n")
-              stop("Function terminated\n")
-           }
-        }
+   for(i in 1:length(parameters))
+   {
+#
+#     For parameters that can be possibly shared, if they are shared, pool design data as long as dimensions match
+#
+	   if(!is.null(parameters[[i]]$share)&&parameters[[i]]$share)
+       {
+	       shared_par=parameters[[i]]$pair
+	       dim1=dim(ddl[[names(parameters)[i]]])
+		   dim2=dim(ddl[[shared_par]])
+           if(dim1[2]==dim2[2])
+		   {
+			   ddl[[names(parameters)[i]]]=rbind(ddl[[names(parameters)[i]]],ddl[[shared_par]])
+               ddl[[names(parameters)[i]]][shared_par]=c(rep(0,dim1[1]),rep(1,dim2[1]))
+		       row.names(ddl[[names(parameters)[i]]])=1:dim(ddl[[names(parameters)[i]]])[1]
+		   } else
+		   {
+			   cat(paste("Error: for a shared ",paste(names(parameters)[i],shared_par,sep="&"),
+				" model, their design data columns must match\n. If you add design data to one it must also be added to the other.\n"))
+			   cat(paste("Columns of",names(parameters)[i]," : ",names(ddl[i]),"\n"))
+			   cat(paste("Columns of",shared_par,": ",names(ddl[[shared_par]]),"\n"))
+			   stop("Function terminated\n") 
+		   }
+	   }
+   }
 #
 # For each parameter type determine which values in the formula are covariates that need to be
 # added to design data and put in data portion of input file.
 #
   xcov=list()
+  covariates=NULL
   time.dependent=list()
   session.dependent=list()
   for(i in 1:length(parameters))
@@ -863,11 +804,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
     for(i in 1:length(parameters))
     {
        model.name=paste(model.name,param.names[i],"(",paste(parameters[[i]]$formula,collapse=""),sep="")
-       if(!is.null(parameters[[i]]$component))
-          if(is.null(parameters[[i]]$component.name))
-             model.name=paste(model.name,"+component",sep="")
-          else
-             model.name=paste(model.name,"+",parameters[[i]]$component.name,sep="")
        model.name=paste(model.name,")",sep="")
      }
   }
@@ -1108,12 +1044,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
             }
         }
         maxpar=dim(full.ddl[[parx]])[1]
-        if(poolpandc&names(parameters)[i]=="p")
-            maxpar=maxpar+dim(full.ddl[["c"]])[1]
-        if(pool.ps&names(parameters)[i]=="p1")
-            maxpar=maxpar+dim(full.ddl[["p2"]])[1]
-        if(poolgammas&names(parameters)[i]=="GammaDoublePrime")
-            maxpar=maxpar+dim(full.ddl[["GammaPrime"]])[1]
+        if(!is.null(parameters[[names(parameters)[i]]]$share) && parameters[[names(parameters)[i]]]$share)
+			maxpar=maxpar + dim(full.ddl[[parameters[[names(parameters)[i]]]$pair]])[1]  		
         design.matrix[[i]]=matrix(0,ncol=dim(dm)[2],nrow=maxpar)
         if(dim(design.matrix[[i]][as.numeric(row.names(ddl[[parx]])),,drop=FALSE])[1]==dim(dm)[1])
            design.matrix[[i]][as.numeric(row.names(ddl[[parx]])),]=dm
@@ -1125,7 +1057,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #       It can add interactions that are not relevant.  The results are columns in the design
 #       matrix that are all zero.  These are stripped out here.
 #
-        col.sums=apply(design.matrix[[i]],2,sum)
+        col.sums=apply(design.matrix[[i]],2,function(x) sum(abs(x)))
         design.matrix[[i]]=design.matrix[[i]][,col.sums!=0,drop=FALSE]
 #
 #       Next substitute variable names for covariates into design matrix 
@@ -1190,33 +1122,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
           }
 
         row.names(design.matrix[[i]])=NULL
-#     }
-#
-#    If there any additional design components add them on here
-#
-     if(is.null(parameters[[i]]$component))
-        design.matrix[[i]]=as.data.frame(design.matrix[[i]])
-     else
-     {
-        savenames=colnames(design.matrix[[i]])
-        if(is.null(savenames))savenames="(Intercept)"
-        design.matrix[[i]]=cbind(design.matrix[[i]],parameters[[i]]$component)
-        if(is.data.frame(parameters[[i]]$component))
-           savenames=c(savenames,names(parameters[[i]]$component))
-        else
-        {
-            if(is.null(parameters[[i]]$component.name)) 
-                assigned.name="cov"
-            else
-                assigned.name=parameters[[i]]$component.name
-            if(is.matrix(parameters[[i]]$component))
-               savenames=c(savenames,paste(assigned.name,1:dim(parameters[[i]]$component)[2],sep=""))
-            else
-               savenames=c(savenames,assigned.name)
-        }
-        if(!is.data.frame(design.matrix[[i]]))design.matrix[[i]]=as.data.frame(design.matrix[[i]])
-        names(design.matrix[[i]])=savenames
-     }
+     design.matrix[[i]]=as.data.frame(design.matrix[[i]])
      if(parameters[[i]]$formula=="~1")
         names(design.matrix[[i]])[1]="(Intercept)"
      names(design.matrix[[i]])=paste(names(parameters)[i],names(design.matrix[[i]]),sep=":")
@@ -1235,36 +1141,17 @@ create.agenest.var=function(data,init.agevar,time.intervals)
         mat=NULL
         lastpim=length( pim[[length(parameters)]])
         lastindex=max(pim[[length(parameters)]][[lastpim]]$pim)
-        if(poolpandc & names(parameters)[i]=="c")
-        {
-           minrow=pim[["c"]][[1]]$pim[1,1]
-           maxrow=max(pim[["c"]][[length(pim[["c"]])]]$pim)
-           if(minrow>1)
-              mat=matrix("0",ncol=dim(design.matrix[[i]])[2],nrow=minrow-1)
-           mat=rbind(mat,as.matrix(design.matrix[[i]]))
-           if(i<length(parameters))
-               mat=rbind(mat,matrix("0",ncol=dim(design.matrix[[i]])[2],nrow=lastindex-maxrow ))
-        } else
-        if(pool.ps & names(parameters)[i]=="p2")
-        {
-           minrow=pim[["p2"]][[1]]$pim[1,1]
-           maxrow=max(pim[["p2"]][[length(pim[["p2"]])]]$pim)
-           if(minrow>1)
-              mat=matrix("0",ncol=dim(design.matrix[[i]])[2],nrow=minrow-1)
-           mat=rbind(mat,as.matrix(design.matrix[[i]]))
-           if(i<length(parameters))
-               mat=rbind(mat,matrix("0",ncol=dim(design.matrix[[i]])[2],nrow=lastindex-maxrow ))
-        } else
-        if(poolgammas & names(parameters)[i]=="GammaPrime")
-        {
-           minrow=pim[["GammaPrime"]][[1]]$pim[1,1]
-           maxrow=max(pim[["GammaPrime"]][[length(pim[["GammaPrime"]])]]$pim)
-           if(minrow>1)
-              mat=matrix("0",ncol=dim(design.matrix[[i]])[2],nrow=minrow-1)
-           mat=rbind(mat,as.matrix(design.matrix[[i]]))
-           if(i<length(parameters))
-               mat=rbind(mat,matrix("0",ncol=dim(design.matrix[[i]])[2],nrow=lastindex-maxrow ))
-        } else
+		pair=parameters[[i]]$pair
+		if(!is.null(pair) && pair !="" && !is.null(parameters[[pair]]$share) && parameters[[pair]]$share)
+		{
+			minrow=pim[[names(parameters)[i]]][[1]]$pim[1,1]
+			maxrow=max(pim[[names(parameters)[i]]][[length(pim[[names(parameters)[i]]])]]$pim)
+			if(minrow>1)
+				mat=matrix("0",ncol=dim(design.matrix[[i]])[2],nrow=minrow-1)
+			mat=rbind(mat,as.matrix(design.matrix[[i]]))
+			if(i<length(parameters))
+				mat=rbind(mat,matrix("0",ncol=dim(design.matrix[[i]])[2],nrow=lastindex-maxrow ))
+		} else
         {    
            if(i>1)
               mat=matrix("0",ncol=dim(design.matrix[[i]])[2],nrow=nrows)
@@ -1513,3 +1400,4 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   class(model)=c("mark",data$model)
   return(model)
 }
+

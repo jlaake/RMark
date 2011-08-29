@@ -117,7 +117,17 @@ for more information on the use of \code{time.intervals}.
 
 \examples{
            
-data(RDOccupancy)           
+data(RDOccupancy)
+#
+# Example of epsilon=1-gamma
+test_proc=process.data(RDOccupancy,model="RDOccupEG",time.intervals=c(0,0,1,0,0,1,0,0))
+test_ddl=make.design.data(test_proc)
+test_ddl$Epsilon$eps=-1
+test_ddl$Gamma$eps=1
+p.dot=list(formula=~1)
+Epsilon.random.shared=list(formula=~-1+eps, share=TRUE)
+model=mark(test_proc,test_ddl,model.parameters=list(Epsilon=Epsilon.random.shared, p=p.dot))
+#          
 #  Writing a self-contained function to evaluated a set of 
 #  user-defined candidate models
 run.RDExample=function()

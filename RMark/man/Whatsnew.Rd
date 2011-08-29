@@ -4,6 +4,16 @@
 \description{A good place to look for new changes.  Often I'll add changes here but don't always get to it in the documentation 
 for awhile.  They are ordered from newest to oldest.}
 \details{
+Version 2.0.8 (1 Oct 2011)
+\itemize{
+\item Both \code{\link{setup.model}} and \code{\link{setup.parameters}} were re-written to use data files models.txt and parameters.txt to
+define models and parameters which should make it easier to add new models.  The latter function is now much simpler and smaller.
+\item Model RDOccupEG now allows sharing Epsilon and Gamma parameters.  Epsilon is the dominant parameter which gets the 
+share=TRUE argument. See \code{\link{RDOccupancy}} for an example. Thanks to Jake Ivan for an example of what was needed.
+\item To avoid confusion, the arguments \code{component} and \code{component.name} were removed from the parameter specification because these have not been
+required since v1.3 when full support for individual covariates were included.  Likewise the argument \code{covariates} in \code{\link{mark}} and
+\code{\link{make.mark.model}} was removed because it was only needed to support the component approach.
+} 
 Version 2.0.7 (25 August 2011)
 \itemize{
 \item Change to \code{\link{make.mark.model}} to fix bug in which mlogits were incorrectly assigned in ORDMS model when both Psi and pent used

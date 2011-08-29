@@ -6,7 +6,7 @@ to the data and model structure and formulae specified for the model parameters.
 }
 \usage{
 make.mark.model(data, ddl, parameters=list(), title="", 
-                model.name=NULL, initial=NULL,covariates=NULL, call = NULL, 
+                model.name=NULL, initial=NULL, call = NULL, 
                 simplify=TRUE, default.fixed=TRUE, 
                 options=NULL, profile.int=FALSE, chat=NULL)
 }
@@ -17,7 +17,6 @@ make.mark.model(data, ddl, parameters=list(), title="",
   \item{title}{Title for the analysis (optional)}
   \item{model.name}{Model name to override default name (optional)}
   \item{initial}{Vector of named or unnamed initial values for beta parameters or previously run model (optional)}
-  \item{covariates}{List of covariate names used in added components that are not specified in formulae (if component used)}
   \item{call}{Pass function call when this function is called from another function (e.g.\code{\link{mark}}) (internal use)}
   \item{simplify}{if TRUE, simplifies PIM structure to match unique number of rows in design matrix}
   \item{default.fixed}{if TRUE, real parameters for which the design data have been deleted are fixed to default values}
@@ -125,31 +124,7 @@ would be 1990 so the variables should be named appropriately for the parameter m
 
 In previous versions to handle time varying covariates with a constant effect, it was necessary to use the component feature
 of the parameter specification to be able to append one or more arbitrary columns to the design matrix.  That is no longer required for
-individual covariates and it is likely that the component feature will no longer be needed but it has been kept and for
-completeness we describe its use with the trap dependence example. Columns can be
-added directly to the design matrix with the \code{component} and \code{component.name} elements of the parameter list.  
-For example, a design column with a constant effect for the trap dependence covariate could be created with the following 
-commands:
-
-\preformatted{
-pcomponent=paste("x",ddl$p$Time+2,sep="")
-pmodel.td=list(formula=~1,component=pcomponent,
-             component.name="trap.dep")
-mymodel.td=make.mark.model(proc.example.data,ddl,
-           parameters=list(p=pmodel.td),
-            covariates= paste("x",2:7,sep=""))      
-}
-
-The first command creates a vector of characters with values "\code{x2}",. . .,"\code{x7}" depending on the time.  Alternatively, the 
-variables could have been named with the year as in:
-
-\code{pcomponent=paste("x",ddl$p$Time+1981,sep="")}
-
-The second command creates a list for the model description for p.  It describes an intercept model with the added 
-design component \code{pcomponent} and it is named \code{trap.dep} in the design column.  The third command creates a 
-model with 3 parameters: a constant Phi (the default) and an intercept and trap dependence effect for p.  Because the 
-covariates are not defined in the formula, they must be specified in the covariates argument so they are added to the data.   
-Note this model will not run as defined without defining \code{x2},. . .,\code{x7} in \code{example.data}.
+individual covariates and the component feature was removed in v2.0.8.
   
 There are three other elements of the parameter list that can be useful on occasion.  The first is \code{link}
 which specifies the link function for transforming between the beta and real parameters.  The possible values are 

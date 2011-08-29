@@ -13,7 +13,7 @@
    if(info[[i]][1]=="Version") version<-info[[i]][2]
    if(info[[i]][1]=="Built") built<-info[[i]][2]
  }
- #Print these out
+  #Print these out
  cat(paste("This is",package,version,"\nBuilt:",built,"\n"))
  if(exists("MarkPath"))
  {

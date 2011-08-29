@@ -1,6 +1,6 @@
 Package: RMark
-Version: 2.0.7
-Date: 2011-08-25
+Version: 2.0.8
+Date: 2011-08-29
 Title: R Code for MARK Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov>
 Description: This package provides an interface to the

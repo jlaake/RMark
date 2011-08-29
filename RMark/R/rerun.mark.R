@@ -57,7 +57,7 @@ while(i<=retry & !converge)
 # Remake the model with new initial values
 #
 
-   model<-make.mark.model(data,title=title,covariates=model$covariates,parameters=model.parameters,
+   model<-make.mark.model(data,title=title,parameters=model.parameters,
           ddl=ddl,initial=initial,call=match.call(),simplify=simplify,default.fixed=default.fixed,
           model.name=model$model.name)
    model$model.parameters=model.parameters

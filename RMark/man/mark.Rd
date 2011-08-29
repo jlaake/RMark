@@ -6,8 +6,7 @@
 \usage{
 mark(data, ddl = NULL, begin.time = 1, model.name = NULL, 
      model = "CJS", title = "", model.parameters = list(),
-     covariates = NULL, initial = NULL, 
-     design.parameters = list(), right=TRUE, groups = NULL, 
+     initial = NULL,design.parameters = list(), right=TRUE, groups = NULL, 
      age.var = NULL, initial.ages = 0, age.unit = 1, 
      time.intervals = NULL, nocc=NULL, output = TRUE, 
      invisible = TRUE, adjust = TRUE, mixtures = 1, se=FALSE,
@@ -24,7 +23,6 @@ mark(data, ddl = NULL, begin.time = 1, model.name = NULL,
   \item{model}{ Type of c-r model (eg CJS, Burnham, Barker) }
   \item{title}{ Optional title for the MARK analysis output}
   \item{model.parameters}{ List of model parameter specifications }
-  \item{covariates}{ Vector of covariate names used in added components that are not specified in formulae }
   \item{initial}{ Optional vector of named or unnamed initial values for beta parameters or previously run model object}
   \item{design.parameters}{Specification of any grouping variables for design data for each parameter}
   \item{right}{if TRUE, any intervals created in design.parameters are closed on the right and open on left and vice-versa if FALSE}
@@ -119,7 +117,7 @@ For descriptions of  the arguments \code{data}, \code{begin.time}, \code{groups}
 
 For descriptions of \code{ddl}, \code{design.parameters}=\code{parameters}, and \code{right}, see \code{\link{make.design.data}}.
 
-For descriptions of \code{model.name} , \code{model}, \code{title},\code{model.parameters}=\code{parameters}, \code{covariates},
+For descriptions of \code{model.name} , \code{model}, \code{title},\code{model.parameters}=\code{parameters},
 \code{simplify} , \code{default.fixed} , \code{initial}, \code{options}, see \code{\link{make.mark.model}}.
 
 And finally, for descriptions of arguments \code{invisible}, \code{filename} and \code{adjust},see \code{\link{run.mark.model}}.

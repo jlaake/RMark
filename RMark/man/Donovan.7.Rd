@@ -1,43 +1,38 @@
+\docType{data}
 \name{Donovan.7}
 \alias{Donovan.7}
-\docType{data}
 \title{Exercise 7 example data}
+\format{A data frame with 20 observations (sites) on the following 2
+variables.  \describe{ \item{ch}{a character vector containing the presence
+(1) and absence (0) for each of 5 visits to the site} \item{freq}{frequency
+of sites (always 1)} }}
 \description{
-An example occupancy data set used as exercise 7 in the occupancy website developed
-by Donovan and Hines.
-}
-\usage{data(Donovan.7)}
-\format{
-  A data frame with 20 observations (sites) on the following 2 variables.
-  \describe{
-    \item{ch}{a character vector containing the presence (1) and absence (0) for each of 5 visits to the site}
-    \item{freq}{frequency of sites (always 1)}
-  }
+  An example occupancy data set used as exercise 7 in the
+  occupancy website developed by Donovan and Hines.
 }
 \details{
-This is a data set from exercise 7 of Donovan and Hines occupancy web site
-(\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
+  This is a data set from exercise 7 of Donovan and Hines
+  occupancy web site
+  (\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
 }
-
 \examples{
 # Donovan.7 can be created with
 # Donovan.7=convert.inp("Donovan.7.inp")
 
 do.exercise.7=function()
 {
-  data(Donovan.7)
+data(Donovan.7)
 # Estimates from following agree with estimates on website but the
 # log-likelihood values do not agree.  Maybe a difference in whether the
 # constant binomial coefficients are included.
-  Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE)
+Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE)
 # THe following model was not in exercise 7.
-  Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE)
-  return(collect.models())
+Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE)
+return(collect.models())
 }
 exercise.7=do.exercise.7()
 # Remove # to see output
 # print(exercise.7)
-
-
 }
 \keyword{datasets}
+

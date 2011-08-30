@@ -1,24 +1,26 @@
+\docType{data}
 \name{mstrata}
 \alias{mstrata}
-\docType{data}
-\title{ Multistrata example data}
+\title{Multistrata example data}
+\format{A data frame with 255 observations on the following 2 variables.
+\describe{ \item{ch}{a character vector containing the encounter history of
+each bird with strata} \item{freq}{the number of birds with that capture
+history} }}
 \description{
-An example data set which appears to be simulated data that accompanies MARK as an example analysis using the Multistrata model.
-}
-\usage{data(mstrata)}
-\format{
-  A data frame with 255 observations on the following 2 variables.
-  \describe{
-    \item{ch}{a character vector containing the encounter history of each bird with strata}
-    \item{freq}{the number of birds with that capture history}
-  }
+  An example data set which appears to be simulated data
+  that accompanies MARK as an example analysis using the
+  Multistrata model.
 }
 \details{
-This is a data set that accompanies program MARK as an example for the Multistrata model.
-The models created by RMark are all "Parm-specific" models by default. The sin link is not
-allowed because all models are specified via the design matrix. Although you can set
-links for the parameters, usually the default values are preferable.  See \code{\link{make.mark.model}}
-for additional help building formula for Psi using the remove.intercept argument.
+  This is a data set that accompanies program MARK as an
+  example for the Multistrata model. The models created by
+  RMark are all "Parm-specific" models by default. The sin
+  link is not allowed because all models are specified via
+  the design matrix. Although you can set links for the
+  parameters, usually the default values are preferable.
+  See \code{\link{make.mark.model}} for additional help
+  building formula for Psi using the remove.intercept
+  argument.
 }
 \examples{
 data(mstrata)
@@ -65,7 +67,7 @@ model.list=create.model.list("Multistrata")
 p.stratumxtime=list(formula=~stratum*time)
 p.stratumxtime.fixed=list(formula=~stratum*time,fixed=list(time=4,value=1))
 model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
-  Psi="Psi.sxtime"))
+Psi="Psi.sxtime"))
 model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
 #
 # Run the list of models
@@ -91,3 +93,4 @@ TransitionMatrix(Psivalues[Psivalues$time==1,])
 TransitionMatrix(Psivalues.rev[Psivalues.rev$occ==1,])
 }
 \keyword{datasets}
+

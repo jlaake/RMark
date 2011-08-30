@@ -1,3 +1,23 @@
+#' Merge mark model objects and lists of mark model objects
+#' 
+#' Merge an unspecified number of marklist and mark model objects into a single
+#' marklist with an optional table of model results if \code{table=TRUE}.
+#' 
+#' 
+#' @param ...  an unspecified number of marklist and/or mark model objects
+#' @param table if TRUE, a table of model results is also included in the
+#' returned list
+#' @return model.list: a list of \code{mark} models and optionally a table of
+#' model results.
+#' @author Jeff Laake
+#' @export
+#' @seealso
+#' \code{\link{collect.models}},\code{\link{remove.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
+#' @keywords utility
+#' @examples
+#' 
+#' # see example in dipper
+#' 
 merge.mark=function(...,table=TRUE)
 {
 #

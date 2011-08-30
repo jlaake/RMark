@@ -1,74 +1,115 @@
 \name{covariate.predictions}
 \alias{covariate.predictions}
 \title{Compute estimates of real parameters for multiple covariate values}
-\description{Computes real estimates for a dataframe of covariate values and the var-cov
-matrix of the real estimates.}
-\usage{
-covariate.predictions(model,data=NULL,indices=NULL,drop=TRUE)
-}
 \arguments{
   \item{model}{MARK model object or marklist}
-  \item{data}{dataframe with covariate values used for estimates; if it contains a field
-              called index the covariates in each row are only applied to the parameter
-              with that index and the argument indices is not needed}
-  \item{indices}{a vector of indices from the all-different PIM structure for parameters to be computed}
-  \item{drop}{if TRUE, models with any non-positive variance for betas are dropped}
-}
-\details{
-This function has a similar use as \code{\link{compute.real}} except that it is specifically designed to
-compute real parameter estimates for multiple covariate values for either a single model or to compute model
-averaged estimates across a range of models within a marklist. This is particularly useful for computing and
-plotting the real parameter as a function of the covariate with pointwise confidence bands (see example below).
-The function also computes a variance-covariance matrix for the real parameters.  For example, assume you
-had a model with two age classes of young and adult and survial for young was a function of weight
-and you wanted to estimate survivorship to some adult age as a function of weight.  To do that you
-need the survival for young as a function of weight, the adult survival, the variance
-of each and their covariance.  This function will allow you to accomplish tasks like these and many others.
 
-When a variance-covariance matrix is computed for the real parameters, it can get too large for available
-memory for a large set of real parameters. Most models contain many possible real parameters to accomodate
-the general structure even if there are very few unique ones. It is necessary to use the most general
-structure to accomodate model averaging.  Most of the time you will only want to compute the values
-of a limited set of real parameters but possibly for a range of covariate values.  Use the argument
-\code{indices} to select the real parameters to be computed.  The index is the value that the real parameter
-has been assigned with the all-different PIM structure. If you looked at the row numbers in the design
-data for the \code{\link{dipper}} example, you would see that the parameter for p and Phi are both numbered
-1 to 21.  But to deal with multiple parameters effectively they are given a unique number in a specific
-order.  For the CJS model, p follows Phi, so for the dipper example, Phi are numbered 1 to 21 and then
-p are numbered 22 to 42. You can use the function \code{\link{PIMS}} to lookup the parameter numbers for a
-parameter type if you use \code{simplified=FALSE}. For example, with the \code{\link{dipper}} data, you
-could enter \code{PIMS(dipper.model,"p",simplified=FALSE)} and you would see that they are numbered 22 to 42.
-Alternatively, you can use \code{\link{summary.mark}} with the argument \code{se=TRUE} to see the list of
-indices named \code{all.diff.index}.  They are included in a dataframe for each model parameter which enables
-them to be selected based on the attached data values (e.g., time, group etc).  For example, if you fitted
-a model called \code{dipper.model} then you could use \code{summary(dipper.model,se=TRUE)$real} to list the
-indices for each parameter.
+  \item{data}{dataframe with covariate values used for
+  estimates; if it contains a field called index the
+  covariates in each row are only applied to the parameter
+  with that index and the argument indices is not needed}
 
-The argument \code{data} is a dataframe containing values for the covariates used in the models.  The names
-for the fields should match the names of the covariates used in the model.  If a time-varying covariate is
-used then you need to specify the covariate name with the time index included as it is specified in the data.
-You do not need to specify all covariates that were used.  If a covariate in one or more models is not included in
-\code{data} then the mean value will be used for each missing covariate.  That can be very useful when you
-are only interested in prediction for one type of parameters (eg Phi) when there are many covariates that
-are not interesting in another parameter (e.g., p).  For each row in \code{data}, each parameter specified in
-\code{indices} is computed with those covariate values.  So if there were 5 rows in data and 10 parameters
-were specified there would be 10 sets of 5 (50) estimates produced.  If you do not want the full
-pairing of data and estimates, create a field called \code{index} in \code{data} and the estimate for
-that parameter will be computed with those specific values.  For example, if you wanted parameter 1 to
-be computed with 5 different values of a covariate and then parameter 7 with 2 different covariate values, you
-could create a dataframe with 5 rows each having an \code{index} with the value 1 along with the relevant
-covariate data and an additional 2 rows with the \code{index} with the value 7.  If you include the field
-\code{index} in \code{data} then you do not need to give a value for the argument \code{indices}.
+  \item{indices}{a vector of indices from the all-different
+  PIM structure for parameters to be computed}
 
+  \item{drop}{if TRUE, models with any non-positive
+  variance for betas are dropped}
 }
 \value{
-A list is returned containing a dataframe of estimates and and a var-cov matrix:
-  \item{estimates}{ data frame containing estimates, se, confidence interval and the
-    data values used to compute the estimates}
+  A list is returned containing a dataframe of estimates
+  and and a var-cov matrix: \item{estimates}{ data frame
+  containing estimates, se, confidence interval and the
+  data values used to compute the estimates}
   \item{vcv}{variance-covariance matrix of real estimates}
 }
-\author{Jeff Laake}
-\seealso{\code{\link{compute.real}},\code{\link{model.average}}  }
+\description{
+  Computes real estimates for a dataframe of covariate
+  values and the var-cov matrix of the real estimates.
+}
+\details{
+  This function has a similar use as
+  \code{\link{compute.real}} except that it is specifically
+  designed to compute real parameter estimates for multiple
+  covariate values for either a single model or to compute
+  model averaged estimates across a range of models within
+  a marklist. This is particularly useful for computing and
+  plotting the real parameter as a function of the
+  covariate with pointwise confidence bands (see example
+  below). The function also computes a variance-covariance
+  matrix for the real parameters.  For example, assume you
+  had a model with two age classes of young and adult and
+  survial for young was a function of weight and you wanted
+  to estimate survivorship to some adult age as a function
+  of weight.  To do that you need the survival for young as
+  a function of weight, the adult survival, the variance of
+  each and their covariance.  This function will allow you
+  to accomplish tasks like these and many others.
+
+  When a variance-covariance matrix is computed for the
+  real parameters, it can get too large for available
+  memory for a large set of real parameters. Most models
+  contain many possible real parameters to accomodate the
+  general structure even if there are very few unique ones.
+  It is necessary to use the most general structure to
+  accomodate model averaging.  Most of the time you will
+  only want to compute the values of a limited set of real
+  parameters but possibly for a range of covariate values.
+  Use the argument \code{indices} to select the real
+  parameters to be computed.  The index is the value that
+  the real parameter has been assigned with the
+  all-different PIM structure. If you looked at the row
+  numbers in the design data for the \code{\link{dipper}}
+  example, you would see that the parameter for p and Phi
+  are both numbered 1 to 21.  But to deal with multiple
+  parameters effectively they are given a unique number in
+  a specific order.  For the CJS model, p follows Phi, so
+  for the dipper example, Phi are numbered 1 to 21 and then
+  p are numbered 22 to 42. You can use the function
+  \code{\link{PIMS}} to lookup the parameter numbers for a
+  parameter type if you use \code{simplified=FALSE}. For
+  example, with the \code{\link{dipper}} data, you could
+  enter \code{PIMS(dipper.model,"p",simplified=FALSE)} and
+  you would see that they are numbered 22 to 42.
+  Alternatively, you can use \code{\link{summary.mark}}
+  with the argument \code{se=TRUE} to see the list of
+  indices named \code{all.diff.index}.  They are included
+  in a dataframe for each model parameter which enables
+  them to be selected based on the attached data values
+  (e.g., time, group etc).  For example, if you fitted a
+  model called \code{dipper.model} then you could use
+  \code{summary(dipper.model,se=TRUE)$real} to list the
+  indices for each parameter.
+
+  The argument \code{data} is a dataframe containing values
+  for the covariates used in the models.  The names for the
+  fields should match the names of the covariates used in
+  the model.  If a time-varying covariate is used then you
+  need to specify the covariate name with the time index
+  included as it is specified in the data. You do not need
+  to specify all covariates that were used.  If a covariate
+  in one or more models is not included in \code{data} then
+  the mean value will be used for each missing covariate.
+  That can be very useful when you are only interested in
+  prediction for one type of parameters (eg Phi) when there
+  are many covariates that are not interesting in another
+  parameter (e.g., p).  For each row in \code{data}, each
+  parameter specified in \code{indices} is computed with
+  those covariate values.  So if there were 5 rows in data
+  and 10 parameters were specified there would be 10 sets
+  of 5 (50) estimates produced.  If you do not want the
+  full pairing of data and estimates, create a field called
+  \code{index} in \code{data} and the estimate for that
+  parameter will be computed with those specific values.
+  For example, if you wanted parameter 1 to be computed
+  with 5 different values of a covariate and then parameter
+  7 with 2 different covariate values, you could create a
+  dataframe with 5 rows each having an \code{index} with
+  the value 1 along with the relevant covariate data and an
+  additional 2 rows with the \code{index} with the value 7.
+  If you include the field \code{index} in \code{data} then
+  you do not need to give a value for the argument
+  \code{indices}.
+}
 \examples{
 #
 # indcov1.R
@@ -76,142 +117,142 @@ A list is returned containing a dataframe of estimates and and a var-cov matrix:
 # CJS analysis of the individual covariate data from 12.2 of
 # Cooch and White
 #
-# Import data (indcov1.inp) and convert it from the MARK inp file 
-# format to the RMark format using the function convert.inp  
-# It is defined with 1 group but 2 individual covariates of mass and 
+# Import data (indcov1.inp) and convert it from the MARK inp file
+# format to the RMark format using the function convert.inp
+# It is defined with 1 group but 2 individual covariates of mass and
 # squared.mass
 #
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 indcov1=convert.inp(paste(pathtodata,"indcov1",sep="/"),
-               covariates=c("mass","squared.mass"))
+covariates=c("mass","squared.mass"))
 #
 # Next create the processed dataframe and the design data.
 #
-  ind1.process=process.data(indcov1,model="CJS")
-  ind1.ddl=make.design.data(ind1.process)
+ind1.process=process.data(indcov1,model="CJS")
+ind1.ddl=make.design.data(ind1.process)
 #
 # Next create the function that defines and runs the set of models
-# and returns a marklist with the results and a model.table.  
-# It does not have any arguments but does use the ind1.process 
-# and ind1.ddl objects created above in the workspace. The function 
+# and returns a marklist with the results and a model.table.
+# It does not have any arguments but does use the ind1.process
+# and ind1.ddl objects created above in the workspace. The function
 # create.model.list is the function that creates a dataframe of the
-# names of the parameter specifications for each parameter in that 
+# names of the parameter specifications for each parameter in that
 # type of model. If none are given for any parameter, the default
-# specification will be used for that parameter in mark.  The 
-# first argument of mark.wrapper is the model list of parameter 
+# specification will be used for that parameter in mark.  The
+# first argument of mark.wrapper is the model list of parameter
 # specifications.  Remaining arguments that are passed to
-# mark must be specified using the argument=value specification 
-# because the arguments of mark were not repeated in mark.wrapper 
+# mark must be specified using the argument=value specification
+# because the arguments of mark were not repeated in mark.wrapper
 # so they must be passed using the argument=value syntax.
 #
 ind1.models=function()
 {
-  Phi.dot=list(formula=~1)
-  Phi.mass=list(formula=~mass)
-  Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
-  p.dot=list(formula=~1)
-  cml=create.model.list("CJS")
-  results=mark.wrapper(cml,data=ind1.process,ddl=ind1.ddl,adjust=FALSE)
-  return(results)
+Phi.dot=list(formula=~1)
+Phi.mass=list(formula=~mass)
+Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
+p.dot=list(formula=~1)
+cml=create.model.list("CJS")
+results=mark.wrapper(cml,data=ind1.process,ddl=ind1.ddl,adjust=FALSE)
+return(results)
 }
 #
 # Next run the function to create the models and store the results in
 # ind1.results which is a marklist. Note that beta estimates will differ
-# from Cooch and White results because we are using covariate values 
+# from Cooch and White results because we are using covariate values
 # directly rather than standardized values.
 #
 ind1.results=ind1.models()
 #
-# Next compute real parameter values for survival as a function of 
+# Next compute real parameter values for survival as a function of
 # mass which are model-averaged over the fitted models.
 #
 minmass=min(indcov1$mass)
 maxmass=max(indcov1$mass)
 mass.values=minmass+(0:30)*(maxmass-minmass)/30
 Phibymass=covariate.predictions(ind1.results,
-   data=data.frame(mass=mass.values,squared.mass=mass.values^2),
-    indices=c(1))
+data=data.frame(mass=mass.values,squared.mass=mass.values^2),
+indices=c(1))
 #
-# Plot predicted model averaged estimates by weight with pointwise 
+# Plot predicted model averaged estimates by weight with pointwise
 # confidence intervals
 #
 plot(Phibymass$estimates$mass, Phibymass$estimates$estimate,
-   type="l",lwd=2,xlab="Mass(kg)",ylab="Survival",ylim=c(0,.65))
+type="l",lwd=2,xlab="Mass(kg)",ylab="Survival",ylim=c(0,.65))
 lines(Phibymass$estimates$mass, Phibymass$estimates$lcl,lty=2)
 lines(Phibymass$estimates$mass, Phibymass$estimates$ucl,lty=2)
 
 # indcov2.R
 #
-# CJS analysis of the individual covariate data from 12.3 of 
+# CJS analysis of the individual covariate data from 12.3 of
 # Cooch and White
 #
-# Import data (indcov2.inp) and convert it from the MARK inp file 
+# Import data (indcov2.inp) and convert it from the MARK inp file
 # format to the RMark format using the function convert.inp  It is
-# defined with 1 group but 2 individual covariates of mass and 
+# defined with 1 group but 2 individual covariates of mass and
 # squared.mass
 #
 indcov2=convert.inp(paste(pathtodata,"indcov2",sep="/"),
-        covariates=c("mass","squared.mass"))
+covariates=c("mass","squared.mass"))
 #
 # Standardize covariates
 #
 actual.mass=indcov2$mass
 standardize=function(x,z=NULL)
 {
-   if(is.null(z))
-   {
-       return((x-mean(x))/sqrt(var(x)))
-   }else 
-   {
-      return((x-mean(z))/sqrt(var(z)))
-   }
+if(is.null(z))
+{
+return((x-mean(x))/sqrt(var(x)))
+}else
+{
+return((x-mean(z))/sqrt(var(z)))
+}
 }
 indcov2$mass=standardize(indcov2$mass)
 indcov2$squared.mass=standardize(indcov2$squared.mass)
 #
 # Next create the processed dataframe and the design data.
 #
-  ind2.process=process.data(indcov2,model="CJS")
-  ind2.ddl=make.design.data(ind2.process)
+ind2.process=process.data(indcov2,model="CJS")
+ind2.ddl=make.design.data(ind2.process)
 #
-# Next create the function that defines and runs the set of models and 
+# Next create the function that defines and runs the set of models and
 # returns a marklist with the results and a model.table.  It does not
-# have any arguments but does use the ind1.process and ind1.ddl 
-# objects created above in the workspace. The function create.model.list 
+# have any arguments but does use the ind1.process and ind1.ddl
+# objects created above in the workspace. The function create.model.list
 # is the function that creates a dataframe of the names of the parameter
-# specifications for each parameter in that type of model. If none are 
+# specifications for each parameter in that type of model. If none are
 # given for any parameter, the default specification will be used for
 # that parameter in mark.  The first argument of mark.wrapper is the
 # model list of parameter specifications.  Remaining arguments that are
-# passed to mark must be specified using the argument=value specification 
-# because the arguments of mark were not repeated in mark.wrapper so 
+# passed to mark must be specified using the argument=value specification
+# because the arguments of mark were not repeated in mark.wrapper so
 # they must be passed using the argument=value syntax.
 #
 ind2.models=function()
 {
-  Phi.dot=list(formula=~1)
-  Phi.time=list(formula=~time)
-  Phi.mass=list(formula=~mass)
-  Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
-  Phi.time.x.mass.plus.mass.squared=
-        list(formula=~time:mass + time:squared.mass)
-  Phi.time.mass.plus.mass.squared=
-     list(formula=~time*mass + squared.mass+ time:squared.mass)
-  p.dot=list(formula=~1)
-  cml=create.model.list("CJS")
-  results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE)
-  return(results)
+Phi.dot=list(formula=~1)
+Phi.time=list(formula=~time)
+Phi.mass=list(formula=~mass)
+Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
+Phi.time.x.mass.plus.mass.squared=
+list(formula=~time:mass + time:squared.mass)
+Phi.time.mass.plus.mass.squared=
+list(formula=~time*mass + squared.mass+ time:squared.mass)
+p.dot=list(formula=~1)
+cml=create.model.list("CJS")
+results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE)
+return(results)
 }
 #
 # Next run the function to create the models and store the results in
 # ind2.results which is a marklist. Note that beta estimates will differ
-# because we are using covariate values directly rather than 
+# because we are using covariate values directly rather than
 # standardized values.
 #
 ind2.results=ind2.models()
 #
-# Next compute real parameter values for survival as a function of 
-# mass which are model-averaged over the fitted models. They are 
+# Next compute real parameter values for survival as a function of
+# mass which are model-averaged over the fitted models. They are
 # standardized individually so the values have to be chosen differently.
 #
 minmass=min(actual.mass)
@@ -221,22 +262,28 @@ squared.mass.values=mass.values^2
 mass.values=standardize(mass.values,actual.mass)
 squared.mass.values=standardize(squared.mass.values,actual.mass^2)
 Phibymass=covariate.predictions(ind2.results,
- data=data.frame(mass=mass.values,squared.mass=squared.mass.values),
-  indices=c(1:7))
+data=data.frame(mass=mass.values,squared.mass=squared.mass.values),
+indices=c(1:7))
 #
-# Plot predicted model averaged estimates by weight with pointwise 
+# Plot predicted model averaged estimates by weight with pointwise
 # confidence intervals
 #
 par(mfrow=c(4,2))
 for (i in 1:7)
 {
-   mass=minmass+(0:30)*(maxmass-minmass)/30
-   x=Phibymass$estimates
-   plot(mass,x$estimate[x$par.index==i],type="l",lwd=2,
-    xlab="Mass(kg)",ylab="Survival",ylim=c(0,1),main=paste("Time",i))
-   lines(mass, x$lcl[x$par.index==i],lty=2)
-   lines(mass, x$ucl[x$par.index==i],lty=2)
+mass=minmass+(0:30)*(maxmass-minmass)/30
+x=Phibymass$estimates
+plot(mass,x$estimate[x$par.index==i],type="l",lwd=2,
+xlab="Mass(kg)",ylab="Survival",ylim=c(0,1),main=paste("Time",i))
+lines(mass, x$lcl[x$par.index==i],lty=2)
+lines(mass, x$ucl[x$par.index==i],lty=2)
 }
-
+}
+\author{
+  Jeff Laake
+}
+\seealso{
+  \code{\link{compute.real}},\code{\link{model.average}}
 }
 \keyword{utility}
+

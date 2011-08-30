@@ -1,23 +1,30 @@
 \name{TransitionMatrix}
 \alias{TransitionMatrix}
-\title{Creates a transition matrix of movement parameters for a multi-state(strata) model}
-\description{Computes all Psi values for a multi-strata mark model and constructs a
-transition matrix.  Standard errors and confidence intervals can also be obtained. }
+\title{Creates a transition matrix of movement parameters for a multi-state(strata)
+model}
 \usage{
-TransitionMatrix(x, vcv.real=NULL)
+  TransitionMatrix(x, vcv.real = NULL)
 }
 \arguments{
-  \item{x}{Estimate table from \code{\link{get.real}} with a single record for each possible transition}
-  \item{vcv.real}{optional variance-covariance matrix from the call to \code{\link{get.real}}}
+  \item{x}{Estimate table from \code{\link{get.real}} with
+  a single record for each possible transition}
+
+  \item{vcv.real}{optional variance-covariance matrix from
+  the call to \code{\link{get.real}}}
 }
 \value{
-Either a transition matrix (vcv.real=NULL) or a list of matrices (vcv.real specified) named
-TransitionMat (transition matrix), se.TransitionMat (se of each transition),
-lcl.TransitionMat (lower confidence interval limit for each transition), and
-ucl.TransitionMat (upper confidence interval limit for each transition).
+  Either a transition matrix (vcv.real=NULL) or a list of
+  matrices (vcv.real specified) named TransitionMat
+  (transition matrix), se.TransitionMat (se of each
+  transition), lcl.TransitionMat (lower confidence interval
+  limit for each transition), and ucl.TransitionMat (upper
+  confidence interval limit for each transition).
 }
-\author{Jeff Laake}
-\seealso{\code{\link{get.real}}}
+\description{
+  Computes all Psi values for a multi-strata mark model and
+  constructs a transition matrix.  Standard errors and
+  confidence intervals can also be obtained.
+}
 \examples{
 # fit the sequence of multistrata models as shown for ?mstrata
 data(mstrata)
@@ -64,7 +71,7 @@ model.list=create.model.list("Multistrata")
 p.stratumxtime=list(formula=~stratum*time)
 p.stratumxtime.fixed=list(formula=~stratum*time,fixed=list(time=4,value=1))
 model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
-               Psi="Psi.sxtime"))
+Psi="Psi.sxtime"))
 model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
 #
 # Run the list of models
@@ -88,4 +95,11 @@ TransitionMatrix(Psivalues[Psivalues$time==1,])
 # call it again but specify the vc matrix to get se and conf interval
 TransitionMatrix(Psivalues[Psivalues$time==1,],vcv.real=Psilist$vcv.real)
 }
+\author{
+  Jeff Laake
+}
+\seealso{
+  \code{\link{get.real}}
+}
 \keyword{utility}
+

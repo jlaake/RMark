@@ -1,43 +1,40 @@
+\docType{data}
 \name{Donovan.8}
 \alias{Donovan.8}
-\docType{data}
 \title{Exercise 8 example data}
+\format{A data frame with 20 observations (sites) on the following 2
+variables.  \describe{ \item{ch}{a character vector containing the counts
+for each of 5 visits to the site} \item{freq}{frequency of sites (always 1)}
+}}
 \description{
-An example occupancy data set used as exercise 8 in the occupancy website developed
-by Donovan and Hines.
-}
-\usage{data(Donovan.8)}
-\format{
-  A data frame with 20 observations (sites) on the following 2 variables.
-  \describe{
-    \item{ch}{a character vector containing the counts for each of 5 visits to the site}
-    \item{freq}{frequency of sites (always 1)}
-  }
+  An example occupancy data set used as exercise 8 in the
+  occupancy website developed by Donovan and Hines.
 }
 \details{
-This is a data set from exercise 8 of Donovan and Hines occupancy web site
-(\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
-In MARK, it uses 2 digits to allow a count of 0 to 99 at each site, so the history
-has 10 digits for 5 visits (occasions).
+  This is a data set from exercise 8 of Donovan and Hines
+  occupancy web site
+  (\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
+  In MARK, it uses 2 digits to allow a count of 0 to 99 at
+  each site, so the history has 10 digits for 5 visits
+  (occasions).
 }
-
 \examples{
 # Donovan.8 can be created with
 # Donovan.8=convert.inp("Donovan.8.inp")
 do.exercise.8=function()
 {
-  data(Donovan.8)
+data(Donovan.8)
 # Results agree with the values on the website.
-  Donovan.8.poisson=mark(Donovan.8,model="OccupRPoisson",invisible=FALSE)
-# The following model was not in exercise 8. The NegBin model does 
+Donovan.8.poisson=mark(Donovan.8,model="OccupRPoisson",invisible=FALSE)
+# The following model was not in exercise 8. The NegBin model does
 # better if it is initialized with the r and lambda from the poisson.
-  Donovan.8.negbin=mark(Donovan.8,model="OccupRNegBin",
-    initial=Donovan.8.poisson,invisible=FALSE)
-  return(collect.models())
+Donovan.8.negbin=mark(Donovan.8,model="OccupRNegBin",
+initial=Donovan.8.poisson,invisible=FALSE)
+return(collect.models())
 }
 exercise.8=do.exercise.8()
 # Remove # to see output
 # print(exercise.8)
-
 }
 \keyword{datasets}
+

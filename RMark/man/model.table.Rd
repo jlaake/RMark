@@ -1,50 +1,69 @@
 \name{model.table}
 \alias{model.table}
 \title{Create table of MARK model selection results}
-\description{
-Constructs a table of model selection results for MARK analyses. The table includes the formulas, model name, number of parameters,
-deviance, AICc, DeltaAICc, model weight and residual deviance.  If chat>1 QAICc, QDeltaAICc and QDeviance 
-are used instead.
-}
-\usage{
-model.table(model.list=NULL,type=NULL,sort=TRUE,adjust=TRUE,ignore=TRUE,
-               pf=1,use.lnl=FALSE,use.AIC=FALSE,model.name=TRUE)
-}
 \arguments{
-  \item{model.list}{ a vector of model names or a list created by the function \code{\link{collect.models}} which has 
-   each model object and at the end a \code{model.table} ; If nothing is specified then any mark object
-   in the workspace is collected for the table.  If \code{type} is specified all analyses in parent frame(\code{pf}) of that \code{type}
-   of model are used. If specified set of models are of conflicting types or of different data sets then an error is issued unless ignore=TRUE}
-  \item{type}{type of model (eg "CJS")}
-  \item{sort}{if true sorts models by criterion}
-  \item{adjust}{if TRUE adjusts # of parameters to # of cols in design matrix}
-  \item{ignore}{if TRUE collects all models and ignores that they are from different models}
-  \item{pf}{parent frame value; default=1 so it looks in calling frame of model.table; used in other functions
-            with pf=2 when functions are nested two-deep}
-  \item{use.lnl}{display -2lnl instead of deviance}
-  \item{use.AIC}{use AIC instead of AICc}
-  \item{model.name}{if TRUE uses the model.name in each mark object which uses formula notation.
-                 If FALSE it uses the R names for the model obtained from collect.model.names
-                 or names assigned to marklist elements}
+  \item{model.list}{a vector of model names or a list
+  created by the function \code{\link{collect.models}}
+  which has each model object and at the end a
+  \code{model.table} ; If nothing is specified then any
+  mark object in the workspace is collected for the table.
+  If \code{type} is specified all analyses in parent
+  frame(\code{pf}) of that \code{type} of model are used.
+  If specified set of models are of conflicting types or of
+  different data sets then an error is issued unless
+  ignore=TRUE}
 
-}
-\details{
-This function is used by \code{\link{collect.models}} to construct a table of model selection results with
-the models that it collects; however it can be called directly to construct the table.
+  \item{type}{type of model (eg "CJS")}
+
+  \item{sort}{if true sorts models by criterion}
+
+  \item{adjust}{if TRUE adjusts # of parameters to # of
+  cols in design matrix}
+
+  \item{ignore}{if TRUE collects all models and ignores
+  that they are from different models}
+
+  \item{pf}{parent frame value; default=1 so it looks in
+  calling frame of model.table; used in other functions
+  with pf=2 when functions are nested two-deep}
+
+  \item{use.lnl}{display -2lnl instead of deviance}
+
+  \item{use.AIC}{use AIC instead of AICc}
+
+  \item{model.name}{if TRUE uses the model.name in each
+  mark object which uses formula notation.  If FALSE it
+  uses the R names for the model obtained from
+  collect.model.names or names assigned to marklist
+  elements}
 }
 \value{
-result.table - dataframe containing summary of models
+  result.table - dataframe containing summary of models
   \item{model.name}{name of fitted model}
-  \item{parameter.name - an entry for each parameter}{formula for parameter}
-  \item{npar}{number of estimated parameters}
-  \item{AICc or QAICc}{AICc value or QAICc if chat>1}
-  \item{DeltaAICc or DeltaQAICc}{difference between AICc or QAICc value from model with smallest value}
-  \item{weight}{model weight based on exp(-.5*DeltaAICc) or exp(-.5*QDeltaAICc)}
-  \item{Deviance or QDeviance}{residual deviance from saturated model}
-  \item{chat}{overdispersion constant if not 1}
+  \item{parameter.name - an entry for each
+  parameter}{formula for parameter} \item{npar}{number of
+  estimated parameters} \item{AICc or QAICc}{AICc value or
+  QAICc if chat>1} \item{DeltaAICc or
+  DeltaQAICc}{difference between AICc or QAICc value from
+  model with smallest value} \item{weight}{model weight
+  based on exp(-.5*DeltaAICc) or exp(-.5*QDeltaAICc)}
+  \item{Deviance or QDeviance}{residual deviance from
+  saturated model} \item{chat}{overdispersion constant if
+  not 1}
 }
-\author{Jeff Laake}
-\seealso{ \code{\link{collect.model.names}}, \code{\link{collect.models}} }
+\description{
+  Constructs a table of model selection results for MARK
+  analyses. The table includes the formulas, model name,
+  number of parameters, deviance, AICc, DeltaAICc, model
+  weight and residual deviance.  If chat>1 QAICc,
+  QDeltaAICc and QDeviance are used instead.
+}
+\details{
+  This function is used by \code{\link{collect.models}} to
+  construct a table of model selection results with the
+  models that it collects; however it can be called
+  directly to construct the table.
+}
 \examples{
 data(dipper)
 run.dipper=function()
@@ -97,14 +116,22 @@ dipper.results
 # Compute matrices of model weights, number of parameters and Delta AICc values
 #
 model.weight.matrix=tapply(dipper.results$model.table$weight,
- list(dipper.results$model.table$Phi,dipper.results$model.table$p),mean)
+list(dipper.results$model.table$Phi,dipper.results$model.table$p),mean)
 model.npar.matrix=tapply(dipper.results$model.table$npar,
- list(dipper.results$model.table$Phi,dipper.results$model.table$p),mean)
+list(dipper.results$model.table$Phi,dipper.results$model.table$p),mean)
 model.DeltaAICc.matrix=tapply(dipper.results$model.table$DeltaAICc,
- list(dipper.results$model.table$p,dipper.results$model.table$Phi),mean)
+list(dipper.results$model.table$p,dipper.results$model.table$Phi),mean)
 #
-# Output DeltaAICc as a tab-delimited text file that can be read into Excel 
+# Output DeltaAICc as a tab-delimited text file that can be read into Excel
 # (to do that directly use RODBC or xlsreadwrite package for R)
 #
-write.table(model.DeltaAICc.matrix,"DipperDeltaAICc.txt",sep="\t")
+write.table(model.DeltaAICc.matrix,"DipperDeltaAICc.txt",sep="\\t")
 }
+\author{
+  Jeff Laake
+}
+\seealso{
+  \code{\link{collect.model.names}},
+  \code{\link{collect.models}}
+}
+

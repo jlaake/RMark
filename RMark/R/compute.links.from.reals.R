@@ -1,3 +1,37 @@
+#' Compute link values from real parameters
+#' 
+#' Computes link values from reals using 1-1 real to beta(=link)
+#' transformation. Also, creates a v-c matrix for the link values if vcv.real
+#' is specified.
+#' 
+#' It has 2 uses both related to model averaged estimates. Firstly, it is used
+#' to transform model averaged estimates so the normal confidence interval can
+#' be constructed on the link values and then back-transformed to real space.
+#' The second function is to enable parametric bootstrapping in which the error
+#' distbution is assumed to be multivariate normal for the link values. From a
+#' single model, the link values are easily constructed from the betas and
+#' design matrix so this function is not needed.  But for model averaging there
+#' is no equivalent because the real parameters are averaged over a variety of
+#' models with the same real parameter structure but differing design
+#' structures.  This function allows for link values and their var-cov matrix
+#' to be created from the model averaged real estimates.
+#' 
+#' @param x vector of real estimates to be converted to link values
+#' @param model MARK model object used only to obtain model structure/links
+#' etc.  If function is being called for model averaged estimates, then amy
+#' model in the model list used to construct the estimates is sufficient
+#' @param parm.indices index numbers from PIMS for rows in design
+#' matrix(non-simplified indices); x[parm.indices] are computed
+#' @param vcv.real v-c matrix for the real parameters
+#' @param use.mlogits logical; if FALSE then parameters with mlogit links are
+#' transformed with logit rather than mlogit for creating confidence intervals
+#' for each value
+#' @return A list with the estimates (link values) and the links that were
+#' used.  If vcv.real = TRUE, then the v-c matrix of the links is also
+#' returned.
+#' @author Jeff Laake
+#' @seealso \code{\link{model.average}}
+#' @keywords utility
 compute.links.from.reals=function(x,model,parm.indices=NULL,vcv.real=NULL,use.mlogits=TRUE)
 {
 #

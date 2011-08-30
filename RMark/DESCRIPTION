@@ -12,9 +12,10 @@ SystemRequirements: notepad.exe, mark.exe and rel_32.exe
     (see README.txt)
 Depends:
     R (>= 2.13.0),
-    msm,
-    nlme,
     plotrix
+Imports:
+    msm,
+    nlme
 LazyLoad: yes
 License: GPL version 2 or later
 Maintainer: Jeff Laake <Jeff.Laake@noaa.gov>
@@ -32,6 +33,7 @@ Collate:
     'convert.inp.r'
     'convert.link.to.real.r'
     'covariate.predictions.r'
+    'create.model.list.R'
     'deltamethod.r'
     'deriv.inverse.link.R'
     'export.chdata.R'
@@ -60,7 +62,6 @@ Collate:
     'popan.r'
     'print.mark.R'
     'print.summary.mark.R'
-    'process.ch.R'
     'process.data.R'
     'read.mark.binary.linux.R'
     'read.mark.binary.R'
@@ -80,3 +81,4 @@ Collate:
     'var.components.R'
     'var.components.reml.r'
     'zzz.R'
+    'RMark-package.R'

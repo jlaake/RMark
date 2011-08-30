@@ -1,31 +1,51 @@
 \name{compute.link}
 \alias{compute.link}
 \title{Compute estimates of link values}
-\description{Computes link values (design*beta) for real parameters, and var-cov from design matrix (design) and coefficients
-(beta)}
-\usage{
-compute.link(model, beta = NULL, design = NULL, data=NULL, 
-             parm.indices = NULL, vcv = TRUE)
-}
 \arguments{
   \item{model}{MARK model object}
+
   \item{beta}{Estimates of beta parameters}
-  \item{design}{numeric design matrix for MARK model with any covariate values filled in}
-  \item{data}{dataframe with covariate values that are averaged for estimates}
-  \item{parm.indices}{index numbers from PIMS for rows in design matrix to use}
-  \item{vcv}{logical; if TRUE, returns v-c matrix of link values}
-}
-\details{
-This function is very similar to \code{\link{compute.real}} except that it provides estimates of link values before they
-are transformed to real estimates using the inverse-link.  It is called by \code{\link{get.link}} to make calculations but
-can be called separately. The value is always a dataframe for the estimates and
-design data and optionally a variance-covariance matrix.  See \code{\link{get.real}} for further details about the
-arguments.
+
+  \item{design}{numeric design matrix for MARK model with
+  any covariate values filled in}
+
+  \item{data}{dataframe with covariate values that are
+  averaged for estimates}
+
+  \item{parm.indices}{index numbers from PIMS for rows in
+  design matrix to use}
+
+  \item{vcv}{logical; if TRUE, returns v-c matrix of link
+  values}
 }
 \value{
-estimates:  If \code{vcv=TRUE}, a list is returned with elements \code{vcv.link} and the dataframe \code{estimates}.
-If \code{vcv=FALSE}, only the estimates dataframe is returned which has the same structure as in \code{\link{get.real}}.
+  estimates: If \code{vcv=TRUE}, a list is returned with
+  elements \code{vcv.link} and the dataframe
+  \code{estimates}. If \code{vcv=FALSE}, only the estimates
+  dataframe is returned which has the same structure as in
+  \code{\link{get.real}}.
 }
-\author{Jeff Laake}
-\seealso{\code{\link{get.link}}}
+\description{
+  Computes link values (design*beta) for real parameters,
+  and var-cov from design matrix (design) and coefficients
+  (beta)
+}
+\details{
+  This function is very similar to
+  \code{\link{compute.real}} except that it provides
+  estimates of link values before they are transformed to
+  real estimates using the inverse-link.  It is called by
+  \code{\link{get.link}} to make calculations but can be
+  called separately. The value is always a dataframe for
+  the estimates and design data and optionally a
+  variance-covariance matrix.  See \code{\link{get.real}}
+  for further details about the arguments.
+}
+\author{
+  Jeff Laake
+}
+\seealso{
+  \code{\link{get.link}}
+}
 \keyword{utility}
+

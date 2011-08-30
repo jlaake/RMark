@@ -1,36 +1,51 @@
 \name{export.model}
 \alias{export.model}
 \title{Export output files for appending into MARK .dbf/.fpt format}
-\description{
-Creates renamed versions of the output,vcv and residual files so they can be appended into
-a MARK .dbf file.
-}
-\usage{
-export.model(model, replace = FALSE)
-}
 \arguments{
   \item{model}{a mark model object or marklist object}
-  \item{replace}{if file exists and replace=TRUE, file will be over-written}
+
+  \item{replace}{if file exists and replace=TRUE, file will
+  be over-written}
+}
+\value{
+  None
+}
+\description{
+  Creates renamed versions of the output,vcv and residual
+  files so they can be appended into a MARK .dbf file.
 }
 \details{
-If \code{model} is a marklist then it exports each model in the marklist.  The function
-simply copies the files with new names so the MARK interface will recognize them.
-The marknnn.out is copied as marknnnY.tmp, marknnn.res is copied as marknnnx.tmp and
-marknnn.vcv is copied as marknnnV.tmp.  You can create a MARK .dbf by using \code{\link{export.chdata}}
-to create an input file for MARK, opening MARK (MARKINT.EXE) to create a new .dbf with the input file,
-and then using the Output/Append to select the output file (marknnnY.tmp) to append the model with its files.
-Then you can use any facilities of MARK that are not already included in RMark.
+  If \code{model} is a marklist then it exports each model
+  in the marklist. The function simply copies the files
+  with new names so the MARK interface will recognize them.
+  The marknnn.out is copied as marknnnY.tmp, marknnn.res is
+  copied as marknnnx.tmp and marknnn.vcv is copied as
+  marknnnV.tmp.  You can create a MARK .dbf by using
+  \code{\link{export.chdata}} to create an input file for
+  MARK, opening MARK (MARKINT.EXE) to create a new .dbf
+  with the input file, and then using the Output/Append to
+  select the output file (marknnnY.tmp) to append the model
+  with its files. Then you can use any facilities of MARK
+  that are not already included in RMark.
 
-***Warning*** Make sure that you use the .inp created by \code{\link{export.chdata}} with your 
-processed data to create the MARK .dbf file rather than using a separate similar .inp file.  It is essential that the group structure
-and ordering of groups matches between the .inp file and the exported models or you can get erroneous results.
+  ***Warning*** Make sure that you use the .inp created by
+  \code{\link{export.chdata}} with your processed data to
+  create the MARK .dbf file rather than using a separate
+  similar .inp file.  It is essential that the group
+  structure and ordering of groups matches between the .inp
+  file and the exported models or you can get erroneous
+  results.
 }
-\value{ None}
-\author{Jeff Laake}
-\seealso{ \code{\link{export.chdata}}}
 \examples{
 data(dipper)
 mymodel=mark(dipper)
 export.model(mymodel)
 }
+\author{
+  Jeff Laake
+}
+\seealso{
+  \code{\link{export.chdata}}
+}
 \keyword{utility}
+

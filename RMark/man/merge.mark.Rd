@@ -1,23 +1,33 @@
 \name{merge.mark}
 \alias{merge.mark}
 \title{Merge mark model objects and lists of mark model objects}
-\description{Merge an unspecified number of marklist and mark model objects into a single marklist with
-an optional table of model results if \code{table=TRUE}.
-}
 \usage{
-\method{merge}{mark}(..., table = TRUE)
+  merge.mark(..., table = TRUE)
 }
 \arguments{
-  \item{...}{ an unspecified number of marklist and/or mark model objects}
-  \item{table}{ if TRUE, a table of model results is also included in the returned list}
+  \item{...}{an unspecified number of marklist and/or mark
+  model objects}
+
+  \item{table}{if TRUE, a table of model results is also
+  included in the returned list}
 }
 \value{
-model.list: a list of \code{mark} models and optionally a table of model results.  
+  model.list: a list of \code{mark} models and optionally a
+  table of model results.
 }
-\author{ Jeff Laake}
-
-\seealso{ \code{\link{collect.models}},\code{\link{remove.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}} }
+\description{
+  Merge an unspecified number of marklist and mark model
+  objects into a single marklist with an optional table of
+  model results if \code{table=TRUE}.
+}
 \examples{
 # see example in dipper
 }
-\keyword{ utility}
+\author{
+  Jeff Laake
+}
+\seealso{
+  \code{\link{collect.models}},\code{\link{remove.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
+}
+\keyword{utility}
+

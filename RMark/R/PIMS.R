@@ -1,4 +1,31 @@
 # Need to add labels as option
+
+
+#' Display PIM for a parameter
+#' 
+#' Extract PIMS for a particular parameter and display either the full PIM
+#' structure or the simplified PIM structure.
+#' 
+#' 
+#' @param model mark model object
+#' @param parameter character string of a particular type of parameter in the
+#' model (eg "p","Phi","pent","S")
+#' @param simplified if TRUE show simplified PIM structure; otherwise show full
+#' structure
+#' @param use.labels if TRUE, uses time and cohort labels for columns and rows
+#' respectively
+#' @return None
+#' @author Jeff Laake
+#' @export
+#' @seealso \code{\link{make.design.data}}
+#' @keywords utility
+#' @examples
+#' 
+#' data(dipper)
+#' results=mark(dipper)
+#' PIMS(results,"Phi")
+#' PIMS(results,"Phi",simplified=FALSE)
+#' 
 PIMS=function(model,parameter,simplified=TRUE,use.labels=TRUE)
 {
 #

@@ -1,34 +1,38 @@
+\docType{data}
 \name{robust}
 \alias{robust}
-\docType{data}
 \title{Robust design example data}
-\description{A robust design example data set that accompanies MARK as an example analysis using the various models for
-the robust design.
-}
-\usage{data(robust)}
-\format{
-  A data frame with 668 observations on the following 2 variables.
-  \describe{
-    \item{ch}{a character vector containing the encounter history }
-    \item{freq}{the number of critters with that capture history}
-  }
+\format{A data frame with 668 observations on the following 2 variables.
+\describe{ \item{ch}{a character vector containing the encounter history }
+\item{freq}{the number of critters with that capture history} }}
+\description{
+  A robust design example data set that accompanies MARK as
+  an example analysis using the various models for the
+  robust design.
 }
 \details{
-This is a data set that accompanies program MARK as an example for robust models. The data
-are entered with the summary format using the variable \code{freq} which represents the
-number of critters with that capture (encounter) history.  The data set represents
-a robust design with 5 primary occasions and within each primary occasion the number of
-secondary occasions is 2,2,4,5,2 respectively.  This is represented with the
-\code{time.intervals} argument of \code{\link{process.data}} which are 0,1,0,1,0,0,0,1,0,0,0,0,1,0.
-The 0 time intervals represent the secondary sessions in which the population is assumed to be closed.
-The non-zero values are the time intervals between the primary occasions.  They are all 1 in this
-example but they can have different non-zero values.  The code determines the structure of the
-robust design based on the time intervals.  The intervals must begin and end with at least one 0 and
-there must be at least one 0 between any 2 non-zero elements. The number of occasions in a secondary session
-is one plus the number of contiguous zeros.
+  This is a data set that accompanies program MARK as an
+  example for robust models. The data are entered with the
+  summary format using the variable \code{freq} which
+  represents the number of critters with that capture
+  (encounter) history.  The data set represents a robust
+  design with 5 primary occasions and within each primary
+  occasion the number of secondary occasions is 2,2,4,5,2
+  respectively.  This is represented with the
+  \code{time.intervals} argument of
+  \code{\link{process.data}} which are
+  0,1,0,1,0,0,0,1,0,0,0,0,1,0. The 0 time intervals
+  represent the secondary sessions in which the population
+  is assumed to be closed. The non-zero values are the time
+  intervals between the primary occasions.  They are all 1
+  in this example but they can have different non-zero
+  values.  The code determines the structure of the robust
+  design based on the time intervals. The intervals must
+  begin and end with at least one 0 and there must be at
+  least one 0 between any 2 non-zero elements. The number
+  of occasions in a secondary session is one plus the
+  number of contiguous zeros.
 }
-
-
 \examples{
 data(robust)
 run.robust=function()
@@ -44,44 +48,44 @@ time.intervals=c(0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0)
 S.time=list(formula=~time)
 p.time.session=list(formula=~-1+session:time,share=TRUE)
 GammaDoublePrime.random=list(formula=~time,share=TRUE)
-model.1=mark(data = robust, model = "Robust", 
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.time,
-            GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
+model.1=mark(data = robust, model = "Robust",
+time.intervals=time.intervals,
+model.parameters=list(S=S.time,
+GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
 #
-# Random emigration, p varies by session, uses Mh but pi fixed to 1, 
+# Random emigration, p varies by session, uses Mh but pi fixed to 1,
 # S by time.This model is in the example Robust with MARK but it is
-# a silly example because it uses the heterogeneity model but then fixes 
-# pi=1 which means there is no heterogeneity.Probably the data were 
+# a silly example because it uses the heterogeneity model but then fixes
+# pi=1 which means there is no heterogeneity.Probably the data were
 # not generated under Mh.  See results of model.2.b
 #
 pi.fixed=list(formula=~1,fixed=1)
 p.session=list(formula=~-1+session,share=TRUE)
-model.2.a=mark(data = robust, model = "RDHet", 
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.time,
-            GammaDoublePrime=GammaDoublePrime.random,
-            p=p.session,pi=pi.fixed))
+model.2.a=mark(data = robust, model = "RDHet",
+time.intervals=time.intervals,
+model.parameters=list(S=S.time,
+GammaDoublePrime=GammaDoublePrime.random,
+p=p.session,pi=pi.fixed))
 #
-# Random emigration, p varies by session, uses Mh and in this 
+# Random emigration, p varies by session, uses Mh and in this
 # case pi varies and so does p across
 # mixtures with an additive session effect.
 #
 pi.dot=list(formula=~1)
 p.session.mixture=list(formula=~session+mixture,share=TRUE)
-model.2.b=mark(data = robust, model = "RDHet", 
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.time,
-            GammaDoublePrime=GammaDoublePrime.random,
-            p=p.session.mixture,pi=pi.dot))
+model.2.b=mark(data = robust, model = "RDHet",
+time.intervals=time.intervals,
+model.parameters=list(S=S.time,
+GammaDoublePrime=GammaDoublePrime.random,
+p=p.session.mixture,pi=pi.dot))
 #
-# Markov constant emigration rates, pi varies by session, 
+# Markov constant emigration rates, pi varies by session,
 # p=c varies by session, S constant
-# This model is in the example Robust with MARK 
+# This model is in the example Robust with MARK
 # but it is a silly example because it
-# uses the heterogeneity model but then fixes pi=1 
+# uses the heterogeneity model but then fixes pi=1
 # which means there is no heterogeneity.
-# Probably the data were not generated under Mh.  
+# Probably the data were not generated under Mh.
 # See results of model.3.b
 #
 S.dot=list(formula=~1)
@@ -89,72 +93,73 @@ pi.session=list(formula=~session)
 p.session=list(formula=~-1+session,share=TRUE)
 GammaDoublePrime.dot=list(formula=~1)
 GammaPrime.dot=list(formula=~1)
-model.3.a=mark(data = robust, model = "RDHet", 
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.dot,
-            GammaPrime=GammaPrime.dot,
-            GammaDoublePrime=GammaDoublePrime.dot,
-            p=p.session,pi=pi.session))
+model.3.a=mark(data = robust, model = "RDHet",
+time.intervals=time.intervals,
+model.parameters=list(S=S.dot,
+GammaPrime=GammaPrime.dot,
+GammaDoublePrime=GammaDoublePrime.dot,
+p=p.session,pi=pi.session))
 #
-# Markov constant emigration rates, pi varies by session, 
-# p=c varies by session+mixture, S constant. This is model.3.a 
+# Markov constant emigration rates, pi varies by session,
+# p=c varies by session+mixture, S constant. This is model.3.a
 # but allows pi into the model by varying p/c by mixture.
 #
 S.dot=list(formula=~1)
 pi.session=list(formula=~session)
 GammaDoublePrime.dot=list(formula=~1)
 GammaPrime.dot=list(formula=~1)
-model.3.b=mark(data = robust, model = "RDHet", 
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.dot,
-            GammaPrime=GammaPrime.dot,
-            GammaDoublePrime=GammaDoublePrime.dot,
-            p=p.session.mixture,pi=pi.session))
+model.3.b=mark(data = robust, model = "RDHet",
+time.intervals=time.intervals,
+model.parameters=list(S=S.dot,
+GammaPrime=GammaPrime.dot,
+GammaDoublePrime=GammaDoublePrime.dot,
+p=p.session.mixture,pi=pi.session))
 #
-# Huggins Random emigration, p=c varies by time and session, 
+# Huggins Random emigration, p=c varies by time and session,
 # S by time
-# Beware that this model is not quite the same 
+# Beware that this model is not quite the same
 # as the others above that say random emigration because
-# the rates have been fixed for the last 2 occasions.  
+# the rates have been fixed for the last 2 occasions.
 # That was done with PIMS in the MARK example and
-# here it is done by binning the times so that times 3 and 4 
+# here it is done by binning the times so that times 3 and 4
 # are in the same bin, so the time model
-# has 3 levels (1,2, and 3-4).  By doing so the parameters 
+# has 3 levels (1,2, and 3-4).  By doing so the parameters
 # become identifiable but this may not be
-# reasonable depending on the particulars of the data.  
+# reasonable depending on the particulars of the data.
 # Note that the same time binning must be done both for
-# GammaPrime and GammaDoublePrime because the parameters are 
+# GammaPrime and GammaDoublePrime because the parameters are
 # the same in the random emigration model.  If you
-# forget to bin one of the parameters across time it will fit 
+# forget to bin one of the parameters across time it will fit
 # a model but it won't be what you expect as it will
-# not share parameters.  Note the use of the argument "right".  
-# This controls whether binning is inclusive on the right (right=TRUE) 
+# not share parameters.  Note the use of the argument "right".
+# This controls whether binning is inclusive on the right (right=TRUE)
 # or on the left (right=FALSE).  Using "right" nested in the list
-# of design parameters is equivalent to using it as a calling 
+# of design parameters is equivalent to using it as a calling
 # argument to make.design.data or add.design.data.
 #
 S.time=list(formula=~time)
 p.time.session=list(formula=~-1+session:time,share=TRUE)
 GammaDoublePrime.random=list(formula=~time,share=TRUE)
-model.4=mark(data = robust, model = "RDHuggins", 
-        time.intervals=time.intervals,design.parameters=
-        list(GammaDoublePrime=list(time.bins=c(1,2,5))),
-        right=FALSE, model.parameters=
-        list(S=S.time,GammaDoublePrime=GammaDoublePrime.random,
-        p=p.time.session))
+model.4=mark(data = robust, model = "RDHuggins",
+time.intervals=time.intervals,design.parameters=
+list(GammaDoublePrime=list(time.bins=c(1,2,5))),
+right=FALSE, model.parameters=
+list(S=S.time,GammaDoublePrime=GammaDoublePrime.random,
+p=p.time.session))
 
 return(collect.models())
 }
 robust.results=run.robust()
 #
-#  You will receive a warning message that the model list 
-#  includes models of different types which are not compatible 
+#  You will receive a warning message that the model list
+#  includes models of different types which are not compatible
 #  for comparisons of AIC.  That is because
-#  the runs include closed models which include N 
-#  in the likelihood and Huggins models which don't include 
+#  the runs include closed models which include N
+#  in the likelihood and Huggins models which don't include
 #  N in the likelihood.  That can be avoided by running
 #  the two types of models in different sets.
 #
 robust.results
 }
 \keyword{datasets}
+

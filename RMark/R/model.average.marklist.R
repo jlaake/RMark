@@ -1,3 +1,153 @@
+#' Compute model averaged estimates of real parameters
+#' 
+#' Computes model averaged estimates and standard errors of real parameters for
+#' a list of models with a \code{model.table} constructed from
+#' \code{\link{collect.models}}. It can also optionally compute the var-cov
+#' matrix of the averaged parameters and their confidence intervals by
+#' transforming with the link functions, setting normal confidence intervals on
+#' the transformed values and then back-transforming for the real estimates.
+#' 
+#' If there are any models in the \code{model.list} which do not have any
+#' output or results they are dropped.  If any have non-positive variances for
+#' the betas and \code{drop=TRUE}, then the model is reported and dropped from
+#' the model averaging.  The weights are renormalized for the remaining models
+#' that are not dropped before they are averaged.
+#' 
+#' If \code{parameter=NULL}, all real parameters are model averaged but the
+#' design data is not copied over because it can vary by the type of parameter.
+#' It is only necessary to model average all parameters at once to get
+#' covariances of model averaged parameters of differing types.
+#' 
+#' If \code{data=NULL}, the average covariate values are used for any models
+#' using covariates. Note that this will only work with models created after
+#' v1.5.0 such that average covariate values are stored in each model object.
+#' 
+#' @usage \method{model.average}{marklist}(x, parameter, data, vcv, drop=TRUE, indices=NULL, revised=TRUE,...)
+#' @S3method model.average marklist
+#' @param x a list of mark model results and a model.table constructed by
+#' \code{\link{collect.models}}
+#' @param parameter name of model parameter (e.g., "Phi" for CJS models); if
+#' left NULL all real parameters are averaged
+#' @param data dataframe with covariate values that are averaged for estimates
+#' @param vcv logical; if TRUE then the var-cov matrix and confidence intervals
+#' are computed
+#' @param drop if TRUE, models with any non-positive variance for betas are
+#' dropped
+#' @param indices a vector of parameter indices from the all-different PIM
+#' formulation of the parameter estimates that should be presented.  This
+#' argument only works if the parameter argument = NULL.  The primary purpose
+#' of the argument is to trim the list of parameters in computing a vcv matrix
+#' of the real parameters which can get too big to be computed with the
+#' available memory
+#' @param revised if TRUE, uses revised variance formula (eq 6.12 from Burnham
+#' and Anderson) for model averaged estimates and eq 6.11 when FALSE
+#' @param ... additional arguments passed to specific functions
+#' @return If vcv=FALSE, the return value is a dataframe of model averaged
+#' estimates and standard errors for a particular type of real parameter (e.g.,
+#' Phi).  The design data are appended to the dataframe to enable subsettting
+#' of the estimates based on features of the design data such as age, time,
+#' cohort and grouping variables.
+#' 
+#' If vcv=TRUE, confidence interval (lcl,ucl) limits are added to the dataframe
+#' which is contained in a list with the var-cov matrix.
+#' @author Jeff Laake
+#' @seealso \code{\link{collect.models}}, \code{\link{covariate.predictions}},
+#' \code{\link{model.table}}, \code{\link{compute.links.from.reals}},
+#' \code{\link{model.average.list}}
+#' @references Burnham, K. P. and D. R. Anderson. 2002. Model Selection and
+#' Multimodel Inference: A Practical Information-Theoretic Approach, Second
+#' edition. Springer, New York.
+#' @keywords utility
+#' @examples
+#' 
+#' data(dipper)
+#' run.dipper=function()
+#' {
+#' #
+#' # Process data
+#' #
+#' dipper.processed=process.data(dipper,groups=("sex"))
+#' #
+#' # Create default design data
+#' #
+#' dipper.ddl=make.design.data(dipper.processed)
+#' #
+#' # Add Flood covariates for Phi and p that have different values
+#' #
+#' dipper.ddl$Phi$Flood=0
+#' dipper.ddl$Phi$Flood[dipper.ddl$Phi$time==2 | dipper.ddl$Phi$time==3]=1
+#' dipper.ddl$p$Flood=0
+#' dipper.ddl$p$Flood[dipper.ddl$p$time==3]=1
+#' #
+#' #  Define range of models for Phi
+#' #
+#' Phi.dot=list(formula=~1)
+#' Phi.time=list(formula=~time)
+#' Phi.sex=list(formula=~sex)
+#' Phi.sextime=list(formula=~sex+time)
+#' Phi.sex.time=list(formula=~sex*time)
+#' Phi.Flood=list(formula=~Flood)
+#' #
+#' #  Define range of models for p
+#' #
+#' p.dot=list(formula=~1)
+#' p.time=list(formula=~time)
+#' p.sex=list(formula=~sex)
+#' p.sextime=list(formula=~sex+time)
+#' p.sex.time=list(formula=~sex*time)
+#' p.Flood=list(formula=~Flood)
+#' #
+#' # Collect pairings of models
+#' #
+#' cml=create.model.list("CJS")
+#' #
+#' # Run and return the list of models
+#' #
+#' return(mark.wrapper(cml,data=dipper.processed,ddl=dipper.ddl))
+#' }
+#' dipper.results=run.dipper()
+#' Phi.estimates=model.average(dipper.results,"Phi",vcv=TRUE)
+#' p.estimates=model.average(dipper.results,"p",vcv=TRUE)
+#' run.dipper=function()
+#' {
+#' data(dipper)
+#' dipper$nsex=as.numeric(dipper$sex)-1
+#' #NOTE:  This generates random valules for the weights so the answers using
+#' #  ~weight will vary
+#' dipper$weight=rnorm(294)  
+#' mod1=mark(dipper,groups="sex",
+#'   model.parameters=list(Phi=list(formula=~sex+weight)))
+#' mod2=mark(dipper,groups="sex",
+#'   model.parameters=list(Phi=list(formula=~sex)))
+#' mod3=mark(dipper,groups="sex",
+#'   model.parameters=list(Phi=list(formula=~weight)))
+#' mod4=mark(dipper,groups="sex",
+#'   model.parameters=list(Phi=list(formula=~1)))
+#' dipper.list=collect.models()
+#' return(dipper.list)
+#' }
+#' dipper.results=run.dipper()
+#' real.averages=model.average(dipper.results,vcv=TRUE)
+#' # get model averaged estimates for all parameters and use average 
+#' # covariate values in models with covariates
+#' real.averages$estimates 
+#' # get model averaged estimates for Phi using a value of 2 for weight
+#' model.average(dipper.results,"Phi", 
+#'   data=data.frame(weight=2),vcv=FALSE)  
+#' # what you can't do yet is use different covariate values for 
+#' # different groups to get covariances of estimates based on different
+#' # covariate values; for example, you can get average survival of females 
+#' # at average female weight and average survival of males at average 
+#' # male weight in separate calls to model.average but not in the same call 
+#' # to get covariances; however, if you standardized weight by group 
+#' # (ie stdwt = weight - groupmean) then using 0 for the covariate value would give
+#' # the model averaged Phi by group at the average group weights and its 
+#' # covariance. You can do the above for
+#' # a single model with find.covariates/fill.covariates.
+#' # get model averaged estimates of first Phi(1) and first p(43) and v-c matrix
+#' model.average(dipper.results,vcv=TRUE,indices=c(1,43))  
+#' 
+#' 
 "model.average.marklist"<- function(x,parameter=NULL,data=NULL,vcv=FALSE,drop=TRUE,indices=NULL,revised=TRUE,...)
 {
 # Computes model averaged real parameter estimates and their std errors for the values specified by

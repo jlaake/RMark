@@ -1,42 +1,39 @@
+\docType{data}
 \name{RDSalamander}
 \alias{RDSalamander}
-\docType{data}
 \title{Robust design salamander occupancy data}
+\format{A data frame with 40 observations (sites) on the following 2
+variables.  \describe{ \item{ch}{a character vector containing the presence
+(1) and absence (0) with 2 primary occasions with 48 and 31 visits to the
+site} \item{freq}{frequency of sites (always 1)} }}
 \description{
-A robust design occupancy data set for modelling presence/absence data for salamanders.
-}
-\usage{data(RDSalamander)}
-\format{
-  A data frame with 40 observations (sites) on the following 2 variables.
-  \describe{
-    \item{ch}{a character vector containing the presence (1) and absence (0) with 2 primary occasions with 48 and 31 visits to the site}
-    \item{freq}{frequency of sites (always 1)}
-  }
+  A robust design occupancy data set for modelling
+  presence/absence data for salamanders.
 }
 \details{
-This is a data set that I got from Gary White which is suppose to be salamander data
-collected with a robust design.
+  This is a data set that I got from Gary White which is
+  suppose to be salamander data collected with a robust
+  design.
 }
-
 \examples{
 fit.RDOccupancy=function()
 {
-   data(RDSalamander)
-   occ.p.time.eg=mark(RDSalamander,model="RDOccupEG",
-      time.intervals=c(rep(0,47),1,rep(0,30)),
-      model.parameters=list(p=list(formula=~session)))
-   occ.p.time.pg=mark(RDSalamander,model="RDOccupPG",
-      time.intervals=c(rep(0,47),1,rep(0,30)),
-      model.parameters=list(Psi=list(formula=~time),
-      p=list(formula=~session)))
-   occ.p.time.pe=mark(RDSalamander,model="RDOccupPE",
-      time.intervals=c(rep(0,47),1,rep(0,30)),
-      model.parameters=list(Psi=list(formula=~time),
-      p=list(formula=~session)))
+data(RDSalamander)
+occ.p.time.eg=mark(RDSalamander,model="RDOccupEG",
+time.intervals=c(rep(0,47),1,rep(0,30)),
+model.parameters=list(p=list(formula=~session)))
+occ.p.time.pg=mark(RDSalamander,model="RDOccupPG",
+time.intervals=c(rep(0,47),1,rep(0,30)),
+model.parameters=list(Psi=list(formula=~time),
+p=list(formula=~session)))
+occ.p.time.pe=mark(RDSalamander,model="RDOccupPE",
+time.intervals=c(rep(0,47),1,rep(0,30)),
+model.parameters=list(Psi=list(formula=~time),
+p=list(formula=~session)))
 return(collect.models())
 }
 RDOcc=fit.RDOccupancy()
 print(RDOcc)
-
 }
 \keyword{datasets}
+

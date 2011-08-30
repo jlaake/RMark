@@ -1,41 +1,59 @@
 \name{export.chdata}
 \alias{export.chdata}
 \title{Export capture-history data to MARK .inp format}
-\description{
-Creates a MARK .inp file from processed data list that can be used to create a MARK .dbf file for 
-use with MARK directly rather than with the RMark package.
-}
-\usage{
-export.chdata(data, filename, covariates = NULL, replace = FALSE)
-}
 \arguments{
-  \item{data}{processed data list resulting from process.data}
+  \item{data}{processed data list resulting from
+  process.data}
+
   \item{filename}{quoted filename (without .inp extension)}
-  \item{covariates}{vector of names of covariate variables in data to include}
-  \item{replace}{if file exists and replace=TRUE, file will be over-written}
+
+  \item{covariates}{vector of names of covariate variables
+  in data to include}
+
+  \item{replace}{if file exists and replace=TRUE, file will
+  be over-written}
+}
+\value{
+  None
+}
+\description{
+  Creates a MARK .inp file from processed data list that
+  can be used to create a MARK .dbf file for use with MARK
+  directly rather than with the RMark package.
 }
 \details{
-The default is to include none of the covariates in the processed data list. All of the covariates  
-can be passed by setting covariates="all".
+  The default is to include none of the covariates in the
+  processed data list. All of the covariates can be passed
+  by setting covariates="all".
 
-After you have created the MARK .dbf/.fpt files with the exported .inp file, then you can use
-\code{\link{export.chdata}} to export models that can be imported into the MARK interface.  However
-note the following: ***Warning*** Make sure that you use the .inp created by \code{\link{export.chdata}} with your 
-processed data to create the MARK .dbf file rather than using a separate similar .inp file.  It is essential that the group structure
-and ordering of groups matches between the .inp file and the exported models or you can get erroneous results.
+  After you have created the MARK .dbf/.fpt files with the
+  exported .inp file, then you can use
+  \code{\link{export.chdata}} to export models that can be
+  imported into the MARK interface.  However note the
+  following: ***Warning*** Make sure that you use the .inp
+  created by \code{\link{export.chdata}} with your
+  processed data to create the MARK .dbf file rather than
+  using a separate similar .inp file.  It is essential that
+  the group structure and ordering of groups matches
+  between the .inp file and the exported models or you can
+  get erroneous results.
 }
-\value{ None}
-\author{Jeff Laake}
-\seealso{ \code{\link{import.chdata}}}
 \examples{
 data(dipper)
 dipper$numeric.sex=as.numeric(dipper$sex)-1
 dipper.processed=process.data(dipper,group="sex")
-export.chdata(dipper.processed, filename="dipper", 
-         covariates="numeric.sex")
+export.chdata(dipper.processed, filename="dipper",
+covariates="numeric.sex")
 #
-# Had sex been used in place of numeric.sex in the above command, 
+# Had sex been used in place of numeric.sex in the above command,
 # MARK would have been unable to use it as a covariate
 # because it is not a numeric field
 }
+\author{
+  Jeff Laake
+}
+\seealso{
+  \code{\link{import.chdata}}
+}
 \keyword{utility}
+

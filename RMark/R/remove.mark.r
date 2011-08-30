@@ -1,3 +1,23 @@
+#' Remove mark models from list
+#' 
+#' Remove one or more mark models from a marklist
+#' 
+#' 
+#' @param marklist an object of class "marklist" created by
+#' \code{\link{collect.models}} or \code{\link{merge.mark}}
+#' @param model.numbers vector of one more model numbers to remove from the
+#' marklist
+#' @return model.list: a list of \code{mark} models and a table of model
+#' results.
+#' @author Jeff Laake
+#' @export
+#' @seealso
+#' \code{\link{collect.models}},\code{\link{merge.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
+#' @keywords utility
+#' @examples
+#' 
+#' # see example in dipper
+#' 
 remove.mark=function(marklist,model.numbers)
 {
 #

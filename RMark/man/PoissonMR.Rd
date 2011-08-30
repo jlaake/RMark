@@ -1,33 +1,27 @@
+\docType{data}
 \name{PoissonMR}
 \alias{PoissonMR}
-\docType{data}
-\title{
-Example of Poisson Mark-Resight model
-}
+\title{Example of Poisson Mark-Resight model}
+\format{A data frame with 68 observations on the following 1 variables.
+\describe{ \item{ch}{a character vector} }}
 \description{
-Data and example illustrating Poisson Mark-Resight model. 
-}
-\usage{data(PoissonMR)}
-\format{
-  A data frame with 68 observations on the following 1 variables.
-  \describe{
-    \item{\code{ch}}{a character vector}
- }
+  Data and example illustrating Poisson Mark-Resight model.
 }
 \examples{
 data(PoissonMR)
 pois.proc=process.data(PoissonMR,model="PoissonMR",
-		counts=list("Unmarked Seen"=c(1380, 1120, 1041, 948),
-				    "Marked Unidentified"=c(8,10,9,11),
-					"Known Marks"=c(45,67,0,0)))
+counts=list("Unmarked Seen"=c(1380, 1120, 1041, 948),
+"Marked Unidentified"=c(8,10,9,11),
+"Known Marks"=c(45,67,0,0)))
 pois.ddl=make.design.data(pois.proc)
 mod=mark(pois.proc,pois.ddl,
-		model.parameters=list(Phi=list(formula=~1,link="sin"),
-				              GammaDoublePrime=list(formula=~1,share=TRUE,link="sin"),
-							  alpha=list(formula=~-1+time,link="log"),
-							  U=list(formula=~-1+time,link="log"),
-							  sigma=list(formula=~-1+time,link="log")),
-		                      initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1))
+model.parameters=list(Phi=list(formula=~1,link="sin"),
+GammaDoublePrime=list(formula=~1,share=TRUE,link="sin"),
+alpha=list(formula=~-1+time,link="log"),
+U=list(formula=~-1+time,link="log"),
+sigma=list(formula=~-1+time,link="log")),
+initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1))
 summary(mod)
 }
 \keyword{datasets}
+

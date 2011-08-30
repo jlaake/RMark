@@ -1,48 +1,72 @@
 \name{cleanup}
 \alias{cleanup}
 \title{Removes unused MARK output files}
-\description{
-Identifies all unused (orphaned) mark*.inp, .vcv, .res and .out and .tmp files in the working
-directory and removes them.  The orphaned files are determined by examining all
-mark objects and lists of mark objects (created by \code{\link{collect.models}}) to create a list
-of files in use. All other files are treated as orphans to delete.}
-\usage{
-cleanup(lx=NULL,ask=TRUE, prefix="mark")
-}
 \arguments{
-  \item{lx}{listing of R objects; defaults to list of workspace from calling environment; if NULL it uses ls(envir=parent.frame())}
-  \item{ask}{if TRUE, prompt whether each file should be removed. Typically will be used with ask=FALSE but default of TRUE may avoid problems}
-  \item{prefix}{prefix for filename if different than "mark"}
-}
-\details{
-This function removes orphaned output files from MARK.  This occurs when there are
- output files in the subdirectory that are not associated with a mark object in the
- current R session (.Rdata). For example, if you repeat an analysis or set of
- analyses and store them in the same object then the original set of output files
- would no longer be linked to an R object and would be orphaned.
+  \item{lx}{listing of R objects; defaults to list of
+  workspace from calling environment; if NULL it uses
+  ls(envir=parent.frame())}
 
- As an example, consider the \code{\link{mallard}} analysis. The first time you run
- the analysis script in an empty subdirectory it would create 9 sets of MARK output files
- (mark001.out,.vcv,.res,.inp  to mark009.out,.vcv,.res,.inp) and each would be linked
- to one of the objects in \code{nest.results}. When the command
- \code{AgePpnGrass=nest.results$AgePpnGrass} was issued,
- both of those \code{mark} objects were linked to the same set of output files.  Now if
- you were to repeat the above commands and re-run the models and stored the results
- into \code{nest.results} again, it would create files with prefixes 10 to 18. Because
- that would have replaced \code{nest.results}, none of the files numbered 1 to 9 would be linked to
- an object.  \code{cleanup(ask=FALSE)} automatically removes those orphan files.
- If you delete all objects in the R session with the command \code{rm(list=ls(all=TRUE))}, then
- subsequently \code{cleanup(ask=FALSE)}  will delete all MARK output files because all of them will be orphans.
- Output files can also become orphans if MARK finishes but for some reason R crashes
- or you forget to save your session before you exit R.  Orphan output files can
- be re-linked to an R object without re-running MARK by re-running the
- \code{\link{mark}} function in R and specifing the \code{filename} argument to match the base portion of the
- orphaned output file (eg "mark067").  It will create all of the necessary R
- objects and then asks if you want to use the existing file.  If you respond
- affirmatively it will link to the orphaned files.
+  \item{ask}{if TRUE, prompt whether each file should be
+  removed. Typically will be used with ask=FALSE but
+  default of TRUE may avoid problems}
+
+  \item{prefix}{prefix for filename if different than
+  "mark"}
 }
 \value{
-None
+  None
 }
-\author{Jeff Laake}
+\description{
+  Identifies all unused (orphaned) mark*.inp, .vcv, .res
+  and .out and .tmp files in the working directory and
+  removes them.  The orphaned files are determined by
+  examining all mark objects and lists of mark objects
+  (created by \code{\link{collect.models}}) to create a
+  list of files in use. All other files are treated as
+  orphans to delete.
+}
+\details{
+  This function removes orphaned output files from MARK.
+  This occurs when there are output files in the
+  subdirectory that are not associated with a mark object
+  in the current R session (.Rdata). For example, if you
+  repeat an analysis or set of analyses and store them in
+  the same object then the original set of output files
+  would no longer be linked to an R object and would be
+  orphaned.
+
+  As an example, consider the \code{\link{mallard}}
+  analysis. The first time you run the analysis script in
+  an empty subdirectory it would create 9 sets of MARK
+  output files (mark001.out,.vcv,.res,.inp to
+  mark009.out,.vcv,.res,.inp) and each would be linked to
+  one of the objects in \code{nest.results}. When the
+  command \code{AgePpnGrass=nest.results$AgePpnGrass} was
+  issued, both of those \code{mark} objects were linked to
+  the same set of output files.  Now if you were to repeat
+  the above commands and re-run the models and stored the
+  results into \code{nest.results} again, it would create
+  files with prefixes 10 to 18. Because that would have
+  replaced \code{nest.results}, none of the files numbered
+  1 to 9 would be linked to an object.
+  \code{cleanup(ask=FALSE)} automatically removes those
+  orphan files.  If you delete all objects in the R session
+  with the command \code{rm(list=ls(all=TRUE))}, then
+  subsequently \code{cleanup(ask=FALSE)} will delete all
+  MARK output files because all of them will be orphans.
+  Output files can also become orphans if MARK finishes but
+  for some reason R crashes or you forget to save your
+  session before you exit R.  Orphan output files can be
+  re-linked to an R object without re-running MARK by
+  re-running the \code{\link{mark}} function in R and
+  specifing the \code{filename} argument to match the base
+  portion of the orphaned output file (eg "mark067").  It
+  will create all of the necessary R objects and then asks
+  if you want to use the existing file.  If you respond
+  affirmatively it will link to the orphaned files.
+}
+\author{
+  Jeff Laake
+}
 \keyword{utility}
+

@@ -1,39 +1,41 @@
+\docType{data}
 \name{Blackduck}
 \alias{Blackduck}
-\docType{data}
-\title{ Black duck known fate data}
+\title{Black duck known fate data}
+\format{A data frame with 48 observations on the following 5 variables.
+\describe{ \item{ch}{a character vector containing the encounter history of
+each bird} \item{BirdAge}{the age of the bird: a factor with levels \code{0}
+\code{1} for young and adult} \item{Weight}{the weight of the bird at time
+of marking} \item{Wing_Len}{the wing-length of the bird at time of marking}
+\item{condix}{the condition index of the bird at time of marking} }}
 \description{
-A known fate data set on Black ducks that accompanies MARK as an example analysis using the Known model.
-}
-\usage{data(Blackduck)}
-\format{
-  A data frame with 48 observations on the following 5 variables.
-  \describe{
-    \item{ch}{a character vector containing the encounter history of each bird}
-    \item{BirdAge}{the age of the bird: a factor with levels \code{0} \code{1} for young and adult}
-    \item{Weight}{the weight of the bird at time of marking}
-    \item{Wing_Len}{the wing-length of the bird at time of marking}
-    \item{condix}{the condition index of the bird at time of marking}
-  }
+  A known fate data set on Black ducks that accompanies
+  MARK as an example analysis using the Known model.
 }
 \details{
-This is a data set that accompanies program MARK as an example for Known fate. The data can be
-stratified using BirdAge as a grouping variable.  The function \code{run.Blackduck} defined below in the examples
-creates some of the models used in the dbf file that accompanies MARK.
+  This is a data set that accompanies program MARK as an
+  example for Known fate. The data can be stratified using
+  BirdAge as a grouping variable.  The function
+  \code{run.Blackduck} defined below in the examples
+  creates some of the models used in the dbf file that
+  accompanies MARK.
 
-Note that in the MARK example the variable is named Age.  In the R code, the fields "age" and
-"Age" have specific meanings in the design data related to time since release.  These will
-override the use of a field with the same name in the individual covariate data, so the names
-"time", "Time", "cohort", "Cohort", "age", and "Age" should not be used in the individual covariate
-data with possibly the exception of "cohort" which is not defined for models with "Square" PIMS such
-as POPAN and other Jolly-Seber type models.
+  Note that in the MARK example the variable is named Age.
+  In the R code, the fields "age" and "Age" have specific
+  meanings in the design data related to time since
+  release.  These will override the use of a field with the
+  same name in the individual covariate data, so the names
+  "time", "Time", "cohort", "Cohort", "age", and "Age"
+  should not be used in the individual covariate data with
+  possibly the exception of "cohort" which is not defined
+  for models with "Square" PIMS such as POPAN and other
+  Jolly-Seber type models.
 }
-
 \examples{
 data(Blackduck)
 # Change BirdAge to numeric; starting with version 1.6.3 factor variables are
 # no longer allowed.  They can work as in this example but they can be misleading
-# and fail if the levels are non-numeric.  The real parameters will remain 
+# and fail if the levels are non-numeric.  The real parameters will remain
 # unchanged but the betas will be different.
 Blackduck$BirdAge=as.numeric(Blackduck$BirdAge)-1
 run.Blackduck=function()
@@ -70,7 +72,7 @@ S.BirdAge.Weight=list(formula=~BirdAge+Weight)
 #
 model.list=create.model.list("Known")
 bduck.results=mark.wrapper(model.list,data=bduck.processed,ddl=bduck.ddl,
-               invisible=FALSE)
+invisible=FALSE)
 
 #
 # Return model table and list of models
@@ -79,7 +81,6 @@ return(bduck.results)
 }
 bduck.results=run.Blackduck()
 bduck.results
-
-
 }
 \keyword{datasets}
+

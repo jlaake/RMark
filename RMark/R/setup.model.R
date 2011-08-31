@@ -56,7 +56,7 @@ function(model,nocc,mixtures=1)
 	fdir=system.file(package="RMark")	
 	fdir=file.path(fdir,"models.txt")	
 	model_definitions=read.delim(fdir,header=TRUE,
-			colClasses=c("character","character",rep("logical",4),rep("numeric",3)))
+			colClasses=c("character","character",rep("logical",4),rep("numeric",3),"logical"))
     model_def=model_definitions[model_definitions$model==model,]	
     if(nrow(model_def)==0)
         stop("Invalid type of model = ",model," Valid types are\n", paste(model_definitions$model,collapse="\n"))

@@ -139,9 +139,11 @@ purge("res",model.filenames,ask)
 purge("vcv",model.filenames,ask)
 purge("rda",model.filenames,ask)
 #
-#  Delete any tmp files created by export.models
+#  Delete any tmp files created by export.models or input file creation
 #
 file.list=list.files(pattern="mark[0123456789]+[:YVX:][:.:]tmp")
+unlink(file.list)
+file.list=list.files(pattern="markxxx[0123456789][:.:]tmp")
 unlink(file.list)
 invisible()
 }

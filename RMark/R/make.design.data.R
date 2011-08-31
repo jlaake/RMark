@@ -434,7 +434,7 @@ remove.unused.occasions=function(data,ddl)
 #
 # 10 Jan 06 ; added pim.type argument in call to compute.design.data
 #
-full.design.data=vector("list",length=length(parameters))
+   full.design.data=vector("list",length=length(parameters))
    pimtypes=vector("list",length=length(parameters))
    anyTriang=FALSE
    anySquare=FALSE
@@ -463,8 +463,14 @@ full.design.data=vector("list",length=length(parameters))
         }
         else
         {
-           subtract.stratum=NULL
-           tostrata=FALSE
+			if(data$model%in%c("RDMSOpenMisClass","RDMSMisClass") & names(parameters)[i]%in%c("pi","Omega"))
+			{
+			   subtract.stratum=data$strata.labels[nstrata]
+		    } else
+			{
+			   subtract.stratum=NULL
+	        }
+            tostrata=FALSE
         }
      } 
      else
@@ -480,10 +486,12 @@ full.design.data=vector("list",length=length(parameters))
 #    mod 27 June 2011 -- if data structure (too few occasions) is such that no parameters can be estimated it does not create the design data
      if(is.na(parameters[[i]]$num)||(parameters[[i]]$num+data$nocc)>0)
 	 {
+		 sub.stratum=0
+		 if(!is.null(parameters[[i]]$sub.stratum))sub.stratum=parameters[[i]]$sub.stratum
          design.data=compute.design.data(data,parameters[[i]]$begin,parameters[[i]]$num,
                       parameters[[i]]$type,parameters[[i]]$mix,parameters[[i]]$rows,
                       parameters[[i]]$pim.type,parameters[[i]]$secondary, nstrata,
-                      tostrata,strata.labels,subtract.stratum,common.zero=common.zero)
+                      tostrata,strata.labels,subtract.stratum,common.zero=common.zero,sub.stratum=sub.stratum)
          if(!is.null(parameters[[i]]$mix) && parameters[[i]]$mix)design.data$mixture=as.factor(design.data$mixture)
          if(parameters[[i]]$secondary)design.data$session=as.factor(design.data$session+data$begin.time-1)
          design.data$group=as.factor(design.data$group)
@@ -507,9 +515,9 @@ full.design.data=vector("list",length=length(parameters))
             design.data$time=cut(design.data$time,parameters[[i]]$time.bins,include.lowest=TRUE,right=right)
          if(model.list$closed | model.list$robust )
          {
-            if(names(parameters)[i]=="p")
+            if(names(parameters)[i]=="p" )
             {
-               design.data$c=0
+			   if(!is.null(parameters[[i]]$share)) design.data$c=0
                design.data$age=NULL
                design.data$Age=NULL
             }
@@ -519,7 +527,7 @@ full.design.data=vector("list",length=length(parameters))
                design.data$age=NULL
                design.data$Age=NULL
             }
-            if(names(parameters)[i]=="N" | names(parameters)[i]=="pi")
+            if(names(parameters)[i]=="N" | (names(parameters)[i]=="pi" & !is.null(parameters[[i]]$mix)))
             {
                design.data$age=NULL
                design.data$Age=NULL

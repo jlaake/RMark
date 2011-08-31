@@ -37,6 +37,8 @@
 #' @param common.zero if TRUE, uses a common begin.time to set origin (0) for
 #' Time variable defaults to FALSE for legacy reasons but should be set to TRUE
 #' for models that share formula like p and c with the Time model
+#' @param sub.stratum the number of strata to subtract for parameters that use 
+#' mlogit across strata like pi and Omega for RDMSOpenMisClass
 #' @return design.data: a data frame containing all of the design data fields
 #' for a particular type of parameter \item{group}{group factor level}
 #' \item{age}{age factor level} \item{time}{time factor level}
@@ -50,29 +52,11 @@
 "compute.design.data" <-
 function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
            secondary,nstrata=1,tostrata=FALSE,strata.labels=NULL,
-           subtract.stratum=strata.labels,common.zero=FALSE)
+           subtract.stratum=strata.labels,common.zero=FALSE,sub.stratum=0)
 {
 # -------------------------------------------------------------------------------------------------------------
 #
 # compute.design.data -  creates a design dataframe that is used to construct the design matrix 
-#
-# Arguments:
-#
-#  data             - data list created by process.data
-#  begin            - 0 for survival type, 1 for capture type
-#  num              - number of parameters relative to number of occasions (0 or -1)
-#  type             - type of parameter structure (Triang or Square)
-#  mix              - if TRUE this is a mixed parameter
-#  rows             - number of rows relative to # of mixtures
-#  secondary        - TRUE if a parameter for the secondary periods of robust design
-#  pim.type         - type of pim structure; either all different or time
-#  nstrata          - number of strata for multistrata
-#  tostrata         - set to TRUE for Psi parameters
-#  strata.labels    - labels for strata as identified in capture history
-#  subtract.stratum - for each stratum, the to.strata that is computed by subtraction
-#  common.zero      - if TRUE, uses a common begin.time to set origin (0) for Time variable
-#                      defaults to FALSE for legacy reasons but should be set to TRUE
-#                      for models that share formula like p and c with the Time model
 #
 # Value:
 #
@@ -125,12 +109,23 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
   number.of.groups=dim(data$freq)[2]
   design.data=NULL
   nsubtract.stratum=match(subtract.stratum,strata.labels)
+  all.tostrata=FALSE
+  if(sub.stratum==-1)
+  {
+	  all.tostrata=TRUE
+	  sub.stratum=0
+  }
   for(j in 1:number.of.groups)
-  for (jj in 1:nstrata)
+  for (jj in 1:(nstrata-sub.stratum))
   for(l in 1:num.sessions)
   {
       if(tostrata)
-         other.strata= sequence(nstrata)[sequence(nstrata)!=nsubtract.stratum[jj]]
+	  {
+		 if(!all.tostrata)
+             other.strata= sequence(nstrata)[sequence(nstrata)!=nsubtract.stratum[jj]]
+	     else
+			 other.strata= 1:nstrata		 
+	  }		 
       else
          other.strata=1
   for(to.strata in other.strata)

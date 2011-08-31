@@ -1985,7 +1985,11 @@ NULL
 #' specification because these have not been required since v1.3 when full
 #' support for individual covariates were included.  Likewise the argument
 #' \code{covariates} in \code{\link{mark}} and \code{\link{make.mark.model}}
-#' was removed because it was only needed to support the component approach. }
+#' was removed because it was only needed to support the component approach.
+#' \item  \code{\link{export.MARK}} was modified so that if all individual covariates
+#' are output, it excludes factor covariates. \item Several models were added to those
+#' supported in RMark.  See MarkModels.pdf in the RMark directory of your R library. 
+#' Usually C:/program files/R/rvvvv/Library where vvvv is the R version. }
 #' Version 2.0.7 (25 August 2011) \itemize{ \item Change to
 #' \code{\link{make.mark.model}} to fix bug in which mlogits were incorrectly
 #' assigned in ORDMS model when both Psi and pent used mlogit links. Thanks to

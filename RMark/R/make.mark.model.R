@@ -607,7 +607,7 @@ if(type=="Triang")
 #   invisible()
 #}
 
-"pim.header"<- function(group,param.name,parameters,ncol,stratum,tostratum,strata.labels,mixtures,session=NULL)
+"pim.header"<- function(group,param.name,parameters,ncol,stratum,tostratum,strata.labels,mixtures,session=NULL,socc=NULL)
 {
   if(!is.null(stratum)&length(strata.labels)>0)
      if(!is.null(tostratum))
@@ -619,8 +619,11 @@ if(type=="Triang")
   if(is.null(session))
      session.designation=""
   else
-     session.designation=paste("Session",session)
-  if (parameters$type == "Triang")
+     if(is.null(socc))
+	    session.designation=paste("Session",session)
+	 else
+		 session.designation=paste("Sampling Occasion",session)
+ if (parameters$type == "Triang")
          string = paste(paste("group=", group,sep=""), param.name, stratum.designation, session.designation, 
                            paste(" rows=",ncol," cols=",ncol,sep=""), parameters$type, ";")
   else
@@ -721,7 +724,8 @@ for (i in 1:length(parameters)) {
      {
          ncol = dim(model$pims[[i]][[j]]$pim)[2]
          string=pim.header(pim[[i]][[j]]$group,param.names[i],parameters[[i]],
-                   ncol,model$pims[[i]][[j]]$stratum,model$pims[[i]][[j]]$tostratum,model$strata.labels,mixtures,model$pims[[i]][[j]]$session)
+                   ncol,model$pims[[i]][[j]]$stratum,model$pims[[i]][[j]]$tostratum,model$strata.labels,
+				   mixtures,model$pims[[i]][[j]]$session,parameters[[i]]$socc)
          write(string, file = outfile, append = TRUE)
          if(parameters[[i]]$type == "Triang")
          {
@@ -1120,7 +1124,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
      string=paste("proc title ",title,";\nproc chmatrix occasions=",nocc," groups=",number.of.groups," etype=",etype)
   else
      string=paste("proc title ",title,";\nproc chmatrix occasions=",sum(nocc.secondary)," groups=",number.of.groups," etype=",etype)
-  if(etype=="Multistrata"|etype=="ORDMS"|etype=="CRDMS"|etype=="MSLiveDead")string=paste(string," strata=",data$nstrata,sep="")
+  if(model.list$strata)string=paste(string," strata=",data$nstrata,sep="")
   if(!is.null(covariates))
   {
      covariates=unique(covariates)
@@ -1128,11 +1132,13 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   }
   if(mixtures!=1)
       string=paste(string," mixtures =",mixtures)
+  if(data$model=="MultScalOcc")
+	  string=paste(string," mixtures =",length(levels(ddl$p$time)))
   time.int=data$time.intervals
-  if(data$reverse)time.int[time.int==0]=1
+  if(data$reverse | data$model=="MultScalOcc")time.int[time.int==0]=1
   string=paste(string," ICMeans NoHist hist=",dim(zz)[1],
            ";\n time interval ",paste(time.int,collapse=" "),";")
-  if(etype=="Multistrata"|etype=="ORDMS"|etype=="MSLiveDead"|etype=="CRDMS")string=paste(string,"\n strata=",paste(data$strata.labels[1:data$nstrata],collapse=" "),";",sep="")
+  if(model.list$strata)string=paste(string,"\n strata=",paste(data$strata.labels[1:data$nstrata],collapse=" "),";",sep="")
   if(!is.null(covariates))
   {
      string=paste(string,"\nicovariates ",paste(covariates,collapse=" "),";")
@@ -1231,13 +1237,24 @@ create.agenest.var=function(data,init.agevar,time.intervals)
      k=0
      for(j in 1:number.of.groups)
      {
-       for (jj in 1:nstrata)
+	   sub.stratum=0
+	   if(!is.null(parameters[[i]]$sub.stratum))sub.stratum=parameters[[i]]$sub.stratum
+	   all.tostrata=FALSE
+	   if(sub.stratum==-1)
+	   {
+		   all.tostrata=TRUE
+		   sub.stratum=0
+	   }
+       for (jj in 1:(nstrata-sub.stratum))
        {
           other.strata=1
           if(!is.null(parameters[[i]]$tostrata))
           {
              nsubtract.stratum=match(parameters[[i]]$subtract.stratum,data$strata.labels)
-             other.strata= sequence(nstrata)[sequence(nstrata)!=nsubtract.stratum[jj]]
+			 if(!all.tostrata)
+				 other.strata= sequence(nstrata)[sequence(nstrata)!=nsubtract.stratum[jj]]
+			 else
+				 other.strata= 1:nstrata		 
           }
           for(to.stratum in other.strata)
           {
@@ -1400,7 +1417,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
            ncol=dim(pim[[i]][[j]]$pim)[2]
            string=pim.header(pim[[i]][[j]]$group,param.names[i],parameters[[i]],
                    ncol,pim[[i]][[j]]$stratum,pim[[i]][[j]]$tostratum,
-                   data$strata.labels,mixtures,pim[[i]][[j]]$session)
+                   data$strata.labels,mixtures,pim[[i]][[j]]$session,parameters[[i]]$socc)
            write(string,outfile,append=TRUE)
            print.pim( pim[[i]][[j]]$pim,outfile)
         }
@@ -1663,12 +1680,33 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                     x.indices=as.vector(t(pim[[parx]][[kk]]$pim))
                     x.indices=x.indices[x.indices!=0]
                     max.logit.number=max.logit.number+1
-                   string=c(string,paste("mlogit(",rep(max.logit.number,length(x.indices)),")",sep=""))
+                    string=c(string,paste("mlogit(",rep(max.logit.number,length(x.indices)),")",sep=""))
                  }
              }else
              {
-                 stop(paste("Mlogit link not allowed with parameter",parx))
-             }
+				 if(parx %in% c("pi","Omega"))
+				 {
+					 nsets=length(pim[[parx]])
+					 for (kk in 1:nsets)
+					 {
+						 logit.numbers=max.logit.number+rep(1:nrow(full.ddl[[parx]])/(nstrata-1),nstrata-1)
+						 max.logit.number=max(logit.numbers)
+						 string=c(string,paste("mlogit(",logit.numbers,")",sep=""))
+					 }
+					 
+					 
+				 } else
+				 {
+					 if(parx=="Omega")
+					 {
+
+						 
+					 }else
+					 {
+                         stop(paste("Mlogit link not allowed with parameter",parx))
+                     }
+				 }
+			 }
            }
         } else
         {

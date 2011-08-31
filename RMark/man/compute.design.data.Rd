@@ -39,6 +39,10 @@ use)}
   set origin (0) for Time variable defaults to FALSE for
   legacy reasons but should be set to TRUE for models that
   share formula like p and c with the Time model}
+
+  \item{sub.stratum}{the number of strata to subtract for
+  parameters that use mlogit across strata like pi and
+  Omega for RDMSOpenMisClass}
 }
 \value{
   design.data: a data frame containing all of the design

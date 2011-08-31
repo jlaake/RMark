@@ -138,7 +138,7 @@ export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",i
   {
 	if(ind.covariates[1]=="all")
 	{
-		ind.covariates=names(x$data)
+		ind.covariates=names(x$data[!sapply(x$data,is.factor)])
 		if(x$model=="Nest")
 			ind.covariates=ind.covariates[!ind.covariates%in%c("FirstFound","LastPresent","LastChecked","Fate","freq")]
 		else

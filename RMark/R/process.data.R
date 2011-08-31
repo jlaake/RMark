@@ -272,14 +272,11 @@ initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,co
          inp.strata.labels=sort(ch.values[!(ch.values %in% c("0",".","1"))])
       else
          inp.strata.labels=sort(ch.values[!(ch.values %in% c("0","."))])
+	  if(model%in%c("RDMSOpenMisClass","RDMSMisClass","RDMS2MisClass"))
+		  inp.strata.labels=inp.strata.labels[!inp.strata.labels%in%"u"]
       nstrata = length(inp.strata.labels)                  
-      if(model=="Multistrata" | model=="ORDMS"| model=="CRDMS" | model=="MSLiveDead")
+      if(model.list$strata)
       {
-#        if(nstrata<2)stop("\nMultistrata designs must have at least 2 strata\n")
-#        strata.labels=inp.strata.labels
-#      } else
-#      if(model=="ORDMS")
-#      {
         if(is.null(strata.labels)) 
         {
            strata.labels=inp.strata.labels
@@ -292,7 +289,7 @@ initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,co
            if(sum(as.numeric(strata.labels %in% inp.strata.labels))< (nstrata-1))
               stop("More than one non-observable state has been specified")
         }
-        if(nstrata<2)stop("\nCRDMS, ORDMS and Multistrata designs must have at least 2 strata\n")
+        if(nstrata<2)stop("\nAny multistrata model must have at least 2 strata\n")
       } else
       {              
          nstrata=1

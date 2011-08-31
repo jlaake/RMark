@@ -28,7 +28,7 @@ Jolly	Phi	0	-1	1	Square	all	logit	~1
 Jolly	p	0	0	0	Square	all	logit	~1										
 Jolly	Lambda	0	-1	1	Square	all	log	~1										
 Jolly	N	0	1		Square	all	log	~1										
-Pradel	Gamma	0	-1	1	Square	all	logit											
+Pradel	Gamma	0	-1	1	Square	all	logit	~1										
 Pradel	p	0	-1	0	Square	all	logit	~1										
 Pradrec	Phi	0	-1	1	Square	all	logit	~1										
 Pradrec	p	0	0	0	Square	all	logit	~1										
@@ -38,7 +38,7 @@ LinkBarker	p	0	0	0	Square	all	logit	~1
 LinkBarker	f	0	-1		Square	all	log	~1										
 Pradsen	Phi	0	-1	1	Square	all	logit	~1										
 Pradsen	p	0	0	0	Square	all	logit	~1										
-Pradsen	Gamma	0	-1	1	Square	all	logit											
+Pradsen	Gamma	0	-1	1	Square	all	logit	~1										
 Pradlambda	Phi	0	-1	1	Square	all	logit	~1										
 Pradlambda	p	0	0	0	Square	all	logit	~1										
 Pradlambda	Lambda	0	-1	1	Square	all	log	~1										
@@ -277,7 +277,90 @@ ORDMSState	p	0	0	0	Square	all	logit	~1					TRUE	TRUE
 MultScalOcc	Psi	0	1		Square	all	logit	~1					FALSE					
 MultScalOcc	Delta	0	0		Square	all	logit	~1					FALSE					
 MultScalOcc	p	0	0	0	Square	all	logit	~1					TRUE					TRUE
-																		
-																		
-																		
-																		
+RDPdGClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGClosed	Gamma	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE					
+RDPdGClosed	c	1	-1	0	Square	all	logit			p			TRUE					
+RDPdGClosed	N	0			Square	all	log	~session					TRUE					
+RDPdGHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGHuggins	Gamma	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE					
+RDPdGHuggins	c	1	-1	0	Square	all	logit			p			TRUE					
+RDPdGHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdGHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					
+RDPdGHet	N	0			Square	all	log	~session					TRUE					
+RDPdGFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGFullHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdGFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE					
+RDPdGFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE					
+RDPdGFullHet	N	0			Square	all	log	~session			FALSE		TRUE					
+RDPdGHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGHugFullHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdGHugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE					
+RDPdGHugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE					
+RDPdLClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLClosed	Lambda	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE					
+RDPdLClosed	c	1	-1	0	Square	all	logit			p			TRUE					
+RDPdLClosed	N	0			Square	all	log	~session					TRUE					
+RDPdLHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLHuggins	Lambda	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE					
+RDPdLHuggins	c	1	-1	0	Square	all	logit			p			TRUE					
+RDPdLHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdLHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					
+RDPdLHet	N	0			Square	all	log	~session					TRUE					
+RDPdLFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLFullHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdLFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE					
+RDPdLFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE					
+RDPdLFullHet	N	0			Square	all	log	~session			FALSE		TRUE					
+RDPdLHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLHugFullHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdLHugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE					
+RDPdLHugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE					
+RDPdfClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfClosed	f	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE					
+RDPdfClosed	c	1	-1	0	Square	all	logit			p			TRUE					
+RDPdfClosed	N	0			Square	all	log	~session					TRUE					
+RDPdfHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfHuggins	f	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE					
+RDPdfHuggins	c	1	-1	0	Square	all	logit			p			TRUE					
+RDPdfHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfHet	f	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdfHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					
+RDPdfHet	N	0			Square	all	log	~session					TRUE					
+RDPdfFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfFullHet	f	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdfFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE					
+RDPdfFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE					
+RDPdfFullHet	N	0			Square	all	log	~session			FALSE		TRUE					
+RDPdfHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfHugFullHet	f	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdfHugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE					
+RDPdfHugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE					
+RDPdGHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGHugHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdGHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdGHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					
+RDPdLHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLHugHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdLHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdLHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					
+RDPdfHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfHugHet	f	0	-1	1	Square	all	logit	~1					FALSE					
+RDPdfHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDPdfHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					

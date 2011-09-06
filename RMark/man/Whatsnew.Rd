@@ -31,8 +31,12 @@
   it excludes factor covariates. \item Several models were
   added to those supported in RMark.  See MarkModels.pdf in
   the RMark directory of your R library. Usually C:/program
-  files/R/rvvvv/Library where vvvv is the R version. }
-  Version 2.0.7 (25 August 2011) \itemize{ \item Change to
+  files/R/rvvvv/Library where vvvv is the R version. \item
+  Previously RMark stored the input file in a temporary
+  file Markxxx.tmp. Using a common filename caused problems
+  when more than one model were spawned to different CPUs,
+  so now it uses a random temporary file name.} Version
+  2.0.7 (25 August 2011) \itemize{ \item Change to
   \code{\link{make.mark.model}} to fix bug in which mlogits
   were incorrectly assigned in ORDMS model when both Psi
   and pent used mlogit links. Thanks to Glenn Stauffer for

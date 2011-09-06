@@ -13,6 +13,8 @@
 
   \item{realvcv}{if TRUE the vcv matrix of the real
   parameters is extracted and stored in the model results}
+
+  \item{vcvfile}{name of vcv file output}
 }
 \value{
   result: list of extracted output elements

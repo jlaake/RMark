@@ -14,6 +14,7 @@
 #' columns in design matrix, modifies AIC and records both
 #' @param realvcv if TRUE the vcv matrix of the real parameters is extracted
 #' and stored in the model results
+#' @param vcvfile name of vcv file output
 #' @return result: list of extracted output elements
 #' \item{lnl}{-2xLog-likelihood} \item{deviance}{Difference between saturated
 #' model and lnl} \item{npar}{Number of model parameters}
@@ -34,20 +35,13 @@
 #' @seealso \code{\link{run.mark.model}}
 #' @keywords utility
 "extract.mark.output" <-
-function(out,model,adjust,realvcv=FALSE)
+function(out,model,adjust,realvcv=FALSE,vcvfile)
 {
 # ----------------------------------------------------------------------------------------
 #
 #  extract.mark.output     extracts the lnl, AICc, npar, beta and real estimates 
 #                          and returns a list of these
 #                          beta and real are dataframes with names estimate,se,lcl,ucl
-#
-#  Arguments:
-#     out            - output from MARK analysis
-#     model          - mark model object
-#     adjust         - if TRUE, adjusts npar to # of cols in design matrix, modifies AIC and records both
-#     realvcv        - if TRUE the vcv matrix of the real parameters is extracted and stored in the model results
-#
 #  Value:
 #     result         - list of extracted output elements like npar, n(ESS), deviance etc
 #
@@ -62,10 +56,9 @@ function(out,model,adjust,realvcv=FALSE)
   design.matrix=model$design.matrix
   links=model$links
   derived=setup.model(model$model,model$nocc)$derived
-  outfile="markxxx.inp"
+  outfile=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
   nreal=dim(design.matrix)[1]
   nbeta=dim(design.matrix)[2]
-  unlink(paste(outfile,".tmp",sep=""))
   x=grep("Effective sample size ",out,ignore.case=TRUE)
   if(length(x)==0)
     stop("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
@@ -118,8 +111,8 @@ function(out,model,adjust,realvcv=FALSE)
        }
      }
   }
-  write(save,file=paste(outfile,".tmp",sep=""))
-  x=read.fwf(file=paste(outfile,".tmp",sep=""),widths=c(26,16,16,16,16),col.names=c("","estimate","se","lcl","ucl"))
+  write(save,outfile)
+  x=read.fwf(file=outfile,widths=c(26,16,16,16,16),col.names=c("","estimate","se","lcl","ucl"))
   dimx=dim(x)[2]
   beta=as.data.frame(x[,((dimx-4+1):dimx)])
   names(beta)=c("estimate","se","lcl","ucl")
@@ -156,7 +149,7 @@ function(out,model,adjust,realvcv=FALSE)
   }
   else
     npar.unadjusted=NULL    
-  unlink(paste(outfile,".tmp",sep=""))
+  unlink(outfile)
 #
 # Extract real parameters from text file; This could be done from binary file but the text file
 # also denotes the fixed parameters
@@ -172,14 +165,14 @@ function(out,model,adjust,realvcv=FALSE)
 		   ind= regexpr("\\*\\*\\*\\*:",out[i])
        if(ind!=-1& ind<=20)
        {
-          write(out[i],file=paste(outfile,".tmp",sep=""),append=TRUE)
+          write(out[i],file=outfile,append=TRUE)
           j=j+1
        }
     }
   }
-  x=read.fwf(file=paste(outfile,".tmp",sep=""),widths=c(26,16,16,16,16,20),col.names=c("","estimate","se","lcl","ucl","fixed"),
+  x=read.fwf(file=outfile,widths=c(26,16,16,16,16,20),col.names=c("","estimate","se","lcl","ucl","fixed"),
                                as.is=TRUE)
-  unlink(paste(outfile,".tmp",sep=""))
+  unlink(outfile)
   x$note=""
   x$fixed[is.na(x$fixed)]=  "       "
   x$note[substr(as.character(x$fixed),3,7)!="Fixed"]=x$fixed[substr(as.character(x$fixed),3,7)!="Fixed"]
@@ -193,11 +186,11 @@ function(out,model,adjust,realvcv=FALSE)
      row.names(real)=row.names(model$simplify$design.matrix)
 #  if(!is.factor(real$fixed))real$fixed=""
   if(!is.factor(real$note))real$note=""
-  if(file.exists("markxxx.vcv"))
+  if(file.exists(vcvfile))
      if(os=="mingw32")
-        param=read.mark.binary("markxxx.vcv")
+        param=read.mark.binary(vcvfile)
      else
-        param=read.mark.binary.linux("markxxx.vcv")
+        param=read.mark.binary.linux(vcvfile)
   else
   {
      param=NULL

@@ -146,7 +146,7 @@ delete=FALSE,external=FALSE)
        if(toupper(substr(readline("Create mark model with existing file (Y/N)?"),1,1))=="Y")
          RunMark=FALSE
 #
-# Write input file to temp file markxxx.inp
+# Write input file to temp file 
 #
   writeLines(model$input,inputfile)
   if(os=="mingw32")
@@ -171,17 +171,17 @@ delete=FALSE,external=FALSE)
 	}		
     if(RunMark)
 		system(paste(MarkPath, " BATCH i=",inputfile," o=", outfile,
-						" v=markxxx.vcv r=",resfile,sep = ""), invisible = invisible)
-	else
-      file.rename(vcvfile,"markxxx.vcv")
+						" v=",vcvfile, " r=",resfile,sep = ""), invisible = invisible)
+#	else
+#      file.rename(vcvfile,"markxxx.vcv")
   } else
   {
     if(!exists("MarkPath"))MarkPath=""
     if(RunMark)
        system(paste("mark i=",inputfile," o=", outfile,
-            " v=markxxx.vcv r=",resfile,sep = ""))
-    else
-      file.rename(vcvfile,"markxxx.vcv")
+            " v=", vcvfile," r=",resfile,sep = ""))
+#    else
+#      file.rename(vcvfile,"markxxx.vcv")
   }
 #
 # Read in the output file
@@ -190,8 +190,8 @@ delete=FALSE,external=FALSE)
 #
 # Extract relevant parts of output
 #
-  results=extract.mark.output(out,model,adjust,realvcv)
-  file.rename("markxxx.vcv",vcvfile)
+  results=extract.mark.output(out,model,adjust,realvcv,vcvfile)
+#  file.rename("markxxx.vcv",vcvfile)
   model$results=results
 #
 # 24-Aug-05; output is now the base filename and input is no longer stored in object

@@ -364,3 +364,6 @@ RDPdfHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE
 RDPdfHugHet	f	0	-1	1	Square	all	logit	~1					FALSE					
 RDPdfHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
 RDPdfHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					
+CJSMixture	pi	0		0	Square	all	logit	~1			TRUE	-1						
+CJSMixture	Phi	0	-1	1	Triang	all	logit	~mixture			TRUE	0						
+CJSMixture	p	1	-1	0	Triang	all	logit	~mixture			TRUE	0						

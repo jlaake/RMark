@@ -311,7 +311,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
                     output.labels[j]=paste(output.labels[j]," To:",model$strata.labels[model$pims[[parameter]][[j]]$tostratum],sep="")
               else
                  if(parameter.labels[k]=="session")
-                    output.labels[j]=paste(output.labels[j]," Session:",model$pims[[parameter]][[j]]$session,sep="")
+                    output.labels[j]=paste(output.labels[j]," Session:",model$pims[[parameter]][[j]]$session.label,sep="")
 
        }
     }

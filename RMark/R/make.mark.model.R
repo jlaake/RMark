@@ -1279,6 +1279,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                      else
                          pim[[i]][[k]]$pim=create.pim(nocc.secondary[l],parameters[[i]],npar,mixtures)
                      pim[[i]][[k]]$session=l
+					 pim[[i]][[k]]$session.label=levels(ddl[[i]]$session)[l]
                   }
                   pim[[i]][[k]]$group=j
                   if(length(data$strata.labels)>0) pim[[i]][[k]]$stratum=jj

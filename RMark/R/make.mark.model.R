@@ -580,11 +580,13 @@ function(model){
 
 "renumber.pims" <-
 function(pim,newlist,type){
-if(type=="Triang")
+if(type%in%c("Triang","STriang"))
 {
-   pim=t(pim)
-   pim[lower.tri(pim,TRUE)]=newlist[pim]
-   return(t(pim))
+#   pim=t(pim)
+	pim[pim!=0]=newlist[pim]
+#    pim[lower.tri(pim,TRUE)]=newlist[pim]
+#   return(t(pim))
+    return(pim)
 } else
    return(newlist[pim])
 }
@@ -626,7 +628,11 @@ if(type=="Triang")
  if (parameters$type == "Triang")
          string = paste(paste("group=", group,sep=""), param.name, stratum.designation, session.designation, 
                            paste(" rows=",ncol," cols=",ncol,sep=""), parameters$type, ";")
-  else
+ else
+	 if (parameters$type == "STriang")
+				   string = paste(paste("group=", group,sep=""), param.name, stratum.designation, session.designation, 
+						   paste(" rows=",(mixtures+parameters$rows)*ncol," cols=",ncol,sep=""), parameters$type, ";")
+	else
       if(mixtures==1)
           string=paste(paste("group=",group,sep=""),param.name,stratum.designation, session.designation, 
                            paste(" rows=1"," cols=",ncol,sep=""),parameters$type,";")
@@ -727,7 +733,7 @@ for (i in 1:length(parameters)) {
                    ncol,model$pims[[i]][[j]]$stratum,model$pims[[i]][[j]]$tostratum,model$strata.labels,
 				   mixtures,model$pims[[i]][[j]]$session,parameters[[i]]$socc)
          write(string, file = outfile, append = TRUE)
-         if(parameters[[i]]$type == "Triang")
+         if(parameters[[i]]$type %in% c("Triang","STriang"))
          {
             newpim=renumber.pims(model$pims[[names(model$parameters)[i]]][[j]]$pim,new.indices,parameters[[i]]$type)
             print.pim(newpim,outfile)
@@ -872,23 +878,31 @@ create.pim=function(nocc,parameters,npar,mixtures)
 {
     ncol=nocc+parameters$num
     mat=NULL
-    if(parameters$type=="Triang")
+    if(parameters$type%in%c("Triang","STriang"))
     {
-        for(k in 1:(nocc+parameters$num))
-        {
-            if(parameters$pim.type=="all")
-            {
-                mat=rbind(mat,c(rep(0,k-1),npar:(npar+ncol-1)))
-                npar=npar+ncol
-            }
-            else
-            {
-               if(parameters$pim.type=="time")
-                   mat=rbind(mat,c(rep(0,k-1),(npar+k-1):(npar+k-1+ncol-1)))
+		nmix=1
+		if(mixtures>1)
+			if(!is.null(parameters$mix)&&parameters$mix)
+				nmix=mixtures+parameters$rows
+		for (j in 1:nmix)
+		{
+		   ncol=nocc+parameters$num
+		   for(k in 1:(nocc+parameters$num))
+           {
+               if(parameters$pim.type=="all")
+               {
+                   mat=rbind(mat,c(rep(0,k-1),npar:(npar+ncol-1)))
+                   npar=npar+ncol
+               }
                else
-                   mat=rbind(mat,c(rep(0,k-1),rep(npar,ncol)))
-            }
-            ncol=ncol-1
+               {
+                  if(parameters$pim.type=="time")
+                      mat=rbind(mat,c(rep(0,k-1),(npar+k-1):(npar+k-1+ncol-1)))
+                  else
+                      mat=rbind(mat,c(rep(0,k-1),rep(npar,ncol)))
+               }
+               ncol=ncol-1
+		   }
         }
 #        if(parameters$pim.type!="all")
 #            npar=max(mat)+1
@@ -1135,7 +1149,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(data$model=="MultScalOcc")
 	  string=paste(string," mixtures =",length(levels(ddl$p$time)))
   time.int=data$time.intervals
-  if(data$reverse | data$model=="MultScalOcc")time.int[time.int==0]=1
+  if(!is.null(data$reverse) &&(data$reverse | data$model=="MultScalOcc")) time.int[time.int==0]=1
   string=paste(string," ICMeans NoHist hist=",dim(zz)[1],
            ";\n time interval ",paste(time.int,collapse=" "),";")
   if(model.list$strata)string=paste(string,"\n strata=",paste(data$strata.labels[1:data$nstrata],collapse=" "),";",sep="")

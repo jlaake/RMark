@@ -31,7 +31,7 @@
 #' @param ... additional non-specified argument for S3 generic function
 #' @param input if TRUE, prints mark input file; otherwise the output file
 #' @return None
-#' @export print.mark print.marklist
+#' @export print.mark print.marklist 
 #' @author Jeff Laake
 #' @seealso \code{\link{summary.mark}}
 #' @keywords utility

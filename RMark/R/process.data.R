@@ -335,10 +335,13 @@ initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,co
          stop("\nTime intervals must be specified for a robust design\n")
       else
       {
-         nocc.list=robust.occasions(time.intervals)
-         nocc=nocc.list$nocc
+		 if(substr(model,1,6)=="RDBark")
+			  nocc.list=robust.occasions(time.intervals[-length(time.intervals)])
+		 else
+		   nocc.list=robust.occasions(time.intervals)
+		 nocc=nocc.list$nocc
          nocc.secondary=nocc.list$nocc.secondary
-         if(any(nchar(data$ch)!=sum(nocc.secondary)))
+         if(any(nchar(data$ch)/model.list$divisor !=sum(nocc.secondary)))
              stop("Incorrect number of time intervals. One or more capture history lengths do not match time interval structure.")
 
       }

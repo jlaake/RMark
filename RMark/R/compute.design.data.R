@@ -23,7 +23,7 @@
 #' @param data data list created by \code{\link{process.data}}
 #' @param begin 0 for survival type, 1 for capture type
 #' @param num number of parameters relative to number of occasions (0 or -1)
-#' @param type type of parameter structure (Triang or Square)
+#' @param type type of parameter structure (Triang (STriang) or Square)
 #' @param mix if TRUE this is a mixed parameter
 #' @param rows number of rows relative to number of mixtures
 #' @param pim.type type of pim structure; either all (all-different) or time
@@ -91,15 +91,19 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
   #
   #  pim.type field allows either all-different or time pims for Triangular pims
   #
+	 if(is.null(mix) || !mix)
+		num.rows=1
+	 else
+		num.rows=data$mixtures+rows 
      if(pim.type=="all")
      {
         num.lines=num
-        num.rows=1
+#        num.rows=1
      }
      else
      {
         num.lines=1
-        num.rows=1
+#        num.rows=1
      }
   }
   if(setup.model(data$model,data$nocc)$robust)
@@ -137,16 +141,19 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
        else
        {
           ncol=data$nocc.secondary[l]+num
-          if(type=="Triang")num.lines=ncol
+          if(type%in%c("Triang","STriang"))num.lines=ncol
        }
      }
      else
         ncol=num
-     for(i in 1:num.lines)
-     for(k in 1:num.rows)
-     {    
+	 ncol.save=ncol
+	 for(k in 1:num.rows)
+	 {
+	    ncol=ncol.save
+  	    for(i in 1:num.lines)
+        {    
 #
-#     Define age variable
+#        Define age variable
 #
         if(secondary)
            ages=0
@@ -159,7 +166,7 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
 #     Define cohort variable
 #
         if(secondary)
-           if(type!="Triang")
+           if(!type%in%c("Triang","STriang"))
               cohort=0
            else
               cohort=i
@@ -177,15 +184,15 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
 #
 #     Define time variable
 #
-       if(secondary)
+        if(secondary)
           if(is.na(num))
              times=0
           else
-             if(type=="Triang")
+             if(type%in%c("Triang","STriang"))
                 times=(begin+i):(data$nocc.secondary[l]+num)
              else
                 times=(begin+1):(begin+ncol)
-       else
+        else
           if(begin==0)
              if(i==num)
                 times=cohort
@@ -196,8 +203,8 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
 #
 #      Create design data as needed for the parameter
 #
-       if(type=="Triang")
-       {
+        if(type%in%c("Triang","STriang"))
+        {
           if(pim.type=="all")
           {
              add.design.data=cbind(rep(j,ncol),rep(cohort,ncol),ages,times,(i-1)+1:ncol,rep(i,ncol))
@@ -214,18 +221,18 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
                 add.design.data=matrix(rep(j,ncol),nrow=1)
                 dd.names=c("group")
             }
-       }
-       else
-       {
+        }
+        else
+        {
           add.design.data=cbind(rep(j,ncol),ages,times)
           dd.names=c("group","age","time")
-       }
-       if(!is.null(mix) && mix)
-       {
+        }
+        if(!is.null(mix) && mix)
+        {
           add.design.data=cbind(add.design.data,rep(k,ncol))
           dd.names=c(dd.names,"mixture")
-       }
-       if(nstrata>1)
+        }
+        if(nstrata>1)
            if(tostrata)
            {
               add.design.data=cbind(add.design.data,rep(jj,ncol),rep(to.strata,ncol))
@@ -236,21 +243,22 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
               add.design.data=cbind(add.design.data,rep(jj,ncol))
               dd.names=c(dd.names,"stratum")
            }
-      if(secondary)
-      {
+        if(secondary)
+        {
           add.design.data=cbind(add.design.data,rep(l,ncol))
           dd.names=c(dd.names,"session")
-      }
+        }
 #
 #     Add rows to existing design data
 #
-      design.data=rbind(design.data,add.design.data)
+        design.data=rbind(design.data,add.design.data)
 #
-#     If trianular pim type, decrement number of cols
+#      If trianular pim type, decrement number of cols
 #
-       if(type=="Triang")
+       if(type%in%c("Triang","STriang"))
           ncol=ncol-1
-     }
+       }
+	 }
   }
   }
    design.data=as.data.frame(design.data,row.names=NULL)

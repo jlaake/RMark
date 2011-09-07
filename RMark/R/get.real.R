@@ -121,14 +121,19 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
 #
   Put.in.PIM.format=function(real,pim,design.data)
   {
-    wtable=matrix(NA,nrow=dim(pim)[1],ncol=dim(pim)[2])
-    for(i in 1:dim(pim)[1])
+    wtable=matrix(NA,nrow=nrow(pim),ncol=ncol(pim))
+    for(i in 1:nrow(pim))
     {
-      wtable[i,(i:(dim(pim)[2]))]=real[pim[i,(i:(dim(pim)[2]))]]
+	  cols=(i:ncol(pim))
+	  if(i>ncol(pim))cols=((i-ncol(pim)):ncol(pim))
+      wtable[i,cols]=real[pim[i,cols]]
     }
-    colnames(wtable)=design.data$time[1:dim(pim)[1]]
+    colnames(wtable)=design.data$time[1:ncol(pim)]
     if(!is.null(design.data$cohort))
-       rownames(wtable)=design.data$cohort[(diag(pim)-pim[1,1]+1)]
+		if(nrow(pim)==ncol(pim))
+           rownames(wtable)=design.data$cohort[(diag(pim[1:nrow(pim),])-pim[1,1]+1)]
+        else
+			rownames(wtable)=rep(design.data$cohort[(diag(pim[1:nrow(pim),])-pim[1,1]+1)],nrow(pim)/ncol(pim))	
     wtable
   }
 #
@@ -285,7 +290,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
   parameter.names=names(parameters)
   type=parameters[[match(parameter,parameter.names)]]$type
   ng=length(model$pims[[parameter]])
-  if( type =="Triang" | !is.null(model$mixtures)| !is.null(model$nocc.secondary))
+  if( type%in%c("Triang","STriang") | !is.null(model$mixtures)| !is.null(model$nocc.secondary))
       estimates=list()
   else
       estimates=NULL
@@ -319,7 +324,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
         output.labels[j]=""
     if(!se & is.null(beta))
     {
-        if(type=="Triang")
+        if(type%in%c("Triang","STriang"))
         
         {
            estimates[[j]]=list(pim=Put.in.PIM.format(real,model$pims[[parameter]][[j]]$pim,model$design.data[[parameter]]))
@@ -345,7 +350,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
     else
     {
     
-        if(type=="Triang"&&model$parameters[[parameter]]$pim.type!="all")
+        if(type%in%c("Triang","STriang")&&model$parameters[[parameter]]$pim.type!="all")
            if(model$parameters[[parameter]]$pim.type=="time")
               indices=model$pims[[parameter]][[j]]$pim[1,]
            else
@@ -365,7 +370,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
   }
   if(!se& is.null(beta))
   {
-     if(type =="Triang" | is.list(estimates))
+     if(type %in%c("Triang","STriang") | is.list(estimates))
         names(estimates)=output.labels
      else
      {

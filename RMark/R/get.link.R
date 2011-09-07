@@ -126,7 +126,7 @@ function(model,parameter,beta=NULL,design=NULL,data=NULL,vcv=FALSE)
   parameter.names=names(parameters)
   type=parameters[[match(parameter,parameter.names)]]$type
   ng=length(model$pims[[parameter]])
-  if( type =="Triang" | !is.null(model$mixtures)| !is.null(model$nocc.secondary))
+  if( type %in%c("Triang","STriang") | !is.null(model$mixtures)| !is.null(model$nocc.secondary))
       estimates=list()
   else
       estimates=NULL
@@ -158,7 +158,7 @@ function(model,parameter,beta=NULL,design=NULL,data=NULL,vcv=FALSE)
     }
     else
         output.labels[j]=""
-    if(type=="Triang" && model$parameters[[parameter]]$pim.type!="all")
+    if(type%in%c("Triang","STriang") && model$parameters[[parameter]]$pim.type!="all")
         if(model$parameters[[parameter]]$pim.type=="time")
            indices=model$pims[[parameter]][[j]]$pim[1,]
         else

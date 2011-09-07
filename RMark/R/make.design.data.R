@@ -375,7 +375,7 @@ remove.unused.occasions=function(data,ddl)
 		if(!valid.parameters(data$model,parameter)) stop()
 		parameters=setup.parameters(data$model,parameters=NULL,data$nocc,check=FALSE,
 				number.of.groups=dim(data$freq)[2])
-		if(parameters[[parameter]]$type !="Triang")stop("\nDoes not work for parameters with non-triangular PIM\n")
+		if(!parameters[[parameter]]$type%in%c("Triang","STriang"))stop("\nDoes not work for parameters with non-triangular PIM\n")
 		ch=data$data$ch
 		if(data$model=="Multistrata")
 			ch=gsub("[1-9 a-z A-Z]","1",ch)
@@ -538,7 +538,7 @@ remove.unused.occasions=function(data,ddl)
          full.design.data[[i]]=design.data
          pimtypes[[i]]=list(pim.type=parameters[[i]]$pim.type)
 	     if(!is.null(subtract.stratum))pimtypes[[i]]$subtract.stratum=subtract.stratum
-         if(parameters[[i]]$type =="Triang"&&parameters[[i]]$pim.type=="all")anyTriang=TRUE
+         if(parameters[[i]]$type%in%c("Triang","STriang")&&parameters[[i]]$pim.type=="all")anyTriang=TRUE
          if(parameters[[i]]$type =="Square")anySquare=TRUE
 	  }
    }
@@ -581,7 +581,7 @@ remove.unused.occasions=function(data,ddl)
            }
            for(i in 1:length(parameters))
            {
-              if(parameters[[i]]$type =="Triang"&&parameters[[i]]$pim.type=="all")
+              if(parameters[[i]]$type %in%c("Triang","STriang")&&parameters[[i]]$pim.type=="all")
               {
                  if(number.of.groups==1)
 					 full.design.data[[i]]=full.design.data[[i]][!(full.design.data[[i]]$occ.cohort%in%remove.cohort),]

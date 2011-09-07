@@ -17,9 +17,9 @@ Barker	S	0	0	1	Triang	all	logit	~1
 Barker	p	1	-1	0	Triang	all	logit	~1										
 Barker	r	0	0	0	Triang	all	logit	~1										
 Barker	R	0	0	0	Triang	all	logit	~1										
-Barker	Rprime	0	0	0	Triang	all	logit	~1										
+Barker	RPrime	0	0	0	Triang	all	logit	~1										
 Barker	F	0	-1	1	Triang	all	logit	~1										
-Barker	Fprime	0	-1	0	Triang	all	logit	~1										
+Barker	FPrime	0	-1	0	Triang	all	logit	~1										
 POPAN	Phi	0	-1	1	Square	all	logit	~1										
 POPAN	p	0	0	0	Square	all	logit	~1										
 POPAN	pent	1	-1	0	Square	all	mlogit	~1										
@@ -364,6 +364,65 @@ RDPdfHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE
 RDPdfHugHet	f	0	-1	1	Square	all	logit	~1					FALSE					
 RDPdfHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
 RDPdfHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					
-CJSMixture	pi	0		0	Square	all	logit	~1			TRUE	-1						
-CJSMixture	Phi	0	-1	1	Triang	all	logit	~mixture			TRUE	0						
-CJSMixture	p	1	-1	0	Triang	all	logit	~mixture			TRUE	0						
+CJSMixture	pi	0	1	0	Square	all	logit	~1			TRUE	-1						
+CJSMixture	Phi	0	-1	1	STriang	all	logit	~mixture			TRUE	0						
+CJSMixture	p	1	-1	0	STriang	all	logit	~mixture			TRUE	0						
+RDBarker	S	0	0	1	Triang	all	logit	~1					FALSE					
+RDBarker	r	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarker	R	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarker	RPrime	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarker	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE					
+RDBarker	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE					
+RDBarker	F	0	-1	1	Triang	all	logit	~1					FALSE					
+RDBarker	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE					
+RDBarker	c	1	-1	0	Square	all	logit			p			TRUE					
+RDBarker	N	0			Square	all	log	~session					TRUE					
+RDBarkHet	S	0	0	1	Triang	all	logit	~1					FALSE					
+RDBarkHet	r	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHet	R	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE					
+RDBarkHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE					
+RDBarkHet	F	0	-1	1	Triang	all	logit	~1					FALSE					
+RDBarkHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDBarkHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					
+RDBarkHet	N	0			Square	all	log	~session					TRUE					
+RDBarkFHet	S	0	0	1	Triang	all	logit	~1					FALSE					
+RDBarkFHet	r	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkFHet	R	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkFHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkFHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE					
+RDBarkFHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE					
+RDBarkFHet	F	0	-1	1	Triang	all	logit	~1					FALSE					
+RDBarkFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDBarkFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE					
+RDBarkFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE					
+RDBarkFHet	N	0			Square	all	log	~session					TRUE					
+RDBarkHug	S	0	0	1	Triang	all	logit	~1					FALSE					
+RDBarkHug	r	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHug	R	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHug	RPrime	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHug	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE					
+RDBarkHug	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE					
+RDBarkHug	F	0	-1	1	Triang	all	logit	~1					FALSE					
+RDBarkHug	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE					
+RDBarkHug	c	1	-1	0	Square	all	logit			p			TRUE					
+RDBarkHHet	S	0	0	1	Triang	all	logit	~1					FALSE					
+RDBarkHHet	r	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHHet	R	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE					
+RDBarkHHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE					
+RDBarkHHet	F	0	-1	1	Triang	all	logit	~1					FALSE					
+RDBarkHHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDBarkHHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE					
+RDBarkHFHet	S	0	0	1	Triang	all	logit	~1					FALSE					
+RDBarkHFHet	r	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHFHet	R	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHFHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE					
+RDBarkHFHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE					
+RDBarkHFHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE					
+RDBarkHFHet	F	0	-1	1	Triang	all	logit	~1					FALSE					
+RDBarkHFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDBarkHFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE					
+RDBarkHFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE					

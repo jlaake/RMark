@@ -128,6 +128,12 @@ export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",i
        if(file.exists(xfilename)) stop("Use a different project name because the .inp file already exists")
     }
   }
+  if(x$model=="MultScalOcc")
+  {
+	 x$mixtures= match("1",x$time.intervals)
+	 x$time.intervals=rep(1,length(x$time.intervals))
+	 x$nocc=nchar(x$data$ch[1])
+  }
   write(setup.model(x$model, nchar(x$data$ch[1]), x$mixtures)$etype,file=filename)
   write(x$mixtures,file=filename,append=TRUE)
   write(x$nocc,file=filename,append=TRUE)

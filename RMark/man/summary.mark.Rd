@@ -3,6 +3,11 @@
 \alias{print.summary.mark}
 \alias{summary.mark}
 \title{Summary of MARK model parameters and results}
+\usage{
+  \method{summary}{mark}(object,...,se=FALSE,vc=FALSE,showall=TRUE,show.fixed=FALSE,brief=FALSE)
+  \method{coef}{mark}(object,...)
+  \method{print}{summary.mark}(x,...)
+}
 \arguments{
   \item{object}{a MARK model object}
 

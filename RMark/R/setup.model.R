@@ -66,6 +66,5 @@ function(model,nocc,mixtures=1)
 		model_def$mixtures=mixtures
 	model_def$default.mixtures=NULL
 	model_def$nocc=nocc/model_def$divisor
-	model_def$divisor=NULL
     return(as.list(model_def))
 }

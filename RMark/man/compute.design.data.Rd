@@ -11,8 +11,8 @@ use)}
   \item{num}{number of parameters relative to number of
   occasions (0 or -1)}
 
-  \item{type}{type of parameter structure (Triang or
-  Square)}
+  \item{type}{type of parameter structure (Triang (STriang)
+  or Square)}
 
   \item{mix}{if TRUE this is a mixed parameter}
 

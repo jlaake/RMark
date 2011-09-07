@@ -1973,7 +1973,7 @@ NULL
 #' always get to it in the documentation for awhile.  They are ordered from
 #' newest to oldest.
 #' 
-#' Version 2.0.8 (1 Oct 2011) \itemize{ \item Both \code{\link{setup.model}}
+#' Version 2.0.8 (7 Sept 2011) \itemize{ \item Both \code{\link{setup.model}}
 #' and \code{\link{setup.parameters}} were re-written to use data files
 #' models.txt and parameters.txt to define models and parameters which should
 #' make it easier to add new models.  The latter function is now much simpler
@@ -1987,12 +1987,16 @@ NULL
 #' \code{covariates} in \code{\link{mark}} and \code{\link{make.mark.model}}
 #' was removed because it was only needed to support the component approach.
 #' \item  \code{\link{export.MARK}} was modified so that if all individual covariates
-#' are output, it excludes factor covariates. \item Several models were added to those
-#' supported in RMark.  See MarkModels.pdf in the RMark directory of your R library. 
-#' Usually C:/program files/R/rvvvv/Library where vvvv is the R version. \item 
-#' Previously RMark stored the input file in a temporary file Markxxx.tmp. Using a common
+#' are output, it excludes factor covariates. \item Many more models were added to those
+#' supported in RMark. Now 92 of the 137 models in MARK are supported. See MarkModels.pdf in the RMark directory of your R library
+#' to see which models are supported (in red). Most of the remaining unsupported models
+#' are versions with mis-identification error and they are not shown in MarkModels.pdf.  
+#' \item Previously RMark stored the input file in a temporary file Markxxx.tmp. Using a common
 #' filename caused problems when more than one model were spawned to different CPUs, so
-#' now it uses a random temporary file name.}
+#' now it uses a random temporary file name. It also no longer uses common file markxxx.vcv.
+#' Thanks to Glenn Stauffer for testing these changes.
+#' \item Sessions are now labelled using value of session time rather than numerically from 1
+#' to largest session number in robust designs.  Thanks to Tommy Garrison for this suggestion.}
 #' Version 2.0.7 (25 August 2011) \itemize{ \item Change to
 #' \code{\link{make.mark.model}} to fix bug in which mlogits were incorrectly
 #' assigned in ORDMS model when both Psi and pent used mlogit links. Thanks to

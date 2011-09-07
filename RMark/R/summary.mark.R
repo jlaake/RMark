@@ -41,6 +41,9 @@
 #' parameters.
 #' 
 #' @aliases summary.mark print.summary.mark coef.mark
+#' @usage \method{summary}{mark}(object,...,se=FALSE,vc=FALSE,showall=TRUE,show.fixed=FALSE,brief=FALSE)
+#'        \method{coef}{mark}(object,...)
+#'        \method{print}{summary.mark}(x,...)
 #' @param object a MARK model object
 #' @param se if FALSE the real parameter estimates are output in PIM format
 #' (eg. triangular format); if TRUE, they are displayed as a list with se and
@@ -53,6 +56,9 @@
 #' @param brief if TRUE, does not show real parameter estimates
 #' @param ... additional non-specified argument for S3 generic function
 #' @param x list resulting from call to \code{summary}
+#' @S3method summary mark
+#' @S3method print summary.mark
+#' @S3method coef mark
 #' @return A list with each of the summarized objects that depends on the
 #' argument values. Only the first 4 are given if it is a summary of a model
 #' that has not been run. \item{model}{type of model (e.g., CJS)}
@@ -70,7 +76,7 @@
 #' dataframes or matrices depending on value of se and the type of model
 #' (triangular versus square PIMS) (see details above)}
 #' @author Jeff Laake
-#' @export
+#' @export summary.mark print.summary.mark coef.mark
 #' @keywords utility
 "summary.mark" <-function(object,...,se=FALSE,vc=FALSE,showall=TRUE,show.fixed=FALSE,
                     brief=FALSE)
@@ -167,7 +173,7 @@ if(!brief)
              x$reals[[i]]=x$reals[[i]][!duplicated(x$reals[[i]]$par.index),,drop=FALSE]
         if(!show.fixed)x$reals[[i]]=x$reals[[i]][x$reals[[i]]$fixed!="Fixed",]
       }
-      if(parameters[[i]]$type=="Triang" && parameters[[i]]$pim.type=="time"&&!se)
+      if(parameters[[i]]$type%in%c("Triang","STriang") && parameters[[i]]$pim.type=="time"&&!se)
         for (j in 1:length(x$reals[[i]]))
         {
            row.matrix=matrix(x$reals[[i]][[j]]$pim[1,],nrow=1)

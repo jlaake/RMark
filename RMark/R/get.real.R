@@ -150,13 +150,6 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
 #
   if(!valid.parameters(model$model,parameter))stop()
 #
-# Compute real parameters that were estimated rowsum (of design matrix) value >0
-#
-    rowsums=apply(model$design.matrix,1,
-      function(x){if(all(x=="0"))return(0) else return(1)})
-    rowsums=as.numeric(rowsums>0)
-    if(!is.null(model$simplify))rowsums= rowsums[model$simplify$pim.translation]
-#
 #  Check to see if there are any covariates used in the model.   If there
 #  are covariates used and no design is specified but data is given, then create
 #  the design matrix from data
@@ -260,28 +253,28 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
 #
 #  Set non-estimated reals to NA or fixed value depending on show.fixed
 #
-  if(any(rowsums==0))
-  if(is.vector(real))
+   if(!is.null(model$fixed))
+	 if(is.vector(real))
      if(show.fixed)
-        real[rowsums==0]=model$fixed$value[!duplicated(model$fixed$index)][unique(model$fixed$index)%in%which(rowsums==0)]
+		real[model$fixed$index]=model$fixed$value
      else
-        real[rowsums==0]=NA
+        real[model$fixed$index]=NA
 
   else
      if(is.data.frame(real))
      {
        if(show.fixed)
        {
-          real$estimate[rowsums==0]=model$fixed$value[!duplicated(model$fixed$index)][unique(model$fixed$index)%in%which(rowsums==0)]
-          real$se[rowsums==0]=0
+		   real$estimate[model$fixed$index]=model$fixed$value
+		   real$se[model$fixed$index]=0
        }
        else
        {
-          real$estimate[rowsums==0]=NA
-          real$se[rowsums==0]=NA
+		   real$estimate[model$fixed$index]=NA
+		   real$se[model$fixed$index]=NA
        }
-       real$lcl[rowsums==0]=real$estimate[rowsums==0]
-       real$ucl[rowsums==0]=real$estimate[rowsums==0]
+	   real$lcl[model$fixed$index]=real$estimate[model$fixed$index]
+	   real$ucl[model$fixed$index]=real$estimate[model$fixed$index]
      }
 #
 # Lookup type of PIM structure

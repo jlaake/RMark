@@ -49,13 +49,14 @@ vegetation thickness} \item{PpnGrass}{proportion grass in vicinity of nest}
   variables rather than dummy variables.
 }
 \examples{
+# Last updated June 2, 2011
 # Read in data, which are in a simple text file that
 # looks like a MARK input file but (1) with no comments or semicolons and
 # (2) with a 1st row that contains column labels
 # mallard=read.table("mallard.txt",header=TRUE)
+
 # The mallard data set is also incuded with RMark and can be retrieved with
 # data(mallard)
-
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Example of use of RMark for modeling nest survival data -   #
@@ -68,8 +69,7 @@ vegetation thickness} \item{PpnGrass}{proportion grass in vicinity of nest}
 # developed methods that can be implemented in MARK and SAS.  #
 #   Animal Biodiversity and Conservation 27:187-204.          #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-library(RMark)
-library(plotrix)  # used to put axis breaks on graphs
+require(RMark)
 
 # Retrieve data
 data(mallard)
@@ -134,23 +134,26 @@ model.parameters=list(S=list(formula=~NestAge+PpnGrass)))
 #
 return(collect.models() )
 }
-# This runs the 9 models above and takes a minute or 2
+
+# The next line runs the 9 models above and takes a minute or 2
 mallard.results=run.mallard()
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Examine table of model-selection results #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
 mallard.results                        # print model-selection table to screen
 options(width=100)                     # set page width to 100 characters
 sink("results.table.txt")              # capture screen output to file
 print.marklist(mallard.results)        # send output to file
 sink()                                 # return output to screen
-# remove # to see output in notepad
+
+# remove "#" on next line to see output in notepad
 # system("notepad results.table.txt",invisible=FALSE,wait=FALSE)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Examine output for constant DSR model #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# Remove # to see output
+# Remove "#" on next line to see output
 # mallard.results$Dot                  # print MARK output to designated text editor
 mallard.results$Dot$results$beta       # view estimated beta for model in R
 mallard.results$Dot$results$real       # view estimated DSR estimate in R
@@ -158,7 +161,7 @@ mallard.results$Dot$results$real       # view estimated DSR estimate in R
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Examine output for 'DSR by habitat' model #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# Remove # to see output
+# Remove "#" on next line to see output
 # mallard.results$Hab                  # print MARK output to designated text editor
 mallard.results$Hab$design.matrix      # view the design matrix that was used
 mallard.results$Hab$results$beta       # view estimated beta for model in R
@@ -168,7 +171,7 @@ mallard.results$Hab$results$real       # view the estimates of Daily Survival Ra
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Examine output for best model #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# Remove # to see output
+# Remove "#" on next line to see output
 # mallard.results$AgePpnGrass            # print MARK output to designated text editor
 mallard.results$AgePpnGrass$results$beta # view estimated beta's in R
 mallard.results$AgePpnGrass$results$beta.vcv # view estimated var-cov matrix in R
@@ -220,15 +223,16 @@ grid()
 axis.break(axis=2,breakpos=0.879,style='slash')
 with(data=AgePpn.survival,points(PpnGrass,lclDSR,'l',lty=3))
 with(data=AgePpn.survival,points(PpnGrass,uclDSR,'l',lty=3))
-# The following removes all objects from the .Rdata file.  If you wanted
-# to do further calculations in another session you would want to remove
-# the next line. Cleaning up objects as shown in this script is good programming
+
+# The "rm" command can be used to remove all objects from the .Rdata file.
+# Cleaning up objects as shown in this script is good programming
 # practice and a good idea as long as the computations are not time consuming.
 # However, if your analysis is taking several hours or days in MARK then
 # clearly you'll want to hang onto the resulting objects in R and you
-# won't want to use the following command. t has been commented out for
-# this example.
+# won't want to use the following command. It has been commented out for
+# this example; the "#" on the next line needs to be removed to do the clean up.
 # rm(list=ls(all=TRUE))
+
 # The next line deletes orphaned output files from MARK.
 # ?cleanup will give a more complete description of this function.
 cleanup(ask=FALSE)

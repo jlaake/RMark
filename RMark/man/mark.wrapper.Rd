@@ -24,8 +24,9 @@ specifications}
   These must be specified as argument=value pairs.}
 }
 \value{
-  marklist - list of mark models that were run and a
-  model.table of results.
+  if(run) marklist - list of mark models that were run and
+  a model.table of results; if(!run) a list of models that
+  were constructed but not run.
 }
 \description{
   This is a convenience function that uses a dataframe of
@@ -61,7 +62,7 @@ specifications}
   boundaries, the results were discouraging because the
   models converged to a sub-optimal likelihood value than
   the runs using the default initial values.  I've left
-  this option in but set its default value to FALSE.
+  sthis option in but set its default value to FALSE.
 
   A possibly more useful argument is the argument
   \code{initial}.  Previously, you could use

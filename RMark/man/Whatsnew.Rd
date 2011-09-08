@@ -8,7 +8,7 @@
   to oldest.
 }
 \details{
-  Version 2.0.8 (7 Sept 2011) \itemize{ \item Both
+  Version 2.0.8 (8 Sept 2011) \itemize{ \item Both
   \code{\link{setup.model}} and
   \code{\link{setup.parameters}} were re-written to use
   data files models.txt and parameters.txt to define models
@@ -43,8 +43,15 @@
   Stauffer for testing these changes. \item Sessions are
   now labelled using value of session time rather than
   numerically from 1 to largest session number in robust
-  designs.  Thanks to Tommy Garrison for this suggestion.}
-  Version 2.0.7 (25 August 2011) \itemize{ \item Change to
+  designs.  Thanks to Tommy Garrison for this suggestion.
+  \item A bug was fixed in \code{\link{get.real}} which
+  caused incorrect assignments of fixed parameter values in
+  the unusual case where a fixed parameter had a non-zero
+  design matrix row. \item \code{\link{mark.wrapper}} was
+  modified so it returns a list of the models that were
+  constructed if run==FALSE.  Thanks to Eldar Rakhimberdiev
+  for the suggestion and code. } Version 2.0.7 (25 August
+  2011) \itemize{ \item Change to
   \code{\link{make.mark.model}} to fix bug in which mlogits
   were incorrectly assigned in ORDMS model when both Psi
   and pent used mlogit links. Thanks to Glenn Stauffer for

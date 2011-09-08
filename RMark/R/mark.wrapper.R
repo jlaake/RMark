@@ -26,7 +26,7 @@
 #' execution times, but from the one set of examples I ran where several
 #' parameters were at boundaries, the results were discouraging because the
 #' models converged to a sub-optimal likelihood value than the runs using the
-#' default initial values.  I've left this option in but set its default value
+#' default initial values.  I've left sthis option in but set its default value
 #' to FALSE.
 #' 
 #' A possibly more useful argument is the argument \code{initial}.  Previously,
@@ -67,8 +67,8 @@
 #' @param initial vector, mark model or marklist for defining initial values
 #' @param ... arguments to be passed to \code{\link{mark}}. These must be
 #' specified as argument=value pairs.
-#' @return marklist - list of mark models that were run and a model.table of
-#' results.
+#' @return if(run) marklist - list of mark models that were run and a model.table of
+#' results; if(!run) a list of models that were constructed but not run.
 #' @author Jeff Laake
 #' @export
 #' @seealso \code{\link{collect.models}}, \code{\link{mark}},
@@ -92,6 +92,7 @@ if(class(initial)[1]=="marklist")
 	else
 		initiallist=initial
 model.names=rep(NA,nrow(model.list))
+if (!run) list.of.models<-vector("list", nrow(model.list))
 for (i in 1:nrow(model.list))
 {
   model.parameters=list()
@@ -135,6 +136,7 @@ for (i in 1:nrow(model.list))
   else
   {
      mymodel=try(make.mark.model(parameters=model.parameters,initial=initial,...),silent=silent)
+	 list.of.models[[i]]<-mymodel
   }
   if(class(mymodel)[1]!="try-error")
   {
@@ -155,7 +157,7 @@ rm(initial)
 if(run)
    return(collect.models())
 else
-   return(NULL)
+   return(list.of.models)
 }
 
 

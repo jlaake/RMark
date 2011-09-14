@@ -1,6 +1,10 @@
 \name{export.chdata}
 \alias{export.chdata}
 \title{Export capture-history data to MARK .inp format}
+\usage{
+  export.chdata(data, filename, covariates = NULL, replace
+  = FALSE)
+}
 \arguments{
   \item{data}{processed data list resulting from
   process.data}

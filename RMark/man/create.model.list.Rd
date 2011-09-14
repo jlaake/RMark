@@ -1,6 +1,9 @@
 \name{create.model.list}
 \alias{create.model.list}
 \title{Creates a dataframe of all combinations of parameter specifications}
+\usage{
+  create.model.list(model)
+}
 \arguments{
   \item{model}{character string identifying the type of
   model (e.g., "CJS")}

@@ -46,7 +46,7 @@
 #' @export
 #' @author Jeff Laake
 #' @keywords utility
-"cleanup" <- function(lx=NULL,ask=TRUE,prefix="mark")
+cleanup <- function(lx=NULL,ask=TRUE,prefix="mark")
 # ----------------------------------------------------------------------------------------
 #
 # cleanup   - remove unused MARK* files

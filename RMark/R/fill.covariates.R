@@ -57,7 +57,7 @@
 #' survival.by.sex$vcv.real[1,2]/prod(survival.by.sex$se.real[1:2]) 
 #' # sampling correlation of the estimates
 #' 
-"fill.covariates" <-
+fill.covariates <-
 function(model,values)
 {
 # ----------------------------------------------------------------------------------------------------

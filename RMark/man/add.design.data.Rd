@@ -1,6 +1,10 @@
 \name{add.design.data}
 \alias{add.design.data}
 \title{Add design data}
+\usage{
+  add.design.data(data, ddl, parameter, type = "age", bins
+  = NULL, name = NULL, replace = FALSE, right = TRUE)
+}
 \arguments{
   \item{data}{processed data list resulting from
   \code{\link{process.data}}}

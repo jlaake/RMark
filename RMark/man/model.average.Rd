@@ -2,6 +2,9 @@
 \alias{model.average}
 \alias{model.average.default}
 \title{Compute model averaged estimates}
+\usage{
+  model.average(x, ...)
+}
 \arguments{
   \item{x}{is either a list with a prescribed structure as
   defined in \code{\link{model.average.list}} or a

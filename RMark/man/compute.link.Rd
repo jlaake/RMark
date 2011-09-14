@@ -1,6 +1,10 @@
 \name{compute.link}
 \alias{compute.link}
 \title{Compute estimates of link values}
+\usage{
+  compute.link(model, beta = NULL, design = NULL, data =
+  NULL, parm.indices = NULL, vcv = TRUE)
+}
 \arguments{
   \item{model}{MARK model object}
 

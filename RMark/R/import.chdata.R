@@ -65,7 +65,7 @@
 #' dipper<-import.chdata(paste(pathtodata,"dipper.txt",sep="/"),
 #'       field.names=c("ch","sex"),header=FALSE)
 #' 
-"import.chdata" <-
+import.chdata <-
 function(filename, header=TRUE, field.names=NULL, field.types=NULL, use.comments=TRUE)
 {
 #

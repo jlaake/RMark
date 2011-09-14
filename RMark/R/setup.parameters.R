@@ -65,7 +65,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{setup.model}},\code{\link{valid.parameters}}
 #' @keywords utility
-"setup.parameters" <-
+setup.parameters <-
 		function(model,parameters=list(),nocc=NULL,check=FALSE,number.of.groups=1)
 # ----------------------------------------------------------------------------------------
 #  setup.parameters  - fills in value for begin and num for each parameter type depending

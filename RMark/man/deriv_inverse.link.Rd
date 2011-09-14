@@ -2,6 +2,9 @@
 \alias{deriv.inverse.link}
 \alias{deriv_inverse.link}
 \title{Derivatives of inverse of link function (internal use)}
+\usage{
+  deriv_inverse.link(real, x, link)
+}
 \arguments{
   \item{real}{Vector of values of real parameters}
 

@@ -56,7 +56,7 @@
 #' 
 #' # see examples in dipper, edwards.eberhardt and example.data
 #' 
-"collect.models" <-
+collect.models <-
 function(lx=NULL,type=NULL,table=TRUE,adjust=TRUE,external=FALSE)
 {
 #

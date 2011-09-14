@@ -254,7 +254,7 @@
 #' }
 #' 
 #' 
-"covariate.predictions" <- function(model,data=NULL,indices=NULL,drop=TRUE)
+covariate.predictions <- function(model,data=NULL,indices=NULL,drop=TRUE)
 {
 # ------------------------------------------------------------------------------------------------
 #

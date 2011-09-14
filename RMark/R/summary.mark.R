@@ -78,7 +78,7 @@
 #' @author Jeff Laake
 #' @export summary.mark print.summary.mark coef.mark
 #' @keywords utility
-"summary.mark" <-function(object,...,se=FALSE,vc=FALSE,showall=TRUE,show.fixed=FALSE,
+summary.mark <-function(object,...,se=FALSE,vc=FALSE,showall=TRUE,show.fixed=FALSE,
                     brief=FALSE)
 {
 # -------------------------------------------------------------------------------------------------------------

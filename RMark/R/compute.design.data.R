@@ -49,7 +49,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{make.design.data}}, \code{\link{add.design.data}}
 #' @keywords utility
-"compute.design.data" <-
+compute.design.data <-
 function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
            secondary,nstrata=1,tostrata=FALSE,strata.labels=NULL,
            subtract.stratum=strata.labels,common.zero=FALSE,sub.stratum=0)

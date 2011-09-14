@@ -1,4 +1,4 @@
-"read.mark.binary.linux" <-
+read.mark.binary.linux <-
 function(filespec)
 #
 # read.mark.binary 

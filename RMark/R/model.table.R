@@ -105,7 +105,7 @@
 #' #
 #' write.table(model.DeltaAICc.matrix,"DipperDeltaAICc.txt",sep="\t")
 #' 
-"model.table" <-
+model.table <-
 function(model.list=NULL,type=NULL,sort=TRUE,adjust=TRUE,ignore=TRUE,pf=1,
               use.lnl=FALSE,use.AIC=FALSE,model.name=TRUE)
 # ----------------------------------------------------------------------------------------

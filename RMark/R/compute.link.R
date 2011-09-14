@@ -25,7 +25,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{get.link}}
 #' @keywords utility
-"compute.link" <-
+compute.link <-
 function(model,beta=NULL,design=NULL,data=NULL,parm.indices=NULL,vcv=TRUE)
 {
 # ------------------------------------------------------------------------------------------------

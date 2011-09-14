@@ -32,7 +32,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{compute.real}},\code{\link{deriv_inverse.link}}
 #' @keywords utility
-"inverse.link" <-
+inverse.link <-
 function(x,link)
 {
 switch(link,

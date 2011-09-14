@@ -95,7 +95,7 @@
 #' }
 #' dipper.results=run.dipper()
 #' 
-"create.model.list"<-function(model)
+create.model.list<-function(model)
 {
 	parameters=setup.parameters(model,check=TRUE)
 	model.list=list()

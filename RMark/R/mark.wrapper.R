@@ -74,7 +74,7 @@
 #' @seealso \code{\link{collect.models}}, \code{\link{mark}},
 #' \code{\link{create.model.list}}
 #' @keywords utility
-"mark.wrapper" <-
+mark.wrapper <-
 function(model.list,silent=FALSE,run=TRUE,use.initial=FALSE,initial=NULL,...)
 {
 # -----------------------------------------------------------------------------------------------------------------------

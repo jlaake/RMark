@@ -2,6 +2,9 @@
 \alias{collect.model.names}
 \title{Collect names of MARK model objects from list of R objects (internal
 function)}
+\usage{
+  collect.model.names(lx, type = NULL, warning = TRUE)
+}
 \arguments{
   \item{lx}{vector of R object names from parent.frame(2)}
 

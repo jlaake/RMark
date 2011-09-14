@@ -1,6 +1,11 @@
 \name{run.mark.model}
 \alias{run.mark.model}
 \title{Runs analysis with MARK model using MARK.EXE}
+\usage{
+  run.mark.model(model, invisible = FALSE, adjust = TRUE,
+  filename = NULL, prefix = "mark", realvcv = FALSE, delete
+  = FALSE, external = FALSE)
+}
 \arguments{
   \item{model}{MARK model created by
   \code{\link{make.mark.model}}}

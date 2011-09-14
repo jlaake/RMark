@@ -1,6 +1,11 @@
 \name{get.real}
 \alias{get.real}
 \title{Extract or compute sets of real parameters}
+\usage{
+  get.real(model, parameter, beta = NULL, se = FALSE,
+  design = NULL, data = NULL, vcv = FALSE, show.fixed =
+  TRUE)
+}
 \arguments{
   \item{model}{MARK model object}
 

@@ -25,7 +25,7 @@
 #' @export
 #' @seealso \code{\link{collect.model.names}}, \code{\link{run.mark.model}}
 #' @keywords utility
-"run.models" <-
+run.models <-
 function(model.list=NULL,type=NULL, save=TRUE, ...)
 # -----------------------------------------------------------------------------------------------------------------------
 #

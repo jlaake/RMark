@@ -44,7 +44,7 @@
 #' dipper.phitime.ptime=mark(dipper,model.parameters=list(Phi=Phitime, p=ptime),
 #'                            adjust=FALSE)
 #' 
-"adjust.parameter.count" <-
+adjust.parameter.count <-
 function(model,npar)
 {
 #

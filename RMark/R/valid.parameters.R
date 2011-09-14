@@ -11,7 +11,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{setup.parameters}}, \code{\link{setup.model}}
 #' @keywords utility
-"valid.parameters" <-
+valid.parameters <-
 function(model,parameters)
 # ------------------------------------------------------------------------------------------------
 # valid.parameters  - checks to make sure specified parameter is valid for a particular model

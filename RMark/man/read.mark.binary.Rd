@@ -2,6 +2,9 @@
 \alias{read.mark.binary}
 \alias{read.mark.binary.linux}
 \title{Reads binary file output from MARK and returns a list of the results}
+\usage{
+  read.mark.binary(filespec)
+}
 \arguments{
   \item{filespec}{Filename specification for binary output
   file from MARK;named here as markxxx.vcv}

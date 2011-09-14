@@ -21,7 +21,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{inverse.link}}, \code{\link{compute.real}}
 #' @keywords utility
-"deriv_inverse.link" <-
+deriv_inverse.link <-
 function(real,x,link)
 {
 if(substr(link,1,6)=="mlogit" | substr(link,1,6)=="MLogit")link="MLogit"

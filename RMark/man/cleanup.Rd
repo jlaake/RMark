@@ -1,6 +1,9 @@
 \name{cleanup}
 \alias{cleanup}
 \title{Removes unused MARK output files}
+\usage{
+  cleanup(lx = NULL, ask = TRUE, prefix = "mark")
+}
 \arguments{
   \item{lx}{listing of R objects; defaults to list of
   workspace from calling environment; if NULL it uses

@@ -32,7 +32,7 @@
 #' mymodel=mark(dipper)
 #' export.model(mymodel)
 #' 
-"export.model" <-
+export.model <-
 function(model,replace=FALSE)
 {
 # -----------------------------------------------------------------------------------------------------------------------

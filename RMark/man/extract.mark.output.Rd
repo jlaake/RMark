@@ -1,6 +1,10 @@
 \name{extract.mark.output}
 \alias{extract.mark.output}
 \title{Extract results from MARK output file (internal use)}
+\usage{
+  extract.mark.output(out, model, adjust, realvcv = FALSE,
+  vcvfile)
+}
 \arguments{
   \item{out}{output from MARK analysis
   (\code{model$output})}

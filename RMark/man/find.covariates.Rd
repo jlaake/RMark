@@ -1,6 +1,9 @@
 \name{find.covariates}
 \alias{find.covariates}
 \title{Find covariates in MARK design matrix}
+\usage{
+  find.covariates(model, data = NULL, usemean = TRUE)
+}
 \arguments{
   \item{model}{MARK model object}
 

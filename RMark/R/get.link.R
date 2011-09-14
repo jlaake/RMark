@@ -24,7 +24,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{compute.link}},\code{\link{get.real}}
 #' @keywords utility
-"get.link" <-
+get.link <-
 function(model,parameter,beta=NULL,design=NULL,data=NULL,vcv=FALSE)
 {
 # ----------------------------------------------------------------------------------------

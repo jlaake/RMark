@@ -330,7 +330,7 @@
 #' 
 #' 
 #' 
-"make.design.data" <-                                                      
+make.design.data <-                                                      
 function(data,parameters=list(),remove.unused=FALSE,right=TRUE,common.zero=FALSE)
 {
 #------------------------------------------------------------------------------------------------------

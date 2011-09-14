@@ -37,7 +37,7 @@
 #' # MARK would have been unable to use it as a covariate
 #' # because it is not a numeric field
 #' 
-"export.chdata" <-
+export.chdata <-
 function(data, filename, covariates=NULL, replace=FALSE)
 {
 # -----------------------------------------------------------------------------------------------------------------------

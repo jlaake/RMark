@@ -1,6 +1,9 @@
 \name{fill.covariates}
 \alias{fill.covariates}
 \title{Fill covariate entries in MARK design matrix with values}
+\usage{
+  fill.covariates(model, values)
+}
 \arguments{
   \item{model}{MARK model object}
 

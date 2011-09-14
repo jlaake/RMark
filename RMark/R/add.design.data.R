@@ -105,7 +105,7 @@
 #' ddl=add.design.data(example.data.proc,ddl,parameter="Phi",type="age",
 #' bins=c(0,1,10),name="2ages",replace=TRUE)
 #' 
-"add.design.data" <-
+add.design.data <-
 function(data,ddl,parameter,type="age",bins=NULL,name=NULL,replace=FALSE,right=TRUE)
 # -------------------------------------------------------------------------------------------------------------
 #

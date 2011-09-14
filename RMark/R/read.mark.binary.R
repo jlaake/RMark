@@ -17,7 +17,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{extract.mark.output}}
 #' @keywords utility
-"read.mark.binary" <-
+read.mark.binary <-
 function(filespec)
 #
 # read.mark.binary 

@@ -34,7 +34,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{run.mark.model}}
 #' @keywords utility
-"extract.mark.output" <-
+extract.mark.output <-
 function(out,model,adjust,realvcv=FALSE,vcvfile)
 {
 # ----------------------------------------------------------------------------------------

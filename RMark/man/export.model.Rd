@@ -1,6 +1,9 @@
 \name{export.model}
 \alias{export.model}
 \title{Export output files for appending into MARK .dbf/.fpt format}
+\usage{
+  export.model(model, replace = FALSE)
+}
 \arguments{
   \item{model}{a mark model object or marklist object}
 

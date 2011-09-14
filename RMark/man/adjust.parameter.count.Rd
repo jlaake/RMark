@@ -1,6 +1,9 @@
 \name{adjust.parameter.count}
 \alias{adjust.parameter.count}
 \title{Adjust count of estimated parameters}
+\usage{
+  adjust.parameter.count(model, npar)
+}
 \arguments{
   \item{model}{MARK model object}
 

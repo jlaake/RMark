@@ -1,6 +1,10 @@
 \name{covariate.predictions}
 \alias{covariate.predictions}
 \title{Compute estimates of real parameters for multiple covariate values}
+\usage{
+  covariate.predictions(model, data = NULL, indices = NULL,
+  drop = TRUE)
+}
 \arguments{
   \item{model}{MARK model object or marklist}
 

@@ -21,6 +21,8 @@
 #' in AICc/QAICc calculations.
 #' 
 #' @aliases adjust.chat adjust.value
+#' @usage adjust.value(field="n",value,model.list)
+#'        adjust.chat(chat=1,model.list)
 #' @param field Character string containing name of the field; either
 #' \code{chat} or a field in \code{model$results} such as \code{n} for sample
 #' size used in AICc or QAICc
@@ -61,7 +63,7 @@
 #' POPAN.results=adjust.chat(2,POPAN.results) 
 #' POPAN.results
 #' 
-"adjust.value" <- function(field="n",value,model.list)
+adjust.value <- function(field="n",value,model.list)
 # ----------------------------------------------------------------------------------------
 #
 # adjust.value  - adjusts values of field in model list for a collection of models
@@ -124,7 +126,7 @@ class(model.list)="marklist"
 return(model.list)
 }
 
-"adjust.chat" <- function(chat=1,model.list)
+adjust.chat <- function(chat=1,model.list)
   return(adjust.value("chat",chat,model.list))
   
 

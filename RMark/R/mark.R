@@ -224,7 +224,7 @@
 #' data(dipper)
 #' dipper.Phidot.pdot=mark(dipper)
 #' 
-"mark" <-
+mark <-
 function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,
 design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
 invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,simplify=TRUE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,

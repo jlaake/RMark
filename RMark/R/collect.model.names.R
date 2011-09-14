@@ -30,7 +30,7 @@
 #' @seealso \code{\link{collect.models}}, \code{\link{run.models}},
 #' \code{\link{model.table}}
 #' @keywords utility
-"collect.model.names" <-
+collect.model.names <-
 function(lx, type=NULL, warning=TRUE)
 # ----------------------------------------------------------------------------------------
 #

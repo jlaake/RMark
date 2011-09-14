@@ -89,7 +89,7 @@
 #' 		ylim=c(.5,1),main="Capture probability estimates by region")
 #' 
 #' 
-"get.real" <-
+get.real <-
 function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show.fixed=TRUE)
 {
 # ----------------------------------------------------------------------------------------

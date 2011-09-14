@@ -1,6 +1,9 @@
 \name{inverse.link}
 \alias{inverse.link}
 \title{Inverse link functions (internal use)}
+\usage{
+  inverse.link(x, link)
+}
 \arguments{
   \item{x}{Matrix of design values multiplied by the vector
   of the beta parameter values}

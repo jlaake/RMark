@@ -148,7 +148,7 @@
 #' model.average(dipper.results,vcv=TRUE,indices=c(1,43))  
 #' 
 #' 
-"model.average.marklist"<- function(x,parameter=NULL,data=NULL,vcv=FALSE,drop=TRUE,indices=NULL,revised=TRUE,...)
+model.average.marklist<- function(x,parameter=NULL,data=NULL,vcv=FALSE,drop=TRUE,indices=NULL,revised=TRUE,...)
 {
 # Computes model averaged real parameter estimates and their std errors for the values specified by
 # parameter (eg "Psi", "p" etc) using the models contained in model.list.  If parameter=NULL,

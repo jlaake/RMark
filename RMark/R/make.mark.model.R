@@ -399,7 +399,7 @@
 #' dipper.phiFlood.pdot=make.mark.model(dipper.processed,dipper.ddl,
 #'   parameters=list(Phi=PhiFlood, p=pdot))
 #' 
-"make.mark.model" <-
+make.mark.model <-
 function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,
             simplify=TRUE,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL)
 {

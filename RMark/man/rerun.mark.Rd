@@ -1,6 +1,13 @@
 \name{rerun.mark}
 \alias{rerun.mark}
 \title{Runs a previous MARK model with new starting values}
+\usage{
+  rerun.mark(model, data, ddl, initial, output = TRUE,
+  title = "", invisible = TRUE, adjust = TRUE, se = FALSE,
+  simplify = TRUE, filename = NULL, prefix = "mark",
+  default.fixed = TRUE, silent = FALSE, retry = 0, realvcv
+  = FALSE, external = FALSE)
+}
 \arguments{
   \item{model}{previously run MARK model}
 

@@ -141,7 +141,7 @@
 #' data(dipper)
 #' dipper.process=process.data(dipper)
 #' 
-"process.data" <-
+process.data <-
 function(data,begin.time=1,model="CJS",mixtures=1,groups=NULL,allgroups=FALSE,age.var=NULL,
 initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,counts=NULL,reverse=FALSE)
 {
@@ -188,7 +188,7 @@ initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,co
 #
 #  Functions used: setup.model
 # -------------------------------------------------------------------------------------
-"robust.occasions"<-function(times)
+robust.occasions<-function(times)
 {
    if(times[1] !=0 | times[length(times)]!=0)
       stop("\nIncorrect structure for time intervals with robust design. Time intervals must begin and end with a zero.\n")

@@ -120,7 +120,7 @@
 #' # show new model table
 #' #nat
 #' 
-"rerun.mark" <-
+rerun.mark <-
 function(model,data,ddl,initial,output=TRUE,title="",invisible=TRUE,adjust=TRUE,se=FALSE,simplify=TRUE,
  filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,realvcv=FALSE,external=FALSE)
 {

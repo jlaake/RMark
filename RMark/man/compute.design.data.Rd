@@ -2,6 +2,13 @@
 \alias{compute.design.data}
 \title{Compute design data for a specific parameter in the MARK model (internal
 use)}
+\usage{
+  compute.design.data(data, begin, num, type = "Triang",
+  mix = FALSE, rows = 0, pim.type = "all", secondary,
+  nstrata = 1, tostrata = FALSE, strata.labels = NULL,
+  subtract.stratum = strata.labels, common.zero = FALSE,
+  sub.stratum = 0)
+}
 \arguments{
   \item{data}{data list created by
   \code{\link{process.data}}}

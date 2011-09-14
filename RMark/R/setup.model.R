@@ -30,7 +30,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{setup.parameters}}, \code{\link{valid.parameters}}
 #' @keywords utility
-"setup.model" <-
+setup.model <-
 function(model,nocc,mixtures=1)
 {
 #

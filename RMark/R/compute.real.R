@@ -82,7 +82,7 @@
 #' 
 #' # see examples in fill.covariates
 #' 
-"compute.real" <-
+compute.real <-
 function(model,beta=NULL,design=NULL,data=NULL,se=TRUE,vcv=FALSE)
 {
 # ------------------------------------------------------------------------------------------------

@@ -1,6 +1,9 @@
 \name{setup.model}
 \alias{setup.model}
 \title{Defines model specific parameters (internal use)}
+\usage{
+  setup.model(model, nocc, mixtures = 1)
+}
 \arguments{
   \item{model}{name of model type (must be in vector
   \code{valid.models})}

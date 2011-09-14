@@ -77,7 +77,7 @@
 #' cleanup(ask=FALSE,prefix="Male")
 #' cleanup(ask=FALSE,prefix="Female")
 #' 
-"run.mark.model" <-
+run.mark.model <-
 function(model,invisible=FALSE,adjust=TRUE,filename=NULL,prefix="mark",realvcv=FALSE,
 delete=FALSE,external=FALSE)
 {

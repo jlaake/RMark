@@ -1,6 +1,10 @@
 \name{run.models}
 \alias{run.models}
 \title{Runs a set of MARK models}
+\usage{
+  run.models(model.list = NULL, type = NULL, save = TRUE,
+  ...)
+}
 \arguments{
   \item{model.list}{either a vector of model names or NULL
   to run all MARK models possibly of a particular

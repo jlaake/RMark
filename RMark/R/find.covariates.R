@@ -39,7 +39,7 @@
 #' 
 #' # see examples in fill.covariates
 #' 
-"find.covariates" <-
+find.covariates <-
 function(model,data=NULL,usemean=TRUE)
 {
 # ----------------------------------------------------------------------------------------------------

@@ -35,7 +35,7 @@
 #' @author Jeff Laake
 #' @seealso \code{\link{summary.mark}}
 #' @keywords utility
-"print.mark" <- function(x,...,input=FALSE)
+print.mark <- function(x,...,input=FALSE)
 {
 # -------------------------------------------------------------------------------------------------------------
 #
@@ -103,7 +103,7 @@
 #   options(def.options)
    invisible()
 }
-"print.marklist"<-function(x,...)
+print.marklist<-function(x,...)
 {
    ncol=dim(x$model.table)[2]
    if(!is.null(x$model.table))

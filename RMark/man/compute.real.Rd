@@ -1,6 +1,10 @@
 \name{compute.real}
 \alias{compute.real}
 \title{Compute estimates of real parameters}
+\usage{
+  compute.real(model, beta = NULL, design = NULL, data =
+  NULL, se = TRUE, vcv = FALSE)
+}
 \arguments{
   \item{model}{MARK model object}
 

@@ -1833,7 +1833,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
         if(model$parameters[[parx]]$link=="sin")
         {
            dm=model$simplify$design.matrix
-           rows=unique(model$simplify$pim.translation[sort(unique(as.vector(sapply(model$pims[[parx]],function(x)x$pim[x$pim>0]))))])
+           rows=unique(model$simplify$pim.translation[sort(unique(as.vector(unlist(sapply(model$pims[[parx]],function(x)x$pim[x$pim>0])))))])
            if(length(grep('[[:alpha:]]',as.vector(dm[rows,,drop=FALSE])))>0)
               stop("\nCannot use sin link with covariates")
            dm=suppressWarnings(matrix(as.numeric(dm),nrow=dim(dm)[1],ncol=dim(dm)[2]))

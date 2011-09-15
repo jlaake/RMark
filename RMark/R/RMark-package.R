@@ -1974,7 +1974,7 @@ NULL
 #' always get to it in the documentation for awhile.  They are ordered from
 #' newest to oldest.
 #' 
-#' Version 2.0.8 (8 Sept 2011) \itemize{ \item Both \code{\link{setup.model}}
+#' Version 2.0.8 (15 Sept 2011) \itemize{ \item Both \code{\link{setup.model}}
 #' and \code{\link{setup.parameters}} were re-written to use data files
 #' models.txt and parameters.txt to define models and parameters which should
 #' make it easier to add new models.  The latter function is now much simpler
@@ -2001,7 +2001,11 @@ NULL
 #' \item A bug was fixed in \code{\link{get.real}} which caused incorrect assignments of fixed
 #' parameter values in the unusual case where a fixed parameter had a non-zero design matrix row.
 #' \item \code{\link{mark.wrapper}} was modified so it returns a list of the models that were
-#' constructed if run==FALSE.  Thanks to Eldar Rakhimberdiev for the suggestion and code. }
+#' constructed if run==FALSE.  Thanks to Eldar Rakhimberdiev for the suggestion and code.
+#' \item Code was added to \code{\link{extract.mark.output}} to extract deviance degrees of freedom.  Thanks 
+#'  again to Eldar for contributing this code.
+#' \item A bug was fixed in \code{\link{make.mark.model}} that prevented use of sin link on within session parameters
+#' in a robust design model. Thanks to TOmmy Garrison for reporting this bug.}
 #' Version 2.0.7 (25 August 2011) \itemize{ \item Change to
 #' \code{\link{make.mark.model}} to fix bug in which mlogits were incorrectly
 #' assigned in ORDMS model when both Psi and pent used mlogit links. Thanks to

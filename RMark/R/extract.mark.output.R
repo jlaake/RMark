@@ -70,6 +70,8 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   npar=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))
   x=grep("DEVIANCE ",out,ignore.case=TRUE)
   deviance=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))[1]
+  x = grep("DEVIANCE Degrees of Freedom ", out, ignore.case = TRUE)
+  deviance.df = type.convert(substr(out[x], regexpr("=", out[x])+1, nchar(out[x])))[1]
   x=grep("AICc",out,ignore.case=TRUE)
   AICc=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))
   if(length(links)==1)
@@ -201,11 +203,11 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   else
     real.vcv=NULL
   if(is.null(npar.unadjusted))
-     return(list(lnl=lnl,deviance=deviance,npar=npar,n=n,AICc=AICc,beta=beta,real=real,beta.vcv=param$beta.vcv,derived=param$derived,derived.vcv=param$derived.vcv,
+     return(list(lnl=lnl,deviance=deviance,deviance.df=deviance.df,npar=npar,n=n,AICc=AICc,beta=beta,real=real,beta.vcv=param$beta.vcv,derived=param$derived,derived.vcv=param$derived.vcv,
                  covariate.values=covariate.values,singular=singular,real.vcv=real.vcv))
 
   else
-     return(list(lnl=lnl,deviance=deviance,npar=npar,npar.unadjusted=npar.unadjusted,n=n,AICc=AICc,AICc.unadjusted=AICc.unadjusted,
+     return(list(lnl=lnl,deviance=deviance,deviance.df=deviance.df,npar=npar,npar.unadjusted=npar.unadjusted,n=n,AICc=AICc,AICc.unadjusted=AICc.unadjusted,
                  beta=beta,real=real,beta.vcv=param$beta.vcv,derived=param$derived,derived.vcv=param$derived.vcv,
                  covariate.values=covariate.values,singular=singular,real.vcv=real.vcv))
 }

@@ -29,6 +29,7 @@
 #' @param check if TRUE only the vector of parameter names is returned
 #' \code{par.list}
 #' @param number.of.groups number of groups defined for data
+#' @export
 #' @return The return value depends on the argument \code{check}. If it is TRUE
 #' then the return value is a vector of the names of the parameters used in the
 #' specified type of model. For example, if \code{model="CJS"} then the return

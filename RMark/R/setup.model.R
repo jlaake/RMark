@@ -22,6 +22,7 @@
 #' @param model name of model type (must be in vector \code{valid.models})
 #' @param nocc length of capture history string
 #' @param mixtures number of mixtures
+#' @export
 #' @return model.list - a list with following elements \item{etype}{encounter
 #' type string for MARK input; typically same as model} \item{nocc}{number of
 #' capture occasions} \item{num}{number of time intervals relative to number of

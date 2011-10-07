@@ -4,8 +4,8 @@
 \usage{
   make.mark.model(data, ddl, parameters = list(), title =
   "", model.name = NULL, initial = NULL, call = NULL,
-  simplify = TRUE, default.fixed = TRUE, options = NULL,
-  profile.int = FALSE, chat = NULL)
+  default.fixed = TRUE, options = NULL, profile.int =
+  FALSE, chat = NULL)
 }
 \arguments{
   \item{data}{Data list resulting from function
@@ -28,9 +28,6 @@
   \item{call}{Pass function call when this function is
   called from another function (e.g.\code{\link{mark}})
   (internal use)}
-
-  \item{simplify}{if TRUE, simplifies PIM structure to
-  match unique number of rows in design matrix}
 
   \item{default.fixed}{if TRUE, real parameters for which
   the design data have been deleted are fixed to default

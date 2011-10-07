@@ -78,7 +78,7 @@
 #' and \code{right}, see \code{\link{make.design.data}}.
 #' 
 #' For descriptions of \code{model.name} , \code{model},
-#' \code{title},\code{model.parameters}=\code{parameters}, \code{simplify} ,
+#' \code{title},\code{model.parameters}=\code{parameters} ,
 #' \code{default.fixed} , \code{initial}, \code{options}, see
 #' \code{\link{make.mark.model}}.
 #' 
@@ -130,8 +130,6 @@
 #' filename.*.
 #' @param prefix base filename prefix for files created by MARK.EXE; for
 #' example if prefix="SpeciesZ" files are named "SpeciesZnnn.*"
-#' @param simplify if TRUE, simplifies PIM structure to match unique number of
-#' rows in design matrix
 #' @param default.fixed if TRUE, real parameters for which the design data have
 #' been deleted are fixed to default values
 #' @param silent if TRUE, errors that are encountered are suppressed
@@ -227,7 +225,7 @@
 mark <-
 function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,
 design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
-invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,simplify=TRUE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
+invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
 realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE)
 {
 # -----------------------------------------------------------------------------------------------------------------------
@@ -257,7 +255,6 @@ realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FA
 #  adjust               - if TRUE, adjusts npar to # of cols in design matrix, modifies AIC and records both
 #  mixtures             - # of mixtures for heterogeneity model
 #  se                   - if TRUE, se and confidence intervals are shown in summary sent to screen
-#  simplify             - if TRUE, simplifies PIM structure to match unique number of rows in design matrix
 #  filename             - base filename for MARK input and output files (filename.* - no numeric sequence is added)
 #  prefix               - base filename prefix for MARK input and output files; eg mark001.* etc
 #  default.fixed        - if TRUE, default fixed values are assigned to any parameters missing from the full design data
@@ -281,6 +278,7 @@ realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FA
 #
 #  If the data haven't been processed (data$data is NULL) do it now with specified or default arguments
 # 
+simplify=TRUE
 if(is.null(data$data))
 {
    if(!is.null(ddl))
@@ -311,7 +309,7 @@ while(i<=retry & !converge)
    if(is.list(model.parameters))
    {
       model<-make.mark.model(data.proc,title=title,parameters=model.parameters,
-             ddl=ddl,initial=initial,call=match.call(),simplify=simplify,default.fixed=default.fixed,
+             ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
              model.name=model.name,options=options,profile.int=profile.int,chat=chat)
       model$model.parameters=model.parameters
    }

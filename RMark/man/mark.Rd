@@ -8,11 +8,10 @@
   groups = NULL, age.var = NULL, initial.ages = 0, age.unit
   = 1, time.intervals = NULL, nocc = NULL, output = TRUE,
   invisible = TRUE, adjust = TRUE, mixtures = 1, se =
-  FALSE, simplify = TRUE, filename = NULL, prefix = "mark",
-  default.fixed = TRUE, silent = FALSE, retry = 0, options
-  = NULL, brief = FALSE, realvcv = FALSE, delete = FALSE,
-  external = FALSE, profile.int = FALSE, chat = NULL,
-  reverse = FALSE)
+  FALSE, filename = NULL, prefix = "mark", default.fixed =
+  TRUE, silent = FALSE, retry = 0, options = NULL, brief =
+  FALSE, realvcv = FALSE, delete = FALSE, external = FALSE,
+  profile.int = FALSE, chat = NULL, reverse = FALSE)
 }
 \arguments{
   \item{data}{Either the raw data which is a dataframe with
@@ -84,9 +83,6 @@
   \item{prefix}{base filename prefix for files created by
   MARK.EXE; for example if prefix="SpeciesZ" files are
   named "SpeciesZnnn.*"}
-
-  \item{simplify}{if TRUE, simplifies PIM structure to
-  match unique number of rows in design matrix}
 
   \item{default.fixed}{if TRUE, real parameters for which
   the design data have been deleted are fixed to default
@@ -304,9 +300,9 @@
   \code{right}, see \code{\link{make.design.data}}.
 
   For descriptions of \code{model.name} , \code{model},
-  \code{title},\code{model.parameters}=\code{parameters},
-  \code{simplify} , \code{default.fixed} , \code{initial},
-  \code{options}, see \code{\link{make.mark.model}}.
+  \code{title},\code{model.parameters}=\code{parameters} ,
+  \code{default.fixed} , \code{initial}, \code{options},
+  see \code{\link{make.mark.model}}.
 
   And finally, for descriptions of arguments
   \code{invisible}, \code{filename} and \code{adjust},see

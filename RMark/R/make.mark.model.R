@@ -342,8 +342,6 @@
 #' or previously run model (optional)
 #' @param call Pass function call when this function is called from another
 #' function (e.g.\code{\link{mark}}) (internal use)
-#' @param simplify if TRUE, simplifies PIM structure to match unique number of
-#' rows in design matrix
 #' @param default.fixed if TRUE, real parameters for which the design data have
 #' been deleted are fixed to default values
 #' @param options character string of options for Proc Estimate statement in
@@ -400,8 +398,7 @@
 #'   parameters=list(Phi=PhiFlood, p=pdot))
 #' 
 make.mark.model <-
-function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,
-            simplify=TRUE,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL)
+function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL)
 {
 # -----------------------------------------------------------------------------------------------------------------------
 #
@@ -939,6 +936,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 
 #
 #  *******************  END OF INTERNAL FUNCTIONS    *********************************
+  simplify=TRUE
 #
 # Outfile is assigned a temporary name
 #
@@ -1445,9 +1443,21 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   for(i in 1:length(parameters))
   {
   if(is.null(parameters[[i]]$formula))
+  {
      design.matrix[[i]]=list()
-  else
+  } else
   {    
+#  Next, if share, combine full ddl
+	fullddl=full.ddl[[names(parameters)[i]]]
+	if(!is.null(parameters[[i]]$share)&&parameters[[i]]$share)
+	{	  
+		  shared_par=parameters[[i]]$pair
+		  dim1=dim(fullddl)
+		  dim2=dim(full.ddl[[shared_par]])
+		  fullddl=rbind(fullddl,full.ddl[[shared_par]])
+		  fullddl[shared_par]=c(rep(0,dim1[1]),rep(1,dim2[1]))
+		  row.names(fullddl)=1:dim(fullddl)[1]
+	  } 
 #
 #    Calculate number of parameters for this type
 #
@@ -1476,9 +1486,9 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                   dm=dm[,-intercept.column]
             }
         }
-        maxpar=dim(full.ddl[[parx]])[1]
-        if(!is.null(parameters[[names(parameters)[i]]]$share) && parameters[[names(parameters)[i]]]$share)
-			maxpar=maxpar + dim(full.ddl[[parameters[[names(parameters)[i]]]$pair]])[1]  		
+        maxpar=dim(fullddl)[1]
+#		if(!is.null(parameters[[names(parameters)[i]]]$share) && parameters[[names(parameters)[i]]]$share)
+#			maxpar=maxpar + dim(full.ddl[[parameters[[names(parameters)[i]]]$pair]])[1]  		
         design.matrix[[i]]=matrix(0,ncol=dim(dm)[2],nrow=maxpar)
         if(dim(design.matrix[[i]][as.numeric(row.names(ddl[[parx]])),,drop=FALSE])[1]==dim(dm)[1])
            design.matrix[[i]][as.numeric(row.names(ddl[[parx]])),]=dm
@@ -1517,36 +1527,36 @@ create.agenest.var=function(data,init.agevar,time.intervals)
              for(k in which.cols)
                if(all(design.matrix[[i]][,k]==1 | design.matrix[[i]][,k]==0))
                   if(time.dependent[[parx]][j])
-                     if(!is.null(full.ddl[[parx]]$session))
+                     if(!is.null(fullddl$session))
                         if(session.dependent[[parx]][j])
                             design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=
-                                paste(xcov[[parx]][j],as.character(full.ddl[[parx]]$session[design.matrix[[i]][,k]==1]),sep="")
+                                paste(xcov[[parx]][j],as.character(fullddl$session[design.matrix[[i]][,k]==1]),sep="")
                         else
                            design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=
-                                paste(xcov[[parx]][j],as.character(full.ddl[[parx]]$session[design.matrix[[i]][,k]==1]),
-                                  as.character(full.ddl[[parx]]$time[design.matrix[[i]][,k]==1]),sep="")
+                                paste(xcov[[parx]][j],as.character(fullddl$session[design.matrix[[i]][,k]==1]),
+                                  as.character(fullddl$time[design.matrix[[i]][,k]==1]),sep="")
                      else   
-                        design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=paste(xcov[[parx]][j],as.character(full.ddl[[parx]]$time[design.matrix[[i]][,k]==1]),sep="")
+                        design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=paste(xcov[[parx]][j],as.character(fullddl$time[design.matrix[[i]][,k]==1]),sep="")
                   else
                      design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=xcov[[parx]][j]
                else
                   if(time.dependent[[parx]][j])
                   {
-                     if(!is.null(full.ddl[[parx]]$session))
+                     if(!is.null(fullddl$session))
                      {
                         if(session.dependent[[parx]][j])
                            design.matrix[[i]][,k][design.matrix[[i]][,k]!=0]=
-                              paste("product(",paste(xcov[[parx]][j],as.character(full.ddl[[parx]]$session[design.matrix[[i]][,k]!=0]),sep=""),
+                              paste("product(",paste(xcov[[parx]][j],as.character(fullddl$session[design.matrix[[i]][,k]!=0]),sep=""),
                                        ",",design.matrix[[i]][,k][design.matrix[[i]][,k]!=0],")",sep="")
                         else
                            design.matrix[[i]][,k][design.matrix[[i]][,k]!=0]=
-                              paste("product(",paste(xcov[[parx]][j],as.character(full.ddl[[parx]]$session[design.matrix[[i]][,k]!=0]),
-                                      as.character(full.ddl[[parx]]$time[design.matrix[[i]][,k]!=0]),sep=""),
+                              paste("product(",paste(xcov[[parx]][j],as.character(fullddl$session[design.matrix[[i]][,k]!=0]),
+                                      as.character(fullddl$time[design.matrix[[i]][,k]!=0]),sep=""),
                                        ",",design.matrix[[i]][,k][design.matrix[[i]][,k]!=0],")",sep="")                     
                      }
                      else
                         design.matrix[[i]][,k][design.matrix[[i]][,k]!=0]=
-                           paste("product(",paste(xcov[[parx]][j],as.character(full.ddl[[parx]]$time[design.matrix[[i]][,k]!=0]),sep=""),
+                           paste("product(",paste(xcov[[parx]][j],as.character(fullddl$time[design.matrix[[i]][,k]!=0]),sep=""),
                                     ",",design.matrix[[i]][,k][design.matrix[[i]][,k]!=0],")",sep="")
                   }
                   else
@@ -1752,28 +1762,28 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   ipos=0
   for(i in 1:length(parameters))
   {
-    parx=names(parameters)[i]
-    plimit=dim(full.ddl[[parx]])[1]
-    stratum.strings=rep("",plimit)
-    if(!is.null(full.ddl[[parx]]$stratum)) stratum.strings=paste(" s",full.ddl[[parx]]$stratum,sep="")
-    if(!is.null(full.ddl[[parx]]$tostratum)) stratum.strings=paste(stratum.strings," to",full.ddl[[parx]]$tostratum,sep="")
-    strings=paste(param.names[i],stratum.strings," g",full.ddl[[parx]]$group,sep="")
-    if(!is.null(full.ddl[[parx]]$cohort))strings=paste(strings," c",full.ddl[[parx]]$cohort,sep="")
-	if(!is.null(full.ddl[[parx]]$occ.cohort))strings=paste(strings," c",full.ddl[[parx]]$occ.cohort,sep="")
-	if(!is.null(full.ddl[[parx]]$age))strings=paste(strings," a",full.ddl[[parx]]$age,sep="")
-	if(!is.null(full.ddl[[parx]]$occ))strings=paste(strings," o",full.ddl[[parx]]$occ,sep="")
-	if(model.list$robust && parameters[[parx]]$secondary)
-       strings=paste(strings," s",full.ddl[[parx]]$session,sep="")
-    if(!is.null(full.ddl[[parx]]$time))strings=paste(strings," t",full.ddl[[parx]]$time,sep="")
-    if(mixtures >1 && !is.null(parameters[[i]]$mix) &&parameters[[i]]$mix)
-       strings=paste(strings," m",full.ddl[[parx]]$mixture,sep="")
-    rnames=c(rnames,strings)
-    if(!simplify)
-    {
-       strings=paste("rlabel(",ipos+1:plimit,")=",strings,";",sep="")
-       labstring=c(labstring,strings)
-       ipos=ipos+plimit
-    }
+      parx=names(parameters)[i]
+      plimit=dim(full.ddl[[parx]])[1]
+      stratum.strings=rep("",plimit)
+      if(!is.null(full.ddl[[parx]]$stratum)) stratum.strings=paste(" s",full.ddl[[parx]]$stratum,sep="")
+      if(!is.null(full.ddl[[parx]]$tostratum)) stratum.strings=paste(stratum.strings," to",full.ddl[[parx]]$tostratum,sep="")
+      strings=paste(param.names[i],stratum.strings," g",full.ddl[[parx]]$group,sep="")
+      if(!is.null(full.ddl[[parx]]$cohort))strings=paste(strings," c",full.ddl[[parx]]$cohort,sep="")
+	  if(!is.null(full.ddl[[parx]]$occ.cohort))strings=paste(strings," c",full.ddl[[parx]]$occ.cohort,sep="")
+	  if(!is.null(full.ddl[[parx]]$age))strings=paste(strings," a",full.ddl[[parx]]$age,sep="")
+	  if(!is.null(full.ddl[[parx]]$occ))strings=paste(strings," o",full.ddl[[parx]]$occ,sep="")
+	  if(model.list$robust && parameters[[parx]]$secondary)
+         strings=paste(strings," s",full.ddl[[parx]]$session,sep="")
+      if(!is.null(full.ddl[[parx]]$time))strings=paste(strings," t",full.ddl[[parx]]$time,sep="")
+      if(mixtures >1 && !is.null(parameters[[i]]$mix) &&parameters[[i]]$mix)
+         strings=paste(strings," m",full.ddl[[parx]]$mixture,sep="")
+      rnames=c(rnames,strings)
+      if(!simplify)
+      {
+         strings=paste("rlabel(",ipos+1:plimit,")=",strings,";",sep="")
+         labstring=c(labstring,strings)
+         ipos=ipos+plimit
+      }
   }
   if(!simplify) write(labstring,file=outfile,append=TRUE)
   row.names(complete.design.matrix)=rnames

@@ -8,7 +8,7 @@
   to oldest.
 }
 \details{
-  Version 2.0.8 (8 Sept 2011) \itemize{ \item Both
+  Version 2.0.8 (7 Oct 2011) \itemize{ \item Both
   \code{\link{setup.model}} and
   \code{\link{setup.parameters}} were re-written to use
   data files models.txt and parameters.txt to define models
@@ -50,39 +50,51 @@
   design matrix row. \item \code{\link{mark.wrapper}} was
   modified so it returns a list of the models that were
   constructed if run==FALSE.  Thanks to Eldar Rakhimberdiev
-  for the suggestion and code. } Version 2.0.7 (25 August
-  2011) \itemize{ \item Change to
-  \code{\link{make.mark.model}} to fix bug in which mlogits
-  were incorrectly assigned in ORDMS model when both Psi
-  and pent used mlogit links. Thanks to Glenn Stauffer for
-  identifying and tracking down this error.  \item Fixed
-  \code{\link{export.chdata}} and \code{\link{export.MARK}}
-  so Nest survival models can be exported.  Also changed
-  default of argument ind.covariates to "all" which will
-  use all individual covariates in the data in the file
-  sent to MARK.  Thanks to Jay Rotella for his help. \item
-  Made change to \code{\link{process.data}} and
-  \code{\link{mark}} to include a new argument reverse,
-  which if set to TRUE with model="Multistratum" will
-  reverse the timing of transition and survival. See
-  \code{\link{mstrata}} for an example of a reverse
-  multistratum model. \item Made change to
-  \code{\link{make.design.data}} to allow for zero time
-  intervals in non-robust design model.  This was needed to
-  allow use of the reverse time structure in multi-state
-  models. In addition, for the reverse multistate model the
-  function now adds an occasion (occ) field to the design
-  data because the time field will be constant when with a
-  0 time interval.  The row names of the design matrix and
-  real parameters was extended for this model to include
-  occasion (o) and occasion cohort (oc) to create unique
-  labels because cohort and time are not unique with 0 time
-  intervals.  } Version 2.0.6 (1 July 2011) \itemize{ \item
-  Change to MR resight examples so the output does not
-  appear in notepad which was causing problem with check on
-  CRAN submission } Version 2.0.5 (29 June 2011) \itemize{
-  \item Order of arguments for
-  \code{\link{model.average.marklist}} were switched
+  for the suggestion and code. \item Code was added to
+  \code{\link{extract.mark.output}} to extract deviance
+  degrees of freedom.  Thanks again to Eldar for
+  contributing this code. \item A bug was fixed in
+  \code{\link{make.mark.model}} that prevented use of sin
+  link on within session parameters in a robust design
+  model. Thanks to Tommy Garrison for reporting this bug.
+  \item A bug was fixed in \code{\link{make.mark.model}}
+  which prevented the use of time varying covariates with
+  shared parameters. Thanks to Andre Breton for reporting
+  this bug. \item simplify argument was removed from
+  functions because I have not found a reason not to
+  simplify and I have not been testing code with
+  simplify=FALSE. } Version 2.0.7 (25 August 2011)
+  \itemize{ \item Change to \code{\link{make.mark.model}}
+  to fix bug in which mlogits were incorrectly assigned in
+  ORDMS model when both Psi and pent used mlogit links.
+  Thanks to Glenn Stauffer for identifying and tracking
+  down this error.  \item Fixed \code{\link{export.chdata}}
+  and \code{\link{export.MARK}} so Nest survival models can
+  be exported.  Also changed default of argument
+  ind.covariates to "all" which will use all individual
+  covariates in the data in the file sent to MARK.  Thanks
+  to Jay Rotella for his help. \item Made change to
+  \code{\link{process.data}} and \code{\link{mark}} to
+  include a new argument reverse, which if set to TRUE with
+  model="Multistratum" will reverse the timing of
+  transition and survival. See \code{\link{mstrata}} for an
+  example of a reverse multistratum model. \item Made
+  change to \code{\link{make.design.data}} to allow for
+  zero time intervals in non-robust design model.  This was
+  needed to allow use of the reverse time structure in
+  multi-state models. In addition, for the reverse
+  multistate model the function now adds an occasion (occ)
+  field to the design data because the time field will be
+  constant when with a 0 time interval.  The row names of
+  the design matrix and real parameters was extended for
+  this model to include occasion (o) and occasion cohort
+  (oc) to create unique labels because cohort and time are
+  not unique with 0 time intervals.  } Version 2.0.6 (1
+  July 2011) \itemize{ \item Change to MR resight examples
+  so the output does not appear in notepad which was
+  causing problem with check on CRAN submission } Version
+  2.0.5 (29 June 2011) \itemize{ \item Order of arguments
+  for \code{\link{model.average.marklist}} were switched
   incorrectly such that ... was the second argument.  This
   has been fixed to the original format where ... is at the
   end.  This resulted in the value of any arguments other

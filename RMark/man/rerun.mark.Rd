@@ -4,9 +4,9 @@
 \usage{
   rerun.mark(model, data, ddl, initial, output = TRUE,
   title = "", invisible = TRUE, adjust = TRUE, se = FALSE,
-  simplify = TRUE, filename = NULL, prefix = "mark",
-  default.fixed = TRUE, silent = FALSE, retry = 0, realvcv
-  = FALSE, external = FALSE)
+  filename = NULL, prefix = "mark", default.fixed = TRUE,
+  silent = FALSE, retry = 0, realvcv = FALSE, external =
+  FALSE)
 }
 \arguments{
   \item{model}{previously run MARK model}
@@ -33,9 +33,6 @@
 
   \item{se}{if TRUE, se and confidence intervals are shown
   in summary sent to screen}
-
-  \item{simplify}{if TRUE, simplifies PIM structure to
-  match unique number of rows in design matrix}
 
   \item{filename}{base filename for files created by
   MARK.EXE. Files are named filename.*.}

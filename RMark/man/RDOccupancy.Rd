@@ -41,7 +41,7 @@ sampled habitat} }}
   breeding bird is recorded 3 times annually for 3 years.
   Potential variables influencing site occupancy are the
   size of the site in hectares (samplearea) and canopy
-  cover percentage (cover).  The timing of the surveys
+  cover percentage (cover). The timing of the surveys
   within the year is thought to influence the detection of
   occupancy, so the week the survey was conducted is
   included in 9 variables that are named as occps where p
@@ -49,7 +49,7 @@ sampled habitat} }}
   secondary session (visit) number. Using
   \code{data(RDOccupancy)} will retrieve the completed
   dataframe and using \code{example(RDOccpancy)} will run
-  the example code.  However, in this example we also show
+  the example code. However, in this example we also show
   how to import the raw data and how they were modified to
   construct the \code{RDOccupancy} dataframe.
 
@@ -64,7 +64,7 @@ sampled habitat} }}
   5 8 11 2 5 8 111101100 15 0.37 1 3 5 6 8 9 5 7 12
   11..11100 10 0.04 1 2 . . 2 3 5 8 14 100000100 17 0.58 2
   3 8 5 6 7 2 . 9 100110000 9 0.38 5 8 14 1 2 8 5 8 16
-  1001.0100 6 0.25 4 6 8 1 . 3 1 5 6 1.110000.  17 0.34 1 .
+  1001.0100 6 0.25 4 6 8 1 . 3 1 5 6 1.110000. 17 0.34 1 .
   4 3 5 9 4 5 . 111100000 3 0.23 1 2 3 4 5 6 7 8 9
   000000000 15 0.87 1 2 8 2 5 6 3 7 11 1111.0010 8 0.18 1 2
   4 1 . 3 2 3 . 10011011 . 7 0.72 2 4 5 2 6 7 1 2 .
@@ -100,10 +100,11 @@ sampled habitat} }}
   visited on an occasion. Those "." values are read in fine
   because \code{ch} is read in as a character string.
   However, "." has also been used in the file in place of
-  numeric values of the \code{occ} variable.  Because "."
-  is not numeric, R will coerce the input value to an NA
-  value for each ".".  NA will not be a valid numeric value
-  for MARK, so we need to change it to a number.  To avoid
+  numeric values of the \code{occ} variable. Because "." is
+  not numeric, R will coerce the input value to an NA value
+  for each "." and will treat the column they are in as a
+  factor.  Thus, the "NA" will not be a valid numeric value
+  for MARK, so we need to change it to a number. To avoid
   the coercion, the \code{occ} values were read in as
   characters and the following code changes all "." to "0"
   and then coverts the fields to numeric values:
@@ -117,7 +118,11 @@ sampled habitat} }}
   "0's" provide no information for modeling as they are
   tied to un-sampled occasions. However, all values of a
   site-specific covariate (e.g., cover) are used, so there
-  cannot be any missing values.
+  cannot be any missing values.  Note, however that use of
+  "0's" in the time-dependent covariates will influence
+  predictions output by MARK for that parameter, as they
+  will be biased low due to the zero's being included in
+  estimating the mean for that parameter.
 
   The code below and associated comments provide a self
   contained example for importing, setting up, and
@@ -125,7 +130,7 @@ sampled habitat} }}
   models (RDOccupEG, RDOccupPE, RDOccupPG) using RMARK.
   Unlike standard occupancy designs, robust designs require
   the user to designate primary and secondary occasions
-  using the argument \code{time.intervals}.  For this
+  using the argument \code{time.intervals}. For this
   example, we have 3 primary occasions (year) with 3
   secondary sampling occasions within each year, thus, we
   would set our \code{time.intervals} as follows to
@@ -139,7 +144,7 @@ sampled habitat} }}
   second sampling occasion in year 1, the second 0
   designates the interval between the second and third
   sampling occasion in year 1, and the 1 indicated the
-  change from primary period 1 to primary period 2.  See
+  change from primary period 1 to primary period 2. See
   \code{\link{process.data}} for more information on the
   use of \code{time.intervals}.
 }
@@ -155,139 +160,174 @@ p.dot=list(formula=~1)
 Epsilon.random.shared=list(formula=~-1+eps, share=TRUE)
 model=mark(test_proc,test_ddl,model.parameters=list(Epsilon=Epsilon.random.shared, p=p.dot))
 #
-#  Writing a self-contained function to evaluated a set of
-#  user-defined candidate models
+# A self-contained function for evaluating a set of user-defined candidate models
 run.RDExample=function()
 {
-#  Creating list of potential predictor variables for Psi
+# Creating list of potential predictor variables for Psi
+
 Psi.area=list(formula=~samplearea)
 Psi.cover=list(formula=~cover)
 Psi.areabycover=list(formula=~samplearea*cover)
 Psi.dot=list(formula=~1)
 Psi.time=list(formula=~time)
-#  Creating list of potential predictor variables for p
-#  When coding formula with session-dependent (primary or secondary)
-#  covariates, you do NOT have to include the session identifiers (
-#  the ps of occps) in the model formula.  You only need to specify ~occ.
-#  The variable suffix can be primary occasion numbers or
-#  primary and secondary occasion numbers.
+
+# Creating list of potential predictor variables for p
+# When coding formula with session-dependent (primary or secondary)
+# covariates, you do NOT have to include the session identifiers (
+# the ps of occps) in the model formula. You only need to specify ~occ.
+# The variable suffix can be primary occasion numbers or
+# primary and secondary occasion numbers.
+
 p.dot=list(formula=~1)
 p.occ=list(formula=~occ)
 p.area=list(formula=~sample.area)
 p.coverbyocc=list(formula=~occ*cover)
-#  Creating list of potential predictor variables for Gamma
-#  and/or Epsilon (depending on which RDOccupXX Parameterization is used)
+
+# Creating list of potential predictor variables for Gamma
+# and/or Epsilon (depending on which RDOccupXX Parameterization is used)
+
 gam.area=list(formula=~samplearea)
 epsilon.area=list(formula=~samplearea)
 gam.dot=list(formula=~1)
 epsilon.dot=list(formula=~1)
-#  setting time intervals for 3 primary sessions with
-#  secondary session length of 3,3,3
+
+# setting time intervals for 3 primary sessions with
+# secondary session length of 3,3,3
+
 time_intervals=c(0,0,1,0,0,1,0,0)
-#  Initial data processing for RMARK RDOccupPG
-#  (see RMARK appendix C-3 for list of RDOccupXX model
-#   paramterizations)
+
+# Initial data processing for RMARK RDOccupPG
+# (see RMARK appendix C-3 for list of RDOccupXX model paramterizations)
+
 RD_process=process.data(RDOccupancy, model="RDOccupPG",
 time.intervals=time_intervals)
 RD_ddl=make.design.data(RD_process)
-#  Candidate model list
-#  1.  Occupancy, detection, and colonization are constant
+# Candidate model list
+# 1. Occupancy, detection, and colonization are constant
+
 model.p.dot.Psi.dot.gam.dot<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.dot, Psi=Psi.dot, Gamma=gam.dot),
 invisible=TRUE)
-#  2.  Occupancy varies by time, detection is constant,
-#       colonization is constant
+
+# 2. Occupancy varies by time, detection is constant,
+# colonization is constant
+
 model.p.dot.Psi.time.gam.dot<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.dot, Psi=Psi.time, Gamma=gam.dot),
 invisible=TRUE)
-#  3.  Occupancy varies by area, detection is constant,
-#    colonization varies by area
+
+# 3. Occupancy varies by area, detection is constant,
+# colonization varies by area
+
 model.p.dot.Psi.area.gam.area<-mark(RD_process,
 RD_ddl, model.parameters=list(p=p.dot, Psi=Psi.area,
 Gamma=gam.area), invisible=TRUE)
-#  4.  Occupancy varies by cover, detection is constant,
+
+# 4. Occupancy varies by cover, detection is constant,
 # colonization varies by area
+
 model.p.dot.Psi.cover.gam.area<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.dot, Psi=Psi.cover, Gamma=gam.area),
 invisible=TRUE)
-#  5.  Occupancy is constant, detection is session dependent,
-#  colonization is constant
+
+# 5. Occupancy is constant, detection is session dependent,
+# colonization is constant
+
 model.p.occ.Psi.dot.gam.dot<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.occ, Psi=Psi.dot, Gamma=gam.dot),
 invisible=TRUE)
-#  6.  Occupancy varied by area, detection is session
-#   dependent, colonization is constant
+
+# 6. Occupancy varied by area, detection is session
+# dependent, colonization is constant
 model.p.occ.Psi.area.gam.dot<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.occ, Psi=Psi.area, Gamma=gam.dot),
 invisible=TRUE)
 #
-#  Return model table and list of models
+# Return model table and list of models
 #
 return(collect.models())
 }
-#  This runs the 6 models above-Note that if you use
-#  invisible=FALSE in the above model calls
-#  then the mark.exe prompt screen will show as each model is run.
-robustexample<-run.RDExample()  #This runs the 6 models above
-#  Outputting model selection results
-robustexample                  #  This will print selection results
-options(width=150)             #  Sets page width to 100 characters
-sink("results.table.txt")      #  Captures screen output to file
+# This runs the 6 models above-Note that if you use
+# invisible=FALSE in the above model calls
+# then the mark.exe prompt screen will show as each model is run.
+
+robustexample<-run.RDExample() #This runs the 6 models above
+
+# Outputting model selection results
+robustexample 	# This will print selection results
+options(width=150)	# Sets page width to 100 characters
+sink("results.table.txt") # Captures screen output to file
+
 # Remove comment to see output
-#print.marklist(robustexample) #  Sends output to file
-sink()                         #  Returns output to screen
+#print.marklist(robustexample) # Sends output to file
+sink() # Returns output to screen
 #
-#  Allows you to view results in notepad;remove # to see output
+# Allows you to view results in notepad;remove # to see output
 # system("notepad results.table.txt", invisible=FALSE, wait=FALSE)
-#  Examine the output for Model 1:  Psi(.), p(.), Gamma(.)
-#  Opens MARK results file in text editor
-# Remove # to see file
+
+# Examine the output for Model 1: Psi(.), p(.), Gamma(.)
+# Opens MARK results file in text editor
 #robustexample$model.p.dot.Psi.dot.gam.dot
-#  View beta estimates for specified model in R
+
+# View beta estimates for specified model in R
 robustexample$model.p.dot.Psi.dot.gam.dot$results$beta
-#  View real estimates for specified model in R
+
+# View real estimates for specified model in R
 robustexample$model.p.dot.Psi.dot.gam.dot$results$real
-#  Examine the output for the best fitting model
-#  (Model 5: Psi(.), p(occ), Gamma(.))
-# #  Opens MARK results file in text editor;Remove # to see file
-#robustexample$model.p.occ.Psi.dot.gam.dot
-#  View beta estimates for specified model in R
+
+# Examine the best fitting model which has a time-dependent
+# effect on detection
+# (Model 5: Psi(.), p(occ), Gamma(.))
+
+# View beta estimates for specified model in R
 robustexample$model.p.occ.Psi.dot.gam.dot$results$beta
-#  View real estimates for specified model in R
+# View real estimates for specified model in R
 robustexample$model.p.occ.Psi.dot.gam.dot$results$real
-#  View estimated variance/covariance matrix in R
+# View estimated variance/covariance matrix in R
 robustexample$model.p.occ.Psi.dot.gam.dot$results$beta.vcv
-#  Examine model average estimates for the parameters of interest
-#  View model averages estimates for session-dependent
-#   detection probabilities
+
+# View model averages estimates for session-dependent
+# detection probabilities
 model.average(robustexample, "p", vcv=TRUE)
-#  View model averaged estimate for Psi (Occupancy)
+
+# View model averaged estimate for Psi (Occupancy)
 model.average(robustexample, "Psi", vcv=TRUE)
-#  View model averaged estimate for Gamma (Colonization)
+
+# View model averaged estimate for Gamma (Colonization)
 model.average(robustexample, "Gamma", vcv=TRUE)
+
 #
-#  Compute real estimates across the range of covariates
-#   for a specific model parameter using Model 6
+# Compute real estimates across the range of covariates
+# for a specific model parameter using Model 6
 #
-#  Identify indices we are interested in predicting
-#  see covariate.predictions for information on
-#   index relationship to real parameters
+# Identify indices we are interested in predicting
+# see covariate.predictions for information on
+# index relationship to real parameters
+
 summary.mark(robustexample$model.p.occ.Psi.area.gam.dot, se=TRUE)
-#  Define data frame of covariates to be used for analysis
+# Define data frame of covariates to be used for analysis
+
 ha<-sort(RDOccupancy$samplearea)
-#  Predict parameter of interest (Psi) across the
-#  range of covariate data of interest
+
+# Predict parameter of interest (Psi) across the
+# range of covariate data of interest
+
 Psi.by.Area<-covariate.predictions(robustexample,
 data=data.frame(samplearea=ha), indices=c(1))
+
 # View dataframe of real parameter estimates without var-cov
 # matrix printing (use str(Psi.by.Area) to evaluate structure))
+
 Psi.by.Area[1]
+
 #Create a simple plot using plot() and lines()
+
 plot(Psi.by.Area$estimates$covdata, Psi.by.Area$estimates$estimate,
 type="l", xlab="Patch Area", ylab="Occupancy", ylim=c(0,1))
 lines(Psi.by.Area$estimates$covdata, Psi.by.Area$estimates$lcl, lty=2)
 lines(Psi.by.Area$estimates$covdata, Psi.by.Area$estimates$ucl, lty=2)
-#  For porting graphics directly to file, see pdf() or png(),
+
+# For porting graphics directly to file, see pdf() or png(),
 }
 \author{
   Bret Collier

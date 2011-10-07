@@ -26,8 +26,6 @@
 #' columns in design matrix, modifies AIC and records both
 #' @param se if TRUE, se and confidence intervals are shown in summary sent to
 #' screen
-#' @param simplify if TRUE, simplifies PIM structure to match unique number of
-#' rows in design matrix
 #' @param filename base filename for files created by MARK.EXE. Files are named
 #' filename.*.
 #' @param prefix base filename prefix for files created by MARK.EXE; the files
@@ -121,7 +119,7 @@
 #' #nat
 #' 
 rerun.mark <-
-function(model,data,ddl,initial,output=TRUE,title="",invisible=TRUE,adjust=TRUE,se=FALSE,simplify=TRUE,
+function(model,data,ddl,initial,output=TRUE,title="",invisible=TRUE,adjust=TRUE,se=FALSE,
  filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,realvcv=FALSE,external=FALSE)
 {
 # -----------------------------------------------------------------------------------------------------------------------
@@ -137,7 +135,6 @@ function(model,data,ddl,initial,output=TRUE,title="",invisible=TRUE,adjust=TRUE,
 #  invisible            - if TRUE, window for running MARK is hidden
 #  adjust               - if TRUE, adjusts npar to # of cols in design matrix, modifies AIC and records both
 #  se                   - if TRUE, se and confidence intervals are shown in summary sent to screen
-#  simplify             - if TRUE, simplifies PIM structure to match unique number of rows in design matrix
 #  filename             - base filename for MARK input and output files
 #  prefix               - base filename prefix; default is "mark" for files named marknnn.*
 #  default.fixed        - if TRUE, default fixed values are assigned to any parameters missing from the full design data
@@ -156,6 +153,7 @@ function(model,data,ddl,initial,output=TRUE,title="",invisible=TRUE,adjust=TRUE,
 #
 #  If the data haven't been processed (data$data is NULL) do it now with specified or default arguments
 # 
+simplify=TRUE
 model=load.model(model)
 if(is.null(data$data))
    stop("\nMust specify processed dataframe\n")
@@ -180,7 +178,7 @@ while(i<=retry & !converge)
 #
 
    model<-make.mark.model(data,title=title,parameters=model.parameters,
-          ddl=ddl,initial=initial,call=match.call(),simplify=simplify,default.fixed=default.fixed,
+          ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
           model.name=model$model.name)
    model$model.parameters=model.parameters
 #

@@ -1609,20 +1609,19 @@ NULL
 #' # View real estimates for specified model in R
 #' robustexample$model.p.dot.Psi.dot.gam.dot$results$real
 #'
-#' # Examine the output for the best fitting model which has a time-dependent
+#' # Examine the best fitting model which has a time-dependent
 #' # effect on detection
 #' # (Model 5: Psi(.), p(occ), Gamma(.))
-#' robustexample$model.p.occ.Psi.dot.gam.dot
 #'
 #' # View beta estimates for specified model in R
 #' robustexample$model.p.occ.Psi.dot.gam.dot$results$beta
-
+#'
 #' # View real estimates for specified model in R
 #' robustexample$model.p.occ.Psi.dot.gam.dot$results$real
-
+#'
 #' # View estimated variance/covariance matrix in R
 #' robustexample$model.p.occ.Psi.dot.gam.dot$results$beta.vcv
-
+#'
 #' 
 #' # View model averages estimates for session-dependent
 #' # detection probabilities
@@ -1668,7 +1667,7 @@ NULL
 #' # For porting graphics directly to file, see pdf() or png(),
 #'
 #' 
-
+NULL
 
 
 
@@ -2016,7 +2015,7 @@ NULL
 #' always get to it in the documentation for awhile.  They are ordered from
 #' newest to oldest.
 #' 
-#' Version 2.0.8 (15 Sept 2011) \itemize{ \item Both \code{\link{setup.model}}
+#' Version 2.0.8 (7 Oct 2011) \itemize{ \item Both \code{\link{setup.model}}
 #' and \code{\link{setup.parameters}} were re-written to use data files
 #' models.txt and parameters.txt to define models and parameters which should
 #' make it easier to add new models.  The latter function is now much simpler
@@ -2047,7 +2046,12 @@ NULL
 #' \item Code was added to \code{\link{extract.mark.output}} to extract deviance degrees of freedom.  Thanks 
 #'  again to Eldar for contributing this code.
 #' \item A bug was fixed in \code{\link{make.mark.model}} that prevented use of sin link on within session parameters
-#' in a robust design model. Thanks to TOmmy Garrison for reporting this bug.}
+#' in a robust design model. Thanks to Tommy Garrison for reporting this bug.
+#' \item A bug was fixed in \code{\link{make.mark.model}} which prevented the use of time varying covariates
+#' with shared parameters. Thanks to Andre Breton for reporting this bug.
+#' \item simplify argument was removed from functions because I have not found a reason not to simplify and
+#' I have not been testing code with simplify=FALSE.
+#' }
 #' Version 2.0.7 (25 August 2011) \itemize{ \item Change to
 #' \code{\link{make.mark.model}} to fix bug in which mlogits were incorrectly
 #' assigned in ORDMS model when both Psi and pent used mlogit links. Thanks to

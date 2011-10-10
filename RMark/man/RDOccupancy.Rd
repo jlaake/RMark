@@ -281,10 +281,13 @@ robustexample$model.p.dot.Psi.dot.gam.dot$results$real
 
 # View beta estimates for specified model in R
 robustexample$model.p.occ.Psi.dot.gam.dot$results$beta
+
 # View real estimates for specified model in R
 robustexample$model.p.occ.Psi.dot.gam.dot$results$real
+
 # View estimated variance/covariance matrix in R
 robustexample$model.p.occ.Psi.dot.gam.dot$results$beta.vcv
+
 
 # View model averages estimates for session-dependent
 # detection probabilities

@@ -797,7 +797,7 @@ rownums=match(1:length(unique(new.indices)),new.indices)
 if(length(rownums)==1)
    complete.design.matrix=subset(model$design.matrix,1:dim(model$design.matrix)[1]%in%rownums)
 else
-   complete.design.matrix=model$design.matrix[rownums,]
+   complete.design.matrix=model$design.matrix[rownums,,drop=FALSE]
 # 10 Jan 06; change to accomodate S(.) with known fate where design matrix can
 # become a single element with simplification
 #if(is.vector(complete.design.matrix))

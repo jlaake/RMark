@@ -62,14 +62,14 @@ summary(killdeer)
 # between the occasions.
 run.killdeer=function()
 {
-Sdot=mark(killdeer,model="Nest",nocc=40)
-STime=mark(killdeer,model="Nest",
-model.parameters=list(S=list(formula=~I(Time+1))),nocc=40)
-STimesq=mark(killdeer,model="Nest",
-model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40)
-STime3=mark(killdeer,model="Nest",
-model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)                        ^3))),nocc=40)
-return(collect.models())
+   Sdot=mark(killdeer,model="Nest",nocc=40)
+   STime=mark(killdeer,model="Nest",
+       model.parameters=list(S=list(formula=~I(Time+1))),nocc=40)
+   STimesq=mark(killdeer,model="Nest",
+       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40)
+   STime3=mark(killdeer,model="Nest",
+      model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)                        ^3))),nocc=40)
+   return(collect.models())
 }
 # run defined models
 killdeer.results=run.killdeer()

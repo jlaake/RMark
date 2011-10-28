@@ -2,8 +2,9 @@
 \alias{export.MARK}
 \title{Export data and models for import in MARK}
 \usage{
-  export.MARK(x, project.name, model = NULL, replace =
-  FALSE, chat = 1, title = "", ind.covariates = "all")
+  export.MARK(x, project.name, model = NULL,
+  replace = FALSE, chat = 1, title = "",
+  ind.covariates = "all")
 }
 \arguments{
   \item{x}{processed data list used to build models}
@@ -100,7 +101,7 @@ model.list=create.model.list("Multistrata")
 p.stratumxtime=list(formula=~stratum*time)
 p.stratumxtime.fixed=list(formula=~stratum*time,fixed=list(time=4,value=1))
 model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
-Psi="Psi.sxtime"))
+             Psi="Psi.sxtime"))
 model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
 #
 # Run the list of models

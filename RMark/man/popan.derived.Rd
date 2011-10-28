@@ -108,11 +108,11 @@ Nsex=list(formula=~sex)
 # Run assortment of models
 #
 dipper.phisex.time.psex.time.pentsex.time=mark(dipper.processed,
-dipper.ddl,model.parameters=list(Phi=Phidot,p=ptime,
-pent=pentsex.time,N=Nsex),invisible=FALSE,adjust=FALSE)
+     dipper.ddl,model.parameters=list(Phi=Phidot,p=ptime,
+     pent=pentsex.time,N=Nsex),invisible=FALSE,adjust=FALSE)
 dipper.psex.time.pentsex.time=mark(dipper.processed,dipper.ddl,
-model.parameters=list(Phi=Phitime,p=pdot,
-pent=pentsex.time,N=Nsex),invisible=FALSE,adjust=FALSE)
+     model.parameters=list(Phi=Phitime,p=pdot,
+     pent=pentsex.time,N=Nsex),invisible=FALSE,adjust=FALSE)
 #
 # Return model table and list of models
 #

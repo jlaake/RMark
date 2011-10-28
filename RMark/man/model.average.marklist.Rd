@@ -138,13 +138,13 @@ dipper$nsex=as.numeric(dipper$sex)-1
 #  ~weight will vary
 dipper$weight=rnorm(294)
 mod1=mark(dipper,groups="sex",
-model.parameters=list(Phi=list(formula=~sex+weight)))
+  model.parameters=list(Phi=list(formula=~sex+weight)))
 mod2=mark(dipper,groups="sex",
-model.parameters=list(Phi=list(formula=~sex)))
+  model.parameters=list(Phi=list(formula=~sex)))
 mod3=mark(dipper,groups="sex",
-model.parameters=list(Phi=list(formula=~weight)))
+  model.parameters=list(Phi=list(formula=~weight)))
 mod4=mark(dipper,groups="sex",
-model.parameters=list(Phi=list(formula=~1)))
+  model.parameters=list(Phi=list(formula=~1)))
 dipper.list=collect.models()
 return(dipper.list)
 }
@@ -155,7 +155,7 @@ real.averages=model.average(dipper.results,vcv=TRUE)
 real.averages$estimates
 # get model averaged estimates for Phi using a value of 2 for weight
 model.average(dipper.results,"Phi",
-data=data.frame(weight=2),vcv=FALSE)
+  data=data.frame(weight=2),vcv=FALSE)
 # what you can't do yet is use different covariate values for
 # different groups to get covariances of estimates based on different
 # covariate values; for example, you can get average survival of females

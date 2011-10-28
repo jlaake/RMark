@@ -87,52 +87,52 @@ summary(mallard)
 run.mallard=function()
 {
 # 1. A model of constant daily survival rate (DSR)
-Dot=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~1)))
+	Dot=mark(mallard,nocc=90,model="Nest",
+			model.parameters=list(S=list(formula=~1)))
 
 # 2. DSR varies by habitat type - treats habitats as factors
 #  and the output provides S-hats for each habitat type
-Hab=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~Native+Planted+Wetland)),
-groups=c("Native","Planted","Wetland"))
+	Hab=mark(mallard,nocc=90,model="Nest",
+			model.parameters=list(S=list(formula=~Native+Planted+Wetland)),
+			groups=c("Native","Planted","Wetland"))
 
 # 3. DSR varies with vegetation thickness (Robel reading)
 # Note: coefficients are estimated using the actual covariate
 # values. They are not based on standardized covariate values.
-Robel=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~Robel)))
+	Robel=mark(mallard,nocc=90,model="Nest",
+			model.parameters=list(S=list(formula=~Robel)))
 
 # 4. DSR varies with the amount of native vegetation in the surrounding area
 # Note: coefficients are estimated using the actual covariate
 # values. They are not based on standardized covariate values.
-PpnGr=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~PpnGrass)))
+	PpnGr=mark(mallard,nocc=90,model="Nest",
+			model.parameters=list(S=list(formula=~PpnGrass)))
 
 # 5. DSR follows a trend through time
-TimeTrend=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~Time)))
+	TimeTrend=mark(mallard,nocc=90,model="Nest",
+			model.parameters=list(S=list(formula=~Time)))
 
 # 6. DSR varies with nest age
-Age=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~NestAge)))
+	Age=mark(mallard,nocc=90,model="Nest",
+			model.parameters=list(S=list(formula=~NestAge)))
 
 # 7. DSR varies with nest age & habitat type
-AgeHab=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~NestAge+Native+Planted+Wetland)),
-groups=c("Native","Planted","Wetland"))
+	AgeHab=mark(mallard,nocc=90,model="Nest",
+			model.parameters=list(S=list(formula=~NestAge+Native+Planted+Wetland)),
+			groups=c("Native","Planted","Wetland"))
 
 # 8. DSR varies with nest age & vegetation thickness
-AgeRobel=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~NestAge+Robel)))
+	AgeRobel=mark(mallard,nocc=90,model="Nest",
+			model.parameters=list(S=list(formula=~NestAge+Robel)))
 
 # 9. DSR varies with nest age & amount of native vegetation in surrounding area
-AgePpnGrass=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~NestAge+PpnGrass)))
+	AgePpnGrass=mark(mallard,nocc=90,model="Nest",
+			model.parameters=list(S=list(formula=~NestAge+PpnGrass)))
 
 #
 # Return model table and list of models
 #
-return(collect.models() )
+	return(collect.models() )
 }
 
 # The next line runs the 9 models above and takes a minute or 2
@@ -211,7 +211,7 @@ AgePpn.survival=compute.real(AgePpnGrass,design=design)
 # insert covariate columns
 AgePpn.survival=cbind(design[,c(2:3)],AgePpn.survival)
 colnames(AgePpn.survival)=
-c("Age","PpnGrass","DSR","seDSR","lclDSR","uclDSR")
+		c("Age","PpnGrass","DSR","seDSR","lclDSR","uclDSR")
 # view estimates of DSR for each age and PpnGrass combo
 AgePpn.survival
 

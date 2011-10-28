@@ -2,8 +2,8 @@
 \alias{convert.link.to.real}
 \title{Convert link values to real parameters}
 \usage{
-  convert.link.to.real(x, model = NULL, links = NULL, fixed
-  = NULL)
+  convert.link.to.real(x, model = NULL, links = NULL,
+  fixed = NULL)
 }
 \arguments{
   \item{x}{Link values to be converted to real parameters}

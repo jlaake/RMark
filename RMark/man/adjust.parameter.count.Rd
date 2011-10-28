@@ -55,7 +55,7 @@ Phitime=list(formula=~time)
 dipper.phitime.ptime=mark(dipper,model.parameters=list(Phi=Phitime, p=ptime))
 dipper.phitime.ptime=adjust.parameter.count(dipper.phitime.ptime,11)
 dipper.phitime.ptime=mark(dipper,model.parameters=list(Phi=Phitime, p=ptime),
-adjust=FALSE)
+                           adjust=FALSE)
 }
 \author{
   Jeff Laake

@@ -1271,16 +1271,22 @@ create.agenest.var=function(data,init.agevar,time.intervals)
           for(to.stratum in other.strata)
           {
                if(model.list$robust && parameters[[i]]$secondary)
-                  num.sessions=nocc
+			   {
+				   multi.session=TRUE
+                   num.sessions=nocc
+			   }
                else
-                  num.sessions=1
+			   {
+				   num.sessions=1
+				   multi.session=FALSE
+			   }
                for (l in 1:num.sessions)
                {
                   k=k+1
                   pim[[i]][[k]]=list()
-                  if(num.sessions==1)
-                     pim[[i]][[k]]$pim=create.pim(nocc,parameters[[i]],npar,mixtures)
-                  else
+				  if(!multi.session)
+						  pim[[i]][[k]]$pim=create.pim(nocc,parameters[[i]],npar,mixtures)
+				  else
                   {
                      if(is.na(parameters[[i]]$num))
                      {

@@ -2,8 +2,8 @@
 \alias{PIMS}
 \title{Display PIM for a parameter}
 \usage{
-  PIMS(model, parameter, simplified = TRUE, use.labels =
-  TRUE)
+  PIMS(model, parameter, simplified = TRUE,
+  use.labels = TRUE)
 }
 \arguments{
   \item{model}{mark model object}

@@ -5,8 +5,8 @@
   rerun.mark(model, data, ddl, initial, output = TRUE,
   title = "", invisible = TRUE, adjust = TRUE, se = FALSE,
   filename = NULL, prefix = "mark", default.fixed = TRUE,
-  silent = FALSE, retry = 0, realvcv = FALSE, external =
-  FALSE)
+  silent = FALSE, retry = 0, realvcv = FALSE,
+  external = FALSE)
 }
 \arguments{
   \item{model}{previously run MARK model}

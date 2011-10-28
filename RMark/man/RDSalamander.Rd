@@ -18,18 +18,18 @@ site} \item{freq}{frequency of sites (always 1)} }}
 \examples{
 fit.RDOccupancy=function()
 {
-data(RDSalamander)
-occ.p.time.eg=mark(RDSalamander,model="RDOccupEG",
-time.intervals=c(rep(0,47),1,rep(0,30)),
-model.parameters=list(p=list(formula=~session)))
-occ.p.time.pg=mark(RDSalamander,model="RDOccupPG",
-time.intervals=c(rep(0,47),1,rep(0,30)),
-model.parameters=list(Psi=list(formula=~time),
-p=list(formula=~session)))
-occ.p.time.pe=mark(RDSalamander,model="RDOccupPE",
-time.intervals=c(rep(0,47),1,rep(0,30)),
-model.parameters=list(Psi=list(formula=~time),
-p=list(formula=~session)))
+   data(RDSalamander)
+   occ.p.time.eg=mark(RDSalamander,model="RDOccupEG",
+      time.intervals=c(rep(0,47),1,rep(0,30)),
+      model.parameters=list(p=list(formula=~session)))
+   occ.p.time.pg=mark(RDSalamander,model="RDOccupPG",
+      time.intervals=c(rep(0,47),1,rep(0,30)),
+      model.parameters=list(Psi=list(formula=~time),
+      p=list(formula=~session)))
+   occ.p.time.pe=mark(RDSalamander,model="RDOccupPE",
+      time.intervals=c(rep(0,47),1,rep(0,30)),
+      model.parameters=list(Psi=list(formula=~time),
+      p=list(formula=~session)))
 return(collect.models())
 }
 RDOcc=fit.RDOccupancy()

@@ -2,10 +2,10 @@
 \alias{make.mark.model}
 \title{Create a MARK model for analysis}
 \usage{
-  make.mark.model(data, ddl, parameters = list(), title =
-  "", model.name = NULL, initial = NULL, call = NULL,
-  default.fixed = TRUE, options = NULL, profile.int =
-  FALSE, chat = NULL)
+  make.mark.model(data, ddl, parameters = list(),
+  title = "", model.name = NULL, initial = NULL,
+  call = NULL, default.fixed = TRUE, options = NULL,
+  profile.int = FALSE, chat = NULL)
 }
 \arguments{
   \item{data}{Data list resulting from function
@@ -514,11 +514,11 @@ ptime=list(formula=~time)
 # Make assortment of models
 #
 dipper.phidot.pdot=make.mark.model(dipper.processed,dipper.ddl,
-parameters=list(Phi=Phidot,p=pdot))
+  parameters=list(Phi=Phidot,p=pdot))
 dipper.phidot.ptime=make.mark.model(dipper.processed,dipper.ddl,
-parameters=list(Phi=Phidot,p=ptime))
+  parameters=list(Phi=Phidot,p=ptime))
 dipper.phiFlood.pdot=make.mark.model(dipper.processed,dipper.ddl,
-parameters=list(Phi=PhiFlood, p=pdot))
+  parameters=list(Phi=PhiFlood, p=pdot))
 }
 \author{
   Jeff Laake

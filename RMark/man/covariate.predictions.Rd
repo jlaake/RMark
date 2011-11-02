@@ -128,12 +128,12 @@
 #
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 indcov1=convert.inp(paste(pathtodata,"indcov1",sep="/"),
-               covariates=c("mass","squared.mass"))
+covariates=c("mass","squared.mass"))
 #
 # Next create the processed dataframe and the design data.
 #
-  ind1.process=process.data(indcov1,model="CJS")
-  ind1.ddl=make.design.data(ind1.process)
+ind1.process=process.data(indcov1,model="CJS")
+ind1.ddl=make.design.data(ind1.process)
 #
 # Next create the function that defines and runs the set of models
 # and returns a marklist with the results and a model.table.
@@ -151,13 +151,13 @@ indcov1=convert.inp(paste(pathtodata,"indcov1",sep="/"),
 #
 ind1.models=function()
 {
-  Phi.dot=list(formula=~1)
-  Phi.mass=list(formula=~mass)
-  Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
-  p.dot=list(formula=~1)
-  cml=create.model.list("CJS")
-  results=mark.wrapper(cml,data=ind1.process,ddl=ind1.ddl,adjust=FALSE)
-  return(results)
+Phi.dot=list(formula=~1)
+Phi.mass=list(formula=~mass)
+Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
+p.dot=list(formula=~1)
+cml=create.model.list("CJS")
+results=mark.wrapper(cml,data=ind1.process,ddl=ind1.ddl,adjust=FALSE)
+return(results)
 }
 #
 # Next run the function to create the models and store the results in
@@ -174,14 +174,14 @@ minmass=min(indcov1$mass)
 maxmass=max(indcov1$mass)
 mass.values=minmass+(0:30)*(maxmass-minmass)/30
 Phibymass=covariate.predictions(ind1.results,
-   data=data.frame(mass=mass.values,squared.mass=mass.values^2),
-    indices=c(1))
+data=data.frame(mass=mass.values,squared.mass=mass.values^2),
+indices=c(1))
 #
 # Plot predicted model averaged estimates by weight with pointwise
 # confidence intervals
 #
 plot(Phibymass$estimates$mass, Phibymass$estimates$estimate,
-   type="l",lwd=2,xlab="Mass(kg)",ylab="Survival",ylim=c(0,.65))
+type="l",lwd=2,xlab="Mass(kg)",ylab="Survival",ylim=c(0,.65))
 lines(Phibymass$estimates$mass, Phibymass$estimates$lcl,lty=2)
 lines(Phibymass$estimates$mass, Phibymass$estimates$ucl,lty=2)
 
@@ -196,28 +196,28 @@ lines(Phibymass$estimates$mass, Phibymass$estimates$ucl,lty=2)
 # squared.mass
 #
 indcov2=convert.inp(paste(pathtodata,"indcov2",sep="/"),
-        covariates=c("mass","squared.mass"))
+covariates=c("mass","squared.mass"))
 #
 # Standardize covariates
 #
 actual.mass=indcov2$mass
 standardize=function(x,z=NULL)
 {
-   if(is.null(z))
-   {
-       return((x-mean(x))/sqrt(var(x)))
-   }else
-   {
-      return((x-mean(z))/sqrt(var(z)))
-   }
+if(is.null(z))
+{
+return((x-mean(x))/sqrt(var(x)))
+}else
+{
+return((x-mean(z))/sqrt(var(z)))
+}
 }
 indcov2$mass=standardize(indcov2$mass)
 indcov2$squared.mass=standardize(indcov2$squared.mass)
 #
 # Next create the processed dataframe and the design data.
 #
-  ind2.process=process.data(indcov2,model="CJS")
-  ind2.ddl=make.design.data(ind2.process)
+ind2.process=process.data(indcov2,model="CJS")
+ind2.ddl=make.design.data(ind2.process)
 #
 # Next create the function that defines and runs the set of models and
 # returns a marklist with the results and a model.table.  It does not
@@ -234,18 +234,18 @@ indcov2$squared.mass=standardize(indcov2$squared.mass)
 #
 ind2.models=function()
 {
-  Phi.dot=list(formula=~1)
-  Phi.time=list(formula=~time)
-  Phi.mass=list(formula=~mass)
-  Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
-  Phi.time.x.mass.plus.mass.squared=
-        list(formula=~time:mass + time:squared.mass)
-  Phi.time.mass.plus.mass.squared=
-     list(formula=~time*mass + squared.mass+ time:squared.mass)
-  p.dot=list(formula=~1)
-  cml=create.model.list("CJS")
-  results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE)
-  return(results)
+Phi.dot=list(formula=~1)
+Phi.time=list(formula=~time)
+Phi.mass=list(formula=~mass)
+Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
+Phi.time.x.mass.plus.mass.squared=
+list(formula=~time:mass + time:squared.mass)
+Phi.time.mass.plus.mass.squared=
+list(formula=~time*mass + squared.mass+ time:squared.mass)
+p.dot=list(formula=~1)
+cml=create.model.list("CJS")
+results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE)
+return(results)
 }
 #
 # Next run the function to create the models and store the results in
@@ -266,8 +266,8 @@ squared.mass.values=mass.values^2
 mass.values=standardize(mass.values,actual.mass)
 squared.mass.values=standardize(squared.mass.values,actual.mass^2)
 Phibymass=covariate.predictions(ind2.results,
- data=data.frame(mass=mass.values,squared.mass=squared.mass.values),
-  indices=c(1:7))
+data=data.frame(mass=mass.values,squared.mass=squared.mass.values),
+indices=c(1:7))
 #
 # Plot predicted model averaged estimates by weight with pointwise
 # confidence intervals
@@ -275,12 +275,12 @@ Phibymass=covariate.predictions(ind2.results,
 par(mfrow=c(4,2))
 for (i in 1:7)
 {
-   mass=minmass+(0:30)*(maxmass-minmass)/30
-   x=Phibymass$estimates
-   plot(mass,x$estimate[x$par.index==i],type="l",lwd=2,
-    xlab="Mass(kg)",ylab="Survival",ylim=c(0,1),main=paste("Time",i))
-   lines(mass, x$lcl[x$par.index==i],lty=2)
-   lines(mass, x$ucl[x$par.index==i],lty=2)
+mass=minmass+(0:30)*(maxmass-minmass)/30
+x=Phibymass$estimates
+plot(mass,x$estimate[x$par.index==i],type="l",lwd=2,
+xlab="Mass(kg)",ylab="Survival",ylim=c(0,1),main=paste("Time",i))
+lines(mass, x$lcl[x$par.index==i],lty=2)
+lines(mass, x$ucl[x$par.index==i],lty=2)
 }
 }
 \author{

@@ -2018,6 +2018,9 @@ NULL
 #' Version 2.0.9 (27 Oct 2011) \itemize{ \item Patch was made to  \code{\link{make.mark.model}} to fix bug in
 #' PIM creation for a multi-session model and there was just 1 session. Thanks to Erin Roche for helping to 
 #' identify this bug.
+#'  \item Patch was made to  \code{\link{make.mark.model}} to fix bug in
+#' handling of mlogits for pi and Omega parameters with more than one group. These parameters were introduced
+#' with the RDMSMisClass and other new models that were recently added. 
 #' }
 #' Version 2.0.8 (7 Oct 2011) \itemize{ \item Both \code{\link{setup.model}}
 #' and \code{\link{setup.parameters}} were re-written to use data files

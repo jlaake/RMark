@@ -47,13 +47,13 @@
 # model sets for adjusting chat and showing model selection table.
 # It is not a realistic analysis.
 #
-  data(dipper)
-  mod=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
-  rr=get.real(mod,"Phi",se=TRUE,vcv=TRUE)
-  deltamethod.special("prod",rr$estimates$estimate[1:6],rr$vcv.real)
-  deltamethod.special("cumprod",rr$estimates$estimate[1:6],rr$vcv.real,ses=FALSE)
-  deltamethod.special("sum",rr$estimates$estimate[1:6],rr$vcv.real)
-  deltamethod.special("cumsum",rr$estimates$estimate[1:6],rr$vcv.real,ses=FALSE)
+data(dipper)
+mod=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
+rr=get.real(mod,"Phi",se=TRUE,vcv=TRUE)
+deltamethod.special("prod",rr$estimates$estimate[1:6],rr$vcv.real)
+deltamethod.special("cumprod",rr$estimates$estimate[1:6],rr$vcv.real,ses=FALSE)
+deltamethod.special("sum",rr$estimates$estimate[1:6],rr$vcv.real)
+deltamethod.special("cumsum",rr$estimates$estimate[1:6],rr$vcv.real,ses=FALSE)
 }
 \author{
   Jeff Laake

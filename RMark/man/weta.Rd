@@ -40,29 +40,29 @@ fit.weta.models=function()
 {
 #  use make.time.factor to create time-varying dummy variables Obs1 and Obs2
 #  observer 3 is used as the intercept
-   weta=make.time.factor(weta,"Obs",1:5,intercept=3)
+weta=make.time.factor(weta,"Obs",1:5,intercept=3)
 #  Process data and use Browse covariate to group sites; it could have also
 #  been used an individual covariate because it is a 0/1 variable.
-   weta.process=process.data(weta,model="Occupancy",groups="Browse")
-   weta.ddl=make.design.data(weta.process)
+weta.process=process.data(weta,model="Occupancy",groups="Browse")
+weta.ddl=make.design.data(weta.process)
 #  time factor variable copied to Day to match names used in book
-   weta.ddl$p$Day=weta.ddl$p$time
+weta.ddl$p$Day=weta.ddl$p$time
 # Define p models
-   p.dot=list(formula=~1)
-   p.day=list(formula=~Day)
-   p.obs=list(formula=~Obs1+Obs2)
-   p.browse=list(formula=~Browse)
-   p.day.obs=list(formula=~Day+Obs1+Obs2)
-   p.day.browse=list(formula=~Day+Browse)
-   p.obs.browse=list(formula=~Obs1+Obs2+Browse)
-   p.day.obs.browse=list(formula=~Day+Obs1+Obs2+Browse)
+p.dot=list(formula=~1)
+p.day=list(formula=~Day)
+p.obs=list(formula=~Obs1+Obs2)
+p.browse=list(formula=~Browse)
+p.day.obs=list(formula=~Day+Obs1+Obs2)
+p.day.browse=list(formula=~Day+Browse)
+p.obs.browse=list(formula=~Obs1+Obs2+Browse)
+p.day.obs.browse=list(formula=~Day+Obs1+Obs2+Browse)
 # Define Psi models
-   Psi.dot=list(formula=~1)
-   Psi.browse=list(formula=~Browse)
+Psi.dot=list(formula=~1)
+Psi.browse=list(formula=~Browse)
 # Create model list
-   cml=create.model.list("Occupancy")
+cml=create.model.list("Occupancy")
 # Run and return marklist of models
-   return(mark.wrapper(cml,data=weta.process,ddl=weta.ddl))
+return(mark.wrapper(cml,data=weta.process,ddl=weta.ddl))
 }
 weta.models=fit.weta.models()
 # Modify the model table to show -2lnl and use AIC rather than AICc

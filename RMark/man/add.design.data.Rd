@@ -2,8 +2,8 @@
 \alias{add.design.data}
 \title{Add design data}
 \usage{
-  add.design.data(data, ddl, parameter, type = "age",
-  bins = NULL, name = NULL, replace = FALSE, right = TRUE)
+  add.design.data(data, ddl, parameter, type = "age", bins
+  = NULL, name = NULL, replace = FALSE, right = TRUE)
 }
 \arguments{
   \item{data}{processed data list resulting from
@@ -141,7 +141,7 @@ data(example.data)
 example.data.proc=process.data(example.data)
 ddl=make.design.data(example.data.proc)
 ddl=add.design.data(example.data.proc,ddl,parameter="Phi",type="age",
-  bins=c(0,.5,10),name="2ages")
+bins=c(0,.5,10),name="2ages")
 ddl=add.design.data(example.data.proc,ddl,parameter="p",type="age",
 bins=c(0,.5,10),name="2ages")
 ddl=add.design.data(example.data.proc,ddl,parameter="Phi",type="age",

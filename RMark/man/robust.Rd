@@ -49,9 +49,9 @@ S.time=list(formula=~time)
 p.time.session=list(formula=~-1+session:time,share=TRUE)
 GammaDoublePrime.random=list(formula=~time,share=TRUE)
 model.1=mark(data = robust, model = "Robust",
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.time,
-            GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
+time.intervals=time.intervals,
+model.parameters=list(S=S.time,
+GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
 #
 # Random emigration, p varies by session, uses Mh but pi fixed to 1,
 # S by time.This model is in the example Robust with MARK but it is
@@ -62,10 +62,10 @@ model.1=mark(data = robust, model = "Robust",
 pi.fixed=list(formula=~1,fixed=1)
 p.session=list(formula=~-1+session,share=TRUE)
 model.2.a=mark(data = robust, model = "RDHet",
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.time,
-            GammaDoublePrime=GammaDoublePrime.random,
-            p=p.session,pi=pi.fixed))
+time.intervals=time.intervals,
+model.parameters=list(S=S.time,
+GammaDoublePrime=GammaDoublePrime.random,
+p=p.session,pi=pi.fixed))
 #
 # Random emigration, p varies by session, uses Mh and in this
 # case pi varies and so does p across
@@ -74,10 +74,10 @@ model.2.a=mark(data = robust, model = "RDHet",
 pi.dot=list(formula=~1)
 p.session.mixture=list(formula=~session+mixture,share=TRUE)
 model.2.b=mark(data = robust, model = "RDHet",
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.time,
-            GammaDoublePrime=GammaDoublePrime.random,
-            p=p.session.mixture,pi=pi.dot))
+time.intervals=time.intervals,
+model.parameters=list(S=S.time,
+GammaDoublePrime=GammaDoublePrime.random,
+p=p.session.mixture,pi=pi.dot))
 #
 # Markov constant emigration rates, pi varies by session,
 # p=c varies by session, S constant
@@ -94,11 +94,11 @@ p.session=list(formula=~-1+session,share=TRUE)
 GammaDoublePrime.dot=list(formula=~1)
 GammaPrime.dot=list(formula=~1)
 model.3.a=mark(data = robust, model = "RDHet",
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.dot,
-            GammaPrime=GammaPrime.dot,
-            GammaDoublePrime=GammaDoublePrime.dot,
-            p=p.session,pi=pi.session))
+time.intervals=time.intervals,
+model.parameters=list(S=S.dot,
+GammaPrime=GammaPrime.dot,
+GammaDoublePrime=GammaDoublePrime.dot,
+p=p.session,pi=pi.session))
 #
 # Markov constant emigration rates, pi varies by session,
 # p=c varies by session+mixture, S constant. This is model.3.a
@@ -109,11 +109,11 @@ pi.session=list(formula=~session)
 GammaDoublePrime.dot=list(formula=~1)
 GammaPrime.dot=list(formula=~1)
 model.3.b=mark(data = robust, model = "RDHet",
-            time.intervals=time.intervals,
-            model.parameters=list(S=S.dot,
-            GammaPrime=GammaPrime.dot,
-            GammaDoublePrime=GammaDoublePrime.dot,
-            p=p.session.mixture,pi=pi.session))
+time.intervals=time.intervals,
+model.parameters=list(S=S.dot,
+GammaPrime=GammaPrime.dot,
+GammaDoublePrime=GammaDoublePrime.dot,
+p=p.session.mixture,pi=pi.session))
 #
 # Huggins Random emigration, p=c varies by time and session,
 # S by time
@@ -141,11 +141,11 @@ S.time=list(formula=~time)
 p.time.session=list(formula=~-1+session:time,share=TRUE)
 GammaDoublePrime.random=list(formula=~time,share=TRUE)
 model.4=mark(data = robust, model = "RDHuggins",
-        time.intervals=time.intervals,design.parameters=
-        list(GammaDoublePrime=list(time.bins=c(1,2,5))),
-        right=FALSE, model.parameters=
-        list(S=S.time,GammaDoublePrime=GammaDoublePrime.random,
-        p=p.time.session))
+time.intervals=time.intervals,design.parameters=
+list(GammaDoublePrime=list(time.bins=c(1,2,5))),
+right=FALSE, model.parameters=
+list(S=S.time,GammaDoublePrime=GammaDoublePrime.random,
+p=p.time.session))
 
 return(collect.models())
 }

@@ -1720,23 +1720,12 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 					 nsets=length(pim[[parx]])
 					 for (kk in 1:nsets)
 					 {
-						 logit.numbers=max.logit.number+rep(1:nrow(full.ddl[[parx]])/(nstrata-1),nstrata-1)
+						 logit.numbers=max.logit.number+rep(1:(nrow(full.ddl[[parx]])/(number.of.groups*(nstrata-1))),nstrata-1)
 						 max.logit.number=max(logit.numbers)
 						 string=c(string,paste("mlogit(",logit.numbers,")",sep=""))
-					 }
-					 
-					 
+					 }			 				 
 				 } else
-				 {
-					 if(parx=="Omega")
-					 {
-
-						 
-					 }else
-					 {
-                         stop(paste("Mlogit link not allowed with parameter",parx))
-                     }
-				 }
+                     stop(paste("Mlogit link not allowed with parameter",parx))
 			 }
            }
         } else

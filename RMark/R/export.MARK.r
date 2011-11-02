@@ -136,7 +136,10 @@ export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",i
   }
   write(setup.model(x$model, nchar(x$data$ch[1]), x$mixtures)$etype,file=filename)
   write(x$mixtures,file=filename,append=TRUE)
-  write(x$nocc,file=filename,append=TRUE)
+  if(setup.model(x$model, nchar(x$data$ch[1]), x$mixtures)$robust)
+     write(nchar(x$data$ch[1]),file=filename,append=TRUE)
+  else
+	  write(x$nocc,file=filename,append=TRUE)
   if(is.null(ind.covariates))
   {
     write("0",file=filename,append=TRUE)  

@@ -2,8 +2,8 @@
 \alias{export.chdata}
 \title{Export capture-history data to MARK .inp format}
 \usage{
-  export.chdata(data, filename, covariates = NULL,
-  replace = FALSE)
+  export.chdata(data, filename, covariates = NULL, replace
+  = FALSE)
 }
 \arguments{
   \item{data}{processed data list resulting from
@@ -47,7 +47,7 @@ data(dipper)
 dipper$numeric.sex=as.numeric(dipper$sex)-1
 dipper.processed=process.data(dipper,group="sex")
 export.chdata(dipper.processed, filename="dipper",
-         covariates="numeric.sex")
+covariates="numeric.sex")
 #
 # Had sex been used in place of numeric.sex in the above command,
 # MARK would have been unable to use it as a covariate

@@ -121,11 +121,11 @@ dipper.results
 # Compute matrices of model weights, number of parameters and Delta AICc values
 #
 model.weight.matrix=tapply(dipper.results$model.table$weight,
- list(dipper.results$model.table$Phi,dipper.results$model.table$p),mean)
+list(dipper.results$model.table$Phi,dipper.results$model.table$p),mean)
 model.npar.matrix=tapply(dipper.results$model.table$npar,
- list(dipper.results$model.table$Phi,dipper.results$model.table$p),mean)
+list(dipper.results$model.table$Phi,dipper.results$model.table$p),mean)
 model.DeltaAICc.matrix=tapply(dipper.results$model.table$DeltaAICc,
- list(dipper.results$model.table$p,dipper.results$model.table$Phi),mean)
+list(dipper.results$model.table$p,dipper.results$model.table$Phi),mean)
 #
 # Output DeltaAICc as a tab-delimited text file that can be read into Excel
 # (to do that directly use RODBC or xlsreadwrite package for R)

@@ -3,8 +3,8 @@
 \title{Extract or compute sets of real parameters}
 \usage{
   get.real(model, parameter, beta = NULL, se = FALSE,
-  design = NULL, data = NULL, vcv = FALSE,
-  show.fixed = TRUE)
+  design = NULL, data = NULL, vcv = FALSE, show.fixed =
+  TRUE)
 }
 \arguments{
   \item{model}{MARK model object}
@@ -99,14 +99,14 @@ data(example.data)
 pregion=list(formula=~region)
 PhiAge=list(formula=~Age)
 mod=mark(example.data,model.parameters=list(p=pregion,Phi=PhiAge),
- groups=c("sex","age","region"),age.var=2,initial.ages=c(0,1,2))
+groups=c("sex","age","region"),age.var=2,initial.ages=c(0,1,2))
 # extract list of Phi parameter estimates for all groups in PIM format
 Phi.estimates=get.real(mod,"Phi")
 # print out parameter estimates in triangular PIM format
 for(i in 1:length(Phi.estimates))
 {
-  cat(names(Phi.estimates)[i],"\\n")
-  print(Phi.estimates[[i]]$pim,na.print="")
+cat(names(Phi.estimates)[i],"\\n")
+print(Phi.estimates[[i]]$pim,na.print="")
 }
 #extract parameter estimates of capture probability p with se and conf intervals
 p.table=get.real(mod,"p",se=TRUE)
@@ -115,8 +115,8 @@ estimates=by(p.table$estimate,p.table$region,mean)
 lcl=by(p.table$lcl,p.table$region,mean)
 ucl=by(p.table$ucl,p.table$region,mean)
 plotCI(c(1:4),estimates,ucl-estimates,estimates-lcl,xlab="Region",
-         ylab="Capture probability",
-		ylim=c(.5,1),main="Capture probability estimates by region")
+ylab="Capture probability",
+ylim=c(.5,1),main="Capture probability estimates by region")
 }
 \author{
   Jeff Laake

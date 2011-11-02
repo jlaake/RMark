@@ -21,14 +21,14 @@ of sites (always 1)} }}
 
 do.exercise.7=function()
 {
-  data(Donovan.7)
+data(Donovan.7)
 # Estimates from following agree with estimates on website but the
 # log-likelihood values do not agree.  Maybe a difference in whether the
 # constant binomial coefficients are included.
-  Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE)
+Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE)
 # THe following model was not in exercise 7.
-  Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE)
-  return(collect.models())
+Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE)
+return(collect.models())
 }
 exercise.7=do.exercise.7()
 # Remove # to see output

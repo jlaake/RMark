@@ -10,17 +10,17 @@
 \examples{
 data(PoissonMR)
 pois.proc=process.data(PoissonMR,model="PoissonMR",
-		counts=list("Unmarked Seen"=c(1380, 1120, 1041, 948),
-				    "Marked Unidentified"=c(8,10,9,11),
-					"Known Marks"=c(45,67,0,0)))
+counts=list("Unmarked Seen"=c(1380, 1120, 1041, 948),
+"Marked Unidentified"=c(8,10,9,11),
+"Known Marks"=c(45,67,0,0)))
 pois.ddl=make.design.data(pois.proc)
 mod=mark(pois.proc,pois.ddl,
-		model.parameters=list(Phi=list(formula=~1,link="sin"),
-				              GammaDoublePrime=list(formula=~1,share=TRUE,link="sin"),
-							  alpha=list(formula=~-1+time,link="log"),
-							  U=list(formula=~-1+time,link="log"),
-							  sigma=list(formula=~-1+time,link="log")),
-		                      initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1))
+model.parameters=list(Phi=list(formula=~1,link="sin"),
+GammaDoublePrime=list(formula=~1,share=TRUE,link="sin"),
+alpha=list(formula=~-1+time,link="log"),
+U=list(formula=~-1+time,link="log"),
+sigma=list(formula=~-1+time,link="log")),
+initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1))
 summary(mod)
 }
 \keyword{datasets}

@@ -2,8 +2,8 @@
 \alias{strip.comments}
 \title{Strip comments}
 \usage{
-  strip.comments(inp.filename, use.comments = TRUE,
-  header = TRUE)
+  strip.comments(inp.filename, use.comments = TRUE, header
+  = TRUE)
 }
 \arguments{
   \item{inp.filename}{name of input file; inp extension is

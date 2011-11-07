@@ -134,10 +134,14 @@ export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",i
 	 x$time.intervals=rep(1,length(x$time.intervals))
 	 x$nocc=nchar(x$data$ch[1])
   }
-  write(setup.model(x$model, nchar(x$data$ch[1]), x$mixtures)$etype,file=filename)
+  if(x$model=="Nest") 
+	  nocc=1
+  else
+	  nocc=nchar(x$data$ch[1])
+  write(setup.model(x$model, nocc, x$mixtures)$etype,file=filename)
   write(x$mixtures,file=filename,append=TRUE)
-  if(setup.model(x$model, nchar(x$data$ch[1]), x$mixtures)$robust)
-     write(nchar(x$data$ch[1]),file=filename,append=TRUE)
+  if(setup.model(x$model, nocc, x$mixtures)$robust)
+     write(nocc,file=filename,append=TRUE)
   else
 	  write(x$nocc,file=filename,append=TRUE)
   if(is.null(ind.covariates))

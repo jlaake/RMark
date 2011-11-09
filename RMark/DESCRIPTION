@@ -1,8 +1,10 @@
 Package: RMark
 Version: 2.0.9
-Date: 2011-10-27
+Date: 2011-11-8
 Title: R Code for MARK Analysis
-Author: Jeff Laake <jeff.laake@noaa.gov>
+Author: Jeff Laake <jeff.laake@noaa.gov> with contributions
+    from Eldar Rakimberdiev, Bret Collier, Jay Rotella and
+    Andrew Paul
 Description: This package provides an interface to the
     software package MARK developed by Gary White. MARK is
     freely available at
@@ -12,7 +14,8 @@ SystemRequirements: notepad.exe, mark.exe and rel_32.exe
     (see README.txt)
 Depends:
     R (>= 2.13.0),
-    plotrix
+    plotrix,
+    snowfall
 Imports:
     msm,
     nlme
@@ -51,6 +54,7 @@ Collate:
     'make.time.factor.r'
     'mark.R'
     'mark.wrapper.R'
+    'mark.wrapper.parallel.r'
     'merge.design.covariates.r'
     'merge.mark.r'
     'model.average.default.r'

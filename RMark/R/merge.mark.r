@@ -4,6 +4,7 @@
 #' marklist with an optional table of model results if \code{table=TRUE}.
 #' 
 #' 
+#' @usage \method{merge}{mark}(...,table=TRUE)
 #' @param ...  an unspecified number of marklist and/or mark model objects
 #' @param table if TRUE, a table of model results is also included in the
 #' returned list

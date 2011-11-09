@@ -141,6 +141,7 @@ mallard.results=run.mallard()
 # Examine table of model-selection results #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+export.MARK(mallard.results$Age$data,"MallDSR",mallard.results,replace=TRUE,ind.covariates="all")
 mallard.results                        # print model-selection table to screen
 options(width=100)                     # set page width to 100 characters
 sink("results.table.txt")              # capture screen output to file

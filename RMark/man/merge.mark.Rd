@@ -2,7 +2,7 @@
 \alias{merge.mark}
 \title{Merge mark model objects and lists of mark model objects}
 \usage{
-  merge.mark(..., table = TRUE)
+  \method{merge}{mark}(...,table=TRUE)
 }
 \arguments{
   \item{...}{an unspecified number of marklist and/or mark

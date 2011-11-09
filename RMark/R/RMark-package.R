@@ -1015,6 +1015,7 @@ NULL
 #'# Examine table of model-selection results #
 #'#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #'
+#'export.MARK(mallard.results$Age$data,"MallDSR",mallard.results,replace=TRUE,ind.covariates="all")
 #'mallard.results                        # print model-selection table to screen
 #'options(width=100)                     # set page width to 100 characters
 #'sink("results.table.txt")              # capture screen output to file
@@ -2015,12 +2016,19 @@ NULL
 #' always get to it in the documentation for awhile.  They are ordered from
 #' newest to oldest.
 #' 
-#' Version 2.0.9 (27 Oct 2011) \itemize{ \item Patch was made to  \code{\link{make.mark.model}} to fix bug in
+#' Version 2.0.9 (8 Nov 2011) \itemize{ \item Patch was made to  \code{\link{make.mark.model}} to fix bug in
 #' PIM creation for a multi-session model and there was just 1 session. Thanks to Erin Roche for helping to 
 #' identify this bug.
 #'  \item Patch was made to  \code{\link{make.mark.model}} to fix bug in
 #' handling of mlogits for pi and Omega parameters with more than one group. These parameters were introduced
-#' with the RDMSMisClass and other new models that were recently added. 
+#' with the RDMSMisClass and other new models that were recently added.
+#' \item Additional changes were made to \code{\link{export.MARK}} to re-fix changes for robust and nest survival
+#' model export to MARK.
+#' \item A function \code{\link{mark.wrapper.parallel}} written by Eldar Rakimberdiev provides a parallel processing
+#' version of mark.wrapper.  See the example in the help for the function.  It does order the model numbers
+#' and uses model object name in the model selection table which is different than \code{\link{mark.wrapper}}, so that
+#' function was left in but with the exception of the run argument, the parallel version is functionally the same
+#' and can be used in place of \code{mark.wrapper} to run sequentially or in parallel. 
 #' }
 #' Version 2.0.8 (7 Oct 2011) \itemize{ \item Both \code{\link{setup.model}}
 #' and \code{\link{setup.parameters}} were re-written to use data files

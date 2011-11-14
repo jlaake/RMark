@@ -131,9 +131,9 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
     colnames(wtable)=design.data$time[1:ncol(pim)]
     if(!is.null(design.data$cohort))
 		if(nrow(pim)==ncol(pim))
-           rownames(wtable)=design.data$cohort[(diag(pim[1:nrow(pim),])-pim[1,1]+1)]
+           rownames(wtable)=design.data$cohort[(diag(pim[1:nrow(pim),,drop=FALSE])-pim[1,1]+1)]
         else
-			rownames(wtable)=rep(design.data$cohort[(diag(pim[1:nrow(pim),])-pim[1,1]+1)],nrow(pim)/ncol(pim))	
+			rownames(wtable)=rep(design.data$cohort[(diag(pim[1:nrow(pim),,drop=FALSE])-pim[1,1]+1)],nrow(pim)/ncol(pim))	
     wtable
   }
 #

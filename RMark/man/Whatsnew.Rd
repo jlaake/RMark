@@ -23,14 +23,15 @@
   \code{\link{mark.wrapper.parallel}} written by Eldar
   Rakimberdiev provides a parallel processing version of
   mark.wrapper.  See the example in the help for the
-  function.  It does order the model numbers and uses model
-  object name in the model selection table which is
-  different than \code{\link{mark.wrapper}}, so that
-  function was left in but with the exception of the run
-  argument, the parallel version is functionally the same
+  function.  The parallel version is functionally the same
   and can be used in place of \code{mark.wrapper} to run
-  sequentially or in parallel. } Version 2.0.8 (7 Oct 2011)
-  \itemize{ \item Both \code{\link{setup.model}} and
+  sequentially or in parallel. It does not include the run
+  argument however. \item A bug was fixed in
+  \code{\link{get.real}} which caused an R error for a
+  triangular PIM that had only a single entry. Thanks to
+  Amanda Goldberg for discovering and reporting this error.
+  } Version 2.0.8 (7 Oct 2011) \itemize{ \item Both
+  \code{\link{setup.model}} and
   \code{\link{setup.parameters}} were re-written to use
   data files models.txt and parameters.txt to define models
   and parameters which should make it easier to add new

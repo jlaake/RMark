@@ -106,7 +106,7 @@
 #' # Fit each model in the list and return the results
 #' 	return(mark.wrapper.parallel(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,cpus=3,parallel=TRUE))
 #' }
-#' \dontrun{xx=do.MSOccupancy()}
+#' xx=do.MSOccupancy()
 
 mark.wrapper.parallel<-
 		function(model.list,silent=FALSE,use.initial=FALSE,initial=NULL, parallel=TRUE, cpus=2, ...)
@@ -238,7 +238,6 @@ make.run.mark.model.apply.int<-function(x) {
 	}
 	else { names(x)[names(x)=="model.parameters"]<-"parameters"
 		mymodel<-try(do.call(make.mark.model, x),silent=silent) }
-	eval(parse(text=paste(x[["model.name"]],"=mymodel"))) # i deleted if condition from here as we need to send something outside anyway..
 	setwd(old.wd)
 	return(mymodel)
 }

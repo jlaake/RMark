@@ -8,8 +8,8 @@
   to oldest.
 }
 \details{
-  Version 2.0.9 (27 Oct 2011) \itemize{ \item Patch was
-  made to \code{\link{make.mark.model}} to fix bug in PIM
+  Version 2.0.9 (8 Nov 2011) \itemize{ \item Patch was made
+  to \code{\link{make.mark.model}} to fix bug in PIM
   creation for a multi-session model and there was just 1
   session. Thanks to Erin Roche for helping to identify
   this bug. \item Patch was made to
@@ -17,8 +17,20 @@
   mlogits for pi and Omega parameters with more than one
   group. These parameters were introduced with the
   RDMSMisClass and other new models that were recently
-  added. } Version 2.0.8 (7 Oct 2011) \itemize{ \item Both
-  \code{\link{setup.model}} and
+  added. \item Additional changes were made to
+  \code{\link{export.MARK}} to re-fix changes for robust
+  and nest survival model export to MARK. \item A function
+  \code{\link{mark.wrapper.parallel}} written by Eldar
+  Rakimberdiev provides a parallel processing version of
+  mark.wrapper.  See the example in the help for the
+  function.  It does order the model numbers and uses model
+  object name in the model selection table which is
+  different than \code{\link{mark.wrapper}}, so that
+  function was left in but with the exception of the run
+  argument, the parallel version is functionally the same
+  and can be used in place of \code{mark.wrapper} to run
+  sequentially or in parallel. } Version 2.0.8 (7 Oct 2011)
+  \itemize{ \item Both \code{\link{setup.model}} and
   \code{\link{setup.parameters}} were re-written to use
   data files models.txt and parameters.txt to define models
   and parameters which should make it easier to add new

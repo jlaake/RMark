@@ -74,7 +74,7 @@
 #' @seealso \code{\link{collect.models}}, \code{\link{mark}},
 #' \code{\link{create.model.list}}
 #' @keywords utility
-#' @example 
+#' @examples 
 #' do.MSOccupancy=function()
 #' {
 #' #  Get the data
@@ -89,7 +89,7 @@
 #' # time-varying p1t and p2t
 #' 	p1.p2.different.time=list(p1=list(formula=~time,share=FALSE),p2=list(formula=~time))
 #' #  delta2 model with one rate for times 1-2 and another for times 3-5;
-#' #delta2 defined below
+#' # delta2 defined below
 #' 	Delta.delta2=list(formula=~delta2)
 #' 	Delta.dot=list(formula=~1)  # constant delta
 #' 	Delta.time=list(formula=~time) # time-varying delta
@@ -104,12 +104,12 @@
 #' # Create a list using the 4 p modls and 3 delta models (12 models total)
 #' 	cml=create.model.list("MSOccupancy")
 #' # Fit each model in the list and return the results
-#' 	return(mark.wrapper.parallel(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,cpus=3,parallel=T))
+#' 	return(mark.wrapper.parallel(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,cpus=3,parallel=TRUE))
 #' }
-#' xx=do.MSOccupancy()
+#' \dontrun{xx=do.MSOccupancy()}
 
 mark.wrapper.parallel<-
-		function(model.list,silent=FALSE,use.initial=FALSE,initial=NULL, parallel=T, cpus=2, ...)
+		function(model.list,silent=FALSE,use.initial=FALSE,initial=NULL, parallel=TRUE, cpus=2, ...)
 {
 	
 # -----------------------------------------------------------------------------------------------------------------------
@@ -131,10 +131,10 @@ mark.wrapper.parallel<-
 	if (!any(names(list.args)=="parallel")) list.args$parallel=TRUE
 	if (!any(names(list.args)=="wd")) list.args$wd=getwd()
 	if (!any(names(list.args)=="prefix")) list.args$prefix="mark"
-	existing.files<-list.files(path=list.args$wd, pattern=list.args$prefix)
+	existing.files<-list.files(path=list.args$wd, pattern=paste(list.args$prefix, "[[:digit:]]+\\.", sep=""))
 	Max.number<-0
 	if (!length(existing.files)==0) {
-		Max.number<-sum(0, max(as.numeric(sapply(strsplit(substr(existing.files, 5, 100), "\\."), "[[", i=1)), na.rm=T), na.rm=T)
+		Max.number<-sum(0, max(as.numeric(sapply(strsplit(substr(existing.files, 5, 100), "\\."), "[[", i=1)), na.rm=TRUE), na.rm=TRUE)
 		if(list.args$prefix!="mark") warning("you already have files with prefix ", list.args$prefix, " in directory ", list.args$wd, ".\n first file will be named as ", list.args$prefix, formatC((Max.number+1), width=3,digits=0,format="f", flag="0"), "\n")
 	}
 	if (!any(names(list.args)=="silent")) list.args$silent=FALSE
@@ -190,7 +190,7 @@ mark.wrapper.parallel<-
 			else
 				initial=NULL
 		if (any(names(list.args)=="initial")) list.args<-list.args[-which(names(list.args)=="initial")]
-		list.of.model.par[[i]]<-c(list(model.parameters=model.parameters, initial=initial, model.name=model.name, filename=paste(list.args$prefix, formatC((Max.number+i), width=3,digits=0,format="f", flag="0"), sep="")), list.args) # here I add all of the args from wrapper
+		list.of.model.par[[i]]<-c(list(model.parameters=model.parameters, initial=initial, model.name=NULL, filename=paste(list.args$prefix, formatC((Max.number+i), width=3,digits=0,format="f", flag="0"), sep="")), list.args) # here I add all of the args from wrapper
 	}
 	if (parallel) {
 		sfInit(parallel=TRUE, cpus=cpus)

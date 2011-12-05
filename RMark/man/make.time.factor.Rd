@@ -3,7 +3,7 @@
 \title{Make time-varying dummy variables from time-varying factor variable}
 \usage{
   make.time.factor(x, var.name, times, intercept = NULL,
-  delete = TRUE)
+    delete = TRUE)
 }
 \arguments{
   \item{x}{dataframe containing set of factor variables

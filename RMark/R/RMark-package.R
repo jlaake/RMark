@@ -2016,7 +2016,7 @@ NULL
 #' always get to it in the documentation for awhile.  They are ordered from
 #' newest to oldest.
 #' 
-#' Version 2.0.9 (8 Nov 2011) \itemize{ \item Patch was made to  \code{\link{make.mark.model}} to fix bug in
+#' Version 2.0.9 (1 Dec 2011) \itemize{ \item Patch was made to  \code{\link{make.mark.model}} to fix bug in
 #' PIM creation for a multi-session model and there was just 1 session. Thanks to Erin Roche for helping to 
 #' identify this bug.
 #'  \item Patch was made to  \code{\link{make.mark.model}} to fix bug in

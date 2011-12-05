@@ -36,10 +36,10 @@ t.int<-c(rep(c(0,0,1),3),c(0,0))
 
 #process data for RMark
 crdms.data<-process.data(crdms,model="CRDMS",time.interval=t.int,
-strata.labels=c("1","U"))
+			strata.labels=c("1","U"))
 #change Psi parameters that are obtained by subtraction
 crdms.ddl<-make.design.data(crdms.data,
-parameters=list(Psi=list(subtract.stratum=c("1","1"))))
+		parameters=list(Psi=list(subtract.stratum=c("1","1"))))
 
 #create grouping index for unobserved p and c (i.e., always zero)
 up=as.numeric(row.names(crdms.ddl$p[crdms.ddl$p$stratum=="U",]))
@@ -48,7 +48,7 @@ up=as.numeric(row.names(crdms.ddl$p[crdms.ddl$p$stratum=="U",]))
 #this isn't necessary but it allows this Psi to be fixed to a value
 #that can be flagged and not erroneously interpreted
 Psiuu1=as.numeric(row.names(crdms.ddl$Psi[crdms.ddl$Psi$stratum=="U"&
-crdms.ddl$Psi$time==1,]))
+			crdms.ddl$Psi$time==1,]))
 
 #create dummy variable for constraining last Psi in Markovian model
 #variable is called ctime for constrained time
@@ -58,29 +58,29 @@ crdms.ddl$Psi$ctime[crdms.ddl$Psi$time==3]=2
 #Initial assumptions
 S.dot=list(formula=~1)  #S equal for both states and constant over time
 p.session=list(formula=~session, share=TRUE,  #p=c varies with session
-fixed=list(index=up,value=0)) #p set to zero for unobs
+		fixed=list(index=up,value=0)) #p set to zero for unobs
 
 #Model 1 - Markovian movement
 Psi.markov=list(formula=~ctime+stratum,
-fixed=list(index=Psiuu1,value=9e-99)) #9e-99 is a flag
+		fixed=list(index=Psiuu1,value=9e-99)) #9e-99 is a flag
 model.1=mark(crdms.data,ddl=crdms.ddl,
-model.parameters=list(S=S.dot,
-p=p.session,
-Psi=Psi.markov))
+	model.parameters=list(S=S.dot,
+		p=p.session,
+		Psi=Psi.markov))
 
 #Model 2 - Random movement
 Psi.rand=list(formula=~time)
 model.2=mark(crdms.data,ddl=crdms.ddl,
-model.parameters=list(S=S.dot,
-p=p.session,
-Psi=Psi.rand))
+	model.parameters=list(S=S.dot,
+		p=p.session,
+		Psi=Psi.rand))
 
 #Model 3 - No movement
 Psi.fix=list(formula=~1,fixed=0)
 model.3=mark(crdms.data,ddl=crdms.ddl,
-model.parameters=list(S=S.dot,
-p=p.session,
-Psi=Psi.fix))
+	model.parameters=list(S=S.dot,
+		p=p.session,
+		Psi=Psi.fix))
 
 #collect and store models
 crdms.res<-collect.models()
@@ -94,5 +94,6 @@ cleanup(ask=FALSE)
   For Cooch and White book see
   \url{http://www.phidot.org/software/mark/}
 }
+\keyword{dataset}
 \keyword{datasets}
 

@@ -2,8 +2,9 @@
 \alias{var.components.reml}
 \title{Variance components estimation using REML or maximum likelihood}
 \usage{
-  var.components.reml(theta, design, vcv = NULL, rdesign =
-  NULL, initial = NULL, interval = c(-25, 10), REML = TRUE)
+  var.components.reml(theta, design, vcv = NULL,
+    rdesign = NULL, initial = NULL, interval = c(-25, 10),
+    REML = TRUE)
 }
 \arguments{
   \item{theta}{vector of parameter estimates}
@@ -59,7 +60,7 @@
 data(dipper)
 dipper.proc=process.data(dipper,model="CJS")
 dipper.ddl=make.design.data(dipper.proc,
-parameters=list(Phi=list(age.bins=c(0,.5,6))))
+   parameters=list(Phi=list(age.bins=c(0,.5,6))))
 levels(dipper.ddl$Phi$age)=c("age0","age1+")
 md=mark(dipper,model.parameters=list(Phi=list(formula=~time+age)))
 # extract the estimates of Phi
@@ -71,12 +72,12 @@ levels(zz$estimates$age)=c("age0","age1+")
 z=zz$estimates
 # Fit age fixed effects with random year component and an iid error
 var.components.reml(z$estimate,design=model.matrix(~-1+age,z),
-zz$vcv,rdesign=model.matrix(~-1+time,z))
+        zz$vcv,rdesign=model.matrix(~-1+time,z))
 # Fitted model assuming no covariance structure to compare to
 # results with lme
 xx=var.components.reml(z$estimate,design=model.matrix(~-1+age,z),
-matrix(0,nrow=nrow(zz$vcv),ncol=ncol(zz$vcv)),
-rdesign=model.matrix(~-1+time,z))
+ matrix(0,nrow=nrow(zz$vcv),ncol=ncol(zz$vcv)),
+ rdesign=model.matrix(~-1+time,z))
 xx
 sqrt(xx$sigmasq)
 library(nlme)

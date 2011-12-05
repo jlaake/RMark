@@ -4,7 +4,7 @@
 specifications}
 \usage{
   mark.wrapper(model.list, silent = FALSE, run = TRUE,
-  use.initial = FALSE, initial = NULL, ...)
+    use.initial = FALSE, initial = NULL, ...)
 }
 \arguments{
   \item{model.list}{a dataframe of parameter specification

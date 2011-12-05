@@ -2,8 +2,9 @@
 \alias{import.chdata}
 \title{Import capture-recapture data sets from space or tab-delimited files}
 \usage{
-  import.chdata(filename, header = TRUE, field.names =
-  NULL, field.types = NULL, use.comments = TRUE)
+  import.chdata(filename, header = TRUE,
+    field.names = NULL, field.types = NULL,
+    use.comments = TRUE)
 }
 \arguments{
   \item{filename}{file name and path for file to be
@@ -83,11 +84,11 @@
 \examples{
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 example.data<-import.chdata(paste(pathtodata,"example.data.txt",sep="/"),
-field.types=c("n","f","f","f"))
+      field.types=c("n","f","f","f"))
 edwards.eberhardt<-import.chdata(paste(pathtodata,"EdwardsandEberhardt.txt",
-sep="/"),field.names="ch",header=FALSE)
+      sep="/"),field.names="ch",header=FALSE)
 dipper<-import.chdata(paste(pathtodata,"dipper.txt",sep="/"),
-field.names=c("ch","sex"),header=FALSE)
+      field.names=c("ch","sex"),header=FALSE)
 }
 \author{
   Jeff Laake

@@ -4,7 +4,7 @@
 \title{Adjust over-dispersion scale or a result value such as effective sample size}
 \usage{
   adjust.value(field="n",value,model.list)
-  adjust.chat(chat=1,model.list)
+    adjust.chat(chat=1,model.list)
 }
 \arguments{
   \item{field}{Character string containing name of the

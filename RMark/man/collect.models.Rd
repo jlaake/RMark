@@ -4,7 +4,7 @@
 results}
 \usage{
   collect.models(lx = NULL, type = NULL, table = TRUE,
-  adjust = TRUE, external = FALSE)
+    adjust = TRUE, external = FALSE)
 }
 \arguments{
   \item{lx}{if NULL, constructs vector of object names

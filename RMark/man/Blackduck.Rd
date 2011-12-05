@@ -72,7 +72,7 @@ S.BirdAge.Weight=list(formula=~BirdAge+Weight)
 #
 model.list=create.model.list("Known")
 bduck.results=mark.wrapper(model.list,data=bduck.processed,ddl=bduck.ddl,
-invisible=FALSE)
+               invisible=FALSE)
 
 #
 # Return model table and list of models
@@ -82,5 +82,6 @@ return(bduck.results)
 bduck.results=run.Blackduck()
 bduck.results
 }
+\keyword{dataset}
 \keyword{datasets}
 

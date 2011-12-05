@@ -52,15 +52,15 @@ female.survival
 # females and then males
 # compute and output survivals for females at average weight
 female.survival=compute.real(mod,data=
-data.frame(nsex=0,weight=mean(dipper$weight)))[1,]
+      data.frame(nsex=0,weight=mean(dipper$weight)))[1,]
 female.survival
 male.survival=compute.real(mod,data=data.frame(nsex=1,
-weight=mean(dipper$weight)))[1,]
+         weight=mean(dipper$weight)))[1,]
 male.survival
 # Fit model using sex as a group/factor variable and
 # compute v-c matrix for estimates
 mod=mark(dipper,groups="sex",
-model.parameters=list(Phi=list(formula=~sex+weight)))
+     model.parameters=list(Phi=list(formula=~sex+weight)))
 survival.by.sex=compute.real(mod,data=dipper,vcv=TRUE)
 survival.by.sex$real[1:2]  # estimates
 survival.by.sex$se.real[1:2] # std errors

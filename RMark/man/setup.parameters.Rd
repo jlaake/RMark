@@ -3,7 +3,7 @@
 \title{Setup parameter structure specific to model (internal use)}
 \usage{
   setup.parameters(model, parameters = list(), nocc = NULL,
-  check = FALSE, number.of.groups = 1)
+    check = FALSE, number.of.groups = 1)
 }
 \arguments{
   \item{model}{type of model ("CJS", "Burnham" etc)}

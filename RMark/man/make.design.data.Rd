@@ -2,8 +2,9 @@
 \alias{make.design.data}
 \title{Create design dataframes for MARK model specification}
 \usage{
-  make.design.data(data, parameters = list(), remove.unused
-  = FALSE, right = TRUE, common.zero = FALSE)
+  make.design.data(data, parameters = list(),
+    remove.unused = FALSE, right = TRUE,
+    common.zero = FALSE)
 }
 \arguments{
   \item{data}{Processed data list; resulting value from
@@ -424,9 +425,9 @@ data(example.data)
 proc.example.data=process.data(example.data)
 ddl=make.design.data(proc.example.data)
 ddl=add.design.data(proc.example.data,ddl,parameter="Phi",type="age",
-bins=c(0,.5,1,2,8),name="agebin")
+  bins=c(0,.5,1,2,8),name="agebin")
 ddl=add.design.data(proc.example.data,ddl,parameter="p",type="time",
-bins=c(1980,1983,1986),name="timebin")
+  bins=c(1980,1983,1986),name="timebin")
 }
 \author{
   Jeff Laake

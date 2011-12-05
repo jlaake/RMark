@@ -17,13 +17,13 @@ sites (always 1)} }}
 \examples{
 do.salamander=function()
 {
-data(salamander)
-occ.p.dot=mark(salamander,model="Occupancy")
-occ.p.time=mark(salamander,model="Occupancy",
-model.parameters=list(p=list(formula=~time)))
-occ.p.mixture=mark(salamander,model="OccupHet",
-model.parameters=list(p=list(formula=~mixture)))
-return(collect.models())
+   data(salamander)
+   occ.p.dot=mark(salamander,model="Occupancy")
+   occ.p.time=mark(salamander,model="Occupancy",
+         model.parameters=list(p=list(formula=~time)))
+   occ.p.mixture=mark(salamander,model="OccupHet",
+         model.parameters=list(p=list(formula=~mixture)))
+   return(collect.models())
 }
 salamander.results=do.salamander()
 print(salamander.results)
@@ -34,5 +34,6 @@ print(salamander.results)
   Estimation and Modeling: Inferring Patterns and Dynamics
   of Species Occurence. Elsevier, Inc. 324p.
 }
+\keyword{dataset}
 \keyword{datasets}
 

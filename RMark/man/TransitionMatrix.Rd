@@ -71,7 +71,7 @@ model.list=create.model.list("Multistrata")
 p.stratumxtime=list(formula=~stratum*time)
 p.stratumxtime.fixed=list(formula=~stratum*time,fixed=list(time=4,value=1))
 model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
-Psi="Psi.sxtime"))
+               Psi="Psi.sxtime"))
 model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
 #
 # Run the list of models

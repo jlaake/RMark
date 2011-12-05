@@ -4,7 +4,7 @@
 \title{Print MARK objects}
 \usage{
   \method{print}{mark}(x,...,input=FALSE)
-  \method{print}{marklist}(x,...)
+    \method{print}{marklist}(x,...)
 }
 \arguments{
   \item{x}{mark model object; or list of mark model objects

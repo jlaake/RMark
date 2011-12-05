@@ -2,8 +2,9 @@
 \alias{export.MARK}
 \title{Export data and models for import in MARK}
 \usage{
-  export.MARK(x, project.name, model = NULL, replace =
-  FALSE, chat = 1, title = "", ind.covariates = "all")
+  export.MARK(x, project.name, model = NULL,
+    replace = FALSE, chat = 1, title = "",
+    ind.covariates = "all")
 }
 \arguments{
   \item{x}{processed data list used to build models}
@@ -100,7 +101,7 @@ model.list=create.model.list("Multistrata")
 p.stratumxtime=list(formula=~stratum*time)
 p.stratumxtime.fixed=list(formula=~stratum*time,fixed=list(time=4,value=1))
 model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
-Psi="Psi.sxtime"))
+             Psi="Psi.sxtime"))
 model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
 #
 # Run the list of models
@@ -119,7 +120,7 @@ mstrata.results=run.mstrata()
 
 data(mallard)
 Dot=mark(mallard,nocc=90,model="Nest",
-model.parameters=list(S=list(formula=~1)))
+		model.parameters=list(S=list(formula=~1)))
 mallard.proc=process.data(mallard,nocc=90,model="Nest")
 export.MARK(mallard.proc,"mallard",Dot)
 data(robust)
@@ -128,11 +129,11 @@ S.time=list(formula=~time)
 p.time.session=list(formula=~-1+session:time,share=TRUE)
 GammaDoublePrime.random=list(formula=~time,share=TRUE)
 model.1=mark(data = robust, model = "Robust",
-time.intervals=time.intervals,
-model.parameters=list(S=S.time,
-GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
+		time.intervals=time.intervals,
+		model.parameters=list(S=S.time,
+				GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
 robust.proc=process.data(data = robust, model = "Robust",
-time.intervals=time.intervals)
+		time.intervals=time.intervals)
 export.MARK(robust.proc,"robust",	model.1)
 }
 \author{

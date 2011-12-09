@@ -8,21 +8,28 @@
   to oldest.
 }
 \details{
-  Version 2.0.9 (1 Dec 2011) \itemize{ \item Patch was made
-  to \code{\link{make.mark.model}} to fix bug in PIM
-  creation for a multi-session model and there was just 1
-  session. Thanks to Erin Roche for helping to identify
-  this bug.  \item Patch was made to
-  \code{\link{make.mark.model}} to fix bug in handling of
-  mlogits for pi and Omega parameters with more than one
-  group. These parameters were introduced with the
-  RDMSMisClass and other new models that were recently
-  added. \item Additional changes were made to
-  \code{\link{export.MARK}} to re-fix changes for robust
-  and nest survival model export to MARK. \item A function
-  \code{\link{mark.wrapper.parallel}} written by Eldar
-  Rakimberdiev provides a parallel processing version of
-  mark.wrapper.  See the example in the help for the
+  Version 2.1.0 (9 Dec 2011) \itemize{ \item Patch was made
+  to \code{\link{run.mark.model}} so that a filename can be
+  specified to pick up orphaned MARK output files for a
+  model that was run but not saved. This used to work but
+  when I added code to allow user-specified prefixes (ie
+  something other than marknnn) the change I made broke the
+  other feature.  Thanks to Kelly Hastings for bringing
+  this to my attention. } Version 2.0.9 (1 Dec 2011)
+  \itemize{ \item Patch was made to
+  \code{\link{make.mark.model}} to fix bug in PIM creation
+  for a multi-session model and there was just 1 session.
+  Thanks to Erin Roche for helping to identify this bug.
+  \item Patch was made to \code{\link{make.mark.model}} to
+  fix bug in handling of mlogits for pi and Omega
+  parameters with more than one group. These parameters
+  were introduced with the RDMSMisClass and other new
+  models that were recently added. \item Additional changes
+  were made to \code{\link{export.MARK}} to re-fix changes
+  for robust and nest survival model export to MARK. \item
+  A function \code{\link{mark.wrapper.parallel}} written by
+  Eldar Rakimberdiev provides a parallel processing version
+  of mark.wrapper.  See the example in the help for the
   function.  The parallel version is functionally the same
   and can be used in place of \code{mark.wrapper} to run
   sequentially or in parallel. It does not include the run

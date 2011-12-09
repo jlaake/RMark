@@ -123,28 +123,35 @@ delete=FALSE,external=FALSE)
 # 24 Aug 05; save all files and give names mark###.*
 #  9 Jan 06; use specified name if given
 #
-    if(!is.null(filename))
-		basefile=filename
-	else
-		basefile=paste(prefix,"001",sep="")
-	i = 1
-    while (file.exists(paste(basefile, ".out", sep = ""))) 
-	{
-       i = i + 1
-       basefile = paste(prefix, formatC(as.integer(i), flag = "0",width=3),sep = "")
-    }
-    outfile = paste(basefile, ".out", sep = "")
-    inputfile = paste(basefile, ".inp", sep = "")
-    vcvfile = paste(basefile, ".vcv", sep = "")
-    resfile = paste(basefile, ".res", sep = "")
+  if(!is.null(filename))
+  {
+	  basefile=filename
+	  outfile = paste(basefile, ".out", sep = "")
 #
-#   If outfile already exists, ask user if mark object should be created with
-#   existing file
+#     If outfile already exists, ask user if mark object should be created with
+#     existing file
 #
-    RunMark=TRUE
-    if(file.exists(outfile))
-       if(toupper(substr(readline("Create mark model with existing file (Y/N)?"),1,1))=="Y")
-         RunMark=FALSE
+	  RunMark=TRUE
+	  if(file.exists(outfile))
+	  {
+		  if(toupper(substr(readline("Create mark model with existing file (Y/N)?"),1,1))=="Y")
+		   RunMark=FALSE
+	  }
+  }else
+  {
+	   RunMark=TRUE
+       basefile=paste(prefix,"001",sep="")
+	   i = 1
+       while (file.exists(paste(basefile, ".out", sep = ""))) 
+	   {
+          i = i + 1
+          basefile = paste(prefix, formatC(as.integer(i), flag = "0",width=3),sep = "")
+       }
+  }
+  outfile = paste(basefile, ".out", sep = "")
+  inputfile = paste(basefile, ".inp", sep = "")
+  vcvfile = paste(basefile, ".vcv", sep = "")
+  resfile = paste(basefile, ".res", sep = "")
 #
 # Write input file to temp file 
 #

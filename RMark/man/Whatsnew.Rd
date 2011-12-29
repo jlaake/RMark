@@ -15,7 +15,10 @@
   when I added code to allow user-specified prefixes (ie
   something other than marknnn) the change I made broke the
   other feature.  Thanks to Kelly Hastings for bringing
-  this to my attention. } Version 2.0.9 (1 Dec 2011)
+  this to my attention. \item Patch was made to
+  \code{\link{make.mark.model}}to allow design data to be
+  deleted on shared parameters. Thanks to Claudia Penaloza
+  for reporting this issue. } Version 2.0.9 (1 Dec 2011)
   \itemize{ \item Patch was made to
   \code{\link{make.mark.model}} to fix bug in PIM creation
   for a multi-session model and there was just 1 session.

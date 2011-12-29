@@ -1036,8 +1036,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # are appended to the shared parameters (p for c and gammaPrime for gammaDoublePrime)
 # In the design data for p a covariate "c" is added to the recapture parameters and for
 # a covariate emigrate for the gammaDoublePrime parameters.
-#
-   for(i in 1:length(parameters))
+# 
+    for(i in 1:length(parameters))
    {
 #
 #     For parameters that can be possibly shared, if they are shared, pool design data as long as dimensions match
@@ -1049,9 +1049,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 		   dim2=dim(ddl[[shared_par]])
            if(dim1[2]==dim2[2])
 		   {
+			   rn1=as.numeric(row.names(ddl[[names(parameters)[i]]]))
+			   rn2=as.numeric(row.names(ddl[[shared_par]]))+nrow(full.ddl[[names(parameters)[i]]])
 			   ddl[[names(parameters)[i]]]=rbind(ddl[[names(parameters)[i]]],ddl[[shared_par]])
                ddl[[names(parameters)[i]]][shared_par]=c(rep(0,dim1[1]),rep(1,dim2[1]))
-		       row.names(ddl[[names(parameters)[i]]])=1:dim(ddl[[names(parameters)[i]]])[1]
+		       row.names(ddl[[names(parameters)[i]]])=c(rn1,rn2)
 		   } else
 		   {
 			   cat(paste("Error: for a shared ",paste(names(parameters)[i],shared_par,sep="&"),
@@ -1493,10 +1495,10 @@ create.agenest.var=function(data,init.agevar,time.intervals)
             }
         }
         maxpar=dim(fullddl)[1]
-#		if(!is.null(parameters[[names(parameters)[i]]]$share) && parameters[[names(parameters)[i]]]$share)
-#			maxpar=maxpar + dim(full.ddl[[parameters[[names(parameters)[i]]]$pair]])[1]  		
+#		Create a complete design matrix using full ddl
         design.matrix[[i]]=matrix(0,ncol=dim(dm)[2],nrow=maxpar)
-        if(dim(design.matrix[[i]][as.numeric(row.names(ddl[[parx]])),,drop=FALSE])[1]==dim(dm)[1])
+#       Using row numbers fill in the dm for rows design data; this handles deleted design data
+		if(dim(design.matrix[[i]][as.numeric(row.names(ddl[[parx]])),,drop=FALSE])[1]==dim(dm)[1])
            design.matrix[[i]][as.numeric(row.names(ddl[[parx]])),]=dm
         else
            stop(paste("\nProblem with design data. It appears that there are NA values in one or more variables in design data for ",parx,"\nMake sure any binned factor completely spans range of data\n",sep=""))

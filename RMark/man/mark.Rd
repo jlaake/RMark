@@ -13,7 +13,7 @@
     silent = FALSE, retry = 0, options = NULL,
     brief = FALSE, realvcv = FALSE, delete = FALSE,
     external = FALSE, profile.int = FALSE, chat = NULL,
-    reverse = FALSE)
+    reverse = FALSE, run = TRUE)
 }
 \arguments{
   \item{data}{Either the raw data which is a dataframe with
@@ -120,6 +120,8 @@
 
   \item{reverse}{if set to TRUE, will reverse timing of
   transition (Psi) and survival (S) in Multistratum models}
+
+  \item{run}{if FALSE does not run model after creation}
 }
 \value{
   model: a MARK object containing output and extracted

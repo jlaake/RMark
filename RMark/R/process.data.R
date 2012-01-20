@@ -287,7 +287,7 @@ robust.occasions<-function(times)
            if(!all(inp.strata.labels %in% strata.labels))
               stop(paste("Some strata labels in data",paste(inp.strata.labels),"are not in strata.labels"))
            if(sum(as.numeric(strata.labels %in% inp.strata.labels))< (nstrata-1))
-              stop("More than one non-observable state has been specified")
+              cat("Note: More than one non-observable state has been specified")
         }
         if(nstrata<2)stop("\nAny multistrata model must have at least 2 strata\n")
       } else
@@ -463,6 +463,9 @@ else
            stop(paste("intial.ages must be numeric and match length of levels of",groups[age.var]))
       if(age.unit<=0 | !is.numeric(age.unit)) stop("age.unit must be numeric and >0")
    }
+   else
+	   if(!is.null(initial.ages)&&length(initial.ages)>1)
+		   stop("initial.ages vector specified but no age variable was identified in groups; see age.var")
 #
 #  Next compute the group number for each capture history
 #

@@ -297,7 +297,7 @@ robust.occasions<-function(times)
          {
             if(model == "OccupRPoisson" | model=="OccupRNegBin")
             {
-               if(any(!ch.values%in%c(0:9)))
+               if(any(!ch.values%in%c(0:9,".")))
                   stop(paste("\nIncorrect count values in data:",paste(ch.values,collapse=""),"\n",sep=""))
             }
             else

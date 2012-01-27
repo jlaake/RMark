@@ -24,7 +24,8 @@
   but a note is still issued when this occurs. Also, a
   warning is issued if you specify more than one value in
   the vector for initial.ages but an age variable is not
-  identified in the groups. \item An argument run was added
+  identified in the groups. Also, allowed "." in Royle
+  count occupancy models. \item An argument run was added
   to \code{\link{mark}} which if set to FALSE will not run
   the model after it is created. } Version 2.0.9 (1 Dec
   2011) \itemize{ \item Patch was made to

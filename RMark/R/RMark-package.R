@@ -2016,7 +2016,7 @@ NULL
 #' always get to it in the documentation for awhile.  They are ordered from
 #' newest to oldest.
 #' 
-#' Version 2.1.0 (19 Jan 2012) \itemize{ \item Patch was made to \code{\link{run.mark.model}} so that
+#' Version 2.1.0 (27 Jan 2012) \itemize{ \item Patch was made to \code{\link{run.mark.model}} so that
 #' a filename can be specified to pick up orphaned MARK output files for a model that was run but not saved. This used
 #' to work but when I added code to allow user-specified prefixes (ie something other than marknnn) the change I made broke
 #' the other feature.  Thanks to Kelly Hastings for bringing this to my attention.
@@ -2024,7 +2024,7 @@ NULL
 #' Claudia Penaloza for reporting this issue.
 #' \item In \code{\link{process.data}} the restriction of having only one non-unobservable state for robust designs was
 #'  removed but a note is still issued when this occurs. Also, a warning is issued if you specify more than one value in the vector for 
-#'  initial.ages but an age variable is not identified in the groups.
+#'  initial.ages but an age variable is not identified in the groups. Also, allowed "." in Royle count occupancy models.
 #' \item An argument run was added to \code{\link{mark}} which if set to FALSE will not run the model after it is created. 
 #' }
 #' Version 2.0.9 (1 Dec 2011) \itemize{ \item Patch was made to  \code{\link{make.mark.model}} to fix bug in

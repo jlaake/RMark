@@ -1617,6 +1617,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   }
   row.names(complete.design.matrix)=1:dim(complete.design.matrix)[1]
   complete.design.matrix=as.data.frame(complete.design.matrix)
+
 #
 #  If there any initial values, output them to the MARK input file
 #  after making sure that the vector length matches the number of parameters  
@@ -1719,8 +1720,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
              {
 				 if(parx %in% c("pi","Omega"))
 				 {
-					 nsets=length(pim[[parx]])
-					 for (kk in 1:nsets)
+#					 nsets=length(pim[[parx]])
+					 for (kk in 1:number.of.groups)
 					 {
 						 logit.numbers=max.logit.number+rep(1:(nrow(full.ddl[[parx]])/(number.of.groups*(nstrata-1))),nstrata-1)
 						 max.logit.number=max(logit.numbers)

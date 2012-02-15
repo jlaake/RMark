@@ -2016,6 +2016,11 @@ NULL
 #' always get to it in the documentation for awhile.  They are ordered from
 #' newest to oldest.
 #' 
+#' #' Version 2.1.1 (15 Feb 2012) \itemize{
+#' \item Fixed bug in  \code{\link{make.mark.model}} for mlogit specification with pi and Omega parameters in RDMSMisClass models 
+#' with more than 2 observable strata.  Thanks to Claudia Penaloza for reporting this problem.
+#' }
+#' 
 #' Version 2.1.0 (27 Jan 2012) \itemize{ \item Patch was made to \code{\link{run.mark.model}} so that
 #' a filename can be specified to pick up orphaned MARK output files for a model that was run but not saved. This used
 #' to work but when I added code to allow user-specified prefixes (ie something other than marknnn) the change I made broke
@@ -2035,7 +2040,7 @@ NULL
 #' with the RDMSMisClass and other new models that were recently added.
 #' \item Additional changes were made to \code{\link{export.MARK}} to re-fix changes for robust and nest survival
 #' model export to MARK.
-#' \item A function \code{\link{mark.wrapper.parallel}} written by Eldar Rakimberdiev provides a parallel processing
+#' \item A function \code{\link{mark.wrapper.parallel}} written by Eldar Rakhimberdiev provides a parallel processing
 #' version of mark.wrapper.  See the example in the help for the function.  The parallel version is functionally the same
 #' and can be used in place of \code{mark.wrapper} to run sequentially or in parallel. It does not include the run argument
 #' however.

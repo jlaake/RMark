@@ -1,0 +1,32 @@
+RMark 2.1.1 (3 April 2012)
+--------------------------
+
+BUG FIXES
+
+* Fixed bug in make.mark.model for mlogit specification with pi and Omega parameters in RDMSMisClass models with more than 2 observable strata.  Thanks to Claudia Penaloza for reporting this problem.
+
+* Modified values in parameters.txt to enable model RDHFHet to work. Thanks to Darryl McKenzie for reporting this problem.
+
+RMark 2.1.0 (27 Jan 2012)
+-------------------------
+
+NEW FEATURES
+
+* In process.data the restriction of having only one non-unobservable state for robust designs was removed but a note is still issued when this occurs. 
+
+* Also, in process.data a warning is issued if you specify more than one value in the vector for initial.ages but an age variable is not identified in the groups. 
+
+* A "." is now allowed in Royle count occupancy models.
+
+* An argument run was added to mark function which if set to FALSE will not run the model after it is created.  
+
+BUG FIXES
+
+* Patch was made to run.mark.model so that a filename can be specified to pick up orphaned MARK output files for a model that was run but not saved. This used to work but when I added code to allow user-specified prefixes (ie something other than marknnn) the change I made broke the other feature.  Thanks to Kelly Hastings for bringing this to my attention.
+
+* Patch was made to make.mark.model to allow design data to be deleted on shared parameters. Thanks to Claudia Penaloza for reporting this issue.
+
+RMark 2.0.9 (1 Dec 2011)
+-------------------------
+
+* For changes in v2.0.9 or earlier, see Whatsnew in the RMark help file.

@@ -122,7 +122,7 @@ RDHet	N	0			Square	all	log	~session			FALSE		TRUE
 RDHFHet	S	0	-1	1	Triang	all	logit	~1					FALSE					
 RDHFHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE					
 RDHFHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE					
-RDHFHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1	TRUE					
+RDHFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE					
 RDHFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE					
 RDHFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE					
 RDFullHet	S	0	-1	1	Triang	all	logit	~1					FALSE					

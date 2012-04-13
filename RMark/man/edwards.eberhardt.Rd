@@ -60,10 +60,6 @@ ee.closed.m0c=mark(edwards.eberhardt,model="Closed")
 #  time varying p=c
 ee.closed.mt=mark(edwards.eberhardt,model="Closed",
                    model.parameters=list(p=ptimeshared))
-#  time varying p + additive c (that is recapture prob is additive
-#  difference from cap prob at same time)
-ee.closed.mtc=mark(edwards.eberhardt,model="Closed",
-                   model.parameters=list(p=ptime.c))
 #
 #  Closed heterogeneity models
 #
@@ -103,6 +99,5 @@ return(collect.models() )
 #
 ee.results=run.edwards.eberhardt()
 }
-\keyword{dataset}
 \keyword{datasets}
 

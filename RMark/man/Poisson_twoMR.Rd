@@ -23,6 +23,5 @@ mod=mark(pois.proc,pois.ddl,
 	 	                      initial=c(0.9741405 ,0.0000000 ,6., 5.))
 summary(mod)
 }
-\keyword{dataset}
 \keyword{datasets}
 

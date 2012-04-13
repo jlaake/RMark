@@ -36,6 +36,5 @@ exercise.8=do.exercise.8()
 # Remove # to see output
 # print(exercise.8)
 }
-\keyword{dataset}
 \keyword{datasets}
 

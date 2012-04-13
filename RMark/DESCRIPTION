@@ -1,6 +1,6 @@
 Package: RMark
 Version: 2.1.1
-Date: 2012-04-03
+Date: 2012-04-13
 Title: R Code for MARK Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with contributions
     from Eldar Rakhimberdiev, Bret Collier, Jay Rotella and
@@ -20,7 +20,7 @@ Imports:
     msm,
     nlme
 LazyLoad: yes
-License: GPL version 2 or later
+License: GPL (>=2)
 Maintainer: Jeff Laake <Jeff.Laake@noaa.gov>
 Collate:
     'add.design.data.R'

@@ -94,6 +94,5 @@ cleanup(ask=FALSE)
   For Cooch and White book see
   \url{http://www.phidot.org/software/mark/}
 }
-\keyword{dataset}
 \keyword{datasets}
 

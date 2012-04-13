@@ -27,6 +27,7 @@
 #' collected
 #' @return model.list: a vector of \code{mark} model names
 #' @author Jeff Laake
+#' @export
 #' @seealso \code{\link{collect.models}}, \code{\link{run.models}},
 #' \code{\link{model.table}}
 #' @keywords utility

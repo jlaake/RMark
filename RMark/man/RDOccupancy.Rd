@@ -335,6 +335,5 @@ lines(Psi.by.Area$estimates$covdata, Psi.by.Area$estimates$ucl, lty=2)
 \author{
   Bret Collier
 }
-\keyword{dataset}
 \keyword{datasets}
 

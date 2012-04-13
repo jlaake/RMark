@@ -95,6 +95,5 @@ sqrt(sum(prop.browse^2*diag(vcv.psi))+2*prod(prop.browse)*vcv.psi[1,2])
   Estimation and Modeling: Inferring Patterns and Dynamics
   of Species Occurence. Elsevier, Inc. 324p.
 }
-\keyword{dataset}
 \keyword{datasets}
 

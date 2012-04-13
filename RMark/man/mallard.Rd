@@ -241,6 +241,5 @@ cleanup(ask=FALSE)
 \author{
   Jay Rotella
 }
-\keyword{dataset}
 \keyword{datasets}
 

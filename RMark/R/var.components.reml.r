@@ -123,8 +123,8 @@ var.components.reml=function(theta,design,vcv=NULL,rdesign=NULL,initial=NULL,int
       H=compute.H(alpha,vcv,rdesign)
       beta=beta.hat(H,X,theta)
       res=theta-X%*%beta
-      lnl=.5*(determinant(H,log=TRUE)$mod+crossprod(res,solve(H,res)))
-      if(REML)lnl=lnl+.5*determinant(crossprod(X,solve(H,X)),log=TRUE)$mod
+      lnl=.5*(determinant(H,logarithm=TRUE)$mod+crossprod(res,solve(H,res)))
+      if(REML)lnl=lnl+.5*determinant(crossprod(X,solve(H,X)),logarithm=TRUE)$mod
       return(lnl)
    }
 #  Find value of log(sigma) that minimizes reml negative log likelihood

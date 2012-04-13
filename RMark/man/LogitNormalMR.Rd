@@ -18,6 +18,5 @@ logitNor.ddl=make.design.data(logitNor.proc)
 mod=mark(logitNor.proc,logitNor.ddl)
 summary(mod)
 }
-\keyword{dataset}
 \keyword{datasets}
 

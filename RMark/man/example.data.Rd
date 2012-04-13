@@ -51,6 +51,5 @@ return(collect.models())
 }
 example.results=run.example()
 }
-\keyword{dataset}
 \keyword{datasets}
 

@@ -34,6 +34,5 @@ print(salamander.results)
   Estimation and Modeling: Inferring Patterns and Dynamics
   of Species Occurence. Elsevier, Inc. 324p.
 }
-\keyword{dataset}
 \keyword{datasets}
 

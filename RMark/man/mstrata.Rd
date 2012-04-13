@@ -92,6 +92,5 @@ Psivalues.rev=Psilist.rev$estimates
 TransitionMatrix(Psivalues[Psivalues$time==1,])
 TransitionMatrix(Psivalues.rev[Psivalues.rev$occ==1,])
 }
-\keyword{dataset}
 \keyword{datasets}
 

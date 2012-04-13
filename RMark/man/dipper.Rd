@@ -315,6 +315,5 @@ return(collect.models() )
 
 dipper.popan.results=run.dipper.popan()
 }
-\keyword{dataset}
 \keyword{datasets}
 

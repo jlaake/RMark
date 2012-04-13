@@ -82,6 +82,5 @@ return(bduck.results)
 bduck.results=run.Blackduck()
 bduck.results
 }
-\keyword{dataset}
 \keyword{datasets}
 

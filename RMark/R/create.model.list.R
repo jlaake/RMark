@@ -101,7 +101,7 @@ create.model.list<-function(model)
 	model.list=list()
 	for(n in parameters)
 	{
-		vec=ls(pat=paste("^",n,"\\.",sep=""),envir=parent.frame())
+		vec=ls(pattern=paste("^",n,"\\.",sep=""),envir=parent.frame())
 		if(length(vec)>0)
 			for (i in 1:length(vec))
 			{

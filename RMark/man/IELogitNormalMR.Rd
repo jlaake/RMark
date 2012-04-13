@@ -33,6 +33,5 @@ mod2=mark(IElogitNor.proc,IElogitNor.ddl,
 							  initial=mod1)
 summary(mod2)
 }
-\keyword{dataset}
 \keyword{datasets}
 

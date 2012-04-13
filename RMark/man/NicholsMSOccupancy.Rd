@@ -71,6 +71,5 @@ p1.plust.p2.by.time=list(formula=~time+p2,share=TRUE)
   and modeling with multiple states and state uncertainty.
   Ecology 88:1395-1400.
 }
-\keyword{dataset}
 \keyword{datasets}
 

@@ -1,4 +1,4 @@
-RMark 2.1.1 (13 April 2012)
+RMark 2.1.1 (19 April 2012)
 --------------------------
 
 BUG FIXES
@@ -10,6 +10,8 @@ BUG FIXES
 * Removed one of the example models in edwards.eberhardt because it does not converge with the Feb 2012 version of mark.exe. It was a poor example giving a very large N with previous versions of mark.exe
 
 * Function collect.model.names is now exported
+
+* make.mark.model will now issue an error and stop if any covariates are longer than the MARK limit of 10 characters 
 
 RMark 2.1.0 (27 Jan 2012)
 -------------------------

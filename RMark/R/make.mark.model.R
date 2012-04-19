@@ -1142,6 +1142,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(!is.null(covariates))
   {
      covariates=unique(covariates)
+	 toolong=nchar(covariates)>10
+	 if(any(toolong)) stop(paste("\nFollowing covariates longer than 10 characters",paste(covariates[toolong],collapse=",")))
      string=paste(string," icovar = ",length(covariates))
   }
   if(mixtures!=1)

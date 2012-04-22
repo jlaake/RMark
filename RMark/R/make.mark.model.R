@@ -1809,11 +1809,18 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
   model$profile.int=profile.int
   model$chat=chat
+# Assign Mlogits that are set to 0 to a Logit link so they can be simplified
+  fixedzero=model$fixed$index[model$fixed$value==0]
+  mlogit.indices=grep("mlogit",model$links)
+  if(length(mlogit.indices)>0 & length(fixedzero)>0)
+     model$links[fixedzero[fixedzero%in%mlogit.indices]]="Logit"
+# Simplify the pim structure
   if(simplify) model=simplify.pim.structure(model)
 #
 # Check to make sure that the only rows in the design matrix that are all zeros are
 # ones that correspond to fixed parameters.
 #
+
   if(simplify)
   {                               
       dm=model$simplify$design.matrix

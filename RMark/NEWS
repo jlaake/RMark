@@ -1,4 +1,4 @@
-RMark 2.1.1 (19 April 2012)
+RMark 2.1.1 (21 April 2012)
 --------------------------
 
 BUG FIXES
@@ -11,7 +11,9 @@ BUG FIXES
 
 * Function collect.model.names is now exported
 
-* make.mark.model will now issue an error and stop if any covariates are longer than the MARK limit of 10 characters 
+* make.mark.model will now issue an error and stop if any covariates are longer than the MARK limit of 10 characters
+
+* added code to make.mark.model that sets link to Logit for Mlogit parameters that are fixed to 0 
 
 RMark 2.1.0 (27 Jan 2012)
 -------------------------

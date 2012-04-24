@@ -64,7 +64,12 @@
   which can be used to specify the set of real parameters
   to be extracted by \code{\link{covariate.predictions}}
   using the index column in \code{data} or the
-  \code{indices} argument.
+  \code{indices} argument. If df is NULL, it returns a
+  dataframe with all of the indices with model.index being
+  the unique index across all parameters and the par.index
+  which is an index to the row in the design data. If
+  parameter is NULL then the the dataframe is given for all
+  of the parameters.
 
   Function \code{nat.surv} produces estimates of natural
   survival (Sn) from total survival (S) and recovery rate

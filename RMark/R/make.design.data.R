@@ -535,7 +535,7 @@ remove.unused.occasions=function(data,ddl)
                design.data$Time=NULL
             }
          }
-         full.design.data[[i]]=design.data
+         full.design.data[[i]]=cbind(par.index=1:nrow(design.data),model.index=1:nrow(design.data),design.data)
          pimtypes[[i]]=list(pim.type=parameters[[i]]$pim.type)
 	     if(!is.null(subtract.stratum))pimtypes[[i]]$subtract.stratum=subtract.stratum
          if(parameters[[i]]$type%in%c("Triang","STriang")&&parameters[[i]]$pim.type=="all")anyTriang=TRUE
@@ -546,6 +546,13 @@ remove.unused.occasions=function(data,ddl)
    null.design.data=sapply(full.design.data,is.null)
    parameters=parameters[!null.design.data]
    full.design.data=full.design.data[!null.design.data]
+#  add model indices
+   prev=0
+   for(i in 1:length(full.design.data))
+   {
+	   full.design.data[[i]]$model.index=full.design.data[[i]]$par.index+prev
+	   prev=max(full.design.data[[i]]$model.index)
+   }	   
 #
 #  Remove unused design data
 #

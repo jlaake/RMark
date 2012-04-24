@@ -349,6 +349,9 @@
 #' @param profile.int if TRUE, requests MARK to compute profile intervals
 #' @param chat pre-specified value for chat used by MARK in calculations of
 #' model output
+#' @param simplify if FALSE, does not simplify PIM structure
+#' @param input.links specifies set of link functions for parameters with non-simplified structure
+#' @param parm.specific if TRUE, forces a link to be specified for each parameter
 #' @return model: a MARK object except for the elements \code{output} and
 #' \code{results}. See \code{\link{mark}} for a detailed description of the
 #' list contents.
@@ -398,35 +401,8 @@
 #'   parameters=list(Phi=PhiFlood, p=pdot))
 #' 
 make.mark.model <-
-function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL)
+function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,input.links=NULL,parm.specific=FALSE)
 {
-# -----------------------------------------------------------------------------------------------------------------------
-#
-# make.mark.model -   creates a MARK model object that contains an input file, design matrix
-#                     and design data for MARK.  It is constructed from a data frame, formulas for design matrix
-#                     ,fixed parameters, and initial values
-#
-# Arguments:
-#
-# data             - data list resulting from function process.data
-# ddl              - design data list which contains an element for each parameter type
-# parameters       - list of parameter model specifications
-# title            - a title for the analysis
-# model.name       - optional model name
-# initial          - vector of initial values for beta parameters or name of a MARK model object with output
-# call             - can be used to pass function call when this function is called from another function (eg mark)
-# simplify         - if TRUE, simplifies PIM structure to match unique number of rows in design matrix
-# default.fixed    - if TRUE, default fixed values are assigned to any parameters missing from the full design data
-# options          - character string of options for Proc Estimate statement in MARK .inp file
-#
-# Value:
-#
-#  model           - a MARK model object
-#
-# Functions used:  valid.parameters, setup.parameters,
-#
-# -----------------------------------------------------------------------------------------------------------------------
-
 
 #  *******************  INTERNAL FUNCTIONS    *********************************
 #
@@ -497,12 +473,12 @@ function(model){
 #  Get all the unique rows in the design matrix and paste all the values
 #  in each row together.
 #
-   uniquevals=apply(unique(model$design.matrix),1,paste,collapse="")
+   uniquevals=apply(unique(cbind(model$design.matrix,model$links)),1,paste,collapse="")
 #
 #  Get all the rows in the design matrix and paste all the values
 #  in each row together.
 #
-   allvals=apply(model$design.matrix,1,paste,collapse="")
+   allvals=apply(cbind(model$design.matrix,model$links),1,paste,collapse="")
 #
 #  Find the corresponding sets of indices by matching allvals into uniquevals
 #
@@ -936,7 +912,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 
 #
 #  *******************  END OF INTERNAL FUNCTIONS    *********************************
-  simplify=TRUE
 #
 # Outfile is assigned a temporary name
 #
@@ -1236,6 +1211,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   link=parameters[[1]]$link
   for(i in 1:length(parameters))
      if(link!=parameters[[i]]$link)link="Parm-Specific"
+  if(!is.null(input.links) | parm.specific)link="Parm-Specific"
 #
 # Next output proc Estimate 
 #
@@ -1683,68 +1659,80 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   }
 #
 #  If parm-specific links, output them here
-#
+# 
   mlogit.list=list(structure=NULL,ncol=1)
-  max.logit.number=0
-  if(link=="Parm-Specific")
+  if(is.null(input.links))
   {
-     string=NULL
-     for(i in 1:length(parameters))
+     max.logit.number=0
+     if(link=="Parm-Specific")
      {
-        parx=names(parameters)[i]
-        if(parameters[[i]]$link=="mlogit"|parameters[[i]]$link=="MLogit")
+        string=NULL
+        for(i in 1:length(parameters))
         {
-          if(parx=="Psi")
-          {
-              logit.numbers = max.logit.number+1:(nrow(full.ddl[[parx]])/(nstrata*(nstrata-1)*number.of.groups))
-              logits.per.group=nstrata*length(logit.numbers)
-              for (k in 1:number.of.groups)
-              {
-                 if(k>1)logit.numbers=logit.numbers+logits.per.group
-                 for (j in 1:nstrata)	 
-                   string=c(string,paste("mlogit(",rep(logit.numbers+(j-1)*length(logit.numbers),(nstrata-1)),")",sep="")) 
-			  }
-			  max.logit.number=max.logit.number+logits.per.group*number.of.groups
-           }
-           else
+           parx=names(parameters)[i]
+           if(parameters[[i]]$link=="mlogit"|parameters[[i]]$link=="MLogit")
            {
-             if(parx=="pent")
+             if(parx=="Psi")
              {
-                 nsets=length(pim[[parx]])
-                 for (kk in 1:nsets)
+                 logit.numbers = max.logit.number+1:(nrow(full.ddl[[parx]])/(nstrata*(nstrata-1)*number.of.groups))
+                 logits.per.group=nstrata*length(logit.numbers)
+                 for (k in 1:number.of.groups)
                  {
-                    x.indices=as.vector(t(pim[[parx]][[kk]]$pim))
-                    x.indices=x.indices[x.indices!=0]
-                    max.logit.number=max.logit.number+1
-                    string=c(string,paste("mlogit(",rep(max.logit.number,length(x.indices)),")",sep=""))
-                 }
-             }else
-             {
-				 if(parx %in% c("pi","Omega"))
-				 {
-#					 nsets=length(pim[[parx]])
-					 for (kk in 1:number.of.groups)
-					 {
-						 logit.numbers=max.logit.number+rep(1:(nrow(full.ddl[[parx]])/(number.of.groups*(nstrata-1))),nstrata-1)
-						 max.logit.number=max(logit.numbers)
-						 string=c(string,paste("mlogit(",logit.numbers,")",sep=""))
-					 }			 				 
-				 } else
-                     stop(paste("Mlogit link not allowed with parameter",parx))
-			 }
-           }
-        } else
-        {
-          xstring=rep(spell(parameters[[i]]$link),dim(full.ddl[[parx]])[1])
-          string=c(string,xstring)
+                    if(k>1)logit.numbers=logit.numbers+logits.per.group
+                    for (j in 1:nstrata)	 
+                      string=c(string,paste("mlogit(",rep(logit.numbers+(j-1)*length(logit.numbers),(nstrata-1)),")",sep="")) 
+			     }
+			     max.logit.number=max.logit.number+logits.per.group*number.of.groups
+              }
+              else
+              {
+                 if(parx=="pent")
+                 {
+                     nsets=length(pim[[parx]])
+                     for (kk in 1:nsets)
+                     {
+                        x.indices=as.vector(t(pim[[parx]][[kk]]$pim))
+                        x.indices=x.indices[x.indices!=0]
+                        max.logit.number=max.logit.number+1
+                       string=c(string,paste("mlogit(",rep(max.logit.number,length(x.indices)),")",sep=""))
+                     }
+                 }else
+                 {
+				    if(parx %in% c("pi","Omega"))
+				    {
+#					    nsets=length(pim[[parx]])
+					    for (kk in 1:number.of.groups)
+					    {
+					   	     logit.numbers=max.logit.number+rep(1:(nrow(full.ddl[[parx]])/(number.of.groups*(nstrata-1))),nstrata-1)
+						     max.logit.number=max(logit.numbers)
+						     string=c(string,paste("mlogit(",logit.numbers,")",sep=""))
+					    }			 				 
+				     } else
+                         stop(paste("Mlogit link not allowed with parameter",parx))
+			     }
+               }
+            } else
+            {
+              xstring=rep(spell(parameters[[i]]$link),dim(full.ddl[[parx]])[1])
+              string=c(string,xstring)
+            }
         }
+   	    write(paste("links=",length(string),";",sep=""),file=outfile,append=TRUE)
+        links=string
+        string=paste(string,";")
+        write(string,file=outfile,append=TRUE)
+     } else
+     {
+		 links=link
      }
-     write(paste("links=",length(string),";",sep=""),file=outfile,append=TRUE)
-     links=string
-     string=paste(string,";")
-     write(string,file=outfile,append=TRUE)
-  } else
-  links=link
+  }	else
+  {
+	  string=paste(input.links,collapse=",")
+	  write(paste("links=",length(string),";",sep=""),file=outfile,append=TRUE)
+	  links=input.links
+	  string=paste(string,";")
+	  write(string,file=outfile,append=TRUE)
+  }  
 #
 # write out labels for design matrix columns
 #
@@ -1796,7 +1784,14 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(mixtures==1)
      mixtures=NULL
   if(is.null(call))call=match.call()
-    model = list(data = substitute(data), model = data$model,
+# add par.index and model.index values to design data
+#  prev=0
+#  for(i in 1:(length(ddl)-1))
+#  {
+#	  full.ddl[[i]]=cbind(full.ddl[[i]],data.frame(model.index=prev+1:nrow(full.ddl[[i]]),par.index=1:nrow(full.ddl[[i]])))
+#	  prev=prev+nrow(full.ddl[[i]])
+#  }
+  model = list(data = substitute(data), model = data$model,
         title = title, model.name = model.name, links = links, mixtures=mixtures,
         call = call, parameters=parameters,time.intervals=data$time.intervals, input = text, number.of.groups = number.of.groups,
         group.labels = group.labels, nocc = nocc, begin.time = data$begin.time, covariates=covariates,

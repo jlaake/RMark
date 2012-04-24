@@ -151,6 +151,8 @@
 #' @param reverse if set to TRUE, will reverse timing of transition (Psi) and
 #' survival (S) in Multistratum models
 #' @param run if FALSE does not run model after creation 
+#' @param input.links specifies set of link functions for parameters with non-simplified structure
+#' @param parm.specific if TRUE, forces a link to be specified for each parameter
 #' @return model: a MARK object containing output and extracted results. It is
 #' a list with the following elements \item{data}{name of the processed data
 #' frame} \item{model}{type of analysis model (see list above)}
@@ -227,7 +229,7 @@ mark <-
 function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,
 design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
 invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
-realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE)
+realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE)
 {
 # -----------------------------------------------------------------------------------------------------------------------
 # mark -  a single function that processes data, creates the design data, makes the mark model and runs it.
@@ -311,7 +313,8 @@ while(i<=retry & !converge)
    {
       model<-make.mark.model(data.proc,title=title,parameters=model.parameters,
              ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
-             model.name=model.name,options=options,profile.int=profile.int,chat=chat)
+             model.name=model.name,options=options,profile.int=profile.int,chat=chat,
+			 input.links=input.links,parm.specific=parm.specific)
       model$model.parameters=model.parameters
 	  if(!run)return(model)
    }

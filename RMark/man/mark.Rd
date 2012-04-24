@@ -13,7 +13,8 @@
     silent = FALSE, retry = 0, options = NULL,
     brief = FALSE, realvcv = FALSE, delete = FALSE,
     external = FALSE, profile.int = FALSE, chat = NULL,
-    reverse = FALSE, run = TRUE)
+    reverse = FALSE, run = TRUE, input.links = NULL,
+    parm.specific = FALSE)
 }
 \arguments{
   \item{data}{Either the raw data which is a dataframe with
@@ -122,6 +123,12 @@
   transition (Psi) and survival (S) in Multistratum models}
 
   \item{run}{if FALSE does not run model after creation}
+
+  \item{input.links}{specifies set of link functions for
+  parameters with non-simplified structure}
+
+  \item{parm.specific}{if TRUE, forces a link to be
+  specified for each parameter}
 }
 \value{
   model: a MARK object containing output and extracted

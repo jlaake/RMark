@@ -1,6 +1,16 @@
 RMark 2.1.1 (21 April 2012)
 --------------------------
 
+NEW FEATURES
+
+* In extract.indices, parameter and df can be NULL and all indices are provided for a parameter (df=NULL and parameter specified) or all parameters if parameter is NULL.
+ 
+* In make.mark.model, the simplify argument was added back but only for building an model and not running it.
+
+* In make.design.data, par.index and model.index are now added to the design data. par.index is a numeric row number within the parameter and model.index is the unique index across all parameters. par.index can be used in place of as.numeric(row.names(ddl[[parameter]]) in the various examples.
+
+* In concert with above change two new arguments parm.specific and input.links were added to make.mark.model and mark.  These are useful for user specified link functions vary within a parameter. See end of help for ?dipper for an example.
+ 
 BUG FIXES
 
 * Fixed bug in make.mark.model for mlogit specification with pi and Omega parameters in RDMSMisClass models with more than 2 observable strata.  Thanks to Claudia Penaloza for reporting this problem.

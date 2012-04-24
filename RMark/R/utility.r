@@ -9,7 +9,10 @@
 #' the dataframe \code{df}. It returns a vector of indices which can be used to
 #' specify the set of real parameters to be extracted by
 #' \code{\link{covariate.predictions}} using the index column in \code{data} or
-#' the \code{indices} argument.
+#' the \code{indices} argument. If df is NULL, it returns a dataframe with all of
+#' the indices with model.index being the unique index across all parameters and the
+#' par.index which is an index to the row in the design data. If parameter is NULL then
+#' the the dataframe is given for all of the parameters.
 #' 
 #' Function \code{nat.surv} produces estimates of natural survival (Sn) from
 #' total survival (S) and recovery rate (r) from a joint live-dead model in
@@ -104,7 +107,7 @@
 #' pop.est(ns,p.list$estimates$estimate,
 #'   design=diag(1,ncol=6,nrow=6),p.list$vcv)
 #' 
-extract.indices=function(model,parameter,df)
+extract.indices=function(model,parameter=NULL,df=NULL)
 {
 #  Extracts the parameter indices from a model for a particular parameter
 #  as defined by the dataframe df which contains columns group, row, column
@@ -118,24 +121,50 @@ extract.indices=function(model,parameter,df)
 #  Value: vector of indices which can be used to specify the set of real parameters
 #         to be extracted
 #
-
-   if(!valid.parameters(model$model,parameter))stop()
-   indices=vector("numeric",length=nrow(df))
-   for(i in 1:nrow(df))
+   if(is.null(parameter))
    {
-      group=df$group[i]
-      irow=df$row[i]
-      jcol=df$col[i]
-      if(group > model$number.of.groups)
-        stop(paste("Specified group number", group, " is greater than number of groups", model$number.of.groups))
-      if(irow > nrow(model$pims[[parameter]][[group]]$pim))
-        stop(paste("Specified row number", jcol, " is greater than number of rows", nrow(model$pims[[parameter]][[group]]$pim)))
-      if(jcol > ncol(model$pims[[parameter]][[group]]$pim))
-        stop(paste("Specified column number", jcol, " is greater than number of columns", ncol(model$pims[[parameter]][[group]]$pim)))
-
-      indices[i]=model$pims[[parameter]][[group]]$pim[irow,jcol]
-   }
-   return(indices)
+	   ddl=model$design.data
+	   link.par=NULL
+	   prev=0
+	   for(i in 1:(length(ddl)-1))
+	   {
+		   link.par=rbind(link.par,data.frame(par=names(ddl[i]),model.index=prev+1:nrow(ddl[[i]]),par.index=1:nrow(ddl[[i]])))
+		   prev=prev+nrow(ddl[[i]])
+	   }
+	   return(link.par)
+   } else
+       if(is.null(df))
+	   {
+		   ddl=model$design.data
+		   link.par=NULL
+		   prev=0
+		   for(i in 1:(length(ddl)-1))
+		   {
+			   if(names(ddl)[i]==parameter)
+				   link.par=data.frame(par=names(ddl[parameter]),model.index=prev+1:nrow(ddl[[parameter]]),par.index=1:nrow(ddl[[parameter]]))
+			   prev=prev+nrow(ddl[[i]])
+		   }
+		   return(link.par)
+	   } else
+	   {
+		   if(!valid.parameters(model$model,parameter))stop()
+		   indices=vector("numeric",length=nrow(df))
+		   for(i in 1:nrow(df))
+		   {
+			   group=df$group[i]
+			   irow=df$row[i]
+			   jcol=df$col[i]
+			   if(group > model$number.of.groups)
+				   stop(paste("Specified group number", group, " is greater than number of groups", model$number.of.groups))
+			   if(irow > nrow(model$pims[[parameter]][[group]]$pim))
+				   stop(paste("Specified row number", jcol, " is greater than number of rows", nrow(model$pims[[parameter]][[group]]$pim)))
+			   if(jcol > ncol(model$pims[[parameter]][[group]]$pim))
+				   stop(paste("Specified column number", jcol, " is greater than number of columns", ncol(model$pims[[parameter]][[group]]$pim)))
+			   
+			   indices[i]=model$pims[[parameter]][[group]]$pim[irow,jcol]
+		   }
+		   return(indices)
+	   }
 }
 
 nat.surv=function(model,df)

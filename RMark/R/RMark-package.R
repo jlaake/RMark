@@ -478,11 +478,27 @@ NULL
 #' }
 #' 
 #' dipper.popan.results=run.dipper.popan()
-#' 
-#' 
+#'
+#'# *****************************************************************
+#'# Here is an example of user specified links for each real parameter
+#'  data(dipper)
+#'  dipper.proc=process.data(dipper)
+#'  dipper.ddl=make.design.data(dipper.proc)
+#'# dummy run of make.mark.model to get links and design data. 
+#'# parm.specific set to TRUE so it will create a link for 
+#'# each parameter because for this model they are all the
+#'# same (logit) and if this was not specified you'ld get a vector with one element
+#'  dummy=make.mark.model(dipper.proc,dipper.ddl,simplify=FALSE,parm.specific=TRUE)
+#'  input.links=dummy$links
+#'# get model indices for p where time=4
+#'  log.indices=dipper.ddl$p$model.index[dipper.ddl$p$time==4]
+#'# assign those links to log
+#'  input.links[log.indices]="Log"
+#'# Now these can be used with any call to mark
+#'  mymodel=mark(dipper.proc,dipper.ddl,input.links=input.links)
+#'  summary(mymodel)
+#'
 NULL
-
-
 
 
 

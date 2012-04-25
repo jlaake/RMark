@@ -1117,8 +1117,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(!is.null(covariates))
   {
      covariates=unique(covariates)
-	 toolong=nchar(covariates)>10
-	 if(any(toolong)) stop(paste("\nFollowing covariates longer than 10 characters",paste(covariates[toolong],collapse=",")))
+	 covar10=covariates[duplicated((substr(covariates,1,10)))]
+	 if(length(covar10)>0) stop(paste("\nFollowing covariates are duplicates of another covariate within the first 10 characters\n",paste(covar10,collapse=", ")))
      string=paste(string," icovar = ",length(covariates))
   }
   if(mixtures!=1)
@@ -1784,13 +1784,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(mixtures==1)
      mixtures=NULL
   if(is.null(call))call=match.call()
-# add par.index and model.index values to design data
-#  prev=0
-#  for(i in 1:(length(ddl)-1))
-#  {
-#	  full.ddl[[i]]=cbind(full.ddl[[i]],data.frame(model.index=prev+1:nrow(full.ddl[[i]]),par.index=1:nrow(full.ddl[[i]])))
-#	  prev=prev+nrow(full.ddl[[i]])
-#  }
   model = list(data = substitute(data), model = data$model,
         title = title, model.name = model.name, links = links, mixtures=mixtures,
         call = call, parameters=parameters,time.intervals=data$time.intervals, input = text, number.of.groups = number.of.groups,

@@ -1,4 +1,4 @@
-RMark 2.1.1 (21 April 2012)
+RMark 2.1.1 (25 April 2012)
 --------------------------
 
 NEW FEATURES
@@ -10,6 +10,8 @@ NEW FEATURES
 * In make.design.data, par.index and model.index are now added to the design data. par.index is a numeric row number within the parameter and model.index is the unique index across all parameters. par.index can be used in place of as.numeric(row.names(ddl[[parameter]]) in the various examples.
 
 * In concert with above change two new arguments parm.specific and input.links were added to make.mark.model and mark.  These are useful for user specified link functions vary within a parameter. See end of help for ?dipper for an example.
+
+* Added code to make.mark.model that sets link to Logit for Mlogit parameters that are fixed to 0. This should make these types of models run far more quickly because the number of real parameters will be reduced. 
  
 BUG FIXES
 
@@ -19,11 +21,9 @@ BUG FIXES
 
 * Removed one of the example models in edwards.eberhardt because it does not converge with the Feb 2012 version of mark.exe. It was a poor example giving a very large N with previous versions of mark.exe
 
-* Function collect.model.names is now exported
+* Function collect.model.names is now exported.
 
-* make.mark.model will now issue an error and stop if any covariates are longer than the MARK limit of 10 characters
-
-* added code to make.mark.model that sets link to Logit for Mlogit parameters that are fixed to 0 
+* make.mark.model will now issue an error and stop if any covariates are not unique within the first 10 characters which is a MARK limit.
 
 RMark 2.1.0 (27 Jan 2012)
 -------------------------

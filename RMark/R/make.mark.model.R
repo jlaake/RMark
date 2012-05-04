@@ -352,6 +352,8 @@
 #' @param simplify if FALSE, does not simplify PIM structure
 #' @param input.links specifies set of link functions for parameters with non-simplified structure
 #' @param parm.specific if TRUE, forces a link to be specified for each parameter
+#' @param mlogit0 if TRUE, any real parameter that is fixed to 0 and has an mlogit link will 
+#' have its link changed to logit so it can be simplified
 #' @return model: a MARK object except for the elements \code{output} and
 #' \code{results}. See \code{\link{mark}} for a detailed description of the
 #' list contents.
@@ -401,7 +403,7 @@
 #'   parameters=list(Phi=PhiFlood, p=pdot))
 #' 
 make.mark.model <-
-function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,input.links=NULL,parm.specific=FALSE)
+function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE)
 {
 
 #  *******************  INTERNAL FUNCTIONS    *********************************
@@ -1798,10 +1800,13 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   model$profile.int=profile.int
   model$chat=chat
 # Assign Mlogits that are set to 0 to a Logit link so they can be simplified
-  fixedzero=model$fixed$index[model$fixed$value==0]
-  mlogit.indices=grep("mlogit",model$links)
-  if(length(mlogit.indices)>0 & length(fixedzero)>0)
-     model$links[fixedzero[fixedzero%in%mlogit.indices]]="Logit"
+  if(mlogit0)
+  {
+	  fixedzero=model$fixed$index[model$fixed$value==0]
+	  mlogit.indices=grep("mlogit",model$links)
+	  if(length(mlogit.indices)>0 & length(fixedzero)>0)
+		  model$links[fixedzero[fixedzero%in%mlogit.indices]]="Logit"
+  }
 # Simplify the pim structure
   if(simplify) model=simplify.pim.structure(model)
 #

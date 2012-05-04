@@ -6,7 +6,8 @@
     title = "", model.name = NULL, initial = NULL,
     call = NULL, default.fixed = TRUE, options = NULL,
     profile.int = FALSE, chat = NULL, simplify = TRUE,
-    input.links = NULL, parm.specific = FALSE)
+    input.links = NULL, parm.specific = FALSE,
+    mlogit0 = FALSE)
 }
 \arguments{
   \item{data}{Data list resulting from function
@@ -51,6 +52,10 @@
 
   \item{parm.specific}{if TRUE, forces a link to be
   specified for each parameter}
+
+  \item{mlogit0}{if TRUE, any real parameter that is fixed
+  to 0 and has an mlogit link will have its link changed to
+  logit so it can be simplified}
 }
 \value{
   model: a MARK object except for the elements

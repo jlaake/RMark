@@ -36,19 +36,23 @@ if(exists("MarkPath"))
 {
 	if(R.Version()$os=="mingw32")
 	{
-		if(Sys.which("mark.exe")=="" & !file.exists("c:/Program Files/Mark/mark.exe") & !file.exists("c:/Program Files (x86)/Mark/mark.exe"))
-		{
-			cat("Warning: Software mark.exe not found in path or in c:/Program Files/mark or c:/Program Files (x86)/mark\n. It is available at http://www.cnr.colostate.edu/~gwhite/mark/mark.htm\n")
+		markpath=c("c:/Program Files/Mark/","c:/Program Files (x86)/Mark/")
+	    markstrings=c("mark.exe","mark32.exe","mark64.exe")
+	    markpath=as.vector(sapply(markpath,function(x)paste(x,markstrings,sep="/")))
+	    which.exists=file.exists(markpath)
+	    if(all(Sys.which(c("mark.exe","mark32.exe","mark64.exe"))=="")&!any(file.exists(markpath)))
+	    {
+			cat("Warning: Software mark.exe,mark32.exe or mark64.exe not found in path or in c:/Program Files/mark or c:/Program Files (x86)/mark\n. It is available at http://www.cnr.colostate.edu/~gwhite/mark/mark.htm\n")
 			cat('         If you have mark.exe, you will need to set MarkPath object to its location (e.g. MarkPath="C:/Users/Jeff Laake/Desktop"')
-		}
-	}
-	else
+	    }
+	} else
 	{
-		if(Sys.which("mark")=="")
-		{
-			cat("Warning: Software mark not found in path.\n")
-			cat('         If you have mark executable, you will need to set MarkPath object to its location (e.g. MarkPath="C:/Users/Jeff Laake/Desktop"')
-		}  
+	   if(Sys.which("mark")=="")
+	   {
+		   cat("Warning: Software mark not found in path.\n")
+		   cat('         If you have mark executable, you will need to set MarkPath object to its location (e.g. MarkPath="C:/Users/Jeff Laake/Desktop"')
+	   }  
 	}
 }
 }
+

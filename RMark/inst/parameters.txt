@@ -151,7 +151,7 @@ CRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE
 CRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE			
 CRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE	TRUE				
 CRDMS	c	1	-1	0	Square	all	logit			p			TRUE	TRUE				
-CRDMS	N	0			Square	all	log	~1					TRUE	TRUE				
+CRDMS	N	0			Square	all	log	~session					TRUE	TRUE				
 LogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE					
 LogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE					
 LogitNormalMR	N	0			Square	all	log	~session					TRUE					

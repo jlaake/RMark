@@ -1,6 +1,6 @@
 Package: RMark
-Version: 2.1.1
-Date: 2012-05-03
+Version: 2.1.2
+Date: 2012-05-09
 Title: R Code for MARK Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with contributions
     from Eldar Rakhimberdiev, Bret Collier, Jay Rotella and
@@ -15,10 +15,13 @@ SystemRequirements: notepad.exe, mark.exe and rel_32.exe
 Depends:
     R (>= 2.13.0),
     plotrix,
-    snowfall
+    snowfall,
+    coda
 Imports:
     msm,
     nlme
+Suggests:
+    lattice
 LazyLoad: yes
 License: GPL (>=2)
 Maintainer: Jeff Laake <Jeff.Laake@noaa.gov>
@@ -86,3 +89,4 @@ Collate:
     'var.components.reml.r'
     'zzz.R'
     'RMark-package.R'
+    'create.mark.mcmc.R'

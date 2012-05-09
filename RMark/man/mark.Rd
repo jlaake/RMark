@@ -14,7 +14,7 @@
     brief = FALSE, realvcv = FALSE, delete = FALSE,
     external = FALSE, profile.int = FALSE, chat = NULL,
     reverse = FALSE, run = TRUE, input.links = NULL,
-    parm.specific = FALSE, mlogit0 = FALSE)
+    parm.specific = FALSE, mlogit0 = FALSE, threads = -1)
 }
 \arguments{
   \item{data}{Either the raw data which is a dataframe with
@@ -133,6 +133,9 @@
   \item{mlogit0}{if TRUE, any real parameter that is fixed
   to 0 and has an mlogit link will have its link changed to
   logit so it can be simplified}
+
+  \item{threads}{number of cpus to use with mark.exe if
+  positive or number of cpus to remain idle if negative}
 }
 \value{
   model: a MARK object containing output and extracted

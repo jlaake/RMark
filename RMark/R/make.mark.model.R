@@ -354,6 +354,7 @@
 #' @param parm.specific if TRUE, forces a link to be specified for each parameter
 #' @param mlogit0 if TRUE, any real parameter that is fixed to 0 and has an mlogit link will 
 #' have its link changed to logit so it can be simplified
+#' @param threads number of cpus to use with mark.exe if positive or number of cpus to remain idle if negative
 #' @return model: a MARK object except for the elements \code{output} and
 #' \code{results}. See \code{\link{mark}} for a detailed description of the
 #' list contents.
@@ -403,7 +404,7 @@
 #'   parameters=list(Phi=PhiFlood, p=pdot))
 #' 
 make.mark.model <-
-function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE)
+function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1)
 {
 
 #  *******************  INTERNAL FUNCTIONS    *********************************
@@ -728,14 +729,42 @@ for (i in 1:length(parameters)) {
      }
 }
 #
-# Look for setting of initial values in the input file; if found write them out
-# as is to new input file.  Simplifying the PIM structure does not change the
-# column structure of the design matrix and therefore does not change the
-# definition of the betas.
+# Next compute the new simplified design matrix.  rownums is the row numbers (indices)
+# from the original design matrix but there is only one for each of the new
+# parameters with indices 1:length(new.indices).  The new design matrix
+# (complete.design.matrix) is obtained by subsetting the rows from the
+# original design matrix matching rownums.  This is done using row.names to be
+# able to use subset so it will always yield a dataframe.  Using indices for
+# row numbers can result in a vector if there is only a single beta.
+rownums=match(1:length(unique(new.indices)),new.indices)
+# 22-Aug-05; change to use [rownums,] to accomodate fixed parameters
+# 1 feb 06; modified to cope with single element selected
+if(length(rownums)==1)
+	complete.design.matrix=subset(model$design.matrix,1:dim(model$design.matrix)[1]%in%rownums)
+else
+	complete.design.matrix=model$design.matrix[rownums,,drop=FALSE]
+#
+# Find any columns that are all 0; left from mlogit0 fix
+#
+dm=complete.design.matrix
+allzero=apply(dm,2,function(x) all(x=="0"))
+complete.design.matrix=dm[,!allzero,drop=FALSE]
+#
+# Look for setting of initial values in the input file; if found write them 
+# exclude columns that are now all 0s.
 #
 if(length(grep("initial ",model$input))!=0)
 {
-  string=model$input[grep("initial ",model$input)]
+  if(any(allzero))
+  {
+	  initial=strsplit(model$input[grep("initial ", model$input)]," ")[[1]]
+	  initial=initial[-c(1:2,length(initial))]
+	  initial=initial[!allzero]
+	  string=paste("initial ",paste(initial,collapse=" ")," ;",collapse=" ")
+  } else
+  {
+	  string=model$input[grep("initial ",model$input)]
+  }		
   write(string, file = outfile, append = TRUE)
 }
 #
@@ -761,21 +790,6 @@ else
       write(paste(string,";",sep=""),file=outfile,append=TRUE)      
     } 
 }
-#
-# Next output the new simplified design matrix.  rownums is the row numbers (indices)
-# from the original design matrix but there is only one for each of the new
-# parameters with indices 1:length(new.indices).  The new design matrix
-# (complete.design.matrix) is obtained by subsetting the rows from the
-# original design matrix matching rownums.  This is done using row.names to be
-# able to use subset so it will always yield a dataframe.  Using indices for
-# row numbers can result in a vector if there is only a single beta.
-rownums=match(1:length(unique(new.indices)),new.indices)
-# 22-Aug-05; change to use [rownums,] to accomodate fixed parameters
-# 1 feb 06; modified to cope with single element selected
-if(length(rownums)==1)
-   complete.design.matrix=subset(model$design.matrix,1:dim(model$design.matrix)[1]%in%rownums)
-else
-   complete.design.matrix=model$design.matrix[rownums,,drop=FALSE]
 # 10 Jan 06; change to accomodate S(.) with known fate where design matrix can
 # become a single element with simplification
 #if(is.vector(complete.design.matrix))
@@ -1112,9 +1126,9 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # 11 Jan 06; Added code for multistratum - nstrata and strata labels
 #
   if(is.null(nocc.secondary))
-     string=paste("proc title ",title,";\nproc chmatrix occasions=",nocc," groups=",number.of.groups," etype=",etype)
+     string=paste("proc title ",title,";\nproc chmatrix occasions=",nocc," groups=",number.of.groups," etype=",etype, "Threads=", threads)
   else
-     string=paste("proc title ",title,";\nproc chmatrix occasions=",sum(nocc.secondary)," groups=",number.of.groups," etype=",etype)
+     string=paste("proc title ",title,";\nproc chmatrix occasions=",sum(nocc.secondary)," groups=",number.of.groups," etype=",etype, "Threads=", threads)
   if(model.list$strata)string=paste(string," strata=",data$nstrata,sep="")
   if(!is.null(covariates))
   {

@@ -53,7 +53,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
 #
 #  Extract basic stats (npar, n, deviance AICc etc)
 #
-  design.matrix=model$design.matrix
+  design.matrix=model$simplify$design.matrix
   links=model$links
   derived=setup.model(model$model,model$nocc)$derived
   outfile=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
@@ -118,7 +118,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   dimx=dim(x)[2]
   beta=as.data.frame(x[,((dimx-4+1):dimx)])
   names(beta)=c("estimate","se","lcl","ucl")
-  row.names(beta)=names(design.matrix)
+  row.names(beta)= colnames(model$simplify$design.matrix)
   nbeta=length(beta$estimate[beta$estimate!=0.000000])
 #
 # Extract parameter numbers that were not "estimated"
@@ -172,7 +172,8 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
        }
     }
   }
-  x=read.fwf(file=outfile,widths=c(26,16,16,16,16,20),col.names=c("","estimate","se","lcl","ucl","fixed"),
+
+  x=read.fwf(file=outfile,widths=c(27,16,16,16,16,20),col.names=c("","estimate","se","lcl","ucl","fixed"),
                                as.is=TRUE)
   unlink(outfile)
   x$note=""

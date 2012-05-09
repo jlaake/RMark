@@ -156,39 +156,70 @@ delete=FALSE,external=FALSE)
 # Write input file to temp file 
 #
   writeLines(model$input,inputfile)
+# Windows operating system
   if(os=="mingw32")
   {
-    if(!exists("MarkPath"))
+	if(!exists("MarkPath"))
 	{
-		MarkPath=Sys.which("mark.exe")
-	    if(MarkPath=="")
-			if(file.exists("c:/Program Files/Mark/mark.exe"))
-			  MarkPath=shQuote("c:/Program Files/Mark/mark.exe")
-            else
-			  if(file.exists("c:/Program Files (x86)/Mark/mark.exe"))
-				  MarkPath=shQuote("c:/Program Files (x86)/Mark/mark.exe")
-		      else	
-			      stop("mark.exe cannot be found. Add to system path or specify MarkPath object (e.g., MarkPath='C:/Program Files (x86)/Mark'")
-    }else
+		markpath=c("c:/Program Files/Mark/","c:/Program Files (x86)/Mark/")
+	    markpath=markpath[c(length(dir(markpath[1])),length(dir(markpath[2])))>0]
+	}else
+	    markpath=MarkPath  
+	markstrings=c("mark.exe","mark32.exe","mark64.exe")
+	markpath=as.vector(sapply(markpath,function(x)paste(x,markstrings,sep="/")))
+	which.exists=file.exists(markpath)
+	if(any(which.exists[1])) 
 	{
-		if(substr(MarkPath,nchar(MarkPath),nchar(MarkPath))%in%c("\\","/"))
-			MarkPath=shQuote(paste(MarkPath,"mark.exe",sep=""))
-		else
-			MarkPath=shQuote(paste(MarkPath,"mark.exe",sep="/"))
-	}		
-    if(RunMark)
-		system(paste(MarkPath, " BATCH i=",inputfile," o=", outfile,
-						" v=",vcvfile, " r=",resfile,sep = ""), invisible = invisible)
-#	else
-#      file.rename(vcvfile,"markxxx.vcv")
+			MarkPath=shQuote(markpath[1])
+	}else
+	{
+		if(R.Version()$arch=="x86_64")
+		{
+			if(any(which.exists[3]))
+				MarkPath=shQuote(markpath[3])
+		} else
+		{
+			if(any(which.exists[2]))
+				MarkPath=shQuote(markpath[2])
+		}          		
+		if(MarkPath=="")
+		{
+			inPath=Sys.which(markstrings)!=""
+            if(inPath[1])
+				MarkPath=shQuote(markstrings[1])
+			else
+				if(inPath[3]&R.Version()$arch=="x86_64")
+					MarkPath=shQuote(markstrings[3])
+				else
+					if(inPath[2])
+						MarkPath=shQuote(markstrings[2])
+					else
+				      stop("mark.exe, mark32.exe or mark64.exe cannot be found. Add to system path or specify MarkPath object (e.g., MarkPath='C:/Program Files (x86)/Mark'")
+		}
+	 }
+	 if(RunMark)
+		 if(.Platform$GUI[1]=="RTerm")
+		 {
+			 if(invisible)
+				 system(paste(MarkPath, " i=",inputfile," o=", outfile,
+								 " v=",vcvfile, " r=",resfile,sep = ""),ignore.stdout=TRUE,ignore.stderr=TRUE)
+			 else
+				 system(paste(MarkPath, " i=",inputfile," o=", outfile,
+								 " v=",vcvfile, " r=",resfile,sep = ""))
+			 
+		 }else
+		 {
+			 system(paste(MarkPath, " i=",inputfile," o=", outfile,
+								 " v=",vcvfile, " r=",resfile,sep = ""),invisible=TRUE)
+			 if(file.exists("fort.0"))unlink("fort.0")
+		 }
   } else
+# Non Windows operating systems
   {
     if(!exists("MarkPath"))MarkPath=""
     if(RunMark)
        system(paste("mark i=",inputfile," o=", outfile,
             " v=", vcvfile," r=",resfile,sep = ""))
-#    else
-#      file.rename(vcvfile,"markxxx.vcv")
   }
 #
 # Read in the output file

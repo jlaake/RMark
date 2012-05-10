@@ -1,28 +1,54 @@
-#' Creates a transition matrix of movement parameters for a multi-state(strata)
-#' model
+#' Multi-state Transition Functions
 #' 
-#' Computes all Psi values for a multi-strata mark model and constructs a
+#' TransitionMatrix: Creates a transition matrix of movement parameters for a multi-state(strata)
+#' model. It computes all Psi values for a multi-strata mark model and constructs a
 #' transition matrix.  Standard errors and confidence intervals can also be
 #' obtained.
+#' 
+#' find.possible.transitions:  Finds possible transitions; essentially it identifies where
+#' stratum label A and B are in the same ch for all labels but the 
+#' the transition could be from A to B or B to A or even ACB which is
+#' really an A to C and C to B transition.
+#' 
+#' transition.pairs: Computes counts of transition pairs. The rows are the "from stratum" and the
+#' columns are the "to stratum". So AB would be in the first row second column
+#' and BA would be in the second row first column.  All intervening 0s are ignored.
+#' These are transition pairs so AB0C is A to B and B to C but not A to C.
 #' 
 #' 
 #' @param x Estimate table from \code{\link{get.real}} with a single record for
 #' each possible transition
 #' @param vcv.real optional variance-covariance matrix from the call to
 #' \code{\link{get.real}}
-#' @return Either a transition matrix (vcv.real=NULL) or a list of matrices
+#' @param ch vector of capture history strings for a multi-state analysis
+#' @return TransitionMatrix: returns either a transition matrix (vcv.real=NULL) or a list of matrices
 #' (vcv.real specified) named TransitionMat (transition matrix),
 #' se.TransitionMat (se of each transition), lcl.TransitionMat (lower
 #' confidence interval limit for each transition), and ucl.TransitionMat (upper
-#' confidence interval limit for each transition).
+#' confidence interval limit for each transition). find.possible.transitions returns a 0/1 table where 1 means that t
+#' both values are in one or more ch strings and transition.pairs returns a table of counts of transition pairs.
 #' @author Jeff Laake
-#' @export
+#' @usage  TransitionMatrix(x,vcv.real=NULL)
+#' 
+#'         find.possible.transitions(ch)
+#' 
+#'         transition.pairs(ch)
+#' 
+#' @aliases TransitionMatrix find.possible.transitions transition.pairs
+#' @export TransitionMatrix find.possible.transitions transition.pairs
 #' @seealso \code{\link{get.real}}
 #' @keywords utility
 #' @examples
 #' 
-#' # fit the sequence of multistrata models as shown for ?mstrata
 #' data(mstrata)
+#' # Show possible transitions in first 15 ch values
+#' find.possible.transitions(mstrata$ch[1:15])
+#' # Show transtion pairs for same data
+#' transition.pairs(mstrata$ch[1:15])
+#' #limit transtions to 2 and 3 character values for first 30 ch
+#' transition.pairs(substr(mstrata$ch[1:30],2,3))
+#' 
+#' # fit the sequence of multistrata models as shown for ?mstrata
 #' run.mstrata=function()
 #' {
 #' #
@@ -152,3 +178,51 @@ TransitionMatrix=function(x,vcv.real=NULL)
   else
      return(TransitionMat)
 }
+
+# Finds possible transitions; essentially it identifies where
+# stratum label A and B are in the same ch for all labels but the 
+# the transition could be from A to B or B to A or even ACB which is
+# really an A to C and C to B transition.
+find.possible.transitions=function(ch)
+{
+	splitch=sapply(ch,function(x) unlist(strsplit(x,split="")))
+	strata=unique(as.vector(splitch))
+	strata=strata[strata!="0"]
+	strata=strata[order(strata)]
+	trans=matrix(FALSE,nrow=length(strata),ncol=length(strata))
+	i=0
+	for(let1 in strata) 
+	{ 
+		i=i+1
+		j=0
+		for(let2 in strata)
+		{
+			j=j+1  
+			trans[i,j]=as.numeric(length(grep(let2,ch[grep(let1,ch)]))>0)
+		}
+	}
+	colnames(trans)=strata
+	row.names(trans)=colnames(trans)
+	trans[trans==0]=NA
+	return(as.table(trans))
+}
+transition.pairs=function(ch)
+{
+	splitch=sapply(ch,function(x) unlist(strsplit(x,split="")))
+	pairvals=function(x)
+	{
+		x=x[x!="0"]
+		if(length(x)<=1)
+			return(x)
+		else
+			return(paste(x[1:(length(x)-1)],x[2:length(x)],sep=""))
+	}
+	xx=unlist(apply(splitch,2,pairvals))
+	if(!any(nchar(xx)>1))stop("\nNo transition pairs in data\n")
+	xx=xx[nchar(xx)>1]
+	xx=table(xx)
+	let1=substr(names(xx),1,1)
+	let2=substr(names(xx),2,2)
+	xx=tapply(xx,list(let1,let2),mean)
+	as.table(xx)
+} 

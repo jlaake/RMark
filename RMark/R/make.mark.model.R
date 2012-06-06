@@ -888,7 +888,10 @@ create.pim=function(nocc,parameters,npar,mixtures)
                   if(parameters$pim.type=="time")
                       mat=rbind(mat,c(rep(0,k-1),(npar+k-1):(npar+k-1+ncol-1)))
                   else
-                      mat=rbind(mat,c(rep(0,k-1),rep(npar,ncol)))
+					  if(parameters$pim.type=="age")
+						  mat=rbind(mat,c(rep(0,k-1),npar:(npar+ncol-1)))
+					  else
+						  mat=rbind(mat,c(rep(0,k-1),rep(npar,ncol)))
                }
                ncol=ncol-1
 		   }
@@ -1633,7 +1636,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
             {
                 if(length(names(initial))==0)
 				{
-				  cat("\nLength of initial vector doesn't match design matrix\n")
+				  cat("\nLength of initial vector doesn't match design matrix: ",ncol(complete.design.matrix)," \n")
+				  print(colnames(complete.design.matrix))
                   stop()
 			    }else
 				{
@@ -1716,7 +1720,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                  {
 				    if(parx %in% c("pi","Omega"))
 				    {
-#					    nsets=length(pim[[parx]])
 					    for (kk in 1:number.of.groups)
 					    {
 					   	     logit.numbers=max.logit.number+rep(1:(nrow(full.ddl[[parx]])/(number.of.groups*(nstrata-1))),nstrata-1)
@@ -1827,7 +1830,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # Check to make sure that the only rows in the design matrix that are all zeros are
 # ones that correspond to fixed parameters.
 #
-
   if(simplify)
   {                               
       dm=model$simplify$design.matrix

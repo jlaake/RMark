@@ -98,12 +98,10 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
      if(pim.type=="all")
      {
         num.lines=num
-#        num.rows=1
      }
      else
      {
         num.lines=1
-#        num.rows=1
      }
   }
   if(setup.model(data$model,data$nocc)$robust)
@@ -217,10 +215,16 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
                 dd.names=c("group","time")
             }
             else
-            {
+				if(pim.type=="age")
+				{
+					add.design.data=cbind(rep(j,ncol),rep(cohort,ncol),ages,times)
+					dd.names=c("group","cohort","age","time")
+				}
+				else	
+				{
                 add.design.data=matrix(rep(j,ncol),nrow=1)
                 dd.names=c("group")
-            }
+                }
         }
         else
         {

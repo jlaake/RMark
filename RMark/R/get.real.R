@@ -344,7 +344,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
     {
     
         if(type%in%c("Triang","STriang")&&model$parameters[[parameter]]$pim.type!="all")
-           if(model$parameters[[parameter]]$pim.type=="time")
+		   if(model$parameters[[parameter]]$pim.type%in%c("time","age"))
               indices=model$pims[[parameter]][[j]]$pim[1,]
            else
               indices=model$pims[[parameter]][[j]]$pim[1,1]

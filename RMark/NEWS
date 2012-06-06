@@ -1,4 +1,4 @@
-RMark 2.1.2 (9 May 2012)
+RMark 2.1.2 (6 June 2012)
 --------------------------
 
 NEW FEATURES
@@ -17,9 +17,12 @@ NEW FEATURES
  
 * Default formula for CRDMS was changed to ~session from ~1 for N. 
  
-* Functions find.possible.transitions and transition.pairs were added.  These can be useful for examining transitions in MS models. See help for an example. 
+* Functions find.possible.transitions and transition.pairs were added.  These can be useful for examining transitions in MS models. See help for an example.
  
-
+* Added pim.type="age" to allowable values for pims in make.design.data. Now all pim types can be created: all, constant, time and age
+ 
+* Added functions splitCH and collapseCH which can be used to split a vector of character strings into a matrix and collapse a matrix into a vector of character strings.
+ 
 RMark 2.1.1 (3 May 2012)
 --------------------------
 

@@ -173,7 +173,7 @@ if(!brief)
              x$reals[[i]]=x$reals[[i]][!duplicated(x$reals[[i]]$par.index),,drop=FALSE]
         if(!show.fixed)x$reals[[i]]=x$reals[[i]][x$reals[[i]]$fixed!="Fixed",]
       }
-      if(parameters[[i]]$type%in%c("Triang","STriang") && parameters[[i]]$pim.type=="time"&&!se)
+      if(parameters[[i]]$type%in%c("Triang","STriang") && parameters[[i]]$pim.type%in%c("time","age")&&!se)
         for (j in 1:length(x$reals[[i]]))
         {
            row.matrix=matrix(x$reals[[i]][[j]]$pim[1,],nrow=1)

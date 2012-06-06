@@ -1,6 +1,6 @@
 Package: RMark
 Version: 2.1.2
-Date: 2012-05-10
+Date: 2012-06-6
 Title: R Code for MARK Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with contributions
     from Eldar Rakhimberdiev, Bret Collier, Jay Rotella and
@@ -90,3 +90,4 @@ Collate:
     'zzz.R'
     'RMark-package.R'
     'create.mark.mcmc.R'
+    'splitCH.r'

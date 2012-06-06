@@ -1124,10 +1124,27 @@ create.agenest.var=function(data,init.agevar,time.intervals)
          }
      }
   }
+# 
+#  Unless this is nest data, aggregate data
+#
+  if(etype!="Nest")
+  {
+	  zzd=data.frame(cbind(zz,data$data[,covariates]))
+	  pasted.data=apply(zzd, 1, paste, collapse = "")
+	  ng=ncol(data$freq)
+	  if(ng>1)
+		  freq=t(sapply(split(data$freq,pasted.data ),colSums))
+	  else
+		  freq=sapply(split(data$freq, pasted.data),sum)
+	  zzd=unique(zzd[order(pasted.data),])
+	  zzd[,2:(1+ng)]=freq
+	  zz=zzd[,1:(ng+1)]
+  }
 #
 # Output title and list of covariates
 # 11 Jan 06; Added code for multistratum - nstrata and strata labels
 #
+
   if(is.null(nocc.secondary))
      string=paste("proc title ",title,";\nproc chmatrix occasions=",nocc," groups=",number.of.groups," etype=",etype, "Threads=", threads)
   else
@@ -1146,7 +1163,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 	  string=paste(string," mixtures =",length(levels(ddl$p$time)))
   time.int=data$time.intervals
   if(!is.null(data$reverse) &&(data$reverse | data$model=="MultScalOcc")) time.int[time.int==0]=1
-  string=paste(string," ICMeans NoHist hist=",dim(zz)[1],
+  string=paste(string," ICMeans NoHist hist=",nrow(zz),
            ";\n time interval ",paste(time.int,collapse=" "),";")
   if(model.list$strata)string=paste(string,"\n strata=",paste(data$strata.labels[1:data$nstrata],collapse=" "),";",sep="")
   if(!is.null(covariates))
@@ -1161,7 +1178,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
         if(any(any.na))
            stop(paste("The following individual covariates are not allowed because they contain NA: ",paste(names(data$data[,covariates,drop=FALSE])[any.na],collapse=",")))
         else
-           zz=data.frame(cbind(zz,data$data[,covariates]))
+            zz=zzd
+#           zz=data.frame(cbind(zz,data$data[,covariates]))
      }
   }
   write(string,file=outfile)

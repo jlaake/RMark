@@ -1127,9 +1127,12 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # 
 #  Unless this is nest data, aggregate data
 #
+  if(!is.null(covariates))
+	    zzd=data.frame(cbind(zz,data$data[,covariates]))
+  else
+	    zzd=zz
   if(etype!="Nest")
   {
-	  zzd=data.frame(cbind(zz,data$data[,covariates]))
 	  pasted.data=apply(zzd, 1, paste, collapse = "")
 	  ng=ncol(data$freq)
 	  if(ng>1)

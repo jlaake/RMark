@@ -22,7 +22,7 @@ print.RMark.version <- function()
 create_markpath=function()
 {
 	markpath=Sys.which("mark.exe")
-	if(length(markpath)>0)
+	if(markpath!="")
 	{
 		markpath="mark.exe"
         return(markpath)

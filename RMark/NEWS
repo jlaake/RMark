@@ -5,6 +5,7 @@ NEW FEATURES
 
 * Added aggregation of data in make.mark.model to reduce number of capture histories that mark.exe must process in calculating likelihood. Records that have the same ch, covariates and group membership are tallied in the frequency for that group and record.
 
+
 RMark 2.1.2 (8 June 2012)
 --------------------------
 

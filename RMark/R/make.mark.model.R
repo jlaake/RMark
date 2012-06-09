@@ -1131,7 +1131,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 	    zzd=data.frame(cbind(zz,data$data[,covariates]))
   else
 	    zzd=zz
-  accumulate=TRUE
+  accumulate=FALSE
   if(etype!="Nest" & accumulate)
   {
 	  pasted.data=apply(zzd, 1, paste, collapse = "")

@@ -1,6 +1,6 @@
 Package: RMark
-Version: 2.1.3
-Date: 2012-06-7
+Version: 2.1.2
+Date: 2012-06-8
 Title: R Code for MARK Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with contributions
     from Eldar Rakhimberdiev, Bret Collier, Jay Rotella and
@@ -10,8 +10,8 @@ Description: This package provides an interface to the
     freely available at
     (http://www.phidot.org/software/mark/download/) but is
     not open source.
-SystemRequirements: notepad.exe, mark.exe and rel_32.exe
-    (see README.txt)
+SystemRequirements: notepad.exe, mark.exe (>= 6.2) (or mark32.exe and
+    mark64.exe) and rel_32.exe (see README.txt)
 Depends:
     R (>= 2.13.0),
     plotrix,

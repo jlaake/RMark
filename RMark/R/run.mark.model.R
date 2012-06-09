@@ -159,57 +159,21 @@ delete=FALSE,external=FALSE)
 # Windows operating system
   if(os=="mingw32")
   {
-	if(!exists("MarkPath"))
-	{
-		markpath=c("c:/Program Files/Mark/","c:/Program Files (x86)/Mark/")
-	    markpath=markpath[c(length(dir(markpath[1])),length(dir(markpath[2])))>0]
-	}else
-	    markpath=MarkPath  
-	markstrings=c("mark.exe","mark32.exe","mark64.exe")
-	markpath=as.vector(sapply(markpath,function(x)paste(x,markstrings,sep="/")))
-	which.exists=file.exists(markpath)
-	if(any(which.exists[1])) 
-	{
-			MarkPath=shQuote(markpath[1])
-	}else
-	{
-		if(R.Version()$arch=="x86_64")
-		{
-			if(any(which.exists[3]))
-				MarkPath=shQuote(markpath[3])
-		} else
-		{
-			if(any(which.exists[2]))
-				MarkPath=shQuote(markpath[2])
-		}          		
-		if(MarkPath=="")
-		{
-			inPath=Sys.which(markstrings)!=""
-            if(inPath[1])
-				MarkPath=shQuote(markstrings[1])
-			else
-				if(inPath[3]&R.Version()$arch=="x86_64")
-					MarkPath=shQuote(markstrings[3])
-				else
-					if(inPath[2])
-						MarkPath=shQuote(markstrings[2])
-					else
-				      stop("mark.exe, mark32.exe or mark64.exe cannot be found. Add to system path or specify MarkPath object (e.g., MarkPath='C:/Program Files (x86)/Mark'")
-		}
-	 }
+  	 markpath=create_markpath()
+	 if(is.null(markpath)) stop("mark.exe, mark32.exe or mark64.exe cannot be found. Add to system path or specify MarkPath object (e.g., MarkPath='C:/Programme/Mark'")
 	 if(RunMark)
 		 if(.Platform$GUI[1]=="RTerm")
 		 {
 			 if(invisible)
-				 system(paste(MarkPath, " i=",inputfile," o=", outfile,
+				 system(paste(markpath, " i=",inputfile," o=", outfile,
 								 " v=",vcvfile, " r=",resfile,sep = ""),ignore.stdout=TRUE,ignore.stderr=TRUE)
 			 else
-				 system(paste(MarkPath, " i=",inputfile," o=", outfile,
+				 system(paste(markpath, " i=",inputfile," o=", outfile,
 								 " v=",vcvfile, " r=",resfile,sep = ""))
 			 
 		 }else
 		 {
-			 system(paste(MarkPath, " i=",inputfile," o=", outfile,
+			 system(paste(markpath, " i=",inputfile," o=", outfile,
 								 " v=",vcvfile, " r=",resfile,sep = ""),invisible=TRUE)
 			 if(file.exists("fort.0"))unlink("fort.0")
 		 }
@@ -266,3 +230,5 @@ delete=FALSE,external=FALSE)
    } else
      return(model)
 }
+
+

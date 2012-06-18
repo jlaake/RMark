@@ -71,6 +71,7 @@ for estimates}
   uses eq 6.12.
 }
 \examples{
+\donttest{
 # Create a set of models from dipper data
 data(dipper)
 run.dipper=function()
@@ -123,6 +124,7 @@ model.average(list(estimate=estimate,weight=weight,vcv=vcv))
 mavg=model.average(dipper.results,"Phi",vcv=TRUE)
 print(mavg$estimates[Phi.indices,])
 print(mavg$vcv.real[Phi.indices,Phi.indices])
+}
 }
 \author{
   Jeff Laake

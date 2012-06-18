@@ -56,7 +56,7 @@
 #' @seealso \code{\link{export.chdata}}
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 #' example.data<-import.chdata(paste(pathtodata,"example.data.txt",sep="/"),
 #'       field.types=c("n","f","f","f"))
@@ -64,7 +64,7 @@
 #'       sep="/"),field.names="ch",header=FALSE)
 #' dipper<-import.chdata(paste(pathtodata,"dipper.txt",sep="/"),
 #'       field.names=c("ch","sex"),header=FALSE)
-#' 
+#' }
 import.chdata <-
 function(filename, header=TRUE, field.names=NULL, field.types=NULL, use.comments=TRUE)
 {

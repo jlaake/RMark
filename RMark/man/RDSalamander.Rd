@@ -16,24 +16,26 @@ site} \item{freq}{frequency of sites (always 1)} }}
   design.
 }
 \examples{
+\donttest{
 fit.RDOccupancy=function()
 {
    data(RDSalamander)
    occ.p.time.eg=mark(RDSalamander,model="RDOccupEG",
       time.intervals=c(rep(0,47),1,rep(0,30)),
-      model.parameters=list(p=list(formula=~session)))
+      model.parameters=list(p=list(formula=~session)),threads=2)
    occ.p.time.pg=mark(RDSalamander,model="RDOccupPG",
       time.intervals=c(rep(0,47),1,rep(0,30)),
       model.parameters=list(Psi=list(formula=~time),
-      p=list(formula=~session)))
+      p=list(formula=~session)),threads=2)
    occ.p.time.pe=mark(RDSalamander,model="RDOccupPE",
       time.intervals=c(rep(0,47),1,rep(0,30)),
       model.parameters=list(Psi=list(formula=~time),
-      p=list(formula=~session)))
+      p=list(formula=~session)),threads=2)
 return(collect.models())
 }
 RDOcc=fit.RDOccupancy()
 print(RDOcc)
+}
 }
 \keyword{datasets}
 

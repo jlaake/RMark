@@ -84,7 +84,8 @@
 #' @seealso \code{\link{compute.real}},\code{\link{model.average}}
 #' @keywords utility
 #' @examples
-#' 
+#' pathtodata=paste(path.package("RMark"),"extdata",sep="/")
+#' \donttest{
 #' #
 #' # indcov1.R
 #' #
@@ -96,7 +97,6 @@
 #' # It is defined with 1 group but 2 individual covariates of mass and 
 #' # squared.mass
 #' #
-#' pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 #' indcov1=convert.inp(paste(pathtodata,"indcov1",sep="/"),
 #'                covariates=c("mass","squared.mass"))
 #' #
@@ -154,7 +154,7 @@
 #'    type="l",lwd=2,xlab="Mass(kg)",ylab="Survival",ylim=c(0,.65))
 #' lines(Phibymass$estimates$mass, Phibymass$estimates$lcl,lty=2)
 #' lines(Phibymass$estimates$mass, Phibymass$estimates$ucl,lty=2)
-#' 
+#'
 #' # indcov2.R
 #' #
 #' # CJS analysis of the individual covariate data from 12.3 of 
@@ -214,7 +214,7 @@
 #'      list(formula=~time*mass + squared.mass+ time:squared.mass)
 #'   p.dot=list(formula=~1)
 #'   cml=create.model.list("CJS")
-#'   results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE)
+#'   results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE,threads=2)
 #'   return(results)
 #' }
 #' #
@@ -252,7 +252,7 @@
 #'    lines(mass, x$lcl[x$par.index==i],lty=2)
 #'    lines(mass, x$ucl[x$par.index==i],lty=2)
 #' }
-#' 
+#' }
 #' 
 covariate.predictions <- function(model,data=NULL,indices=NULL,drop=TRUE)
 {

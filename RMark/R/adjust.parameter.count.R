@@ -35,7 +35,7 @@
 #' @seealso \code{\link{run.mark.model}},\code{\link{model.table}}
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' data(dipper)
 #' ptime=list(formula=~time)
 #' Phitime=list(formula=~time)
@@ -43,7 +43,7 @@
 #' dipper.phitime.ptime=adjust.parameter.count(dipper.phitime.ptime,11)
 #' dipper.phitime.ptime=mark(dipper,model.parameters=list(Phi=Phitime, p=ptime),
 #'                            adjust=FALSE)
-#' 
+#' }
 adjust.parameter.count <-
 function(model,npar)
 {

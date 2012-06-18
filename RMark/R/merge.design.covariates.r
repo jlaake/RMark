@@ -51,6 +51,7 @@
 #' summary(ddl$p)
 #' ddl$p=merge_design.covariates(ddl$p,df)
 #' summary(ddl$p)
+#' \donttest{
 #' #
 #' # Assign group-specific values
 #' #
@@ -59,7 +60,7 @@
 #' df=data.frame(group=c(rep("Female",6),rep("Male",6)),time=rep(c(2:7),2),
 #'   effort=c(10,5,2,8,1,2,3,20,10,4,16,2))
 #' merge_design.covariates(dipper.ddl$p,df,bygroup=TRUE)
-#' 
+#' }
 merge_design.covariates<-function(ddl,df,bygroup=FALSE,bytime=TRUE)
 #                   - enables design data fields to be added to the design.data(ddl)
 #                    that match time fields in design data (eg effort), by group (eg site covariates)

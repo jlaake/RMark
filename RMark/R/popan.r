@@ -65,7 +65,7 @@
 #' New York.
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' # Example
 #' data(dipper)
 #' dipper.processed=process.data(dipper,model="POPAN",groups="sex")
@@ -94,7 +94,7 @@
 #' }
 #' dipper.popan.results=run.dipper.popan()
 #' popan.derived(dipper.processed,dipper.popan.results)
-#' 
+#' }
 popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=FALSE)
 {
 ################################################################################

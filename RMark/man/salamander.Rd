@@ -15,6 +15,7 @@ sites (always 1)} }}
   is explained on page 99 of MacKenzie et al. (2006).
 }
 \examples{
+\donttest{
 do.salamander=function()
 {
    data(salamander)
@@ -27,6 +28,7 @@ do.salamander=function()
 }
 salamander.results=do.salamander()
 print(salamander.results)
+}
 }
 \references{
   MacKenzie, D.I., Nichols, J. D., Royle, J.A., Pollock,

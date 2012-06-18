@@ -72,6 +72,7 @@ each bird} \item{sex}{the sex of the bird: a factor with levels
   describe groups and a numeric sex covariate.
 }
 \examples{
+\donttest{
 data(dipper)
 dipper.model=mark(dipper)
 run.dipper=function()
@@ -333,6 +334,7 @@ dipper.popan.results=run.dipper.popan()
 # Now these can be used with any call to mark
  mymodel=mark(dipper.proc,dipper.ddl,input.links=input.links)
  summary(mymodel)
+}
 }
 \keyword{datasets}
 

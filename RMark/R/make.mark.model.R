@@ -355,6 +355,7 @@
 #' @param mlogit0 if TRUE, any real parameter that is fixed to 0 and has an mlogit link will 
 #' have its link changed to logit so it can be simplified
 #' @param threads number of cpus to use with mark.exe if positive or number of cpus to remain idle if negative
+#' @param hessian if TRUE specifies to MARK to use hessian rather than second partial matrix
 #' @return model: a MARK object except for the elements \code{output} and
 #' \code{results}. See \code{\link{mark}} for a detailed description of the
 #' list contents.
@@ -365,7 +366,7 @@
 #' @keywords model
 #' @examples
 #' 
-#' 
+#' \donttest{
 #' data(dipper)
 #' #
 #' # Process data
@@ -402,9 +403,9 @@
 #'   parameters=list(Phi=Phidot,p=ptime))
 #' dipper.phiFlood.pdot=make.mark.model(dipper.processed,dipper.ddl,
 #'   parameters=list(Phi=PhiFlood, p=pdot))
-#' 
+#' }
 make.mark.model <-
-function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1)
+function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE)
 {
 
 #  *******************  INTERNAL FUNCTIONS    *********************************
@@ -1256,8 +1257,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
 # Next output proc Estimate 
 #
-  string=paste(paste("proc estimate link=",spell(link),sep=""),"NOLOOP varest=2ndPart ",options," ;\nmodel={",model.name,"};")
-  write(string,file=outfile,append=TRUE)
+  if(!hessian)
+     string=paste(paste("proc estimate link=",spell(link),sep=""),"NOLOOP varest=2ndPart ",options," ;\nmodel={",model.name,"};")
+  else
+     string=paste(paste("proc estimate link=",spell(link),sep=""),"NOLOOP varest=Hessian ",options," ;\nmodel={",model.name,"};")
+ write(string,file=outfile,append=TRUE)
 #
 # Next compute PIMS for each parameter in the model - these are the all different PIMS
 # 11 Jan 06 code added for multistrata models

@@ -71,7 +71,7 @@
 #' @seealso \code{\link{process.data}}
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' # MARK example input file
 #' pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 #' dipper=convert.inp(paste(pathtodata,"dipper",sep="/"),
@@ -116,7 +116,7 @@
 #'              group.df=data.frame(colony=c("Poor","Good")))
 #' effect_size3=convert.inp(paste(pathtodata,"effect_size3",sep="/"),
 #'              group.df=data.frame(colony=c("1","2","3")))
-#' 
+#' }
 convert.inp=function(inp.filename,group.df=NULL,covariates=NULL,use.comments=FALSE)
 {
 #

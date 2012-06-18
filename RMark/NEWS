@@ -1,9 +1,11 @@
-RMark 2.1.3 (9 June 2012)
+RMark 2.1.3 (18 June 2012)
 --------------------------
 		
 NEW FEATURES
 
 * Added aggregation of data in make.mark.model to reduce number of capture histories that mark.exe must process in calculating likelihood. Records that have the same ch, covariates and group membership are tallied in the frequency for that group and record.
+
+* Added argument hessian to functions mark and make.mark.model to specify use of hessian rather than second partial matrix for v-c matrix by mark.exe.
 
 
 RMark 2.1.2 (8 June 2012)

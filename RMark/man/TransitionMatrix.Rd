@@ -55,6 +55,7 @@
   pairs so AB0C is A to B and B to C but not A to C.
 }
 \examples{
+\donttest{
 data(mstrata)
 # Show possible transitions in first 15 ch values
 find.possible.transitions(mstrata$ch[1:15])
@@ -130,6 +131,7 @@ Psivalues=Psilist$estimates
 TransitionMatrix(Psivalues[Psivalues$time==1,])
 # call it again but specify the vc matrix to get se and conf interval
 TransitionMatrix(Psivalues[Psivalues$time==1,],vcv.real=Psilist$vcv.real)
+}
 }
 \author{
   Jeff Laake

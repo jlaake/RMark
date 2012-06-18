@@ -118,6 +118,7 @@
   output file containing the string.
 }
 \examples{
+\donttest{
 # Example of computing N-hat for occasions 2 to 7 for the p=~time model
 data(dipper)
 md=mark(dipper,model.parameters=list(p=list(formula=~time),
@@ -137,6 +138,7 @@ p.list=covariate.predictions(md,data=data.frame(index=p.indices))
 # separate estimate for each occasion
 pop.est(ns,p.list$estimates$estimate,
   design=diag(1,ncol=6,nrow=6),p.list$vcv)
+}
 }
 \author{
   Jeff Laake

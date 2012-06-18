@@ -33,6 +33,7 @@ number for visit 5; . used when site not visited} }}
 #0000.	1	1	3	2	3	.
 #0000.	0	1	3	2	3	.
 #
+\donttest{
 # retrieve weta data
 data(weta)
 # Create function to fit the 18 models in the book
@@ -88,6 +89,8 @@ sqrt( t(prop.browse) \%*\% vcv.psi \%*\% prop.browse )
 # show missing part of variance 2 times cross-product of prop.browse * covariance
 2*prod(prop.browse)*vcv.psi[1,2]
 sqrt(sum(prop.browse^2*diag(vcv.psi))+2*prod(prop.browse)*vcv.psi[1,2])
+
+}
 }
 \references{
   MacKenzie, D.I., Nichols, J. D., Royle, J.A., Pollock,

@@ -44,6 +44,7 @@ was checked} \item{Fate}{the fate of the nest; 0=hatch and 1 depredated}
   same thing.
 }
 \examples{
+\donttest{
 # EXAMPLE CODE FOR CONVERSION OF .INP TO NECESSARY DATA STRUCTURE
 # read in killdeer.inp file
 #killdeer=scan("killdeer.inp",what="character",sep="\\n")
@@ -64,15 +65,16 @@ run.killdeer=function()
 {
    Sdot=mark(killdeer,model="Nest",nocc=40)
    STime=mark(killdeer,model="Nest",
-       model.parameters=list(S=list(formula=~I(Time+1))),nocc=40)
+       model.parameters=list(S=list(formula=~I(Time+1))),nocc=40,threads=2)
    STimesq=mark(killdeer,model="Nest",
-       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40)
+       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40,threads=2)
    STime3=mark(killdeer,model="Nest",
-      model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)                        ^3))),nocc=40)
+      model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)^3))),nocc=40,threads=2)
    return(collect.models())
 }
 # run defined models
 killdeer.results=run.killdeer()
+}
 }
 \keyword{datasets}
 

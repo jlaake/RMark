@@ -15,7 +15,7 @@ logitNor.proc=process.data(LogitNormalMR,model="LogitNormalMR",
 				    "Marked Unidentified"=c(0,0,0,0,1,1,1,0,0,3,0,1)),
 			         time.intervals=c(0,0,0,1,0,0,0,1,0,0,0))
 logitNor.ddl=make.design.data(logitNor.proc)
-mod=mark(logitNor.proc,logitNor.ddl)
+mod=mark(logitNor.proc,logitNor.ddl,threads=2)
 summary(mod)
 }
 \keyword{datasets}

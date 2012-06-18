@@ -69,6 +69,7 @@ vegetation thickness} \item{PpnGrass}{proportion grass in vicinity of nest}
 # developed methods that can be implemented in MARK and SAS.  #
 #   Animal Biodiversity and Conservation 27:187-204.          #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+\donttest{
 require(RMark)
 
 # Retrieve data
@@ -237,6 +238,7 @@ with(data=AgePpn.survival,points(PpnGrass,uclDSR,'l',lty=3))
 # The next line deletes orphaned output files from MARK.
 # ?cleanup will give a more complete description of this function.
 cleanup(ask=FALSE)
+}
 }
 \author{
   Jay Rotella

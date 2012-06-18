@@ -51,7 +51,7 @@
 #' New York.
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' # Create a set of models from dipper data
 #' data(dipper)
 #' run.dipper=function()
@@ -104,7 +104,7 @@
 #' mavg=model.average(dipper.results,"Phi",vcv=TRUE)
 #' print(mavg$estimates[Phi.indices,])
 #' print(mavg$vcv.real[Phi.indices,Phi.indices])
-#' 
+#' }
 #' 
 model.average.list=function(x,revised=TRUE,...)
 {

@@ -57,6 +57,7 @@
   exists.
 }
 \examples{
+\donttest{
 data(mstrata)
 run.mstrata=function()
 {
@@ -134,7 +135,8 @@ model.1=mark(data = robust, model = "Robust",
 				GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
 robust.proc=process.data(data = robust, model = "Robust",
 		time.intervals=time.intervals)
-export.MARK(robust.proc,"robust",	model.1)
+export.MARK(robust.proc,"robust",	model.1,replace=TRUE)
+}
 }
 \author{
   Jeff Laake

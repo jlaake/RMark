@@ -48,6 +48,7 @@
 #' # model sets for adjusting chat and showing model selection table. 
 #' # It is not a realistic analysis.
 #' #
+#' \donttest{
 #' data(dipper)
 #' mod1=mark(dipper)
 #' mod2=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
@@ -62,7 +63,7 @@
 #' # adjust chat for all models to 2
 #' POPAN.results=adjust.chat(2,POPAN.results) 
 #' POPAN.results
-#' 
+#' }
 adjust.value <- function(field="n",value,model.list)
 # ----------------------------------------------------------------------------------------
 #

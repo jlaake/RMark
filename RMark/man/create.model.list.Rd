@@ -58,6 +58,7 @@
   will be used for that parameter.
 }
 \examples{
+\donttest{
 #
 # Compare this to the run.dipper shown under ?dipper
 # It is only necessary to create each parameter specification and
@@ -111,6 +112,7 @@ run.dipper=function()
      return(dipper.results)
 }
 dipper.results=run.dipper()
+}
 }
 \author{
   Jeff Laake

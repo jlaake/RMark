@@ -59,7 +59,7 @@
 #' edition. Springer, New York.
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' data(dipper)
 #' run.dipper=function()
 #' {
@@ -146,7 +146,7 @@
 #' # a single model with find.covariates/fill.covariates.
 #' # get model averaged estimates of first Phi(1) and first p(43) and v-c matrix
 #' model.average(dipper.results,vcv=TRUE,indices=c(1,43))  
-#' 
+#' }
 #' 
 model.average.marklist<- function(x,parameter=NULL,data=NULL,vcv=FALSE,drop=TRUE,indices=NULL,revised=TRUE,...)
 {

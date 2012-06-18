@@ -15,6 +15,7 @@ sites with that history} }}
   This is a data set from Nichols et al (2007).
 }
 \examples{
+\donttest{
 # To create the data file use:
 # NicholsMSOccupancy=convert.inp("NicholsMSOccupancy.inp")
 #
@@ -64,6 +65,7 @@ print(MSOccupancy.results)
 #
 # p varies by time logit(p1t)=logit(p2t)+constant
 p1.plust.p2.by.time=list(formula=~time+p2,share=TRUE)
+}
 }
 \references{
   Nichols, J. D., J. E. Hines, D. I. MacKenzie, M. E.

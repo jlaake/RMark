@@ -20,12 +20,12 @@
 #' @seealso \code{\link{make.design.data}}
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' data(dipper)
 #' results=mark(dipper)
 #' PIMS(results,"Phi")
 #' PIMS(results,"Phi",simplified=FALSE)
-#' 
+#' } 
 PIMS=function(model,parameter,simplified=TRUE,use.labels=TRUE)
 {
 #

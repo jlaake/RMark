@@ -7,7 +7,7 @@
     call = NULL, default.fixed = TRUE, options = NULL,
     profile.int = FALSE, chat = NULL, simplify = TRUE,
     input.links = NULL, parm.specific = FALSE,
-    mlogit0 = FALSE, threads = -1)
+    mlogit0 = FALSE, threads = -1, hessian = FALSE)
 }
 \arguments{
   \item{data}{Data list resulting from function
@@ -59,6 +59,9 @@
 
   \item{threads}{number of cpus to use with mark.exe if
   positive or number of cpus to remain idle if negative}
+
+  \item{hessian}{if TRUE specifies to MARK to use hessian
+  rather than second partial matrix}
 }
 \value{
   model: a MARK object except for the elements
@@ -501,6 +504,7 @@
   can be set on the estimate proc.
 }
 \examples{
+\donttest{
 data(dipper)
 #
 # Process data
@@ -537,6 +541,7 @@ dipper.phidot.ptime=make.mark.model(dipper.processed,dipper.ddl,
   parameters=list(Phi=Phidot,p=ptime))
 dipper.phiFlood.pdot=make.mark.model(dipper.processed,dipper.ddl,
   parameters=list(Phi=PhiFlood, p=pdot))
+}
 }
 \author{
   Jeff Laake

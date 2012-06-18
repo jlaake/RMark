@@ -86,6 +86,7 @@
   files rather than re-running the models.
 }
 \examples{
+\donttest{
 data(dipper)
 for(sex in unique(dipper$sex))
 {
@@ -103,6 +104,7 @@ for(sex in unique(dipper$sex))
 rm(Male.results,Female.results,x.results)
 cleanup(ask=FALSE,prefix="Male")
 cleanup(ask=FALSE,prefix="Female")
+}
 }
 \author{
   Jeff Laake

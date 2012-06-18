@@ -9,6 +9,7 @@
   LogitNormal Mark-Resight model
 }
 \examples{
+\donttest{
 data(IELogitNormalMR)
 IElogitNor.proc=process.data(IELogitNormalMR,model="IELogitNormalMR",
 		counts=list("Marked Superpopulation"=c(28, 29, 30, 30, 30, 33, 33, 33, 33, 34, 34, 34),
@@ -32,6 +33,7 @@ mod2=mark(IElogitNor.proc,IElogitNor.ddl,
 							  Nbar=list(formula=~session)),
 							  initial=mod1)
 summary(mod2)
+}
 }
 \keyword{datasets}
 

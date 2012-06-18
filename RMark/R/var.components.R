@@ -29,14 +29,14 @@
 #' effects methodology applicable to bird ringing data.  Journal of Applied
 #' Statistics 29: 245-264.
 #' @examples
-#' 
+#' \donttest{
 #' data(dipper)
 #' md=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
 #' zz=get.real(md,"Phi",vcv=TRUE)
 #' z=zz$estimates$estimate[1:6]
 #' vcv=zz$vcv.real
 #' var.components(z,design=matrix(rep(1,length(z)),ncol=1),vcv) 
-#' 
+#' }
 var.components=function(theta,design,vcv,LAPACK=TRUE)
 {
 #  Arguments:

@@ -39,7 +39,7 @@
 #' @seealso \code{\link{get.real}}
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' data(mstrata)
 #' # Show possible transitions in first 15 ch values
 #' find.possible.transitions(mstrata$ch[1:15])
@@ -115,7 +115,7 @@
 #' TransitionMatrix(Psivalues[Psivalues$time==1,])
 #' # call it again but specify the vc matrix to get se and conf interval
 #' TransitionMatrix(Psivalues[Psivalues$time==1,],vcv.real=Psilist$vcv.real)
-#' 
+#' }
 TransitionMatrix=function(x,vcv.real=NULL)
 {
 #

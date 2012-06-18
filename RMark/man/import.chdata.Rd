@@ -82,6 +82,7 @@
   they are stripped out.
 }
 \examples{
+\donttest{
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 example.data<-import.chdata(paste(pathtodata,"example.data.txt",sep="/"),
       field.types=c("n","f","f","f"))
@@ -89,6 +90,7 @@ edwards.eberhardt<-import.chdata(paste(pathtodata,"EdwardsandEberhardt.txt",
       sep="/"),field.names="ch",header=FALSE)
 dipper<-import.chdata(paste(pathtodata,"dipper.txt",sep="/"),
       field.names=c("ch","sex"),header=FALSE)
+}
 }
 \author{
   Jeff Laake

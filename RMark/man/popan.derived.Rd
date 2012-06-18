@@ -92,6 +92,7 @@
   otherwise, it returns the values for the specified model.
 }
 \examples{
+\donttest{
 # Example
 data(dipper)
 dipper.processed=process.data(dipper,model="POPAN",groups="sex")
@@ -120,6 +121,7 @@ return(collect.models() )
 }
 dipper.popan.results=run.dipper.popan()
 popan.derived(dipper.processed,dipper.popan.results)
+}
 }
 \author{
   Jeff Laake

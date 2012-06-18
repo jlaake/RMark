@@ -86,7 +86,7 @@
 #' FERGUSON, A. ROSING-ASVID, R. SCHWEINSBURG and F.  MESSIER. 2005. Demography
 #' and viability of a hunted population of polar bears. Arctic 58: 203-214.
 #' @examples
-#' 
+#' \donttest{
 #' # Example of computing N-hat for occasions 2 to 7 for the p=~time model
 #' data(dipper)
 #' md=mark(dipper,model.parameters=list(p=list(formula=~time),
@@ -106,7 +106,7 @@
 #' # separate estimate for each occasion
 #' pop.est(ns,p.list$estimates$estimate,
 #'   design=diag(1,ncol=6,nrow=6),p.list$vcv)
-#' 
+#' }
 extract.indices=function(model,parameter=NULL,df=NULL)
 {
 #  Extracts the parameter indices from a model for a particular parameter

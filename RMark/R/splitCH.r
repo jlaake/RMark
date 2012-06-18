@@ -18,6 +18,7 @@
 #' @export splitCH collapseCH
 #' @author Devin Johnson; Jeff Laake
 #' @examples
+#' \donttest{
 #' data(dipper)
 #' # following returns a matrix
 #' chmat=splitCH(dipper$ch)
@@ -28,6 +29,7 @@
 #' # following finds fields in newdipper and creates ch
 #' newdipper$ch=NULL
 #' newdipper=collapseCH(data=newdipper)
+#' }
 
 splitCH <- function(x="ch", data=NULL, prefix="Time"){
 #   Set value of ch depending on what arguments are set

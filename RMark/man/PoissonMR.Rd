@@ -8,6 +8,7 @@
   Data and example illustrating Poisson Mark-Resight model.
 }
 \examples{
+\donttest{
 data(PoissonMR)
 pois.proc=process.data(PoissonMR,model="PoissonMR",
 		counts=list("Unmarked Seen"=c(1380, 1120, 1041, 948),
@@ -20,8 +21,9 @@ mod=mark(pois.proc,pois.ddl,
 							  alpha=list(formula=~-1+time,link="log"),
 							  U=list(formula=~-1+time,link="log"),
 							  sigma=list(formula=~-1+time,link="log")),
-		                      initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1))
+		                      initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2)
 summary(mod)
+}
 }
 \keyword{datasets}
 

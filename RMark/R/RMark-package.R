@@ -69,7 +69,7 @@
 #' #
 #' model.list=create.model.list("Known")
 #' bduck.results=mark.wrapper(model.list,data=bduck.processed,ddl=bduck.ddl,
-#'                invisible=FALSE)
+#'                invisible=FALSE,threads=2)
 #' 
 #' #
 #' # Return model table and list of models
@@ -102,7 +102,7 @@ NULL
 #' Wildlife Division of the Alberta Provincial Government
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' #Script to simulate the MSCRD 
 #' #example of 15.7.1 from the MARK
 #' #book
@@ -154,21 +154,21 @@ NULL
 #' model.1=mark(crdms.data,ddl=crdms.ddl,
 #' 	model.parameters=list(S=S.dot,
 #' 		p=p.session,
-#' 		Psi=Psi.markov))
+#' 		Psi=Psi.markov),threads=2)
 #' 
 #' #Model 2 - Random movement
 #' Psi.rand=list(formula=~time)
 #' model.2=mark(crdms.data,ddl=crdms.ddl,
 #' 	model.parameters=list(S=S.dot,
 #' 		p=p.session,
-#' 		Psi=Psi.rand))
+#' 		Psi=Psi.rand),threads=2)
 #' 
 #' #Model 3 - No movement
 #' Psi.fix=list(formula=~1,fixed=0)
 #' model.3=mark(crdms.data,ddl=crdms.ddl,
 #' 	model.parameters=list(S=S.dot,
 #' 		p=p.session,
-#' 		Psi=Psi.fix))
+#' 		Psi=Psi.fix),threads=2)
 #' 		
 #' #collect and store models
 #' crdms.res<-collect.models()
@@ -177,6 +177,7 @@ NULL
 #' 
 #' #final cleanup
 #' cleanup(ask=FALSE)
+#' }
 NULL
 
 
@@ -235,7 +236,7 @@ NULL
 #' animals: case studies and recent advances. Ecol. Monogr. 62:67-118.
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' data(dipper)
 #' dipper.model=mark(dipper)
 #' run.dipper=function()
@@ -497,7 +498,7 @@ NULL
 #'# Now these can be used with any call to mark
 #'  mymodel=mark(dipper.proc,dipper.ddl,input.links=input.links)
 #'  summary(mymodel)
-#'
+#' }
 NULL
 
 
@@ -528,9 +529,9 @@ NULL
 #' # Estimates from following agree with estimates on website but the
 #' # log-likelihood values do not agree.  Maybe a difference in whether the
 #' # constant binomial coefficients are included.
-#'   Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE)
+#'   Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE,threads=2)
 #' # THe following model was not in exercise 7.
-#'   Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE)
+#'   Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE,threads=2)
 #'   return(collect.models())
 #' }
 #' exercise.7=do.exercise.7()
@@ -563,24 +564,24 @@ NULL
 #' }
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' # Donovan.8 can be created with
 #' # Donovan.8=convert.inp("Donovan.8.inp")
 #' do.exercise.8=function()
 #' {
 #'   data(Donovan.8)
 #' # Results agree with the values on the website.
-#'   Donovan.8.poisson=mark(Donovan.8,model="OccupRPoisson",invisible=FALSE)
+#'   Donovan.8.poisson=mark(Donovan.8,model="OccupRPoisson",invisible=FALSE,threads=2)
 #' # The following model was not in exercise 8. The NegBin model does 
 #' # better if it is initialized with the r and lambda from the poisson.
 #'   Donovan.8.negbin=mark(Donovan.8,model="OccupRNegBin",
-#'     initial=Donovan.8.poisson,invisible=FALSE)
+#'     initial=Donovan.8.poisson,invisible=FALSE,threads=2)
 #'   return(collect.models())
 #' }
 #' exercise.8=do.exercise.8()
 #' # Remove # to see output
 #' # print(exercise.8)
-#' 
+#' }
 #' 
 NULL
 
@@ -611,7 +612,7 @@ NULL
 #' abundance from live trapping data. J. Wildl. Manage. 31:87-96.
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' #
 #' # get data
 #' #
@@ -682,7 +683,7 @@ NULL
 #' # fit models in mark by calling function created above
 #' #
 #' ee.results=run.edwards.eberhardt()
-#' 
+#' }
 NULL
 
 
@@ -709,7 +710,7 @@ NULL
 #' \code{1} \code{2} \code{3} \code{4}} }
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' data(example.data)
 #' run.example=function()
 #' {
@@ -739,7 +740,7 @@ NULL
 #' return(collect.models())
 #' }
 #' example.results=run.example()
-#' 
+#' }
 NULL
 
 
@@ -758,7 +759,7 @@ NULL
 #' \describe{ \item{ch}{a character vector} }
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' data(IELogitNormalMR)
 #' IElogitNor.proc=process.data(IELogitNormalMR,model="IELogitNormalMR",
 #' 		counts=list("Marked Superpopulation"=c(28, 29, 30, 30, 30, 33, 33, 33, 33, 34, 34, 34),
@@ -782,7 +783,7 @@ NULL
 #' 							  Nbar=list(formula=~session)),
 #' 							  initial=mod1)
 #' summary(mod2)			  
-#' 
+#' }
 NULL
 
 
@@ -826,7 +827,7 @@ NULL
 #' \item{Freq}{the frequency of nests with this data; usually 1} }
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' # EXAMPLE CODE FOR CONVERSION OF .INP TO NECESSARY DATA STRUCTURE
 #' # read in killdeer.inp file
 #' #killdeer=scan("killdeer.inp",what="character",sep="\n")
@@ -847,16 +848,16 @@ NULL
 #' {
 #'    Sdot=mark(killdeer,model="Nest",nocc=40)
 #'    STime=mark(killdeer,model="Nest",
-#'        model.parameters=list(S=list(formula=~I(Time+1))),nocc=40)
+#'        model.parameters=list(S=list(formula=~I(Time+1))),nocc=40,threads=2)
 #'    STimesq=mark(killdeer,model="Nest",
-#'        model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40)
+#'        model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40,threads=2)
 #'    STime3=mark(killdeer,model="Nest",
-#'       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)                        ^3))),nocc=40)
+#'       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)^3))),nocc=40,threads=2)
 #'    return(collect.models())
 #' }
 #' # run defined models
 #' killdeer.results=run.killdeer()
-#' 
+#' }
 NULL
 
 
@@ -881,7 +882,7 @@ NULL
 #' 				    "Marked Unidentified"=c(0,0,0,0,1,1,1,0,0,3,0,1)),
 #' 			         time.intervals=c(0,0,0,1,0,0,0,1,0,0,0))
 #' logitNor.ddl=make.design.data(logitNor.proc)
-#' mod=mark(logitNor.proc,logitNor.ddl)
+#' mod=mark(logitNor.proc,logitNor.ddl,threads=2)
 #' summary(mod)
 #' 
 NULL
@@ -935,6 +936,7 @@ NULL
 #' 27:187-204.
 #' @keywords datasets
 #' @examples
+#' 
 #'# Last updated June 2, 2011
 #'# Read in data, which are in a simple text file that
 #'# looks like a MARK input file but (1) with no comments or semicolons and
@@ -955,7 +957,8 @@ NULL
 #'# developed methods that can be implemented in MARK and SAS.  #
 #'#   Animal Biodiversity and Conservation 27:187-204.          #
 #'#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#'require(RMark)
+#' \donttest{
+#' require(RMark)
 #'
 #'# Retrieve data
 #'data(mallard)
@@ -1123,7 +1126,7 @@ NULL
 #'# The next line deletes orphaned output files from MARK.  
 #'# ?cleanup will give a more complete description of this function.
 #'cleanup(ask=FALSE)
-#' 
+#' }
 NULL
 
 
@@ -1149,7 +1152,7 @@ NULL
 #' history} }
 #' @keywords datasets
 #' @examples
-#' 
+#'  \donttest{
 #' data(mstrata)
 #' run.mstrata=function()
 #' {
@@ -1199,7 +1202,7 @@ NULL
 #' #
 #' # Run the list of models
 #' #
-#' mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl)
+#' mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl,threads=2)
 #' #
 #' # Return model table and list of models
 #' #
@@ -1207,7 +1210,7 @@ NULL
 #' }
 #' mstrata.results=run.mstrata()
 #' mstrata.results
-#' 
+#'
 #' # Example of reverse Multistratum model
 #' data(mstrata)
 #' mod=mark(mstrata,model="Multistrata")
@@ -1218,7 +1221,7 @@ NULL
 #' Psivalues.rev=Psilist.rev$estimates
 #' TransitionMatrix(Psivalues[Psivalues$time==1,])
 #' TransitionMatrix(Psivalues.rev[Psivalues.rev$occ==1,])
-#' 
+#' }
 NULL
 
 
@@ -1243,7 +1246,7 @@ NULL
 #' states and state uncertainty.  Ecology 88:1395-1400.
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' # To create the data file use:
 #' # NicholsMSOccupancy=convert.inp("NicholsMSOccupancy.inp")
 #' #
@@ -1293,7 +1296,7 @@ NULL
 #' #
 #' # p varies by time logit(p1t)=logit(p2t)+constant
 #' p1.plust.p2.by.time=list(formula=~time+p2,share=TRUE) 
-#' 
+#' }
 NULL
 
 
@@ -1313,7 +1316,7 @@ NULL
 #' with levels \code{group1} \code{group2}} }
 #' @keywords datasets
 #' @examples
-#' 
+#'  \donttest{
 #' data(Poisson_twoMR)
 #' pois.proc=process.data(Poisson_twoMR,model="PoissonMR",groups="pg",
 #' 		counts=list("Unmarked Seen"=matrix(c(1237,588),nrow=2,ncol=1),
@@ -1324,9 +1327,9 @@ NULL
 #' 		model.parameters=list(alpha=list(formula=~1),
 #' 				              U=list(formula=~-1+group),
 #' 				              sigma=list(formula=~1,fixed=0)),
-#' 	 	                      initial=c(0.9741405 ,0.0000000 ,6., 5.))
+#' 	 	                      initial=c(0.9741405 ,0.0000000 ,6., 5.),threads=2)
 #' summary(mod)	 	                 
-#' 
+#' }
 NULL
 
 
@@ -1344,7 +1347,7 @@ NULL
 #' \describe{ \item{ch}{a character vector} }
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' data(PoissonMR)
 #' pois.proc=process.data(PoissonMR,model="PoissonMR",
 #' 		counts=list("Unmarked Seen"=c(1380, 1120, 1041, 948),
@@ -1357,9 +1360,9 @@ NULL
 #' 							  alpha=list(formula=~-1+time,link="log"),
 #' 							  U=list(formula=~-1+time,link="log"),
 #' 							  sigma=list(formula=~-1+time,link="log")),
-#' 		                      initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1))
+#' 		                      initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2)
 #' summary(mod)
-#' 
+#' }
 NULL
 
 
@@ -1495,7 +1498,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #'
-#'
+#' \donttest{
 #' data(RDOccupancy)
 #' #
 #' # Example of epsilon=1-gamma
@@ -1679,7 +1682,7 @@ NULL
 #'
 #' # For porting graphics directly to file, see pdf() or png(),
 #'
-#' 
+#' } 
 NULL
 
 
@@ -1701,26 +1704,26 @@ NULL
 #' site} \item{freq}{frequency of sites (always 1)} }
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' fit.RDOccupancy=function()
 #' {
 #'    data(RDSalamander)
 #'    occ.p.time.eg=mark(RDSalamander,model="RDOccupEG",
 #'       time.intervals=c(rep(0,47),1,rep(0,30)),
-#'       model.parameters=list(p=list(formula=~session)))
+#'       model.parameters=list(p=list(formula=~session)),threads=2)
 #'    occ.p.time.pg=mark(RDSalamander,model="RDOccupPG",
 #'       time.intervals=c(rep(0,47),1,rep(0,30)),
 #'       model.parameters=list(Psi=list(formula=~time),
-#'       p=list(formula=~session)))
+#'       p=list(formula=~session)),threads=2)
 #'    occ.p.time.pe=mark(RDSalamander,model="RDOccupPE",
 #'       time.intervals=c(rep(0,47),1,rep(0,30)),
 #'       model.parameters=list(Psi=list(formula=~time),
-#'       p=list(formula=~session)))
+#'       p=list(formula=~session)),threads=2)
 #' return(collect.models())
 #' }
 #' RDOcc=fit.RDOccupancy()
 #' print(RDOcc)
-#' 
+#' }
 #' 
 NULL
 
@@ -1756,7 +1759,7 @@ NULL
 #' \item{freq}{the number of critters with that capture history} }
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' data(robust)
 #' run.robust=function()
 #' {
@@ -1774,7 +1777,7 @@ NULL
 #' model.1=mark(data = robust, model = "Robust", 
 #'             time.intervals=time.intervals,
 #'             model.parameters=list(S=S.time,
-#'             GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
+#'             GammaDoublePrime=GammaDoublePrime.random,p=p.time.session),threads=2)
 #' #
 #' # Random emigration, p varies by session, uses Mh but pi fixed to 1, 
 #' # S by time.This model is in the example Robust with MARK but it is
@@ -1788,7 +1791,7 @@ NULL
 #'             time.intervals=time.intervals,
 #'             model.parameters=list(S=S.time,
 #'             GammaDoublePrime=GammaDoublePrime.random,
-#'             p=p.session,pi=pi.fixed))
+#'             p=p.session,pi=pi.fixed),threads=2)
 #' #
 #' # Random emigration, p varies by session, uses Mh and in this 
 #' # case pi varies and so does p across
@@ -1800,7 +1803,7 @@ NULL
 #'             time.intervals=time.intervals,
 #'             model.parameters=list(S=S.time,
 #'             GammaDoublePrime=GammaDoublePrime.random,
-#'             p=p.session.mixture,pi=pi.dot))
+#'             p=p.session.mixture,pi=pi.dot),threads=2)
 #' #
 #' # Markov constant emigration rates, pi varies by session, 
 #' # p=c varies by session, S constant
@@ -1821,7 +1824,7 @@ NULL
 #'             model.parameters=list(S=S.dot,
 #'             GammaPrime=GammaPrime.dot,
 #'             GammaDoublePrime=GammaDoublePrime.dot,
-#'             p=p.session,pi=pi.session))
+#'             p=p.session,pi=pi.session),threads=2)
 #' #
 #' # Markov constant emigration rates, pi varies by session, 
 #' # p=c varies by session+mixture, S constant. This is model.3.a 
@@ -1836,7 +1839,7 @@ NULL
 #'             model.parameters=list(S=S.dot,
 #'             GammaPrime=GammaPrime.dot,
 #'             GammaDoublePrime=GammaDoublePrime.dot,
-#'             p=p.session.mixture,pi=pi.session))
+#'             p=p.session.mixture,pi=pi.session),threads=2)
 #' #
 #' # Huggins Random emigration, p=c varies by time and session, 
 #' # S by time
@@ -1868,7 +1871,7 @@ NULL
 #'         list(GammaDoublePrime=list(time.bins=c(1,2,5))),
 #'         right=FALSE, model.parameters=
 #'         list(S=S.time,GammaDoublePrime=GammaDoublePrime.random,
-#'         p=p.time.session))
+#'         p=p.time.session),threads=2)
 #' 
 #' return(collect.models())
 #' }
@@ -1883,7 +1886,7 @@ NULL
 #' #  the two types of models in different sets.
 #' #
 #' robust.results
-#' 
+#' }
 NULL
 
 
@@ -1908,7 +1911,7 @@ NULL
 #' Inferring Patterns and Dynamics of Species Occurence. Elsevier, Inc. 324p.
 #' @keywords datasets
 #' @examples
-#' 
+#' \donttest{
 #' do.salamander=function()
 #' {
 #'    data(salamander)
@@ -1921,7 +1924,7 @@ NULL
 #' }
 #' salamander.results=do.salamander()
 #' print(salamander.results)
-#' 
+#' }
 NULL
 
 
@@ -1962,6 +1965,7 @@ NULL
 #' #0000.	1	1	3	2	3	.
 #' #0000.	0	1	3	2	3	.
 #' #
+#' \donttest{
 #' # retrieve weta data
 #' data(weta)
 #' # Create function to fit the 18 models in the book
@@ -2018,7 +2022,7 @@ NULL
 #' 2*prod(prop.browse)*vcv.psi[1,2]
 #' sqrt(sum(prop.browse^2*diag(vcv.psi))+2*prod(prop.browse)*vcv.psi[1,2])
 #' 
-#' 
+#' }
 NULL
 
 

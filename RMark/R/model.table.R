@@ -42,7 +42,7 @@
 #' @export
 #' @seealso \code{\link{collect.model.names}}, \code{\link{collect.models}}
 #' @examples
-#' 
+#' \donttest{
 #' data(dipper)
 #' run.dipper=function()
 #' {
@@ -104,7 +104,7 @@
 #' # (to do that directly use RODBC or xlsreadwrite package for R)
 #' #
 #' write.table(model.DeltaAICc.matrix,"DipperDeltaAICc.txt",sep="\t")
-#' 
+#' }
 model.table <-
 function(model.list=NULL,type=NULL,sort=TRUE,adjust=TRUE,ignore=TRUE,pf=1,
               use.lnl=FALSE,use.AIC=FALSE,model.name=TRUE)

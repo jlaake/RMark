@@ -56,6 +56,7 @@
   provides an illustration as to how this can be useful.
 }
 \examples{
+\donttest{
 # Use dipper data with an age (0,1+)/time model for Phi
 data(dipper)
 dipper.proc=process.data(dipper,model="CJS")
@@ -82,6 +83,7 @@ xx
 sqrt(xx$sigmasq)
 library(nlme)
 lme(estimate~-1+age,data=z,random=~1|time)
+}
 }
 \author{
   Jeff Laake

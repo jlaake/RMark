@@ -28,6 +28,7 @@
   and \code{c}.
 }
 \examples{
+\donttest{
 #
 # get data
 #
@@ -98,6 +99,7 @@ return(collect.models() )
 # fit models in mark by calling function created above
 #
 ee.results=run.edwards.eberhardt()
+}
 }
 \keyword{datasets}
 

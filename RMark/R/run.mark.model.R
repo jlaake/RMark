@@ -58,7 +58,7 @@
 #' \code{\link{mark}}, \code{\link{cleanup}}
 #' @keywords model
 #' @examples
-#' 
+#' \donttest{
 #' data(dipper)
 #' for(sex in unique(dipper$sex))
 #' {
@@ -76,7 +76,7 @@
 #' rm(Male.results,Female.results,x.results)
 #' cleanup(ask=FALSE,prefix="Male")
 #' cleanup(ask=FALSE,prefix="Female")
-#' 
+#' }
 run.mark.model <-
 function(model,invisible=FALSE,adjust=TRUE,filename=NULL,prefix="mark",realvcv=FALSE,
 delete=FALSE,external=FALSE)

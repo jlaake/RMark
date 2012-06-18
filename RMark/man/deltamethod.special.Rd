@@ -42,6 +42,7 @@
   in mean.  cov is the input v-c matrix of the estimates.
 }
 \examples{
+\donttest{
 #
 # The following are examples only to demonstrate selecting different
 # model sets for adjusting chat and showing model selection table.
@@ -54,6 +55,7 @@
   deltamethod.special("cumprod",rr$estimates$estimate[1:6],rr$vcv.real,ses=FALSE)
   deltamethod.special("sum",rr$estimates$estimate[1:6],rr$vcv.real)
   deltamethod.special("cumsum",rr$estimates$estimate[1:6],rr$vcv.real,ses=FALSE)
+}
 }
 \author{
   Jeff Laake

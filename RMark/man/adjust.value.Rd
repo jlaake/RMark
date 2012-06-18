@@ -64,6 +64,7 @@
 # model sets for adjusting chat and showing model selection table.
 # It is not a realistic analysis.
 #
+\donttest{
 data(dipper)
 mod1=mark(dipper)
 mod2=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
@@ -78,6 +79,7 @@ cjs.results
 # adjust chat for all models to 2
 POPAN.results=adjust.chat(2,POPAN.results)
 POPAN.results
+}
 }
 \author{
   Jeff Laake

@@ -149,6 +149,7 @@ sampled habitat} }}
   use of \code{time.intervals}.
 }
 \examples{
+\donttest{
 data(RDOccupancy)
 #
 # Example of epsilon=1-gamma
@@ -331,6 +332,8 @@ lines(Psi.by.Area$estimates$covdata, Psi.by.Area$estimates$lcl, lty=2)
 lines(Psi.by.Area$estimates$covdata, Psi.by.Area$estimates$ucl, lty=2)
 
 # For porting graphics directly to file, see pdf() or png(),
+
+}
 }
 \author{
   Bret Collier

@@ -16,13 +16,11 @@
 #' @export
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' data(dipper)
 #' dipper.processed=process.data(dipper,groups=("sex"))
-#' # The following is commented out because it does not run
-#' # under check for some reason; very weird error lurking somewhere
-#' #release.gof(dipper.processed)
-#' 
+#' release.gof(dipper.processed)
+#' }
 release.gof <-
   function(data,invisible=TRUE,title="Release-gof",view=FALSE)
 {

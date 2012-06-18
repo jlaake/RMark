@@ -21,6 +21,7 @@ factor with levels \code{F} \code{M}} \item{region}{a factor with levels
   time of release) are 0,1,2 for the 3 levels respectively.
 }
 \examples{
+\donttest{
 data(example.data)
 run.example=function()
 {
@@ -50,6 +51,7 @@ mod8=mark(example.data,model.parameters=list(Phi=PhiTimeAge,p=pTime),
 return(collect.models())
 }
 example.results=run.example()
+}
 }
 \keyword{datasets}
 

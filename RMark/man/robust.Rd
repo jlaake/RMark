@@ -34,6 +34,7 @@
   number of contiguous zeros.
 }
 \examples{
+\donttest{
 data(robust)
 run.robust=function()
 {
@@ -51,7 +52,7 @@ GammaDoublePrime.random=list(formula=~time,share=TRUE)
 model.1=mark(data = robust, model = "Robust",
             time.intervals=time.intervals,
             model.parameters=list(S=S.time,
-            GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
+            GammaDoublePrime=GammaDoublePrime.random,p=p.time.session),threads=2)
 #
 # Random emigration, p varies by session, uses Mh but pi fixed to 1,
 # S by time.This model is in the example Robust with MARK but it is
@@ -65,7 +66,7 @@ model.2.a=mark(data = robust, model = "RDHet",
             time.intervals=time.intervals,
             model.parameters=list(S=S.time,
             GammaDoublePrime=GammaDoublePrime.random,
-            p=p.session,pi=pi.fixed))
+            p=p.session,pi=pi.fixed),threads=2)
 #
 # Random emigration, p varies by session, uses Mh and in this
 # case pi varies and so does p across
@@ -77,7 +78,7 @@ model.2.b=mark(data = robust, model = "RDHet",
             time.intervals=time.intervals,
             model.parameters=list(S=S.time,
             GammaDoublePrime=GammaDoublePrime.random,
-            p=p.session.mixture,pi=pi.dot))
+            p=p.session.mixture,pi=pi.dot),threads=2)
 #
 # Markov constant emigration rates, pi varies by session,
 # p=c varies by session, S constant
@@ -98,7 +99,7 @@ model.3.a=mark(data = robust, model = "RDHet",
             model.parameters=list(S=S.dot,
             GammaPrime=GammaPrime.dot,
             GammaDoublePrime=GammaDoublePrime.dot,
-            p=p.session,pi=pi.session))
+            p=p.session,pi=pi.session),threads=2)
 #
 # Markov constant emigration rates, pi varies by session,
 # p=c varies by session+mixture, S constant. This is model.3.a
@@ -113,7 +114,7 @@ model.3.b=mark(data = robust, model = "RDHet",
             model.parameters=list(S=S.dot,
             GammaPrime=GammaPrime.dot,
             GammaDoublePrime=GammaDoublePrime.dot,
-            p=p.session.mixture,pi=pi.session))
+            p=p.session.mixture,pi=pi.session),threads=2)
 #
 # Huggins Random emigration, p=c varies by time and session,
 # S by time
@@ -145,7 +146,7 @@ model.4=mark(data = robust, model = "RDHuggins",
         list(GammaDoublePrime=list(time.bins=c(1,2,5))),
         right=FALSE, model.parameters=
         list(S=S.time,GammaDoublePrime=GammaDoublePrime.random,
-        p=p.time.session))
+        p=p.time.session),threads=2)
 
 return(collect.models())
 }
@@ -160,6 +161,7 @@ robust.results=run.robust()
 #  the two types of models in different sets.
 #
 robust.results
+}
 }
 \keyword{datasets}
 

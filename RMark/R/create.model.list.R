@@ -40,7 +40,7 @@
 #' @seealso \code{\link{mark.wrapper}}
 #' @keywords utility
 #' @examples
-#' 
+#' \donttest{
 #' #
 #' # Compare this to the run.dipper shown under ?dipper
 #' # It is only necessary to create each parameter specification and 
@@ -94,7 +94,7 @@
 #'      return(dipper.results)
 #' }
 #' dipper.results=run.dipper()
-#' 
+#' }
 create.model.list<-function(model)
 {
 	parameters=setup.parameters(model,check=TRUE)

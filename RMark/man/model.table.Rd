@@ -70,6 +70,7 @@
   directly to construct the table.
 }
 \examples{
+\donttest{
 data(dipper)
 run.dipper=function()
 {
@@ -131,6 +132,7 @@ model.DeltaAICc.matrix=tapply(dipper.results$model.table$DeltaAICc,
 # (to do that directly use RODBC or xlsreadwrite package for R)
 #
 write.table(model.DeltaAICc.matrix,"DipperDeltaAICc.txt",sep="\\t")
+}
 }
 \author{
   Jeff Laake

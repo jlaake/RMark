@@ -98,6 +98,7 @@
   included) in before or after.
 }
 \examples{
+\donttest{
 # MARK example input file
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 dipper=convert.inp(paste(pathtodata,"dipper",sep="/"),
@@ -142,6 +143,7 @@ effect_size=convert.inp(paste(pathtodata,"effect_size",sep="/"),
              group.df=data.frame(colony=c("Poor","Good")))
 effect_size3=convert.inp(paste(pathtodata,"effect_size3",sep="/"),
              group.df=data.frame(colony=c("1","2","3")))
+}
 }
 \author{
   Jeff Laake

@@ -104,7 +104,7 @@
 #' # Create a list using the 4 p modls and 3 delta models (12 models total)
 #' 	cml=create.model.list("MSOccupancy")
 #' # Fit each model in the list and return the results
-#' 	return(mark.wrapper.parallel(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,cpus=3,parallel=TRUE))
+#' 	return(mark.wrapper.parallel(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,cpus=2,parallel=TRUE))
 #' }
 #' xx=do.MSOccupancy()
 

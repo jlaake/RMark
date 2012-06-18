@@ -23,6 +23,7 @@ history} }}
   argument.
 }
 \examples{
+\donttest{
 data(mstrata)
 run.mstrata=function()
 {
@@ -72,7 +73,7 @@ model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
 #
 # Run the list of models
 #
-mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl)
+mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl,threads=2)
 #
 # Return model table and list of models
 #
@@ -91,6 +92,7 @@ Psivalues=Psilist$estimates
 Psivalues.rev=Psilist.rev$estimates
 TransitionMatrix(Psivalues[Psivalues$time==1,])
 TransitionMatrix(Psivalues.rev[Psivalues.rev$occ==1,])
+}
 }
 \keyword{datasets}
 

@@ -15,6 +15,7 @@
   from the MARK book Cooch and White
 }
 \examples{
+\donttest{
 #Script to simulate the MSCRD
 #example of 15.7.1 from the MARK
 #book
@@ -66,21 +67,21 @@ Psi.markov=list(formula=~ctime+stratum,
 model.1=mark(crdms.data,ddl=crdms.ddl,
 	model.parameters=list(S=S.dot,
 		p=p.session,
-		Psi=Psi.markov))
+		Psi=Psi.markov),threads=2)
 
 #Model 2 - Random movement
 Psi.rand=list(formula=~time)
 model.2=mark(crdms.data,ddl=crdms.ddl,
 	model.parameters=list(S=S.dot,
 		p=p.session,
-		Psi=Psi.rand))
+		Psi=Psi.rand),threads=2)
 
 #Model 3 - No movement
 Psi.fix=list(formula=~1,fixed=0)
 model.3=mark(crdms.data,ddl=crdms.ddl,
 	model.parameters=list(S=S.dot,
 		p=p.session,
-		Psi=Psi.fix))
+		Psi=Psi.fix),threads=2)
 
 #collect and store models
 crdms.res<-collect.models()
@@ -89,6 +90,7 @@ print(crdms.res)
 
 #final cleanup
 cleanup(ask=FALSE)
+}
 }
 \references{
   For Cooch and White book see

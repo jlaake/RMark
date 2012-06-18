@@ -26,10 +26,12 @@
   structure.
 }
 \examples{
+\donttest{
 data(dipper)
 results=mark(dipper)
 PIMS(results,"Phi")
 PIMS(results,"Phi",simplified=FALSE)
+}
 }
 \author{
   Jeff Laake

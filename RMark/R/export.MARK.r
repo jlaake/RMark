@@ -102,7 +102,7 @@
 #'Dot=mark(mallard,nocc=90,model="Nest",
 #'		model.parameters=list(S=list(formula=~1)))
 #'mallard.proc=process.data(mallard,nocc=90,model="Nest")
-#'export.MARK(mallard.proc,"mallard",Dot)
+#'export.MARK(mallard.proc,"mallard",Dot,replace=TRUE)
 #'data(robust)
 #'time.intervals=c(0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0)
 #'S.time=list(formula=~time)

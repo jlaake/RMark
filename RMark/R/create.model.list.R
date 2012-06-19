@@ -108,7 +108,8 @@ create.model.list<-function(model)
 				if(eval(parse(text=paste("is.list(",vec[i],")",sep="")),envir=parent.frame()))
 				{
 					if(eval(parse(text=paste("!is.null(",vec[i],"$formula)",sep="")),envir=parent.frame()) |
-							eval(parse(text=paste("!is.null(",vec[i],"[[1]]$formula)",sep="")),envir=parent.frame()))
+							(eval(parse(text=paste("is.list(",vec[i],"[[1]])",sep="")),envir=parent.frame())&&
+							eval(parse(text=paste("!is.null(",vec[i],"[[1]]$formula)",sep="")),envir=parent.frame())))
 						model.list[[n]]=c(model.list[[n]],vec[i])
 				}
 			}

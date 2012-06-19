@@ -42,7 +42,7 @@
 \examples{
 data(dipper)
 mymodel=mark(dipper)
-export.model(mymodel)
+export.model(mymodel,replace=TRUE)
 }
 \author{
   Jeff Laake

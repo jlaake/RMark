@@ -168,7 +168,8 @@ else
 #
 result.table=list()
 model.numbers=NULL
-chat.values=rep(1,length(model.list))
+#chat.values=rep(1,length(model.list))
+chat.values=NULL
 for(i in 1:length(model.list))
 {
     if (!amodeltable)
@@ -189,10 +190,8 @@ for(i in 1:length(model.list))
    if(is.null(model$chat))
       chat=1
    else
-   {
       chat=model$chat
-      chat.values[i]=chat
-   }
+   chat.values=c(chat.values,chat)
 #
 #  If this is the first model, save the type and the effective sample size
 #

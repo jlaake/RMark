@@ -30,7 +30,7 @@
 #' 
 #' data(dipper)
 #' mymodel=mark(dipper)
-#' export.model(mymodel)
+#' export.model(mymodel,replace=TRUE)
 #' 
 export.model <-
 function(model,replace=FALSE)

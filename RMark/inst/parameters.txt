@@ -18,8 +18,8 @@ Barker	p	1	-1	0	Triang	all	logit	~1
 Barker	r	0	0	0	Triang	all	logit	~1										
 Barker	R	0	0	0	Triang	all	logit	~1										
 Barker	RPrime	0	0	0	Triang	all	logit	~1										
-Barker	F	0	-1	1	Triang	all	logit	~1										
-Barker	FPrime	0	-1	0	Triang	all	logit	~1										
+Barker	F	0	-1	1	Triang	all	logit	~1	FALSE	FPrime
+Barker	FPrime	0	-1	0	Triang	all	logit			F
 POPAN	Phi	0	-1	1	Square	all	logit	~1										
 POPAN	p	0	0	0	Square	all	logit	~1										
 POPAN	pent	1	-1	0	Square	all	mlogit	~1										

@@ -1,9 +1,11 @@
-RMark 2.1.4 (25 June 2012)
+RMark 2.1.4 (29 June 2012)
 --------------------------
 		
 NEW FEATURES
 
 * Modified parameters.txt so F and FPrime in Barker model can be shared.
+
+* A new example deer was added by Bret Collier that explains the share argument in parameter (model) specifications and gives an example for closed capture model.
 
 
 RMark 2.1.3 (18 June 2012)

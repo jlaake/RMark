@@ -1,6 +1,6 @@
 #' Split/collapse capture histories
 #'
-#' splitCH will split a character string vector of capture histories into a matrix. The matrix is appended to the original data set if one is 
+#' splitCH will split a character string vector of capture histories into a matrix. The matrix is appended to the original data set (data) if one is 
 #' specified. Will handle character and numeric values in ch. Results will differ depending on content of ch. collapseCH will collapse a
 #' capture history matrix back into a character vector. Argument can either be a capture history matrix (chmat) or a dataframe (data)
 #' that contains fields with a specified prefix.
@@ -11,7 +11,7 @@
 #' 
 #' @aliases splitCH collapseCH
 #' @param x A vector containing the character strings of capture histories or the column number or name in the data set \code{data}
-#' @param data A data fram containing x if x indicates a column in a data frame
+#' @param data A data frame containing columnwith value in x if x indicates a column in a data frame
 #' @param prefix first portion of field names for split ch
 #' @param chmat capture history matrix
 #' @return A data frame if data specified and a matrix if vector ch is specified

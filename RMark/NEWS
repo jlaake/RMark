@@ -1,4 +1,4 @@
-RMark 2.1.4 (3 July 2012)
+RMark 2.1.4 (3 Aug 2012)
 --------------------------
 		
 NEW FEATURES
@@ -9,8 +9,12 @@ NEW FEATURES
 
 * A new example for POPAN with data on white-winged doves was added by Bret Collier.
 
+BUG FIXES
 
-RMark 2.1.3 (18 June 2012)
+* Fixed bug in make.design.data that was improperly labelling session values for secondary parameters when the time intervals between primary sessions were not 1. Thanks to Shannon Knapp for finding and reporting this problem.
+
+
+Mark 2.1.3 (18 June 2012)
 --------------------------
 		
 NEW FEATURES

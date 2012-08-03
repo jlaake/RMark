@@ -2173,6 +2173,7 @@ NULL
 #' in the lines where I have listed \code{data(wwdo.09)} and \code{wwdo=wwdo.09}.  If you want to see the 2010 analysis, just change those lines to \code{wwdo.10}.
 #' 
 #' @name wwdo.popan
+#' @aliases wwdo.09 wwdo.10
 #' @docType data
 #' @format The format is 2 data frames, one for 2009 and one for 2010. 2009 has 5101 unique captures, 2010 has 3502 unique captures.
 #' \describe{ \item{Prefix}{Unique band prefix identifier (usually 0914 or 0984)}

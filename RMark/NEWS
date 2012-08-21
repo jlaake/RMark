@@ -1,7 +1,9 @@
-RMark 2.1.4 (3 Aug 2012)
+RMark 2.1.4 (21 Aug 2012)
 --------------------------
 		
 NEW FEATURES
+
+* Code written by Ben Augustine was added to var.components to compute conf limit on process variance, shrinkage estimates and G.
 
 * Modified parameters.txt so F and FPrime in Barker model can be shared.
 
@@ -11,7 +13,7 @@ NEW FEATURES
 
 BUG FIXES
 
-* Fixed bug in make.design.data that was improperly labelling session values for secondary parameters when the time intervals between primary sessions were not 1. Thanks to Shannon Knapp for finding and reporting this problem.
+* Fixed bug in make.design.data that was improperly labeling session values for secondary parameters when the time intervals between primary sessions were not 1. Thanks to Shannon Knapp for finding and reporting this problem.
 
 
 Mark 2.1.3 (18 June 2012)

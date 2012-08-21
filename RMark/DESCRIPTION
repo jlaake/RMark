@@ -3,7 +3,7 @@ Version: 2.1.4
 Date: 2012-08-21
 Title: R Code for MARK Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with code contributions
-    from Eldar Rakhimberdiev and Ben Augustine, and example data and analysis 
+    from Eldar Rakhimberdiev and Ben Augustine, and example data and analysis
     from Bret Collier, Jay Rotella and Andrew Paul
 Description: This package provides an interface to the
     software package MARK developed by Gary White. MARK is

@@ -2,7 +2,8 @@
 \alias{var.components}
 \title{Variance components estimation}
 \usage{
-  var.components(theta, design, vcv, LAPACK = TRUE)
+  var.components(theta, design, vcv, alpha = 0.05,
+    upper = 10 * max(vcv), LAPACK = TRUE)
 }
 \arguments{
   \item{theta}{vector of parameter estimates}
@@ -13,6 +14,8 @@
   \item{vcv}{estimated variance-covariance matrix for
   parameters}
 
+  \item{upper}{upper limit for process variance}
+
   \item{LAPACK}{argument passed to call to \code{qr} for qr
   decomposition and inversion}
 }
@@ -20,7 +23,9 @@
   A list with the following elements \item{sigma}{process
   variance estimate} \item{beta}{dataframe with estimates
   and standard errors of betas for design}
+  \item{betarand}{dataframe of shrinkage estimates}
   \item{vcv.beta}{variance-covariance matrix for beta}
+  \item{GTrace}{trace of matrix G}
 }
 \description{
   Computes estimated effects, standard errors and process
@@ -47,14 +52,21 @@
 \donttest{
 data(dipper)
 md=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
+md$results$AICc
 zz=get.real(md,"Phi",vcv=TRUE)
 z=zz$estimates$estimate[1:6]
 vcv=zz$vcv.real
-var.components(z,design=matrix(rep(1,length(z)),ncol=1),vcv)
+varc=var.components(z,design=matrix(rep(1,length(z)),ncol=1),vcv)
+df=md$design.data$Phi
+shrinkest=data.frame(time=1:6,value=varc$betarand$estimate)
+df=merge(df,shrinkest,by="time")
+md=mark(dipper,model.parameters=list(Phi=list(formula=~time,fixed=list(index=df$par.index,value=df$value))),adjust=FALSE)
+npar=md$results$npar+varc$GTrace
+md$results$lnl+2*(npar + (npar*(npar+1))/(md$results$n-npar-1))
 }
 }
 \author{
-  Jeff Laake
+  Jeff Laake; Ben Augustine
 }
 \references{
   BURNHAM, K. P. and G. C. WHITE. 2002. Evaluation of some

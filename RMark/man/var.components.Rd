@@ -20,9 +20,11 @@
   decomposition and inversion}
 }
 \value{
-  A list with the following elements \item{sigma}{process
-  variance estimate} \item{beta}{dataframe with estimates
-  and standard errors of betas for design}
+  A list with the following elements \item{sigmasq}{process
+  variance estimate and confidence interval; estimate may
+  be <0} \item{sigma}{sqrt of process variance; set to o if
+  sigmasq<0} \item{beta}{dataframe with estimates and
+  standard errors of betas for design}
   \item{betarand}{dataframe of shrinkage estimates}
   \item{vcv.beta}{variance-covariance matrix for beta}
   \item{GTrace}{trace of matrix G}

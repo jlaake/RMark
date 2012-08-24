@@ -3,7 +3,7 @@ RMark 2.1.4 (21 Aug 2012)
 		
 NEW FEATURES
 
-* Code written by Ben Augustine was added to var.components to compute conf limit on process variance, shrinkage estimates and G.
+* Code written by Ben Augustine was added to var.components to compute conf limit on process variance, shrinkage estimates and trace of G. Code was made a little smarter about finding end points for uniroot to compute process variance. Result now contains sigmsq (old sigma) with confidence interval and sigma, the sqrt of sigmsq estimate set to 0 if sigmasq<0
 
 * Modified parameters.txt so F and FPrime in Barker model can be shared.
 

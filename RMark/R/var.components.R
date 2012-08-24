@@ -21,8 +21,9 @@
 #' @param upper upper limit for process variance
 #' @param LAPACK argument passed to call to \code{qr} for qr decomposition and
 #' inversion
-#' @return A list with the following elements \item{sigma}{process variance
-#' estimate} \item{beta}{dataframe with estimates and standard errors of betas
+#' @return A list with the following elements \item{sigmasq}{process variance
+#' estimate and confidence interval; estimate may be <0} \item{sigma}{sqrt of process variance; set to o if sigmasq<0} 
+#' \item{beta}{dataframe with estimates and standard errors of betas
 #' for design} \item{betarand}{dataframe of shrinkage estimates}
 #'  \item{vcv.beta}{variance-covariance matrix for beta} \item{GTrace}{trace of matrix G}
 #' @author Jeff Laake; Ben Augustine
@@ -86,18 +87,47 @@ var.components=function (theta, design, vcv, alpha=0.05, upper=10*max(vcv), LAPA
 	}
 # Uses uniroot to compute value of sigma by finding root of mom.sig  If it results in an error or the root is negative, the
 # estimate of sigma is 0
-	soln = try(uniroot(mom.sig, lower = -(min(Re(eigen(vcv)$values)) + 
-								1e-12), upper = upper, vcv = vcv, theta = theta, X = design, 
-					tol = 1e-15))
-	if (class(soln) == "try-error") 
-		sigma = 0
-	else if (soln$root < 0) 
-		sigma = 0
-	else sigma = soln$root
+    lower=-(min(Re(eigen(vcv)$values)) +1e-12)
+	xlower=optimize(mom.sig,interval=c(lower,upper),vcv = vcv, theta = theta, X = design)
+	xupper=optimize(mom.sig,interval=c(lower,upper),vcv = vcv, theta = theta, X = design,maximum=TRUE)
+	if(xlower$objective*xupper$objective>0) 
+	{
+		lower=2*lower
+		upper=2*upper
+		xlower=optimize(mom.sig,interval=c(lower,upper),vcv = vcv, theta = theta, X = design)
+		xupper=optimize(mom.sig,interval=c(lower,upper),vcv = vcv, theta = theta, X = design,maximum=TRUE)
+	}
+	if(xlower$objective*xupper$objective>0) 
+	{
+		stop("\nroot still could not be found with increased limits; try increasing upper limit by more than a factor of 2\n")
+	} else
+	{
+		lower=min(xlower$minimum,xupper$maximum)
+		upper=max(xupper$maximum,xlower$minimum)
+		soln = uniroot(mom.sig, lower=lower, upper=upper, vcv = vcv, theta = theta, X = design,tol = 1e-15)
+	}
+    sigma = soln$root
+#Begin Augustine additions
+	mom.sigCI = function(sigma, vcv, X, theta,p) {
+		Dinv = compute.Dinv(sigma, vcv)
+		beta = beta.hat(Dinv, X, theta)
+		return(t(theta - X %*% beta) %*% Dinv %*% (theta - X %*% 
+							beta) - qchisq(p,nrow(X) - length(beta)))
+	}
+	solnL = uniroot(mom.sigCI, lower = lower, upper = upper, vcv = vcv, theta = theta, X = design, p=1-alpha/2,tol = 1e-15)
+	solnU = uniroot(mom.sigCI, lower = lower, upper = upper, vcv = vcv, theta = theta, X = design, p=alpha/2,tol = 1e-15)
+	sigmasq = c(sigma,solnL$root,solnU$root)
+	names(sigmasq)=c("est.","lower","upper")
+#End Augustine additions
+	if(sigma<0)
+	{
+		warning("\nEstimated process variance < 0; using 0 for shrinkage estimates\n")
+		sigma=0
+	}
 # Compute final values of D inverse, beta and its v-c matrix and return those values
 	Dinv = compute.Dinv(sigma, vcv)
 	beta = beta.hat(Dinv, design, theta)
-#Begin Augustine additions
+#Begin Augustine additions; rearranged and slightly modified; moved CI code above 24 Aug 2012-jll
 	eig=eigen(Dinv)
 	Dinvsqrt=eig$vectors %*% diag(sqrt(eig$values)) %*% qr.solve(eig$vectors)
 	H=sqrt(sigma)*Dinvsqrt
@@ -110,22 +140,8 @@ var.components=function (theta, design, vcv, alpha=0.05, upper=10*max(vcv), LAPA
 	RMSE=sqrt(diag(VCbetarand)+(betarand-theta)^2)
 	betarandL=betarand-qnorm(1-alpha/2,0,1)*RMSE
 	betarandU=betarand+qnorm(1-alpha/2,0,1)*RMSE
-	mom.sigCI = function(sigma, vcv, X, theta,p) {
-		Dinv = compute.Dinv(sigma, vcv)
-		beta = beta.hat(Dinv, X, theta)
-		return(t(theta - X %*% beta) %*% Dinv %*% (theta - X %*% 
-							beta) - qchisq(p,nrow(X) - length(beta)))
-	}
-	solnL = try(uniroot(mom.sigCI, lower = -(min(Re(eigen(vcv)$values)) + 
-								1e-12), upper = upper, vcv = vcv, theta = theta, X = design, p=1-alpha/2,
-					tol = 1e-15))
-	solnU = try(uniroot(mom.sigCI, lower = -(min(Re(eigen(vcv)$values)) + 
-								1e-12), upper = upper, vcv = vcv, theta = theta, X = design, p=alpha/2,
-					tol = 1e-15))
 	betarand=cbind(betarand,RMSE,betarandL,betarandU)
 	colnames(betarand)=c("estimate","RMSE","lower","upper")
-	sigma = c(sigma,solnL$root,solnU$root)
-	names(sigma)=c("est.","lower","upper")
 #end Augustine additions
 	rownames(beta) = colnames(design)
 	vcv.beta = solve(qr(t(design) %*% Dinv %*% design, LAPACK = LAPACK))
@@ -134,5 +150,5 @@ var.components=function (theta, design, vcv, alpha=0.05, upper=10*max(vcv), LAPA
 	beta = as.data.frame(beta)
 	beta$se = sqrt(diag(vcv.beta))
 	names(beta) = c("Estimate", "SE")
-	return(list(sigma = sigma, beta = beta,betarand=as.data.frame(betarand),vcv.beta = vcv.beta, GTrace=matrix.trace(G)))
+	return(list(sigmasq = sigmasq, sigma=sqrt(sigma), beta = beta,betarand=as.data.frame(betarand),vcv.beta = vcv.beta, GTrace=matrix.trace(G)))
 }

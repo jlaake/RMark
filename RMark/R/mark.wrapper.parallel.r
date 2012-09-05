@@ -71,6 +71,7 @@
 #' results
 #' @author Eldar Rakhimberdiev
 #' @export 
+#' @import parallel
 #' @seealso \code{\link{collect.models}}, \code{\link{mark}},
 #' \code{\link{create.model.list}}
 #' @keywords utility
@@ -109,7 +110,7 @@
 #' xx=do.MSOccupancy()
 
 mark.wrapper.parallel<-
-		function(model.list,silent=FALSE,use.initial=FALSE,initial=NULL, parallel=TRUE, cpus=2, ...)
+		function(model.list,silent=FALSE,use.initial=FALSE,initial=NULL, parallel=TRUE, cpus=2, threads=1, ...)
 {
 	
 # -----------------------------------------------------------------------------------------------------------------------
@@ -143,7 +144,10 @@ mark.wrapper.parallel<-
 	if (!any(names(list.args)=="invisible")) list.args$invisible=FALSE
 	if (any(names(list.args)=="model.list")) list.args<-list.args[-which(names(list.args)=="model.list")]
 	if (any(names(list.args)=="cpus")) list.args<-list.args[-which(names(list.args)=="cpus")]
-	
+#	require("parallel")
+	if (threads*cpus>detectCores() | (threads<0 & cpus!=1)) 
+		stop("you've tried to use more cores than you have, try to combine threads and cpus to make ", 
+				 detectCores(), " or less as a product\n")
 	initiallist=NULL
 	if(class(initial)[1]=="marklist")
 		if(nrow(initial$model.table)!=nrow(model.list))

@@ -5,7 +5,7 @@ specifications}
 \usage{
   mark.wrapper.parallel(model.list, silent = FALSE,
     use.initial = FALSE, initial = NULL, parallel = TRUE,
-    cpus = 2, ...)
+    cpus = 2, threads = 1, ...)
 }
 \arguments{
   \item{model.list}{a dataframe of parameter specification

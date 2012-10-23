@@ -65,13 +65,13 @@
 #' @param initial vector, mark model or marklist for defining initial values
 #' @param parallel if TRUE, runs models in parallel on multiple cpus
 #' @param cpus number of cpus to use in parallel
+#' @param threads number of cpus to use with mark.exe if positive or number of cpus to remain idle if negative
 #' @param ... arguments to be passed to \code{\link{mark}}. These must be
 #' specified as argument=value pairs.
 #' @return marklist - list of mark models that were run and a model.table of
 #' results
 #' @author Eldar Rakhimberdiev
 #' @export 
-#' @import parallel
 #' @seealso \code{\link{collect.models}}, \code{\link{mark}},
 #' \code{\link{create.model.list}}
 #' @keywords utility
@@ -144,10 +144,12 @@ mark.wrapper.parallel<-
 	if (!any(names(list.args)=="invisible")) list.args$invisible=FALSE
 	if (any(names(list.args)=="model.list")) list.args<-list.args[-which(names(list.args)=="model.list")]
 	if (any(names(list.args)=="cpus")) list.args<-list.args[-which(names(list.args)=="cpus")]
+	if (!any(names(list.args)=="threads")) list.args$threads<-1
+#	if (any(names(list.args)=="threads")) list.args<-list.args[-which(names(list.args)=="threads")]
 #	require("parallel")
-	if (threads*cpus>detectCores() | (threads<0 & cpus!=1)) 
+	if (threads*cpus>parallel:::detectCores() | (threads<0 & cpus!=1)) 
 		stop("you've tried to use more cores than you have, try to combine threads and cpus to make ", 
-				 detectCores(), " or less as a product\n")
+				 parallel:::detectCores(), " or less as a product\n")
 	initiallist=NULL
 	if(class(initial)[1]=="marklist")
 		if(nrow(initial$model.table)!=nrow(model.list))
@@ -233,15 +235,18 @@ make.run.mark.model.apply.int<-function(x) {
 	setwd(as.character(wd))
 	parallel=as.logical(as.character(x[["parallel"]]))
 	x<-x[-which(names(x)=="parallel")]	
-	if(run) {
+# removed code for !run which doesn't work and not needed.
+#	if(run) {
 		mymodel<-try(do.call(mark, x), silent=silent)
 		if(class(mymodel)[1]=="try-error") mymodel<-"error"
 		if (length(mymodel)>1)
 			if(is.null(mymodel$results))
 				mymodel<-"error"
-	}
-	else { names(x)[names(x)=="model.parameters"]<-"parameters"
-		mymodel<-try(do.call(make.mark.model, x),silent=silent) }
+#	}
+#	else {
+#		x<-x[-which(names(x)=="threads")]	
+#		names(x)[names(x)=="model.parameters"]<-"parameters"
+#		mymodel<-try(do.call(make.mark.model, x),silent=silent) }
 	setwd(old.wd)
 	return(mymodel)
 }

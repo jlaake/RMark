@@ -47,6 +47,7 @@
 #' extracted
 #' @param external if TRUE the mark object is saved externally rather than in
 #' the workspace; the filename is kept in its place
+#' @param threads number of cpus to use with mark.exe if positive or number of cpus to remain idle if negative
 #' @return model: MARK model object with the base filename stored in
 #' \code{output} and the extracted \code{results} from the output file appended
 #' onto list; see \code{\link{mark}} for a detailed description of a
@@ -79,7 +80,7 @@
 #' }
 run.mark.model <-
 function(model,invisible=FALSE,adjust=TRUE,filename=NULL,prefix="mark",realvcv=FALSE,
-delete=FALSE,external=FALSE)
+delete=FALSE,external=FALSE,threads=-1)
 {
 # -----------------------------------------------------------------------------------------------------------------------
 #
@@ -166,15 +167,15 @@ delete=FALSE,external=FALSE)
 		 {
 			 if(invisible)
 				 system(paste(markpath, " i=",inputfile," o=", outfile,
-								 " v=",vcvfile, " r=",resfile,sep = ""),ignore.stdout=TRUE,ignore.stderr=TRUE)
+								 " v=",vcvfile, " r=",resfile, " threads=", threads,sep = ""),ignore.stdout=TRUE,ignore.stderr=TRUE)
 			 else
 				 system(paste(markpath, " i=",inputfile," o=", outfile,
-								 " v=",vcvfile, " r=",resfile,sep = ""))
+								 " v=",vcvfile, " r=",resfile, " threads=", threads,sep = ""))
 			 
 		 }else
 		 {
 			 system(paste(markpath, " i=",inputfile," o=", outfile,
-								 " v=",vcvfile, " r=",resfile,sep = ""),invisible=TRUE)
+								 " v=",vcvfile, " r=",resfile, " threads=", threads,sep = ""),invisible=TRUE)
 			 if(file.exists("fort.0"))unlink("fort.0")
 		 }
   } else
@@ -183,7 +184,7 @@ delete=FALSE,external=FALSE)
     if(!exists("MarkPath"))MarkPath=""
     if(RunMark)
        system(paste("mark i=",inputfile," o=", outfile,
-            " v=", vcvfile," r=",resfile,sep = ""))
+            " v=", vcvfile," r=",resfile, " threads=", threads,sep = ""))
   }
 #
 # Read in the output file

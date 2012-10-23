@@ -1,7 +1,7 @@
 \name{popan.derived}
-\alias{popan.derived}
 \alias{popan.NGross}
 \alias{popan.Nt}
+\alias{popan.derived}
 \title{Computes some derived abundance estimates for POPAN models}
 \usage{
   popan.derived(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=FALSE)

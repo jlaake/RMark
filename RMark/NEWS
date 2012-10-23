@@ -1,5 +1,9 @@
-RMark 2.1.4 (21 Aug 2012)
+RMark 2.1.4 (23 Oct 2012)
 --------------------------
+CHANGES
+
+* threads option for MARK was moved from inp file on proc chmatrix to run command; requires newest version of mark.exe
+
 		
 NEW FEATURES
 

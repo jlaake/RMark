@@ -25,7 +25,6 @@
 #' @return either a vector of standard errors (ses=TRUE) or a
 #' variance-covariance matrix (ses=FALSE)
 #' @author Jeff Laake
-#' @import msm
 #' @export
 #' @keywords utility
 #' @examples

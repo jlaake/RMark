@@ -1,7 +1,7 @@
 \name{TransitionMatrix}
+\alias{TransitionMatrix}
 \alias{find.possible.transitions}
 \alias{transition.pairs}
-\alias{TransitionMatrix}
 \title{Multi-state Transition Functions}
 \usage{
   TransitionMatrix(x,vcv.real=NULL)

@@ -26,6 +26,9 @@ specifications}
 
   \item{cpus}{number of cpus to use in parallel}
 
+  \item{threads}{number of cpus to use with mark.exe if
+  positive or number of cpus to remain idle if negative}
+
   \item{...}{arguments to be passed to \code{\link{mark}}.
   These must be specified as argument=value pairs.}
 }

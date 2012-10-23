@@ -6,7 +6,7 @@
     title = "", invisible = TRUE, adjust = TRUE,
     se = FALSE, filename = NULL, prefix = "mark",
     default.fixed = TRUE, silent = FALSE, retry = 0,
-    realvcv = FALSE, external = FALSE)
+    realvcv = FALSE, external = FALSE, threads = -1)
 }
 \arguments{
   \item{model}{previously run MARK model}
@@ -56,6 +56,9 @@
   \item{external}{if TRUE the mark object is saved
   externally rather than in the workspace; the filename is
   kept in its place}
+
+  \item{threads}{number of cpus to use with mark.exe if
+  positive or number of cpus to remain idle if negative}
 }
 \value{
   model: MARK model object with the base filename stored in

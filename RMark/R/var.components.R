@@ -27,6 +27,7 @@
 #' @param theta vector of parameter estimates
 #' @param design design matrix for combining parameter estimates
 #' @param vcv estimated variance-covariance matrix for parameters
+#' @param alpha sets 1-alpha confidence limit on sigma
 #' @param upper upper limit for process variance
 #' @param LAPACK argument passed to call to \code{qr} for qr decomposition and
 #' inversion
@@ -37,7 +38,6 @@
 #'  \item{vcv.beta}{variance-covariance matrix for beta} \item{GTrace}{trace of matrix G}
 #' @author Jeff Laake; Ben Augustine
 #' @export
-#' @import matrixcalc
 #' @references BURNHAM, K. P. and G. C. WHITE. 2002. Evaluation of some random
 #' effects methodology applicable to bird ringing data.  Journal of Applied
 #' Statistics 29: 245-264.

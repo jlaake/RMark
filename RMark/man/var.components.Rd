@@ -14,6 +14,8 @@
   \item{vcv}{estimated variance-covariance matrix for
   parameters}
 
+  \item{alpha}{sets 1-alpha confidence limit on sigma}
+
   \item{upper}{upper limit for process variance}
 
   \item{LAPACK}{argument passed to call to \code{qr} for qr
@@ -40,8 +42,21 @@
   The \code{design} matrix specifies the manner in which
   the estimates (\code{theta}) are combined.  The number of
   rows of the design matrix must match the length of
-  \code{theta}.  To get a mean estimate use a column matrix
-  of 1's (e.g.,
+  \code{theta}.
+
+  If you select specific values of theta, you must select
+  the equivalent sub-matrix of the variance-covariance
+  matrix.  For instance, if the parameter indices are
+  \code{$estimates[c(1:5,8)]} then the appropriate
+  definition of the vcv matrix would be vcv=vcv[c(1:5,8),
+  c(1:5,8)], if vcv is nxn for n estimates. Note that
+  get.real will only return the vcv matrix of the unique
+  reals so the dimensions of estimates and vcv will not
+  always match as in the example below where estimates has
+  21 rows but with the time model there are only 6 unique
+  Phis so vcv is 6x6.
+
+  To get a mean estimate use a column matrix of 1's (e.g.,
   \code{design=matrix(1,ncol=1,nrow=length(theta))}. The
   function returns a list with the estimates of the
   coefficients for the design matrix (\code{beta}) with one

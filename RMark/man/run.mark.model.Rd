@@ -4,7 +4,7 @@
 \usage{
   run.mark.model(model, invisible = FALSE, adjust = TRUE,
     filename = NULL, prefix = "mark", realvcv = FALSE,
-    delete = FALSE, external = FALSE)
+    delete = FALSE, external = FALSE, threads = -1)
 }
 \arguments{
   \item{model}{MARK model created by
@@ -32,6 +32,9 @@
   \item{external}{if TRUE the mark object is saved
   externally rather than in the workspace; the filename is
   kept in its place}
+
+  \item{threads}{number of cpus to use with mark.exe if
+  positive or number of cpus to remain idle if negative}
 }
 \value{
   model: MARK model object with the base filename stored in

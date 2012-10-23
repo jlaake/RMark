@@ -1,6 +1,6 @@
 Package: RMark
 Version: 2.1.4
-Date: 2012-08-24
+Date: 2012-10-23
 Title: R Code for MARK Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with code contributions
     from Eldar Rakhimberdiev and Ben Augustine, and example data and analysis
@@ -16,10 +16,12 @@ Depends:
     R (>= 2.13.0),
     plotrix,
     snowfall,
-    coda
-Imports:
+    coda,
     msm,
-    nlme
+    nlme,
+    matrixcalc
+Imports:
+    parallel
 Suggests:
     lattice
 LazyLoad: yes

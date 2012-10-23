@@ -318,7 +318,7 @@ while(i<=retry & !converge)
       model<-make.mark.model(data.proc,title=title,parameters=model.parameters,
              ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
              model.name=model.name,options=options,profile.int=profile.int,chat=chat,
-			 input.links=input.links,parm.specific=parm.specific,mlogit0=mlogit0,threads=threads,hessian=hessian)
+			 input.links=input.links,parm.specific=parm.specific,mlogit0=mlogit0,hessian=hessian)
       model$model.parameters=model.parameters
 	  if(!run)return(model)
    }
@@ -335,7 +335,7 @@ while(i<=retry & !converge)
 #
 # Run model
 #
-   runmodel<-try(run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete),silent=silent)
+   runmodel<-try(run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads),silent=silent)
    if(class(runmodel)[1]=="try-error")
    {
      cat("\n\n********Following model failed to run :",model$model.name,"**********\n\n")

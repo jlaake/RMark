@@ -31,7 +31,6 @@
 #' design} \item{vcv.beta}{variance-covariance matrix for beta}
 #' @author Jeff Laake
 #' @export
-#' @import nlme
 #' @examples
 #' \donttest{
 #' # Use dipper data with an age (0,1+)/time model for Phi

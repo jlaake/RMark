@@ -7,7 +7,7 @@
     call = NULL, default.fixed = TRUE, options = NULL,
     profile.int = FALSE, chat = NULL, simplify = TRUE,
     input.links = NULL, parm.specific = FALSE,
-    mlogit0 = FALSE, hessian = FALSE)
+    mlogit0 = FALSE, hessian = FALSE, accumulate = TRUE)
 }
 \arguments{
   \item{data}{Data list resulting from function
@@ -59,6 +59,9 @@
 
   \item{hessian}{if TRUE specifies to MARK to use hessian
   rather than second partial matrix}
+
+  \item{accumulate}{if TRUE accumulate like data values
+  into frequencies}
 }
 \value{
   model: a MARK object except for the elements

@@ -157,6 +157,7 @@
 #' have its link changed to logit so it can be simplified
 #' @param threads number of cpus to use with mark.exe if positive or number of cpus to remain idle if negative
 #' @param hessian if TRUE specifies to MARK to use hessian rather than second partial matrix
+#' @param accumulate if TRUE accumulate like data values into frequencies
 #' @return model: a MARK object containing output and extracted results. It is
 #' a list with the following elements \item{data}{name of the processed data
 #' frame} \item{model}{type of analysis model (see list above)}
@@ -233,7 +234,7 @@ mark <-
 function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,
 design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
 invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
-realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE)
+realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE,accumulate=TRUE)
 {
 # -----------------------------------------------------------------------------------------------------------------------
 # mark -  a single function that processes data, creates the design data, makes the mark model and runs it.
@@ -318,7 +319,7 @@ while(i<=retry & !converge)
       model<-make.mark.model(data.proc,title=title,parameters=model.parameters,
              ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
              model.name=model.name,options=options,profile.int=profile.int,chat=chat,
-			 input.links=input.links,parm.specific=parm.specific,mlogit0=mlogit0,hessian=hessian)
+			 input.links=input.links,parm.specific=parm.specific,mlogit0=mlogit0,hessian=hessian,accumulate=accumulate)
       model$model.parameters=model.parameters
 	  if(!run)return(model)
    }

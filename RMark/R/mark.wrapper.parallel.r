@@ -83,10 +83,6 @@
 #' # Define the models; default of Psi1=~1 and Psi2=~1 is assumed
 #' # p varies by time but p1t=p2t
 #' 	p1.p2equal.by.time=list(formula=~time,share=TRUE)
-#' # time-invariant p p1t=p2t=p1=p2
-#' 	p1.p2equal.dot=list(formula=~1,share=TRUE)
-#' #time-invariant p1 not = p2
-#' 	p1.p2.different.dot=list(p1=list(formula=~1,share=FALSE),p2=list(formula=~1))
 #' # time-varying p1t and p2t
 #' 	p1.p2.different.time=list(p1=list(formula=~time,share=FALSE),p2=list(formula=~time))
 #' #  delta2 model with one rate for times 1-2 and another for times 3-5;

@@ -1,9 +1,10 @@
-RMark 2.1.4 (23 Oct 2012)
+RMark 2.1.4 (11 Dec 2012)
 --------------------------
 CHANGES
 
 * threads option for MARK was moved from inp file on proc chmatrix to run command; requires newest version of mark.exe
 
+* accumulate was added as an argument to control whether records with same values are aggregated
 		
 NEW FEATURES
 

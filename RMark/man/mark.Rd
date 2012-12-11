@@ -15,7 +15,7 @@
     external = FALSE, profile.int = FALSE, chat = NULL,
     reverse = FALSE, run = TRUE, input.links = NULL,
     parm.specific = FALSE, mlogit0 = FALSE, threads = -1,
-    hessian = FALSE)
+    hessian = FALSE, accumulate = TRUE)
 }
 \arguments{
   \item{data}{Either the raw data which is a dataframe with
@@ -140,6 +140,9 @@
 
   \item{hessian}{if TRUE specifies to MARK to use hessian
   rather than second partial matrix}
+
+  \item{accumulate}{if TRUE accumulate like data values
+  into frequencies}
 }
 \value{
   model: a MARK object containing output and extracted

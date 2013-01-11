@@ -1,0 +1,5360 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+
+\usepackage{amsthm}\usepackage{epsfig}\usepackage{psfrag}\usepackage{lineno}
+
+\bibliographystyle{apalike}
+
+%\setlength{\evensidemargin}{0in} \setlength{\oddsidemargin}{0in}
+%\setlength{\topmargin}{0.0in} \setlength{\textwidth}{6.5in}
+%\setlength{\textheight}{9in} \setlength{\topskip}{0in}
+%\setlength{\headheight}{0in} \setlength{\headsep}{0in}
+\usepackage[labelfont=bf,labelsep=period]{caption}
+\usepackage{rotating}
+\end_preamble
+\use_default_options false
+\begin_modules
+sweave
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding latin9
+\fontencoding default
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 2
+\use_esint 1
+\use_mhchem 0
+\use_mathdots 0
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%% TITLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\baselinestretch}{1.8}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\family typewriter
+\size largest
+RMark
+\family default
+: An R interface for analysis of capture-recapture data with 
+\family typewriter
+MARK
+\family default
+\size default
+
+\begin_inset VSpace 0.5in
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size large
+Jeff L.
+ Laake
+\begin_inset Formula $^{1}$
+\end_inset
+
+
+\size default
+ 
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset space \hrulefill{}
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset FormulaMacro
+\renewcommand{\baselinestretch}{1.25}
+\end_inset
+
+ 
+\size large
+National Marine Mammal Laboratory 
+\begin_inset Newline newline
+\end_inset
+
+Alaska Fisheries Science Center
+\size default
+
+\begin_inset Newline newline
+\end_inset
+
+ 
+\size large
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+ NOAA National Marine Fisheries Service
+\size default
+
+\begin_inset Newline newline
+\end_inset
+
+ 
+\size large
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+ Seattle, Washington, U.S.A.
+\size default
+
+\begin_inset Newline newline
+\end_inset
+
+ 
+\size large
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $^{1}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+em
+\end_layout
+
+\end_inset
+
+ Email:
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ jeff.laake@noaa.gov
+\size default
+ 
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size large
+\begin_inset space \hrulefill{}
+\end_inset
+
+
+\size default
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\shape smallcaps
+Running Head
+\shape default
+: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ an R interface for 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+Jan 10, 2013
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setlength{
+\backslash
+textheight}{575pt}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset FormulaMacro
+\renewcommand{\baselinestretch}{2}
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%% ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%  make sure that the document has 25 lines per page (it is 12 pt)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+setlength{
+\backslash
+textheight}{575pt}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+setlength{
+\backslash
+baselineskip}{24pt}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%think this may do doublespacing (required for submission I think)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+\size normal
+Summary
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+
+\size normal
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ provides a formula-based interface to most of the models for analysis of
+ capture-recapture data in program 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+.
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+
+\size normal
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ reduces the development time of models and removes the potential for errors
+ introduced from manual creation of design matrices in 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+.
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+
+\size normal
+By providing an interface to 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+ in R, all of the tools in R can be accessed to extract and manipulate data,
+ plot or simulate.
+ It also provides the potential to include 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+ analysis in a reproducible document with 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|Sweave|
+\end_layout
+
+\end_inset
+
+ and LaTeX.
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+
+\size normal
+I demonstrate 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ using the commonly analyzed European dipper data.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+\size normal
+Key-words
+\series default
+ capture-recapture, 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+, mark-recapture, 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size normal
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+clearpage{}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size normal
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+linenumbers
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size normal
+\begin_inset FormulaMacro
+\renewcommand{\baselinestretch}{1.0}
+\end_inset
+
+ 
+\begin_inset FormulaMacro
+\renewcommand{\baselinestretch}{1.0}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size normal
+\begin_inset VSpace 0.3in
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+\size normal
+Introduction
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size normal
+The most comprehensive software package for analysis of capture-recapture
+ data is program 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+ (
+\begin_inset CommandInset citation
+LatexCommand citealt
+key "White1999"
+
+\end_inset
+
+).
+ While it is unparalleled in the range of models and quality of the user
+ documentation (http://www.phidot.org/software/ mark/docs/book/), the interface
+ for building models can be limiting for large data sets and complex models.
+ While there is some capability for automatic model creation in 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+, most models are built manually with a graphical user interface to specify
+ the parameter structures and design matrices.
+ Manual model creation can be useful during the learning process but eventually
+ it becomes a time-consuming and sometimes frustrating exercise.
+ Also it can be a very real and unnecessary potential source of error in
+ the analysis.
+ Finally, for those that analyze data from on-going monitoring programmes,
+ there is no way to extend the capture-history in 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+, which means all of the models must be re-created manually unless you pad
+ the data for all future sampling occasions.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size normal
+Born out of my frustration with the 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+ interface and a desire to make my analysis more reliable and reproducible
+ (
+\begin_inset CommandInset citation
+LatexCommand citealt
+key "Donoho2010"
+
+\end_inset
+
+), I developed 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+, an R (
+\begin_inset CommandInset citation
+LatexCommand citealt
+key "Rcore"
+
+\end_inset
+
+) package that provides a formula based interface for 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ has been available since 2005 and is on CRAN (http://cran.r-project.org).
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ contains functionality to build models for 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+ from formulas, run the model with 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+, extract the output, and summarize and display the results with automatic
+ labeling.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ also has capabilities for model averaging, prediction, variance components,
+ and exporting models back to the 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+ interface.
+ In addition, all of the tools in R are available which enable a completely
+ scripted analysis from data to results and inclusion into a document with
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|Sweave|
+\end_layout
+
+\end_inset
+
+  (
+\begin_inset CommandInset citation
+LatexCommand citealt
+key "Leisch2002"
+
+\end_inset
+
+) and LaTeX to produce a reproducible manuscript.
+
+\size default
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size normal
+To date, the only citation available for 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ has been an appendix in the 
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+
+\size normal
+ documentation (http://www.phidot.org/software/mark/docs/book/).
+ Being a dynamic web-based document, it is not always considered a suitable
+ citation.
+ Here I provide an overview of the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ package to provide a citation for the software and to make its availability
+ more widely known to ecological researchers.
+ 
+\size default
+For more detailed documentation, refer to the online documentation at http://www.
+phidot.org/software/ mark/rmark/ and the help within the R package.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size normal
+\begin_inset VSpace 0.3in
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+\size normal
+Background
+\end_layout
+
+\begin_layout Standard
+RMark only builds models for 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK
+\end_layout
+
+\end_inset
+
+| and it is 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ that fits the models.
+
+ 
+\lang english
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ creates an input text file, runs
+ 
+\lang english
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ to fit the model to the data and extracts the results from the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK
+\end_layout
+
+\end_inset
+
+| output file.
+ Thus, to understand 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+, some background on 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ is necessary.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ can currently analyze data for 140 model variations.
+ In the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ interface, selecting Help/Data Types will show all of the models and which
+ are supported by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+.
+ Even though the model parameters and their structures vary, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ uses a standard approach to model construction and so does 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+.
+ I will use the Cormack-Jolly-Seber (CJS) model as an example here to describe
+ model construction and extension to other models is straightforward.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size normal
+Capture-recapture data are typically represented as an encounter history.
+ For CJS models, the encounter history is a sequence of zeroes and ones,
+ where a 1 codes for an encounter and a 0 means the animal was missed.
+ Each position in the capture history represents a sampling occasion that
+ occur at a sequence of times 
+\begin_inset Formula $t_{1},t_{2},...,t_{m}$
+\end_inset
+
+ for 
+\begin_inset Formula $m$
+\end_inset
+
+ occasions.
+ For example, a sequence of 101 means the animal was initially encountered
+ (or released) on the first occasion at 
+\begin_inset Formula $t_{1}$
+\end_inset
+
+, not encountered on the second occasion at 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+, and encountered on the third and last occasion at 
+\begin_inset Formula $t_{3}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The parameters in CJS are apparent survival (
+\begin_inset Formula $\phi$
+\end_inset
+
+) and capture probability (
+\begin_inset Formula $p$
+\end_inset
+
+).
+ These parameters can differ by time, age, cohort, grouping factor (categorical)
+ variables such as sex and individual numeric covariates like weight.
+ The parameter structure for the model is specified with a parameter index
+ matrix (PIM) which are typically different across types of parameters.
+ For example, with 4 sampling occasions, a time PIM structure will have
+ 3 potential survival parameters, one for each time interval between occasions
+ (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:PIM"
+
+\end_inset
+
+).
+ A constant PIM would have a single index for each parameter (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:PIM"
+
+\end_inset
+
+).
+ A model with a time PIM for survival and constant PIM for p has 4 parameters
+ and can be represented by Phi(t)p(.) where a '.' implies constant.
+ Alternative PIMs can be specified but the all-different PIM (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:PIM"
+
+\end_inset
+
+) used by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ allows construction of any possible model.
+ 
+\end_layout
+
+\begin_layout Standard
+Typically, a model with all-different parameters is not useful but restricted
+ (subset) models can be constructed with a design matrix.
+ For example, with an all-different PIM, the design matrix for Phi(t)p(.)
+ is shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Design-matrix"
+
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\boldsymbol{X}$
+\end_inset
+
+ is the design matrix and 
+\begin_inset Formula $\boldsymbol{\beta}$
+\end_inset
+
+ is the vector of parameters, the real parameters, 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+, are computed with a default inverse logit link function:
+\begin_inset Formula 
+\[
+\left[\begin{array}{c}
+\boldsymbol{\phi}\\
+\boldsymbol{p}
+\end{array}\right]=\left[1+exp(\boldsymbol{-X}\boldsymbol{\beta})\right]{}^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+For the example in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Design-matrix"
+
+\end_inset
+
+, we would have 
+\begin_inset Formula $\boldsymbol{\beta}=(\beta_{1},\beta_{2},\beta_{3},\beta_{4})$
+\end_inset
+
+.
+ Some example real parameter calculations are 
+\begin_inset Formula $\phi_{2}=\left[1+exp(\boldsymbol{-}\beta_{1}-\beta_{2})\right]{}^{-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{6}=\left[1+exp(\boldsymbol{-}\beta_{4})\right]{}^{-1}$
+\end_inset
+
+ where 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $p_{6}$
+\end_inset
+
+ represents the sixth parameter in an all-different PIM for p but it is
+ actually index value 12 and the twelfth row in the design matrix
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+.
+ Other link functions are available and some more natural link functions
+ like log are used to bound real parameters above 0 (e.g., abundance).
+ 
+\end_layout
+
+\begin_layout Standard
+In R, the function model.matrix can be used to construct design matrices
+ with a formula from data.
+ In this case, the data are not the capture histories nor necessarily informatio
+n about the animals.
+ To use model.matrix, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ creates 'design data' which are data attributed to the possible parameters.
+ The concept of design data will be unfamiliar to anyone using 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ and it should not be confused with a design matrix which is created from
+ the design data.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Design data
+\begin_inset Quotes erd
+\end_inset
+
+ could have also been called 
+\begin_inset Quotes eld
+\end_inset
+
+parameter data
+\begin_inset Quotes erd
+\end_inset
+
+ because they are data associated with the various parameters in the model.
+ The best way to describe design data is with an example.
+ For a CJS model with triangular PIMs, each row in the PIM represents a
+ cohort (animals initially first caught on the occasion), columns represent
+ times/occasions, and diagonals represent age (or time since marking) (Table
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Design-data"
+
+\end_inset
+
+).
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ creates design data cohort, age, and time as factor (categorical) variables
+ with labels shown in (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Design-data"
+
+\end_inset
+
+).
+ Also, it creates numeric variables Cohort, Time and Age and each has an
+ origin of 0 (e.g., Time=0 for time=1990 in 
+\begin_inset Formula $\phi$
+\end_inset
+
+ design data).
+ In 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+, factor variables for individual animals (e.g., sex) are handled as groups
+ and each group has a separate PIM for each parameter.
+ If there was a group variable of sex for the simple example, the design
+ data for 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+ would each have 12 rows and an added field 'sex' that could have values
+ 'F' for the first 6 rows and 'M' for the last 6 rows.
+ The design matrix would have 24 rows because there are 12 possible parameters
+ for both 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ Design data are not limited to the values 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ creates by default.
+ Additional variables can be added (e.g., effort or environmental conditions)
+ and used in the formulas.
+ 
+\end_layout
+
+\begin_layout Standard
+Using the design data in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Design-data"
+
+\end_inset
+
+, the formula ~time for 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and ~1 (intercept only) for 
+\begin_inset Formula $p$
+\end_inset
+
+ would create the design matrix in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Design-matrix"
+
+\end_inset
+
+.
+ More realistic formula are described with the dipper example below.
+ In creating the complete design matrix for all parameters, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ uses the design matrices for each parameter as a sub-matrix with padded
+ 0 matrices because typically real parameters do not share the same beta
+ (
+\begin_inset Formula $\beta$
+\end_inset
+
+) parameter:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Phi design matrix
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+p design matrix
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Occasionally model parameters describe a similar quantity and they will
+ share columns in the design matrix and this capability is handled with
+ a share argument in the model specification for some parameters and models.
+ An example is 
+\begin_inset Formula $p$
+\end_inset
+
+, initial capture probability and 
+\begin_inset Formula $c$
+\end_inset
+
+, recapture probability in closed capture models.
+\end_layout
+
+\begin_layout Standard
+In developing models with many parameters, groups and occasions, it became
+ clear that using all-different PIM structures resulted in very large design
+ matrices with longer run times in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ and some models would simply exceed the available memory.
+ To avoid this problem, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ simplifies the PIM structure after building the design matrix to use only
+ as many indices as there are unique rows in the design matrix.
+ With the example and the model Phi(~1)p(~1), there are only 2 unique rows
+ in the design matrix even though there are 12 rows with the all-different
+ PIMs.
+ Prior to building the input file for 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+, with these formulas, the indices 1-6 would be set to 1 and 7-12 would
+ be set to 2.
+ The simplified PIMs and a design matrix with 2 rows and 2 columns would
+ be passed in the file to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+.
+ The all-different indices are maintained in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ to handle model averaging of models because each model could have a different
+ simplified PIM structure but all models will have the same all-different
+ PIM structures.
+ Simplification is transparent except that the labeling of real parameters
+ in the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ output file is irrelevant and should be ignored.
+ Real parameter labeling in the summary output and displays in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ will be correct.
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size normal
+\begin_inset VSpace 0.3in
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+\size normal
+Dipper data example
+\series default
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size normal
+As an example, I use the European dipper (
+\shape italic
+Cinclus cinclus
+\shape default
+) data analyzed by 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Lebreton1992"
+
+\end_inset
+
+.
+ To demonstrate the use of individual covariates for 
+\begin_inset Formula $\phi$
+\end_inset
+
+, I added an imaginary static covariate 
+\begin_inset Quotes eld
+\end_inset
+
+weight
+\begin_inset Quotes erd
+\end_inset
+
+ (set to a random value between 1 and 10).
+ Also, for the 
+\begin_inset Formula $\phi$
+\end_inset
+
+ design data I created a flood covariate with a value of 1 for 1982 and
+ 1983 and 0 otherwise.
+ 
+\end_layout
+
+\begin_layout Standard
+The dipper data are contained in the package and can be retrieved with data(dipp
+er) after attaching the package (library(RMark)).
+ For your own data, you can use the functions convert.inp to convert an existing
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ input file or import.chdata which is a convenience wrapper for read.table,
+ or you can use any of the data input functions in R.
+ The only restriction on the data frame is that it must contain a variable
+ named ch which is a character string and if the capture history represents
+ more than one animal, the field name for capture frequencies is named freq.
+ The frequency is assumed to be 1 for each history if the variable freq
+ does not exist.
+ Any number or type of additional fields can be included.
+ The only restrictions are that grouping variables (e.g., sex) must be factor
+ variables, and individual (animal-specific) covariates (e.g., weight) must
+ be numeric.
+ The only other restriction is on the naming of time-varying individual
+ covariates.
+ The nest survival model has a completely different input format.
+ Refer to the documentation for more information on those topics.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(12345)
+\end_layout
+
+\begin_layout Plain Layout
+
+library(xtable)
+\end_layout
+
+\begin_layout Plain Layout
+
+data(dipper)
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper$weight=rnorm(nrow(dipper),mean=10,sd=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+cleanup(ask=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Once the data are in the R workspace, a model can be run with a single call
+ to the function mark; however, that is only useful for demonstration purposes.
+ It is better to follow a four step procedure: 1) process the data, 2) make
+ and modify (if necessary) the design data, 3) write a function for the
+ set of models to be fitted, and 4) run the function to fit the models.
+ Clearly, more steps will ensue to look at goodness of fit, model averaging
+ and prediction, plotting etc.
+ But, I'll focus here on the initial process and the documentation provides
+ more details on those subjects and more including setting initial values,
+ fixing real parameters, etc.
+ I use a naming convention for objects in the steps but any valid object
+ names can be used.
+\end_layout
+
+\begin_layout Standard
+Step 1 is analogous to the first step in using 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ in which you specify the type of capture-recapture model and the various
+ descriptors like time intervals.
+ Many of the items you specify on the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ screen like number of occasions, group labels, and individual covariate
+ names are set for you in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+.
+ But others like title, number of mixtures and time intervals are specified
+ as arguments.
+ The function process.data creates a list structure that contains the original
+ dataframe and the various attributes that describe the data and how it
+ should be analyzed.
+ This list structure is called a processed dataframe and it is used for
+ analysis because it has the attributes that describe how the data should
+ be treated (e.g.
+ CJS vs JS).
+ For this example, we need to specify: 1) we want to use CJS (
+\begin_inset Quotes eld
+\end_inset
+
+recaptures only
+\begin_inset Quotes erd
+\end_inset
+
+) as the model structure, 2) the time value for the first occasion (begin.time)
+ is 1981 so we can interpret the time labeling more easily, and 3) that
+ we want to use the factor variable 
+\begin_inset Quotes eld
+\end_inset
+
+sex
+\begin_inset Quotes erd
+\end_inset
+
+ to define groups.
+ These are all passed as arguments in the call to process.data and the result
+ is stored in dipper.proc as shown below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper.proc=process.data(dipper, model="CJS", 
+\end_layout
+
+\begin_layout Plain Layout
+
+             groups="sex", begin.time=1981)
+\end_layout
+
+\begin_layout Plain Layout
+
+names(dipper.proc)
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper.proc$nocc
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper.proc$time.intervals
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Values such as number of occasions (nocc) are computed from the data and
+ others like time intervals have default values.
+ The data are in dipper.proc$data.
+ Some elements in the list are unused depending on the model.
+ Little needs to be done with the processed dataframe because it is just
+ used as a container to store the data and its attributes.
+ If you modify the original dataframe, just remember to run it through process.da
+ta again because the unchanged data are stored in the processed dataframe
+ and that is what is used in the analysis and not the original dataframe.
+ You'll also need to reprocess the dataframe if you wish to change processing
+ arguments like group structure.
+\end_layout
+
+\begin_layout Standard
+Step 2 is to create the design data and modify it, if necessary.
+ Below we create the design data for this dipper example and although there
+ are arguments that can be set with the function, none are needed here.
+ The function make.design.data is passed the name of the processed dataframe
+ and the result is stored in dipper.ddl where the suffix is short for design
+ data list because the result is a list of dataframes, one for each type
+ of parameter in the model and a list of pimtypes for each parameter.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper.ddl=make.design.data(dipper.proc)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+For CJS, the dataframes are Phi and p and each dataframe contains 42 records:
+ 21 for females and 21 for males.
+ There are 5 factor variables, group, sex, cohort, age and time and there
+ are 3 numeric variables Cohort, Time and Age which are continuous versions
+ of the respective factor variables with the lower case letter.
+ The group variable is a composite of the values of all factor variables
+ used to define the groups but when there is a single factor variable as
+ in this case it is redundant.
+ 
+\end_layout
+
+\begin_layout Standard
+With these default design data you can specify a fairly rich set of models;
+ however, you are not limited to the default design data.
+ Any number of fields can be added to the design data.
+ For example, you can add fields that bin age, time or cohort to constrains
+ parameters to be the same within each bin.
+ Also, you can define additional variables such as a 0/1 flood variable
+ to specify the years in which there was a flood.
+ Floods affected survival in 1982 and 1983, so a variable flood is assigned
+ 1 for 1982 and 1983 and everywhere else it is 0.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper.ddl$Phi$flood=ifelse(dipper.ddl$Phi$time%in%1982:1983,1,0)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Any group, cohort or time-specific covariate (e.g., effort, weather) can be
+ included in the design data and these can be used in the formula to create
+ the design matrix.
+ Below are the design data for the first 7 Phi parameters for Females and
+ Males excluding the indices: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper.ddl$Phi[c(1:7,22:28),-(1:2)]
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Before I jump to step 3, let's examine some model formula that only use
+ fields in the design data and I'll demonstrate the use of model.matrix in
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+.
+ Any formula can be used to create the design matrix using the fields in
+ the design data.
+ The formula ~1 is equivalent in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ to the constant or .
+ model, ~time is equivalent to the t model and ~Time is equivalent to the
+ T model with a linear trend over time.
+ Consider a model with time varying survival.
+ This portion of the design matrix can be constructed as follows (note:
+ output restricted to first 6 rows):
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dm=model.matrix(~time,dipper.ddl$Phi)
+\end_layout
+
+\begin_layout Plain Layout
+
+head(dm,6)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Notice that it uses treatment contrasts and the first level of the factor
+ variable time (1981) is the intercept.
+ In contrast, the pre-defined models in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ uses the SAS convention of specifying the last factor level as the intercept.
+ You can get this same behavior by re-leveling the factor variable:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper.ddl$Phi$time=relevel(dipper.ddl$Phi$time,"1986")
+\end_layout
+
+\begin_layout Plain Layout
+
+dm=model.matrix(~time,dipper.ddl$Phi)
+\end_layout
+
+\begin_layout Plain Layout
+
+head(dm,6)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Here is an example that creates a design matrix for an additive model of
+ sex and flood.
+ I show the first 6 rows of the female parameters and the last 6 rows of
+ the male parameters:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dm=model.matrix(~sex+flood,dipper.ddl$Phi)
+\end_layout
+
+\begin_layout Plain Layout
+
+dm[c(1:4,37:40),]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Interactions are specified with the * operator as in this example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dm=model.matrix(~sex*flood,dipper.ddl$Phi)
+\end_layout
+
+\begin_layout Plain Layout
+
+dm[c(1:4,37:40),]
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Step 3 involves writing a function that provides a set of parameter specificatio
+ns for each type of parameter (e.g., Phi and p) and the code to fit the models.
+ You can specify a restricted set of combinations but here I'll use mark.wrapper
+ calls the mark function to fit a model for each combination of the parameter
+ specifications.
+ A parameter specification is a list that gives a formula and other optional
+ arguments like a link and others that are described in the documentation.
+ It is best to store each parameter in an object with the naming convention
+ of parameter.model_name.
+ For example, it could be explanatory like Phi.sex_plus_flood or numerical
+ like Phi.1.
+ The important aspect is that it includes the name of the parameter followed
+ by a period and then some additional text to differentiate between the
+ various specifications.
+ Below is an example function called dipper.analysis which has no arguments
+ (empty parentheses).
+ It has 4 parameter specifications for Phi and p.
+ It calls create.model.list with a model type of 
+\begin_inset Quotes eld
+\end_inset
+
+CJS
+\begin_inset Quotes erd
+\end_inset
+
+ so it knows the names of the parameters to search for the list of specification
+s.
+ The final line of code is the call to mark.wrapper which has as its first
+ argument cml which is the object created to contain the list of models.
+ It also has arguments data and ddl to specify the processed data and the
+ design data list.
+ All arguments of function mark can be passed through mark.wrapper.
+ Below, I set output=FALSE to avoid all of the output being displayed.
+ Because the call to mark.wrapper is the last line in the function it is
+ returned as the result when dipper.analysis is called.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<keep.source=T>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# Create function with parameter specifications to fit models
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper.analysis=function()
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+   # Create specifications for Phi and p
+\end_layout
+
+\begin_layout Plain Layout
+
+   Phi.1=list(formula=~time)
+\end_layout
+
+\begin_layout Plain Layout
+
+   Phi.2=list(formula=~-1+time,link="sin")
+\end_layout
+
+\begin_layout Plain Layout
+
+   Phi.3=list(formula=~sex+weight)
+\end_layout
+
+\begin_layout Plain Layout
+
+   Phi.4=list(formula=~flood)
+\end_layout
+
+\begin_layout Plain Layout
+
+   p.1=list(formula=~1)
+\end_layout
+
+\begin_layout Plain Layout
+
+   p.2=list(formula=~time)
+\end_layout
+
+\begin_layout Plain Layout
+
+   p.3=list(formula=~Time)
+\end_layout
+
+\begin_layout Plain Layout
+
+   p.4=list(formula=~sex)
+\end_layout
+
+\begin_layout Plain Layout
+
+   # Create a list of combinations of parameter specifications; 
+\end_layout
+
+\begin_layout Plain Layout
+
+   # the argument "CJS" tells it to look for CJS parameters
+\end_layout
+
+\begin_layout Plain Layout
+
+   cml=create.model.list("CJS")
+\end_layout
+
+\begin_layout Plain Layout
+
+   # Call mark.wrapper; the arguments are cml and then like with 
+\end_layout
+
+\begin_layout Plain Layout
+
+   # the mark function the processed data and ddl are specified,
+\end_layout
+
+\begin_layout Plain Layout
+
+   # but they must be named data= and ddl= because they are passed
+\end_layout
+
+\begin_layout Plain Layout
+
+   # through to the mark function; I've also set output=FALSE 
+\end_layout
+
+\begin_layout Plain Layout
+
+   # so it doesn't show a summary for the 16 models but it will
+\end_layout
+
+\begin_layout Plain Layout
+
+   # show the model being fitted and any notations or errors.
+\end_layout
+
+\begin_layout Plain Layout
+
+   mark.wrapper(cml,data=dipper.proc,ddl=dipper.ddl,output=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dummy=capture.output(dipper.results<-dipper.analysis())
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Step 4 invokes the function to fit the models and store the results in an
+ object (dipper.results=dipper.analysis()).
+ The object dipper.results is a list with class “marklist” that the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ package creates and understands.
+ The list contains the mark model object for each fitted model and the model
+ selection table which is dipper.results$model.table for this set of models
+ (Table 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{tab1}
+\end_layout
+
+\end_inset
+
+).
+ Typing dipper.results also displays the model selection table.
+ The models are listed in increasing order of AICc and the row number is
+ the model number which can be used to extract the model .
+ For example, if I wanted to get a summary of the best model which is model
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Sexpr{rownames(dipper.results$model.table[1,])}
+\end_layout
+
+\end_inset
+
+, I could use:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<keep.source=T,eval=F>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+summary(dipper.results[[13]]) 
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The summary provides the type of fitted model, number of parameters, -2*log
+ likelihood, AICc, a summary of the beta parameters with labels created
+ by model.matrix, and then the real parameters shown in the PIM format for
+ each parameter and each group.
+ For CJS, the PIMs are triangular and viewing the parameters in this way
+ makes it easy to identify the model structure.
+ In the real parameter output (Table 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{tab2}
+\end_layout
+
+\end_inset
+
+), it is easy to see the differences across the sexes and times and the
+ pattern in survival due to the flood covariate in 1982 and 1983.
+ The parameters for model 2 will match those in Table 11 of 
+\size normal
+
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Lebreton1992"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+I'll examine model with sex and weight for survival to describe models with
+ individual covariates.
+ In the design matrix, individual covariates are handled by specifying the
+ covariate name which is 
+\begin_inset Quotes eld
+\end_inset
+
+weight
+\begin_inset Quotes erd
+\end_inset
+
+ in this example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+dipper.results[[11]]$design.matrix
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK
+\end_layout
+
+\end_inset
+
+| replaces the value for 
+\begin_inset Quotes eld
+\end_inset
+
+weight
+\begin_inset Quotes erd
+\end_inset
+
+ for each animal and computes the design matrix and parameters for each
+ animal.
+ Inclusion of covariate names cannot be handled directly with model.matrix,
+ so you cannot create a design matrix directly if the formula contains an
+ individual covariate.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ creates a dummy variable with value of 1 for any individual covariate,
+ uses model.matrix to create the design matrix and then replaces the values
+ with the covariate name for the appropriate columns.
+ This enables an individual covariate to be used with interactions with
+ design data variables and other individual covariates.
+ With individual covariates there is no single set of real parameter estimates
+ because they depend on the value of the individual covariates.
+ Below I show how you can obtain predictions of survival at a range of weight
+ values for each species and plot the relationship and confidence interval.
+ The following also shows the use of PIMs to examine the simplified or all-diffe
+rent PIMs for a parameter.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<keep.source=TRUE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# Compute min and max weights and 
+\end_layout
+
+\begin_layout Plain Layout
+
+# use it to construct range for plotting
+\end_layout
+
+\begin_layout Plain Layout
+
+minmass=min(dipper$weight)
+\end_layout
+
+\begin_layout Plain Layout
+
+maxmass=max(dipper$weight)
+\end_layout
+
+\begin_layout Plain Layout
+
+mass.values=minmass+(0:30)*(maxmass-minmass)/30
+\end_layout
+
+\begin_layout Plain Layout
+
+# Look at pim values to get index for female 
+\end_layout
+
+\begin_layout Plain Layout
+
+# and male for real parameters
+\end_layout
+
+\begin_layout Plain Layout
+
+PIMS(dipper.results[[11]],"Phi",simplified=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Set up graphics device with 2 plot areas
+\end_layout
+
+\begin_layout Plain Layout
+
+pdf("weight_plots.pdf") 
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mfrow=c(2,1)) 
+\end_layout
+
+\begin_layout Plain Layout
+
+# Compute and plot survival values for females
+\end_layout
+
+\begin_layout Plain Layout
+
+Phibymass=covariate.predictions(dipper.results[[11]],
+\end_layout
+
+\begin_layout Plain Layout
+
+    data=data.frame(weight=mass.values), indices=c(1))
+\end_layout
+
+\begin_layout Plain Layout
+
+# Plot predicted model averaged estimates by weight 
+\end_layout
+
+\begin_layout Plain Layout
+
+# with pointwise confidence intervals
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(Phibymass$estimates$covdata, Phibymass$estimates$estimate,
+\end_layout
+
+\begin_layout Plain Layout
+
+   type="l",lwd=2,xlab="Mass(g)",ylab="Female Survival",ylim=c(0,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+lines(Phibymass$estimates$covdata, Phibymass$estimates$lcl,lty=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+lines(Phibymass$estimates$covdata, Phibymass$estimates$ucl,lty=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Compute and plot survival values for males
+\end_layout
+
+\begin_layout Plain Layout
+
+Phibymass=covariate.predictions(dipper.results[[11]],
+\end_layout
+
+\begin_layout Plain Layout
+
+  data=data.frame(weight=mass.values),indices=c(22))
+\end_layout
+
+\begin_layout Plain Layout
+
+plot(Phibymass$estimates$covdata, Phibymass$estimates$estimate, 
+\end_layout
+
+\begin_layout Plain Layout
+
+ type="l",lwd=2,xlab="Mass(g)",ylab="Male Survival",ylim=c(0,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+lines(Phibymass$estimates$covdata, Phibymass$estimates$lcl,lty=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+lines(Phibymass$estimates$covdata, Phibymass$estimates$ucl,lty=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+dd=dev.off()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size normal
+\begin_inset VSpace 0.3in
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+\size normal
+Summary
+\end_layout
+
+\begin_layout Standard
+Beyond the nicety and ease of providing a formula based interface to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK
+\end_layout
+
+\end_inset
+
+|, use of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ enables all of the other tools in R to be used for data manipulation, plotting
+ etc.
+ With the various database packages in R like RODBC or mysql, and data manipulat
+ion packages like reshape2, data extraction, manipulation and construction
+ of capture histories can be automated eliminating the need for temporary
+ files.
+ The results of the fitted model can be further manipulated (e.g., variance
+ components) and displayed graphically.
+ Using the tools in R, you can also easily conduct simulations to produce
+ capture histories, compute estimates from 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|MARK|
+\end_layout
+
+\end_inset
+
+ and iterate for simulation testing or bootstrapping.
+\end_layout
+
+\begin_layout Standard
+The real benefit of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ is realized with the use of Sweave and a LaTeX publishing system to produce
+ manuscripts that are reproducible and internally documented.
+ This manuscript was created with those tools.
+ All of the tables, figures and quantities in the text are inserted directly
+ rather than manually with the obvious potential for error.
+ Changing the manuscript to accommodate changes in the data only requires
+ recompiling the manuscript which re-runs the analysis.
+ Computer-intensive analysis can be cached and re-run selectively.
+ Exchanging documents and data with other researchers provides a useful
+ educational tool.
+ When a question arises about how a particular value was computed, the code
+ will either be in the document or external package.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb|RMark|
+\end_layout
+
+\end_inset
+
+ does not preclude making errors but it does make them less likely and more
+ easily traceable.
+\end_layout
+
+\begin_layout Standard
+
+\size normal
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "markedWriteUpBib"
+options "jecol"
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:PIM"
+
+\end_inset
+
+Examples of constant, time and all-different PIMs for a CJS model with 4
+ annual sampling occasions starting in 1990.
+ The PIMs are triangular because animals first caught on occasion i can
+ only be recaptured on occasions i+1 and beyond.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="12">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Constant
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+All-different
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Recapture
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Recapture
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Recapture
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Initial Capture
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1993
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1993
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1993
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Design-matrix"
+
+\end_inset
+
+Design matrix for a CJS Phi(t)p(.) model with 4 annual sampling occasions
+ starting in 1990 and all-different PIMs.
+ Indices 1-6 are used for 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 7-12 for 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ The index specifies the row in the design matrix and the columns are the
+ parameters.
+ This is the default treatment contrast used in R in which the first level
+ of a factor is the intercept and the remaining are 'treatments'.
+ Survival refers to an interval between occasions and is labeled based on
+ the beginning time.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="13" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Index
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi$
+\end_inset
+
+: Intercept
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi$
+\end_inset
+
+:1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi$
+\end_inset
+
+:1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+: Intercept
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Design-data"
+
+\end_inset
+
+Design data for a CJS model with 4 annual sampling occasions starting in
+ 1990 and all-different PIMs and age representing number of years since
+ initial marking.
+ The index is the row number in the parameters design data.
+ The indices into the design matrix (called the all-diff-index) are 1 to
+ 12 and determined by the specified order of parameters in the model.
+ The design data for 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+ are slightly different because survival refers to the interval between
+ occasions and the times and ages are based on the time at the beginning
+ of the interval (e.g., age 0 survival is from age 0 to age 1) and capture
+ refers to an occasion and the times and ages at that occasion.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="13" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Index
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cohort
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Age
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1993
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1993
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1992
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1993
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=F,results=tex>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+print(xtable(dipper.results$model.table[,-(1:2)],caption="Model selection
+ table for CJS analysis of dipper data.
+ Deviance values change between models because for models without individual
+ covariates, it is the residual deviance and for models with individual
+ covariates it is -2 log-likelihood.
+ The argument use.lnl can be set to display -2l log-likehood instead of deviance."
+,label="tab1"),table.placement="ht",caption.placement="top",latex.environments="cen
+ter",floating.environment="sidewaystable")
+\end_layout
+
+\begin_layout Plain Layout
+
+cat("
+\backslash
+
+\backslash
+clearpage")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=F,results=tex>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+print(xtable(summary(dipper.results[[13]])$real$Phi[[1]]$pim,caption="Estimates
+ of survival from best model for female dippers.
+ ",label="tab2",digits=3),table.placement="ht",caption.placement="top",latex.enviro
+nments="center")
+\end_layout
+
+\begin_layout Plain Layout
+
+cat("
+\backslash
+
+\backslash
+clearpage")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=5in,height=7in]
+\end_layout
+
+\begin_layout Plain Layout
+
+{weight_plots.pdf}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Predicted female and male dipper survival at various initial values of mass(g).
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

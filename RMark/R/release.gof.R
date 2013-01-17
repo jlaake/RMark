@@ -55,7 +55,7 @@ release.gof <-
   {
 	  if(!exists("MarkPath"))
 	  {
-		  MarkPath=Sys.which("mark.exe")
+		  MarkPath=Sys.which("rel_32.exe")
 		  if(MarkPath=="")
 			  if(file.exists("c:/Program Files/Mark/rel_32.exe"))
 				  MarkPath=shQuote("c:/Program Files/Mark/rel_32.exe")

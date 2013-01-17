@@ -1095,10 +1095,7 @@ verb|MARK|
 \end_inset
 
  that fits the models.
-
  
-\lang english
-
 \begin_inset ERT
 status open
 
@@ -1111,10 +1108,7 @@ verb|RMark|
 
 \end_inset
 
- creates an input text file, runs
- 
-\lang english
-
+ creates an input text file, runs 
 \begin_inset ERT
 status open
 

@@ -1,3 +1,10 @@
+RMark 2.1.5 (11 Jan 2013)
+--------------------------
+CHANGES
+
+* modified release.gof which was not connecting to rel32.exe unless MarkPath was specified
+
+
 RMark 2.1.4 (11 Dec 2012)
 --------------------------
 CHANGES

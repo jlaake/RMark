@@ -1,0 +1,14 @@
+citHeader("To cite package 'RMark' in publications use:")
+
+citEntry(entry="Manual",
+         title = "RMark: An R Interface for Analysis of Capture-Recapture Data with MARK, AFSC Processed Rep 2013-01, 25p. Alaska Fish. Sci. Cent., NOAA, Natl. Mar. Fish. Serv., 7600 Sand Point Way NE, Seattle WA 98115",
+         author = personList(as.person("Laake, J.L.")),
+         year = 2013,
+
+
+         textVersion =
+         paste("Laake, J.L. (",
+               2013,
+               "). RMark: An R Interface for Analysis of Capture-Recapture Data with MARK. AFSC Processed Rep 2013-01, 25p. Alaska Fish. Sci. Cent., NOAA, Natl. Mar. Fish. Serv., 7600 Sand Point Way NE, Seattle WA 98115",
+                ".", sep=""))
+

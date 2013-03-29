@@ -305,6 +305,20 @@ else
 #
 if(is.null(ddl)) ddl=make.design.data(data.proc,design.parameters,right=right)
 #
+#  check to make sure all entered as lists
+#
+tryCatch(length(model.parameters), error = function(e) cat("Make sure you have a tilde at the beginning of each formula\n"))
+if(length(model.parameters)!=0)
+	for(i in 1:length(model.parameters))
+	{
+		if(!is.list(model.parameters[[i]]))
+		{
+			cat("\nEach parameter distribution must be specified as a list\n")
+			stop()
+		}
+		if(is.language(model.parameters[[i]][[1]])&(is.null(names(model.parameters[[i]])) || names(model.parameters[[i]])[1]==""))cat("Make sure you have an = between formula and tilde for formula\n")
+	}
+#
 # Run model as many as times requested if needed
 #
 i=0

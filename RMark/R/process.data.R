@@ -397,7 +397,7 @@ if(number.of.factors==0)
        return(list(data=data,model=model,mixtures=mixtures,
                    freq=matrix(data$freq,ncol=1,dimnames=list(1:number.of.ch,"group1")),
                    nocc=nocc, nocc.secondary=nocc.secondary,time.intervals=time.intervals,begin.time=begin.time,
-                   age.unit=1,initial.ages=initial.ages[1],group.covariates=NULL,nstrata=nstrata,
+                   age.unit=age.unit,initial.ages=initial.ages[1],group.covariates=NULL,nstrata=nstrata,
                    strata.labels=strata.labels,counts=counts,reverse=reverse))
    }
    else
@@ -411,7 +411,7 @@ if(number.of.factors==0)
        return(list(data=data,model=model,mixtures=mixtures,
                    freq=matrix(rep(1,number.of.ch),ncol=1,dimnames=list(1:number.of.ch,"group1")),
                    nocc=nocc,  nocc.secondary=nocc.secondary, time.intervals=time.intervals,begin.time=begin.time,
-                   age.unit=1,initial.ages=initial.ages[1],group.covariates=NULL,nstrata=nstrata,
+                   age.unit=age.unit,initial.ages=initial.ages[1],group.covariates=NULL,nstrata=nstrata,
                    strata.labels=strata.labels,counts=counts,reverse=reverse))
    }
 }

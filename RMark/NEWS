@@ -1,8 +1,27 @@
-RMark 2.1.5 (11 Jan 2013)
+RMark 2.1.5 (28 Mar 2013)
 --------------------------
+NEW FEATURES
+
+* argument mata and associated arguments were added to model.average.list and model.average.marklist to enable calculation of confidence
+intervals based on Turek, D. and Fletcher, D. (2012). Model-Averaged Wald Confidence Intervals. Computational Statistics and Data Analysis, 56(9), p.2809-2815.
+Daniel Turek provided the function mata.wald.  In model.average.list the mata.wald function is applied to the estimates without any transformation if
+mata=TRUE.  In model.average.marklist, the confidence intervals are applied to the estimates in the link space and then the end points are transformed to the real space.
+
+
 CHANGES
 
+* Modified code in extract.mark.output to allow = sign in formula for use of splines which was suggested by Alexey Altukhov and Eli Gurarie. An example is mark(dipper,model.parameters=list(Phi=list(formula=~bs(Time,df=3)))). splines package must be attached.
+
+
+BUG FIXES
+
 * modified release.gof which was not connecting to rel32.exe unless MarkPath was specified
+
+* modified model.average.list which failed if var-cov matrices were provided for single estimates. Thanks to Alex Zerbini for discovering this problem.
+
+* modified make.design.data so it did not create session.labels except for secondary parameters
+
+* fixed bug in process.data which was always using age.unit=1 if there was not an age group.
 
 
 RMark 2.1.4 (11 Dec 2012)

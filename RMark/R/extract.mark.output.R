@@ -65,15 +65,15 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   n=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))
   x=grep("-2logL {",out,fixed=TRUE)
 #  x=grep("-2logL {",out,ignore.case=TRUE, extended=FALSE)
-  lnl=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))
+  lnl=type.convert(substr(out[x],regexpr("} = ",out[x])+4,nchar(out[x])))
   x=grep("Number of Estimated",out,ignore.case=TRUE)
-  npar=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))
+  npar=type.convert(substr(out[x],regexpr("} =",out[x])+4,nchar(out[x])))
   x=grep("DEVIANCE ",out,ignore.case=TRUE)
-  deviance=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))[1]
+  deviance=type.convert(substr(out[x],regexpr("} =",out[x])+4,nchar(out[x])))[1]
   x = grep("DEVIANCE Degrees of Freedom ", out, ignore.case = TRUE)
-  deviance.df = type.convert(substr(out[x], regexpr("=", out[x])+1, nchar(out[x])))[1]
+  deviance.df = type.convert(substr(out[x], regexpr("} =", out[x])+4, nchar(out[x])))[1]
   x=grep("AICc",out,ignore.case=TRUE)
-  AICc=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))
+  AICc=type.convert(substr(out[x],regexpr("} =",out[x])+4,nchar(out[x])))
   if(length(links)==1)
      x1=grep(paste(links,"link"),out,ignore.case=TRUE)
   else 

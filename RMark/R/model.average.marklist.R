@@ -22,7 +22,7 @@
 #' using covariates. Note that this will only work with models created after
 #' v1.5.0 such that average covariate values are stored in each model object.
 #' 
-#' @usage \method{model.average}{marklist}(x, parameter, data, vcv, drop=TRUE, indices=NULL, revised=TRUE,...)
+#' @usage \method{model.average}{marklist}(x, parameter, data, vcv, drop=TRUE, indices=NULL, revised=TRUE, mata=FALSE, normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
 #' @S3method model.average marklist
 #' @param x a list of mark model results and a model.table constructed by
 #' \code{\link{collect.models}}
@@ -41,6 +41,18 @@
 #' available memory
 #' @param revised if TRUE, uses revised variance formula (eq 6.12 from Burnham
 #' and Anderson) for model averaged estimates and eq 6.11 when FALSE
+#' @param mata if TRUE, create model averaged tail area confidence intervals as described by Turek and Fletcher
+#' @param alpha The desired lower and upper error rate.  Specifying alpha=0.025
+#' corresponds to a 95% MATA-Wald confidence interval, an' 
+#' alpha=0.05 to a 90% interval.  'alpha' must be between 0 and 0.5.
+#' Default value is alpha=0.025.
+#' @param normal.lm Specify normal.lm=TRUE for the normal linear model case, and 
+#' normal.lm=FALSE otherwise.  When normal.lm=TRUE, the argument 
+#' 'residual.dfs' must also be supplied.  See USAGE section, 
+#' and Turek and Fletcher (2012) for additional details.
+#' @param residual.dfs A vector containing the residual (error) degrees of freedom 
+#' under each candidate model.  This argument must be provided 
+#' when the argument normal.lm=TRUE.
 #' @param ... additional arguments passed to specific functions
 #' @return If vcv=FALSE, the return value is a dataframe of model averaged
 #' estimates and standard errors for a particular type of real parameter (e.g.,
@@ -148,40 +160,8 @@
 #' model.average(dipper.results,vcv=TRUE,indices=c(1,43))  
 #' }
 #' 
-model.average.marklist<- function(x,parameter=NULL,data=NULL,vcv=FALSE,drop=TRUE,indices=NULL,revised=TRUE,...)
+model.average.marklist<- function(x,parameter=NULL,data=NULL,vcv=FALSE,drop=TRUE,indices=NULL,revised=TRUE,mata=FALSE, normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
 {
-# Computes model averaged real parameter estimates and their std errors for the values specified by
-# parameter (eg "Psi", "p" etc) using the models contained in model.list.  If parameter=NULL,
-# then all real parameters are model averaged. If vcv=TRUE, it also computes the v-c matrix of the
-# model averaged real parameters and the confidence intervals for the real parameters.
-#
-# Arguments:
-#
-#   x (model.list) - a list of class "marklist" created by collect.models that contains
-#                MARK models that have been run and a model.table which summarizes AIC,
-#                weight etc for tne models
-#
-#   parameter  - a character string indicating which set of parameters should be averaged (eg "Psi", "S")
-#                if NULL then all real parameters are averaged.
-#
-#   data       - dataframe with covariate values that are averaged for estimates
-#
-#   vcv        - a logical indicating whether the v-c matrix and conf intervals for the
-#                real parameters should be computed
-#
-#   drop       - if TRUE, models with any non-positive variance for betas are dropped
-#
-#   indices    - a vector of parameter indices from the all-different PIM forumlation
-#                of the parameter estimates that should be presented.  This argument only
-#                works if parameter argument = NULL.  The primary purpose of the argument
-#                is to trim the list of parameters in computing a vcv matrix of the real
-#                parameters which can get too big to be computed with the available memory.
-#    revised - it TRUE uses eq 6.12 in B&A and if FALSE it uses eq 4.9
-#
-# Value:
-#    if vcv=FALSE, it returns a dataframe of the estimates, se and related data
-#    if vcv=TRUE, it returns a list containing the dataframe above with confidence intervals added
-#               and a v-c matrix
 #
 # Check validity of arguments and set up some variables
 #
@@ -410,12 +390,39 @@ else
    row.names(vcv.real)=result$par.index
    colnames(vcv.real)=row.names(vcv.real)
    link.list=compute.links.from.reals(result$estimate,model.list[[1]],parm.indices=result$par.index,vcv.real=vcv.real,use.mlogits=FALSE)
-   result$lcl=link.list$estimates-1.96*sqrt(diag(link.list$vcv))
-   result$ucl=link.list$estimates+1.96*sqrt(diag(link.list$vcv))
-   result$lcl=apply(data.frame(x=result$lcl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
-   result$ucl=apply(data.frame(x=result$ucl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
-   result$lcl[is.na(result$lcl)]=result$estimate[is.na(result$lcl)]
-   result$ucl[is.na(result$ucl)]=result$estimate[is.na(result$ucl)]
+   if(!mata)
+   {
+	   result$lcl=link.list$estimates-qnorm(1-alpha,0,1)*sqrt(diag(link.list$vcv))
+	   result$ucl=link.list$estimates+qnorm(1-alpha,0,1)*sqrt(diag(link.list$vcv))
+	   result$lcl=apply(data.frame(x=result$lcl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
+	   result$ucl=apply(data.frame(x=result$ucl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
+	   result$lcl[is.na(result$lcl)]=result$estimate[is.na(result$lcl)]
+	   result$ucl[is.na(result$ucl)]=result$estimate[is.na(result$ucl)]
+   } else
+   {
+	   weights=NULL
+	   for (j in 1:length(reals))
+		   if(!is.null(reals[[j]]))weights=c(weights,model.table$weight[j])
+	   for(i in 1:nrow(result))
+	   {
+		   link.estimate=NULL
+		   link.se=NULL
+		   for (j in 1:length(reals))
+		   {
+			   if(!is.null(reals[[j]]))
+			   {
+				   link.list=compute.links.from.reals(reals[[j]]$estimate[i],model.list[[1]],parm.indices=result$par.index[i],vcv.real=vcv.real[result$par.index[i],result$par.index[i]],use.mlogits=FALSE)
+				   link.estimate=c(link.estimate,link.list$estimates)
+				   link.se=c(link.se,sqrt(diag(link.list$vcv)))
+			   }	   
+		   }
+		   interval=mata.wald(theta.hats=link.estimate, se.theta.hats=link.se, model.weights=weights, normal.lm=normal.lm, residual.dfs=residual.dfs, alpha=alpha) 	 
+		   result$lcl[i]=inverse.link(interval[1],link.list$links)
+		   result$ucl[i]=inverse.link(interval[2],link.list$links)
+	   }
+	   result$lcl[is.na(result$lcl)]=result$estimate[is.na(result$lcl)]
+	   result$ucl[is.na(result$ucl)]=result$estimate[is.na(result$ucl)]
+   }
    if(!is.null(parameter)) result=cbind(result,other.values[,(7:dim(other.values)[2])])
    return(list(estimates=result,vcv.real=vcv.real))
 }

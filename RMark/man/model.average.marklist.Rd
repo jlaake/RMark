@@ -3,7 +3,8 @@
 \title{Compute model averaged estimates of real parameters}
 \usage{
   \method{model.average}{marklist}(x, parameter, data, vcv,
-    drop=TRUE, indices=NULL, revised=TRUE,...)
+    drop=TRUE, indices=NULL, revised=TRUE, mata=FALSE,
+    normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
 }
 \arguments{
   \item{x}{a list of mark model results and a model.table
@@ -33,6 +34,26 @@
   \item{revised}{if TRUE, uses revised variance formula (eq
   6.12 from Burnham and Anderson) for model averaged
   estimates and eq 6.11 when FALSE}
+
+  \item{mata}{if TRUE, create model averaged tail area
+  confidence intervals as described by Turek and Fletcher}
+
+  \item{alpha}{The desired lower and upper error rate.
+  Specifying alpha=0.025 corresponds to a 95% MATA-Wald
+  confidence interval, an' alpha=0.05 to a 90% interval.
+  'alpha' must be between 0 and 0.5. Default value is
+  alpha=0.025.}
+
+  \item{normal.lm}{Specify normal.lm=TRUE for the normal
+  linear model case, and normal.lm=FALSE otherwise.  When
+  normal.lm=TRUE, the argument 'residual.dfs' must also be
+  supplied.  See USAGE section, and Turek and Fletcher
+  (2012) for additional details.}
+
+  \item{residual.dfs}{A vector containing the residual
+  (error) degrees of freedom under each candidate model.
+  This argument must be provided when the argument
+  normal.lm=TRUE.}
 
   \item{...}{additional arguments passed to specific
   functions}

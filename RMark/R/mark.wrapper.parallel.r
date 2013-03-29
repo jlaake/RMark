@@ -76,6 +76,7 @@
 #' \code{\link{create.model.list}}
 #' @keywords utility
 #' @examples 
+#' \dontrun{
 #' do.MSOccupancy=function()
 #' {
 #' #  Get the data
@@ -104,7 +105,7 @@
 #' 	return(mark.wrapper.parallel(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,cpus=2,parallel=TRUE))
 #' }
 #' xx=do.MSOccupancy()
-
+#' }
 mark.wrapper.parallel<-
 		function(model.list,silent=FALSE,use.initial=FALSE,initial=NULL, parallel=TRUE, cpus=2, threads=1, ...)
 {

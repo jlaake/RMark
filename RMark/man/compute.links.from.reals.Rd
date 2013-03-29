@@ -11,7 +11,7 @@
 
   \item{model}{MARK model object used only to obtain model
   structure/links etc.  If function is being called for
-  model averaged estimates, then amy model in the model
+  model averaged estimates, then any model in the model
   list used to construct the estimates is sufficient}
 
   \item{parm.indices}{index numbers from PIMS for rows in

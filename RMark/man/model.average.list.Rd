@@ -3,7 +3,8 @@
 \title{Compute model averaged estimates of real parameters from a list structure
 for estimates}
 \usage{
-  \method{model.average}{list}(x, revised=TRUE,...)
+  \method{model.average}{list}(x, revised=TRUE, mata=FALSE,
+    normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
 }
 \arguments{
   \item{x}{a list containing the following elements: 1)
@@ -20,6 +21,26 @@ for estimates}
   Anderson (2002) for model averaged se; otherwise it uses
   eq 4.9}
 
+  \item{mata}{if TRUE, create model averaged tail area
+  confidence intervals as described by Turek and Fletcher}
+
+  \item{alpha}{The desired lower and upper error rate.
+  Specifying alpha=0.025 corresponds to a 95% MATA-Wald
+  confidence interval, an' alpha=0.05 to a 90% interval.
+  'alpha' must be between 0 and 0.5. Default value is
+  alpha=0.025.}
+
+  \item{normal.lm}{Specify normal.lm=TRUE for the normal
+  linear model case, and normal.lm=FALSE otherwise.  When
+  normal.lm=TRUE, the argument 'residual.dfs' must also be
+  supplied.  See USAGE section, and Turek and Fletcher
+  (2012) for additional details.}
+
+  \item{residual.dfs}{A vector containing the residual
+  (error) degrees of freedom under each candidate model.
+  This argument must be provided when the argument
+  normal.lm=TRUE.}
+
   \item{...}{additional arguments passed to specific
   functions}
 }
@@ -29,7 +50,9 @@ for estimates}
   unconditional standard errors (square root of
   unconditional variance estimator)}
   \item{vcv}{model-averaged variance-covariance matrix if
-  \code{vcv} was specified input list}
+  \code{vcv} was specified input list} \item{lcl}{lower
+  confidence interval if mata=TRUE} \item{ucl}{upper
+  confidence interval if mata=TRUE}
 }
 \description{
   A generic function to compute model averaged estimates
@@ -133,6 +156,9 @@ print(mavg$vcv.real[Phi.indices,Phi.indices])
   BURNHAM, K. P., AND D. R. ANDERSON. 2002. Model selection
   and multimodel inference. A practical
   information-theoretic approach. Springer, New York.
+  Turek, D. and Fletcher, D. (2012). Model-Averaged Wald
+  Confidence Intervals. Computational Statistics and Data
+  Analysis, 56(9), p.2809-2815.
 }
 \seealso{
   \code{\link{model.average.marklist}}

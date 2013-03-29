@@ -111,6 +111,7 @@ specifications}
   which will start with a 0 initial value.
 }
 \examples{
+\dontrun{
 do.MSOccupancy=function()
 {
 #  Get the data
@@ -139,6 +140,7 @@ do.MSOccupancy=function()
 	return(mark.wrapper.parallel(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,cpus=2,parallel=TRUE))
 }
 xx=do.MSOccupancy()
+}
 }
 \author{
   Eldar Rakhimberdiev

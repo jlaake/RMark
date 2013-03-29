@@ -29,7 +29,7 @@
 #' model-averaged estimates is computed using equation 4.9 of Burnham and
 #' Anderson (2002) if if \code{revised=FALSE}; otherwise it uses eq 6.12.
 #' 
-#' @usage \method{model.average}{list}(x, revised=TRUE,...)
+#' @usage \method{model.average}{list}(x, revised=TRUE, mata=FALSE, normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
 #' @S3method model.average list
 #' @param x a list containing the following elements: 1) \code{estimate} - a
 #' vector or matrix of estimates, 2)a vector of model selection criterion value
@@ -39,16 +39,31 @@
 #' \code{vcv} which give the model-specific variance-covariance matrices.
 #' @param revised if TRUE it uses eq 6.12 from Burnham and Anderson (2002) for
 #' model averaged se; otherwise it uses eq 4.9
+#' @param mata if TRUE, create model averaged tail area confidence intervals as described by Turek and Fletcher
+#' @param alpha The desired lower and upper error rate.  Specifying alpha=0.025
+#' corresponds to a 95% MATA-Wald confidence interval, an' 
+#' alpha=0.05 to a 90% interval.  'alpha' must be between 0 and 0.5.
+#' Default value is alpha=0.025.
+#' @param normal.lm Specify normal.lm=TRUE for the normal linear model case, and 
+#' normal.lm=FALSE otherwise.  When normal.lm=TRUE, the argument 
+#' 'residual.dfs' must also be supplied.  See USAGE section, 
+#' and Turek and Fletcher (2012) for additional details.
+#' @param residual.dfs A vector containing the residual (error) degrees of freedom 
+#' under each candidate model.  This argument must be provided 
+#' when the argument normal.lm=TRUE.
 #' @param ... additional arguments passed to specific functions
 #' @return A list containing elements: \item{estimate}{vector of model-averaged
 #' estimates} \item{se}{vector of unconditional standard errors (square root of
 #' unconditional variance estimator)} \item{vcv}{model-averaged
 #' variance-covariance matrix if \code{vcv} was specified input list}
+#' \item{lcl}{lower confidence interval if mata=TRUE}
+#' \item{ucl}{upper confidence interval if mata=TRUE}
 #' @author Jeff Laake
 #' @seealso \code{\link{model.average.marklist}}
 #' @references BURNHAM, K. P., AND D. R. ANDERSON. 2002. Model selection and
 #' multimodel inference. A practical information-theoretic approach. Springer,
 #' New York.
+#' Turek, D. and Fletcher, D. (2012). Model-Averaged Wald Confidence Intervals. Computational Statistics and Data Analysis, 56(9), p.2809-2815.
 #' @keywords utility
 #' @examples
 #' \donttest{
@@ -106,7 +121,7 @@
 #' print(mavg$vcv.real[Phi.indices,Phi.indices])
 #' }
 #' 
-model.average.list=function(x,revised=TRUE,...)
+model.average.list=function(x,revised=TRUE, mata=FALSE, normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
 {
 #  A generic function to compute model averaged estimates and their std errors or variance-covariance matrix
 #
@@ -141,6 +156,7 @@ model.average.list=function(x,revised=TRUE,...)
   }   
   if(!is.null(x$vcv))
   {
+	 if(mata)stop("\nuse of vcv currently not supported with mata=TRUE\n")
      if(!is.list(x$vcv))stop("vcv must be a list")
      if(!is.matrix(x$vcv[[1]]))stop("each element of vcv must be a matrix")
      if(length(x$vcv)!=nrow(x$estimate))stop("number of vcv matrices does not match dimension (rows) of estimate")
@@ -170,6 +186,7 @@ model.average.list=function(x,revised=TRUE,...)
   if("vcv" %in% xnames)
   {
      se=t(sapply(x$vcv,function(x) sqrt(diag(x))))
+	 if(nrow(x$vcv[[1]])==1)se=t(se)
      if(revised)
         se=sqrt(apply((se^2+(t(t(estimates)-estimate))^2)*weights,2,sum,na.rm=TRUE))
      else 
@@ -181,11 +198,37 @@ model.average.list=function(x,revised=TRUE,...)
        cor=cor+weights[i]*x$vcv[[i]]/outer(xse,xse,"*")
      }
      vcv=cor*outer(se,se,"*")
-     return(list(estimate=estimate,se=se,vcv=vcv))
+	 if(!mata)
+		 return(list(estimate=estimate,se=se,vcv=vcv))
+	 else
+	 {
+		 lcl=NULL
+		 ucl=NULL
+		 for(i in 1:ncol(estimates))
+		 {
+			 interval=mata.wald(theta.hats=estimates[,i], se.theta.hats=x$se[,i], model.weights=weights, normal.lm=normal.lm, residual.dfs=residual.dfs, alpha=alpha) 	 
+			 lcl=c(lcl,interval[1])
+			 ucl=c(ucl,interval[1])
+		 }
+		 return(list(estimate=estimate,se=se,vcv=vcv,lcl=lcl,ucl=ucl))
+	 }
    }
    else
    {
      se=apply(sqrt(x$se^2+(t(t(estimates)-estimate))^2)*weights,2,sum,na.rm=TRUE)
-     return(list(estimate=estimate,se=se))
+	 if(!mata)
+		 return(list(estimate=estimate,se=se))
+	 else
+	 {
+		 lcl=NULL
+		 ucl=NULL
+		 for(i in 1:ncol(estimates))
+		 {
+			 interval=mata.wald(theta.hats=estimates[,i], se.theta.hats=x$se[,i], model.weights=weights, normal.lm=normal.lm, residual.dfs=residual.dfs, alpha=alpha) 	 
+			 lcl=c(lcl,interval[1])
+			 ucl=c(ucl,interval[2])
+		 }
+		 return(list(estimate=estimate,se=se,lcl=lcl,ucl=ucl))
+	 }
    }
 }

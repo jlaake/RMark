@@ -493,8 +493,11 @@ remove.unused.occasions=function(data,ddl)
                       parameters[[i]]$pim.type,parameters[[i]]$secondary, nstrata,
                       tostrata,strata.labels,subtract.stratum,common.zero=common.zero,sub.stratum=sub.stratum)
          if(!is.null(parameters[[i]]$mix) && parameters[[i]]$mix)design.data$mixture=as.factor(design.data$mixture)
-		 session.labels=data$begin.time+cumsum(c(0,data$time.intervals[data$time.intervals>0]))
-         if(parameters[[i]]$secondary)design.data$session=factor(session.labels[design.data$session])
+         if(parameters[[i]]$secondary)
+		 {
+			 session.labels=data$begin.time+cumsum(c(0,data$time.intervals[data$time.intervals>0]))
+			 design.data$session=factor(session.labels[design.data$session])
+		 }
          design.data$group=as.factor(design.data$group)
          if(!is.null(data$group.covariates))
             levels(design.data$group)=apply(data$group.covariates,1,paste,collapse="")

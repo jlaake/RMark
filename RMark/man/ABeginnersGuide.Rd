@@ -38,68 +38,12 @@
   parameters can be computed within R without re-running
   the analysis.
 
-  The following are the MARK capture-recapture models that
-  are currently supported: \tabular{ll}{ \code{model} \tab
-  Selection in MARK \cr \code{CJS} \tab Recaptures only\cr
-  \code{Recovery} \tab Recoveries only\cr \code{Burnham}
-  \tab Both(Burnham)\cr \code{Barker} \tab Both(Barker)\cr
-  \code{Pradel} \tab Pradel recruitment only\cr
-  \code{Pradsen} \tab Pradel survival and seniority\cr
-  \code{Pradlambda} \tab Pradel survival and lambda\cr
-  \code{Pradrec} \tab Pradel survival and recruitment\cr
-  \code{LinkBarker} \tab Available only in change data type
-  as Link-Barker\cr \code{Closed} \tab Closed - no
-  heterogeneity\cr \code{HetClosed} \tab Closed with
-  heterogeneity\cr \code{FullHet} \tab Closed with full
-  heterogeneity\cr \code{Huggins} \tab Huggins with no
-  heterogeneity\cr \code{HugHet} \tab Huggins with
-  heterogeneity\cr \code{HugFullHet} \tab Huggins with full
-  heterogeneity\cr \code{POPAN} \tab POPAN\cr \code{Jolly}
-  \tab Burnham formulation for original Jolly-Seber
-  model\cr \code{Known} \tab Known - known fate data (e.g,
-  radio-tracking)\cr \code{Multistrata} \tab Multistrata -
-  CJS model with strata\cr \code{Robust} \tab Robust design
-  with Closed models for secondary periods with no
-  heterogeneity\cr \code{RDHet} \tab Robust design with
-  Closed models for secondary periods with heterogeneity\cr
-  \code{RDFHet} \tab Robust design with Closed models for
-  secondary periods with full heterogeneity\cr
-  \code{RDHuggins} \tab Robust design with Huggins models
-  for secondary periods with no heterogeneity\cr
-  \code{RDHHet} \tab Robust design with Huggins models for
-  secondary periods with heterogeneity\cr \code{RDHFHet}
-  \tab Robust design with Huggins models for secondary
-  periods with full heterogeneity\cr \code{Nest} \tab Nest
-  survival\cr \code{Occupancy} \tab Site occupancy
-  modelling\cr \code{OccupHet} \tab Site occupancy
-  modelling with mixture model for heterogeneity\cr
-  \code{RDOccupEG} \tab Robust design site occupancy
-  modelling; single Psi, espsilon, and gamma\cr
-  \code{RDOccupPE} \tab Robust design site occupancy
-  modelling; mutliple Psi and espsilon\cr \code{RDOccupPG}
-  \tab Robust design site occupancy modelling; mutliple Psi
-  and gamma\cr \code{RDOccupHetEG} \tab Robust design site
-  occupancy modelling with heterogeneity; single Psi,
-  espsilon, and gamma\cr \code{RDOccupHetPE} \tab Robust
-  design site occupancy modelling with heterogeneity;
-  mutliple Psi and espsilon\cr \code{RDOccupHetPG} \tab
-  Robust design site occupancy modelling with
-  heterogeneity; mutliple Psi and gamma\cr
-  \code{OccupRNPoisson} \tab Royle-Nichols Poisson site
-  occupancy modelling\cr \code{OccupRNNegBin} \tab
-  Royle-Nichols Negative Binomial site occupancy
-  modelling\cr \code{OccupRPoisson} \tab Royle count
-  Poisson site occupancy modelling\cr \code{OccupRNegBin}
-  \tab Royle count Negative Binomial site occupancy
-  modelling\cr \code{MSOccupancy} \tab Multi-state site
-  occupancy modelling\cr \code{ORDMS} \tab Open robust
-  design multi-state\cr \code{CRDMS} \tab Closed robust
-  design multi-state\cr }
-
-  There is one limitation of this interface beyond the
-  obvious that it does not currently handle all of the
-  models and capabilities in MARK. All models in this
-  interface are developed via a design matrix approach
+  The MARK capture-recapture models that are currently
+  supported are provided in MarkModels.pdf which is
+  installed in the RMark directory of your R library. You
+  can also find a list in MARK under Help/Data Types. '
+  There is one limitation of this interface. All models in
+  this interface are developed via a design matrix approach
   rather than coding the model structure via parameter
   index matrices (PIMS). In most cases, a logit or other
   link is used by default which has implications for
@@ -115,7 +59,7 @@
   MARK.EXE. As long as you selected the default location
   for the MARK install (c:/Program Files/Mark), the
   \code{RMark} library will be able to find it.  If for
-  some reason, you chose to install it in a different
+  some reason, you choose to install it in a different
   location, see the note section in \code{\link{mark}} for
   instructions on setting the variable MarkPath to specify
   the path.  In addition to installing MARK, you must have
@@ -206,7 +150,9 @@
   \code{\link{Blackduck}} for known fate. The latter two
   are examples of the use of \code{\link{mark.wrapper}} for
   a shortcut approach to creating a series of models. Other
-  examples have been added for the various other models.
+  examples have been added for the various other models. In
+  MarkModels.pdf it also lists the name of examples that
+  are provided for each model.
 }
 \author{
   Jeff Laake

@@ -1,0 +1,162 @@
+\docType{data}
+\name{deer}
+\alias{deer}
+\title{White-tailed deer double observer spotlight capture-recapture analysis}
+\format{The format is a data frame with 4508 observations on the following 7 variables.
+\describe{ \item{SL (spotlight)}{0/1 whether deer was missed/seen by the spotlight observer}
+\item{TI (thermal imager)}{0/1 whether deer was missed/seen by the thermal imager observer}
+\item{Group}{Factor with 79 levels representing each unique paired (TI-SL) survey conducted}
+\item{Year}{Factor with 5 levels for year of survey}
+\item{MaxCount}{Count of maximum number of deer seen for each survey, only needed
+for bootstrapp analysis in MARK, not used in bfdeeR package}
+\item{Cluster}{Value assigning each deer to a specific observation cluster, only needed
+for bootstrapp analysis in MARK, not used in bfdeeR package}
+\item{MgmtUnit}{Management unit identification} }}
+\description{
+  This data represents a set of independent double observer
+  road-transect survey data of white-tailed deer on Brosnan
+  Forest, South Carolina surveyed in August, 2005-2009.
+  The primary reason for this package is to provide a
+  completely reproducible example of the analysis from
+  Collier et al. (2012).  We used a Huggins closed capture
+  model implemented in MARK
+  \url{http://www.phidot.org/software/mark/} via RMark
+  \url{http://cran.r-project.org/web/packages/RMark/index.html}
+  both of which will need to be installed on the system to
+  use this package.  The data have 2 time periods (primary
+  observer (t1) was a thermal imager, secondary observer
+  (t2) was a spotlight observer in the same vehicle on the
+  same side) with the primary objective of the study being
+  to evaluate the detection (recapture) rates of
+  white-tailed deer using spotlights as a survey method.
+}
+\details{
+  In addition to detailing the analysis used by Collier et
+  al. (2012), this example documents the use of the
+  \code{share} argument in the RMark parameter
+  specification because there is presently very little
+  documentation on the use of \code{share}. Parameters in
+  MARK models rarely share columns of the design matrix.
+  For example while you might want to use the same
+  covariate for survival and capture probability, you would
+  never use the same beta (same column of the design
+  matrix) for each parameter.  However, there are
+  exceptions when the parameters represent similar
+  quantities and that is when the \code{share} argument is
+  useful.  For example, in the closed capture models p is
+  initial capture probability and c is recapture
+  probability. In this case, it would make perfect sense to
+  use the same column of the design matrix for both
+  parameters. The most obvious case is to fit a model in
+  which p=c.
+
+  In RMark, certain pairs of parameters have been
+  identified as similar and shareable.  These can be found
+  in the file parameters.txt which is in the RMark
+  directory in your R library. With each pair that is
+  shareable, the first one listed is the primary parameter.
+  When you want to share columns in the design matrix,
+  share=TRUE is added to the specification of the primary
+  parameter. A parameter specification is not given for the
+  other secondary parameter when they are shared.  When
+  RMark, sees that the parameters are to be shared it
+  creates a pooled set of design data and adds a column
+  with the name of the secondary parameter and its value is
+  0 for the rows for the primary parameter and 1 for the
+  rows for the secondary parameter. For example, with the
+  closed capture model if share=TRUE is added to the
+  parameter specification for p, a model is not specified
+  for c, and the pooled design data set contains a field
+  called c. The added field allows construction of models
+  where there are restricted differences between the
+  parameters. For example,
+  p=list(formula=~time+c,share=TRUE) will fit a model in
+  which capture probability varies by time and recapture
+  probability includes an additive difference on the link
+  scale. Because the design data are pooled when you share
+  parameters, if you modify design data for one of the
+  parameters, the other most be modified as as well, so the
+  columns of the design data for both parameters are the
+  same or RMark will give an error.
+
+  The argument \code{share} is used in all the candidate
+  models in the below example analysis.  As a simplified
+  example of how \code{share} works, look at the candidate
+  models in the \code{bfrun{}} function call named
+  \code{mod.2} and \code{mod.2a} (note that \code{mod.2a}
+  was not included in the supplemental file available from
+  the Journal of Wildlife Management and is only included
+  in this package).  Both of these models are conducting
+  the exact same analysis, with the first \code{mod.2}, we
+  used the formula \code{~time} (if you don't know what
+  this means go read the MARKBOOK at
+  \url{http://www.phidot.org/software/mark/}.  Notice,
+  however, we used the argument \code{share} in
+  \code{mod.2}, which tells RMark to share columns of the
+  MARK design matrix.  For comparison, so you can evaluate
+  how \code{share} works for yourself, \code{mod.2a}
+  recreates the same analysis as \code{mod.2}, but uses the
+  approach more typical to MARK analyses where each
+  parameter is specified independently and uniquely.
+}
+\examples{
+\donttest{
+data(deer)
+x=data.frame(ch=paste(deer$TI, deer$SL, sep=""), Survey=factor(deer$Group), Year=factor(deer$Year), Cluster=deer$Cluster, MgtUnit=factor(deer$MgmtUnit))
+x$ch=as.character(x$ch)
+bfrun=function(){
+x.proc=process.data(x, model="Huggins", groups=c("Survey", "Year", "MgtUnit"))
+x.ddl=make.design.data(x.proc)
+
+#Silly Null model, constant p & c sharing 1 parameter (one detection estimate)
+p.shared=list(formula=~1,share=TRUE)
+mod.1=mark(x.proc, x.ddl, model.parameters=list(p=p.shared), invisible=FALSE)
+
+#2 Parameter Null Model, constant p, constant c, different p and c (one estimate for each; p ne c)
+#p(time), c(-), share=TRUE, detection is time dependent, with recapture parameter shared
+p.sharetime=list(formula=~time, share=TRUE)
+mod.2=mark(x.proc, x.ddl, model.parameters=list(p=p.sharetime), invisible=FALSE)
+
+#2a Parameter Null Model, constant p, constant c, different p and c (one estimate for each; p ne c) not using share
+mod.2a=mark(x.proc, x.ddl, model.parameters=list(p=list(formula=~1), c=list(formula=~1)))
+
+#Fully parameterized model, different p and c for each survey transect replicate, management unit, method (TI or SL) and any observers
+p.survey=list(formula=~Survey*time, share=TRUE)
+mod.3=mark(x.proc, x.ddl, model.parameters=list(p=p.survey), invisible=FALSE)
+
+#p(MU), c(MU), initial detection and recapture differ and are management unit dependent
+p.mu=list(formula=~MgtUnit*time, share=TRUE)
+mod.4=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE)
+
+#p(MU) detection is management unit dependent
+p.mu=list(formula=~MgtUnit, share=TRUE)
+mod.5=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE)
+
+#p(Yr + MgtUnit),  detection is year + MgtUnit
+p.yearMgtUnit=list(formula=~Year*time+MgtUnit, share=TRUE)
+mod.6=mark(x.proc, x.ddl, model.parameters=list(p=p.yearMgtUnit), invisible=FALSE)
+
+#p(Year), initial detection and recapture are year dependent
+p.year=list(formula=~Year*time, share=TRUE)
+mod.7=mark(x.proc, x.ddl, model.parameters=list(p=p.year), invisible=FALSE)
+
+return(collect.models())
+}
+bf.out=bfrun()
+bf.out
+
+#export function to send dataset and covariates data to MARK for bootstrap analysis (not run but here for completeness)
+#export.MARK(x.proc, "BFdeer", mod.3, replace=TRUE, ind.covariates="all")
+}
+}
+\author{
+  Bret Collier
+}
+\references{
+  Collier, B. A., S. S. Ditchkoff, J. B. Raglin, and C. R.
+  Ruth.  2012. Spotlight surveys for white-tailed deer:
+  monitoring panacea or exercise in futility? Journal of
+  Wildlife Management, In Press.
+}
+\keyword{datasets}
+

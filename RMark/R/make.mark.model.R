@@ -937,16 +937,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
   outfile=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
 #
-#  check to make sure all entered as lists
-#
-  if(length(parameters)!=0)
-  for(i in 1:length(parameters))
-     if(!is.list(parameters[[i]]))
-     {
-        cat("\nEach parameter distribution must be specified as a list\n")
-        stop()
-     }
-#
 # Check validity of parameter types, if any given
 #
   if(!valid.parameters(data$model,parameters))stop()

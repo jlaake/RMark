@@ -18,7 +18,7 @@
 #' 
 #' @param x vector of real estimates to be converted to link values
 #' @param model MARK model object used only to obtain model structure/links
-#' etc.  If function is being called for model averaged estimates, then amy
+#' etc.  If function is being called for model averaged estimates, then any
 #' model in the model list used to construct the estimates is sufficient
 #' @param parm.indices index numbers from PIMS for rows in design
 #' matrix(non-simplified indices); x[parm.indices] are computed

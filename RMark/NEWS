@@ -1,3 +1,11 @@
+RMark 2.1.6 (10 April 2013)
+--------------------------
+NEW FEATURES
+
+* Addition of RDMSOccRepro model with changes to create the unique model structure.
+
+* silent argument now also suppresses messages from mark.exe if set to TRUE
+
 RMark 2.1.5 (28 Mar 2013)
 --------------------------
 NEW FEATURES

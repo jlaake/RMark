@@ -7,13 +7,6 @@ print.RMark.version <- function()
 	packageStartupMessage(hello)
 }
 
-.First.lib<-function(library,pkgname)
-{
- print.RMark.version()
- checkForMark()
-}
-
-
 .onAttach <- function(...) { 
 	print.RMark.version()
 	checkForMark()

@@ -103,8 +103,8 @@
 #' @param nocc number of occasions for Nest type; either nocc or time.intervals
 #' must be specified
 #' @param strata.labels vector of single character values used in capture
-#' history(ch) for ORDMS models; it can contain one more value beyond what is
-#' in ch for an unobservable state
+#' history(ch) for ORDMS, CRDMS, RDMSOccRepro models; it can contain one more value beyond what is
+#' in ch for an unobservable state except for RDMSOccRepro which is used to specify strata ordering (eg 0 not-occupied, 1 occupied no repro, 2 occupied with repro.
 #' @param counts named list of numeric vectors (one group) or matrices (>1
 #' group) containing counts for mark-resight models
 #' @param reverse if set to TRUE, will reverse timing of transition (Psi) and
@@ -168,7 +168,7 @@ initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,co
 #  time.intervals       - intervals of time between the capture occasions
 #  nocc                 - number of occasions for Nest type; either nocc or time.intervals
 #                          must be specified
-#  strata.labels        - vector of single character labels for strata in ORDMS or CRDMS
+#  strata.labels        - vector of single character labels for strata in ORDMS, CRDMS, RDMSOccRepro
 #  counts               - list of numeric vectors (one group) or matrices (>1 group) 
 #              	           containing counts for mark-resight models
 #  reverse              - only valid for Multistrata model; reverses timing of movement and survival

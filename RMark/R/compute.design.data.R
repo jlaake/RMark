@@ -39,6 +39,7 @@
 #' for models that share formula like p and c with the Time model
 #' @param sub.stratum the number of strata to subtract for parameters that use 
 #' mlogit across strata like pi and Omega for RDMSOpenMisClass
+#' @param limits For RDMSOccRepro values that set row and col (if any) start on states
 #' @return design.data: a data frame containing all of the design data fields
 #' for a particular type of parameter \item{group}{group factor level}
 #' \item{age}{age factor level} \item{time}{time factor level}
@@ -52,7 +53,7 @@
 compute.design.data <-
 function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
            secondary,nstrata=1,tostrata=FALSE,strata.labels=NULL,
-           subtract.stratum=strata.labels,common.zero=FALSE,sub.stratum=0)
+           subtract.stratum=strata.labels,common.zero=FALSE,sub.stratum=0,limits=NULL)
 {
 # -------------------------------------------------------------------------------------------------------------
 #
@@ -117,16 +118,30 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
 	  all.tostrata=TRUE
 	  sub.stratum=0
   }
+  if(is.null(limits) || limits[1]=="0")
+	  start.stratum=1
+  else
+	  start.stratum=as.numeric(limits[1])
   for(j in 1:number.of.groups)
-  for (jj in 1:(nstrata-sub.stratum))
+  for (jj in start.stratum:(nstrata-sub.stratum))
   for(l in 1:num.sessions)
   {
       if(tostrata)
 	  {
 		 if(!all.tostrata)
-             other.strata= sequence(nstrata)[sequence(nstrata)!=nsubtract.stratum[jj]]
+		 {
+			 if(is.null(limits))
+				 other.strata= sequence(nstrata)[sequence(nstrata)!=nsubtract.stratum[jj]]
+			 else
+			 {
+				 if(limits[1]=="0")
+					 other.strata=(as.numeric(limits[2])+1):nstrata
+				 else
+					 other.strata=jj:nstrata
+			 }		 
+		 }
 	     else
-			 other.strata= 1:nstrata		 
+			 other.strata= 1:nstrata
 	  }		 
       else
          other.strata=1
@@ -236,7 +251,7 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
           add.design.data=cbind(add.design.data,rep(k,ncol))
           dd.names=c(dd.names,"mixture")
         }
-        if(nstrata>1)
+        if(nstrata>1|tostrata)
            if(tostrata)
            {
               add.design.data=cbind(add.design.data,rep(jj,ncol),rep(to.strata,ncol))

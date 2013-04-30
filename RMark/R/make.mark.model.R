@@ -586,13 +586,28 @@ if(type%in%c("Triang","STriang"))
 #   invisible()
 #}
 
-"pim.header"<- function(group,param.name,parameters,ncol,stratum,tostratum,strata.labels,mixtures,session=NULL,socc=NULL)
+"pim.header"<- function(group,param.name,parameters,ncol,stratum,tostratum,strata.labels,mixtures,session=NULL,socc=NULL,bracket=FALSE)
 {
   if(!is.null(stratum)&length(strata.labels)>0)
-     if(!is.null(tostratum))
-        stratum.designation=paste(strata.labels[stratum],"to",strata.labels[tostratum])
-     else
-        stratum.designation= paste(strata.labels[stratum],":Stratum",stratum,sep="")
+  {
+	  if(bracket)stratum.designation=""	 
+	  if(!is.null(tostratum))
+	  {
+		  if(bracket)
+			  param.name=paste(param.name,"[",stratum,",",tostratum,"]",sep="")
+		  else
+			  stratum.designation=paste(stratum,"to",tostratum)
+#		  stratum.designation=paste(strata.labels[stratum],"to",strata.labels[tostratum])
+	  }
+	  else
+	  {
+		  if(bracket)
+			  param.name=paste(param.name,"[",stratum,"]",sep="")
+		  else
+			  stratum.designation= paste(stratum,":Stratum",stratum,sep="")
+#		  stratum.designation= paste(strata.labels[stratum],":Stratum",stratum,sep="")
+	  }
+  }
   else
      stratum.designation=""
   if(is.null(session))
@@ -702,13 +717,17 @@ else
 #  follows code in make.mark.model except it uses renumber.pims and print.pim
 #  to renumber and print out the pim structure.
 #
+if(model$data$model=="RDMSOccRepro")
+	bracket=TRUE
+else
+	bracket=FALSE
 for (i in 1:length(parameters)) {
      for (j in 1:length(model$pims[[i]]))
      {
          ncol = dim(model$pims[[i]][[j]]$pim)[2]
          string=pim.header(pim[[i]][[j]]$group,param.names[i],parameters[[i]],
                    ncol,model$pims[[i]][[j]]$stratum,model$pims[[i]][[j]]$tostratum,model$strata.labels,
-				   mixtures,model$pims[[i]][[j]]$session,parameters[[i]]$socc)
+				   mixtures,model$pims[[i]][[j]]$session,parameters[[i]]$socc,bracket=bracket)
          write(string, file = outfile, append = TRUE)
          if(parameters[[i]]$type %in% c("Triang","STriang"))
          {
@@ -906,11 +925,11 @@ create.pim=function(nocc,parameters,npar,mixtures)
         if(mixtures>1)
             if(!is.null(parameters$mix)&&parameters$mix)
                 nmix=mixtures+parameters$rows
-            for(k in 1:nmix)
-            {
-                mat=rbind(mat,npar:(npar+ncol-1))
-                npar=npar+ncol
-            }
+        for(k in 1:nmix)
+        {
+            mat=rbind(mat,npar:(npar+ncol-1))
+            npar=npar+ncol
+        }
    }
 return(mat)
 }
@@ -1263,25 +1282,15 @@ create.agenest.var=function(data,init.agevar,time.intervals)
      k=0
      for(j in 1:number.of.groups)
      {
-	   sub.stratum=0
-	   if(!is.null(parameters[[i]]$sub.stratum))sub.stratum=parameters[[i]]$sub.stratum
-	   all.tostrata=FALSE
-	   if(sub.stratum==-1)
+	   if(is.null(parameters[[i]]$bystratum)||!parameters[[i]]$bystratum)
+         xstrata=1
+	   else
+		 xstrata=unique(ddl[[i]]$stratum)
+	   for (jj in xstrata)
 	   {
-		   all.tostrata=TRUE
-		   sub.stratum=0
-	   }
-       for (jj in 1:(nstrata-sub.stratum))
-       {
           other.strata=1
           if(!is.null(parameters[[i]]$tostrata))
-          {
-             nsubtract.stratum=match(parameters[[i]]$subtract.stratum,data$strata.labels)
-			 if(!all.tostrata)
-				 other.strata= sequence(nstrata)[sequence(nstrata)!=nsubtract.stratum[jj]]
-			 else
-				 other.strata= 1:nstrata		 
-          }
+			  other.strata=unique(ddl[[i]]$tostratum[ddl[[i]]$stratum==jj])
           for(to.stratum in other.strata)
           {
                if(model.list$robust && parameters[[i]]$secondary)
@@ -1298,8 +1307,12 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                {
                   k=k+1
                   pim[[i]][[k]]=list()
+				  if(data$model=="RDMSOccRepro" & names(parameters)[i]=="Phi0")
+				  {
+					  pim[[i]][[k]]$pim=matrix(1:length(data$strata.labels),nrow=1)   
+				  } else	 
 				  if(!multi.session)
-						  pim[[i]][[k]]$pim=create.pim(nocc,parameters[[i]],npar,mixtures)
+					 pim[[i]][[k]]$pim=create.pim(nocc,parameters[[i]],npar,mixtures)
 				  else
                   {
                      if(is.na(parameters[[i]]$num))
@@ -1314,7 +1327,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 					 pim[[i]][[k]]$session.label=levels(ddl[[i]]$session)[l]
                   }
                   pim[[i]][[k]]$group=j
-                  if(length(data$strata.labels)>0) pim[[i]][[k]]$stratum=jj
+                  if(length(data$strata.labels)>0 && !is.null(parameters[[i]]$bystratum) && parameters[[i]]$bystratum) pim[[i]][[k]]$stratum=jj
                   if(!is.null(parameters[[i]]$tostrata)) pim[[i]][[k]]$tostratum=to.stratum
                   npar=max(pim[[i]][[k]]$pim)+1
                }

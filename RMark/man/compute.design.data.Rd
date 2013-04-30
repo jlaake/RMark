@@ -7,7 +7,7 @@ use)}
     mix = FALSE, rows = 0, pim.type = "all", secondary,
     nstrata = 1, tostrata = FALSE, strata.labels = NULL,
     subtract.stratum = strata.labels, common.zero = FALSE,
-    sub.stratum = 0)
+    sub.stratum = 0, limits = NULL)
 }
 \arguments{
   \item{data}{data list created by
@@ -50,6 +50,9 @@ use)}
   \item{sub.stratum}{the number of strata to subtract for
   parameters that use mlogit across strata like pi and
   Omega for RDMSOpenMisClass}
+
+  \item{limits}{For RDMSOccRepro values that set row and
+  col (if any) start on states}
 }
 \value{
   design.data: a data frame containing all of the design

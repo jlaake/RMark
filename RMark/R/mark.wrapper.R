@@ -131,7 +131,7 @@ for (i in 1:nrow(model.list))
 		initial=NULL
   if(run)
   {
-     mymodel=try(mark(model.parameters=model.parameters,initial=initial,...),silent=silent)
+     mymodel=try(mark(model.parameters=model.parameters,initial=initial,silent=silent,...),silent=silent)
   }
   else
   {

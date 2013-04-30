@@ -404,15 +404,14 @@ remove.unused.occasions=function(data,ddl)
 			}
 		}
 		return(ddl)
-	}
+}
+#### start of make.design.data
 #
 # Check validity of parameter list; stop if not valid
 #
   if(!valid.parameters(data$model,parameters)) stop()
 #
-#  Add following elements based on type of model
-#           begin            - index for compute.design.data
-#           num              - number of parameters relative to number of occasions
+#  Setup model and parameters
 #
   par.list=setup.parameters(data$model,check=TRUE)
   parameters=setup.parameters(data$model,parameters,data$nocc,check=FALSE,
@@ -440,10 +439,11 @@ remove.unused.occasions=function(data,ddl)
    anySquare=FALSE
    for(i in 1:length(parameters))
    {
-#
-# For mixtures, multistrata and robust designs set up values for input to
-# compute.design.data
-#
+   #
+   # For mixtures, multistrata and robust designs set up values for input to
+   # compute.design.data
+   #
+	 limits=NULL
      if(data$mixtures==1)
      {
         parameters[[i]]$mix=FALSE
@@ -453,6 +453,20 @@ remove.unused.occasions=function(data,ddl)
      {
         strata.labels=data$strata.labels
         nstrata=data$nstrata
+		if(!is.null(parameters[[i]]$subset) && nchar(parameters[[i]]$subset)>0)
+		{
+			limits=strsplit(parameters[[i]]$subset,"")[[1]]
+			if(limits[1]=="0")
+			{
+				strata.labels=c("0",strata.labels)
+				nstrata=nstrata+1
+			} 
+		#	else
+		#	{
+		#		strata.labels=strata.labels[as.numeric(limits[1]):nstrata]
+		#		nstrata=length(strata.labels)
+		#	}
+		}
         if(!is.null(parameters[[i]]$tostrata) && parameters[[i]]$tostrata)
         {
            if(!is.null(parameters[[i]]$subtract.stratum))
@@ -488,10 +502,33 @@ remove.unused.occasions=function(data,ddl)
 	 {
 		 sub.stratum=0
 		 if(!is.null(parameters[[i]]$sub.stratum))sub.stratum=parameters[[i]]$sub.stratum
-         design.data=compute.design.data(data,parameters[[i]]$begin,parameters[[i]]$num,
-                      parameters[[i]]$type,parameters[[i]]$mix,parameters[[i]]$rows,
-                      parameters[[i]]$pim.type,parameters[[i]]$secondary, nstrata,
-                      tostrata,strata.labels,subtract.stratum,common.zero=common.zero,sub.stratum=sub.stratum)
+		 # Special code for parameter Phi0 in RDMSOccRepro model
+		 #
+		 if(data$model=="RDMSOccRepro" & names(parameters)[i]=="Phi0")
+		 {
+			 design.data=expand.grid(stratum=data$strata.labels,group=1:ncol(data$freq))      
+			 if(ncol(data$freq)>1)
+			 {
+				 ix=grep("age",names(data$group.covariates))
+				 cnames=names(data$group.covariates)
+				 if(length(ix)!=0)
+					 if(names(data$group.covariates)[ix]=="age")
+					 {
+						 cnames[ix]="initial.age.class"
+						 names(data$group.covariates)=cnames
+					 }
+				 gc=data.frame(data$group.covariates[design.data$group,]) 
+				 names(gc)=cnames 
+				 row.names(gc)=NULL
+				 design.data=cbind(design.data,gc)	  
+			 }
+		 } else
+			 
+             design.data=compute.design.data(data,parameters[[i]]$begin,parameters[[i]]$num,
+                         parameters[[i]]$type,parameters[[i]]$mix,parameters[[i]]$rows,
+                         parameters[[i]]$pim.type,parameters[[i]]$secondary, nstrata,
+                         tostrata,strata.labels,subtract.stratum,common.zero=common.zero,
+						 sub.stratum=sub.stratum,limits=limits)
          if(!is.null(parameters[[i]]$mix) && parameters[[i]]$mix)design.data$mixture=as.factor(design.data$mixture)
          if(parameters[[i]]$secondary)
 		 {
@@ -512,7 +549,7 @@ remove.unused.occasions=function(data,ddl)
          else
            design.data$age=cut(design.data$age,parameters[[i]]$age.bins,include.lowest=TRUE,right=right)
          if(!is.null(design.data$time))
-# mod 30 Sept 09 to remove unused time factor levels
+         # mod 30 Sept 09 to remove unused time factor levels
          if(is.null(parameters[[i]]$time.bins))
             design.data$time=factor(design.data$time,levels=unique(levels(factor(design.data$time))))
          else
@@ -539,7 +576,16 @@ remove.unused.occasions=function(data,ddl)
                design.data$Time=NULL
             }
          }
+		 if(data$model=="RDMSOccRepro")
+		 {
+			 if(names(parameters)[i]=="R")
+				 design.data=design.data[order(design.data$tostratum,design.data$stratum),]
+			 else
+				 if(names(parameters)[i]=="Delta")
+				     design.data=design.data[order(design.data$stratum,design.data$tostratum,design.data$session),]
+		 }
          full.design.data[[i]]=cbind(par.index=1:nrow(design.data),model.index=1:nrow(design.data),design.data)
+		 row.names(full.design.data[[i]])=1:nrow(full.design.data[[i]])
          pimtypes[[i]]=list(pim.type=parameters[[i]]$pim.type)
 	     if(!is.null(subtract.stratum))pimtypes[[i]]$subtract.stratum=subtract.stratum
          if(parameters[[i]]$type%in%c("Triang","STriang")&&parameters[[i]]$pim.type=="all")anyTriang=TRUE

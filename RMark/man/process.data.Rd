@@ -55,9 +55,12 @@
   nocc or time.intervals must be specified}
 
   \item{strata.labels}{vector of single character values
-  used in capture history(ch) for ORDMS models; it can
-  contain one more value beyond what is in ch for an
-  unobservable state}
+  used in capture history(ch) for ORDMS, CRDMS,
+  RDMSOccRepro models; it can contain one more value beyond
+  what is in ch for an unobservable state except for
+  RDMSOccRepro which is used to specify strata ordering (eg
+  0 not-occupied, 1 occupied no repro, 2 occupied with
+  repro.}
 
   \item{counts}{named list of numeric vectors (one group)
   or matrices (>1 group) containing counts for mark-resight

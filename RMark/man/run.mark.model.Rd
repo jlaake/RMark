@@ -4,7 +4,8 @@
 \usage{
   run.mark.model(model, invisible = FALSE, adjust = TRUE,
     filename = NULL, prefix = "mark", realvcv = FALSE,
-    delete = FALSE, external = FALSE, threads = -1)
+    delete = FALSE, external = FALSE, threads = -1,
+    ignore.stderr = FALSE)
 }
 \arguments{
   \item{model}{MARK model created by
@@ -35,6 +36,10 @@
 
   \item{threads}{number of cpus to use with mark.exe if
   positive or number of cpus to remain idle if negative}
+
+  \item{ignore.stderr}{If set TRUE, messages from mark.exe
+  are suppressed; they are automatically suppressed with
+  Rterm}
 }
 \value{
   model: MARK model object with the base filename stored in

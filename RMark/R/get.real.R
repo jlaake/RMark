@@ -303,14 +303,16 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
               output.labels[j]=paste(output.labels[j],"Group:",model$group.labels[model$pims[[parameter]][[j]]$group],sep="")
            else
               if(parameter.labels[k]=="stratum")
-                 output.labels[j]=paste(output.labels[j]," Stratum:",model$strata.labels[model$pims[[parameter]][[j]]$stratum],sep="")
-              else
+                 output.labels[j]=paste(output.labels[j]," Stratum:",model$pims[[parameter]][[j]]$stratum,sep="")
+#			     output.labels[j]=paste(output.labels[j]," Stratum:",model$strata.labels[model$pims[[parameter]][[j]]$stratum],sep="")
+			 else
                  if(parameter.labels[k]=="tostratum")
-                    output.labels[j]=paste(output.labels[j]," To:",model$strata.labels[model$pims[[parameter]][[j]]$tostratum],sep="")
+					 output.labels[j]=paste(output.labels[j]," To:",model$pims[[parameter]][[j]]$tostratum,sep="")
+#				 output.labels[j]=paste(output.labels[j]," To:",model$strata.labels[model$pims[[parameter]][[j]]$tostratum],sep="")
               else
                  if(parameter.labels[k]=="session")
                     output.labels[j]=paste(output.labels[j]," Session:",model$pims[[parameter]][[j]]$session.label,sep="")
-
+				
        }
     }
     else
@@ -330,7 +332,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
               estimates[[j]]=matrix(real[model$pims[[parameter]][[j]]$pim],nrow=dim(model$pims[[parameter]][[j]]$pim)[1])
               if(!is.matrix(estimates[[j]]))estimates[[j]]=matrix(estimates[[j]])
               colnames(estimates[[j]])=model$design.data[[parameter]]$time[model$pims[[parameter]][[j]]$pim[1,]-min(model$pims[[parameter]][[1]]$pim[1,])+1]
-              if(is.null(colnames(estimates[[j]])))colnames(estimates[[j]])=""
+              if(is.null(colnames(estimates[[j]])))colnames(estimates[[j]])=rep("",ncol(estimates[[j]]))
               if(dim(model$pims[[parameter]][[j]]$pim)[1]>1)
                   rownames(estimates[[j]])=paste("mixture:",1:model$mixtures,sep="")
               else

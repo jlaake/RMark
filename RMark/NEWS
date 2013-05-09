@@ -5,6 +5,8 @@ NEW FEATURES
 * Addition of RDMSOccRepro model with changes to create the unique model structure. Also added REDead (Seber recovery with random effects),
 PMDead (Seber recovery with Pledger mixtures), BurnhamLDRE (Burnham Live/Dead with random effects).
 
+* added brownie example using San Luis Valley mallard recovery data.
+
 * silent argument now also suppresses messages from mark.exe if set to TRUE
 
 * expand argument added to get.real to control whether the complete var-cov matrix is returned (expand=T) or only the var-cov of the unique parameters (expand=FALSE; the default)

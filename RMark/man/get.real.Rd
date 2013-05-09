@@ -4,7 +4,7 @@
 \usage{
   get.real(model, parameter, beta = NULL, se = FALSE,
     design = NULL, data = NULL, vcv = FALSE,
-    show.fixed = TRUE)
+    show.fixed = TRUE, expand = FALSE)
 }
 \arguments{
   \item{model}{MARK model object}
@@ -30,6 +30,9 @@
 
   \item{show.fixed}{if TRUE fixed values are returned
   rather than NA in place of fixed values}
+
+  \item{expand}{if TRUE, returns vcv matrix for all unique
+  parameters and only simplified if FALSE}
 }
 \value{
   estimates: if \code{se=FALSE and Beta=NULL}, a matrix of

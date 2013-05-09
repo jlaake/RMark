@@ -54,6 +54,8 @@
 #' real parameters
 #' @param show.fixed if TRUE fixed values are returned rather than NA in place
 #' of fixed values
+#' @param expand if TRUE, returns vcv matrix for all unique parameters and only 
+#' simplified if FALSE
 #' @return estimates: if \code{se=FALSE and Beta=NULL}, a matrix of estimates
 #' or list of matrices for more than one group, and if \code{se=TRUE or beta=is
 #' not NULL and vcv=FALSE} a dataframe of estimates with attached design data.
@@ -90,28 +92,8 @@
 #' 
 #' 
 get.real <-
-function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show.fixed=TRUE)
+function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show.fixed=TRUE,expand=FALSE)
 {
-# ----------------------------------------------------------------------------------------
-#
-# get.real - extracts real parameters for a particular type of parameter (parameter) and
-#            returns in either a table format or in PIM format (se=FALSE)
-#
-# Arguments:
-#
-#  model        - MARK model object
-#  parameter    - type of parameter in model (character)
-#  beta         - estimates of beta parameters for computation of real parameters
-#  se           - if TRUE uses table format, if FALSE uses PIM format
-#  design       - a numeric design matrix with any covariate values filled in with numerical values
-#  data         - covariate data to be averaged for estimates if design=NULL
-#  vcv          - if TRUE computes and returns the v-c matrix of the subset of the real parameters
-#  show.fixed   - if TRUE fixed values are returned rather than NA in place of fixed values
-#
-# Value:
-#  estimates    - a list of tables of estimates (se=TRUE) or a matrices of estimates (se=FALSE)
-#                 if more than one group. If only one group the result is a single data.frame(table) or a
-#                 matrix.
 #
 # Functions used: valid.parameters, Put.in.PIM.format (defined internally below), compute.real,
 #                 setup.parameters
@@ -124,8 +106,13 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
     wtable=matrix(NA,nrow=nrow(pim),ncol=ncol(pim))
     for(i in 1:nrow(pim))
     {
-	  cols=(i:ncol(pim))
-	  if(i>ncol(pim))cols=((i-ncol(pim)):ncol(pim))
+	  start=i%%ncol(pim)
+	  if(start==0)
+		  cols=ncol(pim)
+	  else
+		  cols=start:ncol(pim)
+#	  cols=(i:ncol(pim))
+#	  if(i>ncol(pim))cols=((i-ncol(pim)):ncol(pim))
       wtable[i,cols]=real[pim[i,cols]]
     }
     colnames(wtable)=design.data$time[1:ncol(pim)]
@@ -334,7 +321,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
               colnames(estimates[[j]])=model$design.data[[parameter]]$time[model$pims[[parameter]][[j]]$pim[1,]-min(model$pims[[parameter]][[1]]$pim[1,])+1]
               if(is.null(colnames(estimates[[j]])))colnames(estimates[[j]])=rep("",ncol(estimates[[j]]))
               if(dim(model$pims[[parameter]][[j]]$pim)[1]>1)
-                  rownames(estimates[[j]])=paste("mixture:",1:model$mixtures,sep="")
+                  rownames(estimates[[j]])=paste("mixture:",1:(model$mixtures-1),sep="")
               else
                   rownames(estimates[[j]])=""
 
@@ -386,7 +373,10 @@ else
 {
    if(!is.null(estimates$par.index))
    {
-      pindex=sort(unique(estimates$par.index))
+      if(!expand)
+		  pindex=sort(unique(estimates$par.index))
+	  else
+		  pindex=estimates$par.index 
       real.list$vcv.real=real.list$vcv.real[pindex,pindex,drop=FALSE]
       row.names(real.list$vcv.real)=pindex
       colnames(real.list$vcv.real)=pindex

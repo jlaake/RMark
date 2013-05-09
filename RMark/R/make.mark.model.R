@@ -997,12 +997,19 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   {
 #
 #     For parameters that can be possibly shared, see if they are not shared and if not then create
-#     default formula if one not specified
+#     default formula if one not specified; also use link from dominant parameter
 #
-	  if(!is.null(parameters[[i]]$share)&&!parameters[[i]]$share)
-      {
-		  shared_par=parameters[[i]]$pair
-	      if(is.null(parameters[[shared_par]]$formula))parameters[[shared_par]]$formula=~1
+	  if(!is.null(parameters[[i]]$share))
+	  {
+		  if(!parameters[[i]]$share)
+          {
+		      shared_par=parameters[[i]]$pair
+	          if(is.null(parameters[[shared_par]]$formula))parameters[[shared_par]]$formula=~1
+	      }else
+		  {
+			  shared_par=parameters[[i]]$pair
+			  parameters[[shared_par]]$link=parameters[[i]]$link	  
+		  }
 	  }
 #
 #     Test validity of link functions
@@ -1734,7 +1741,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
               }
               else
               {
-                 if(parx=="pent")
+                 if(parx%in% c("pent","alpha"))
                  {
                      nsets=length(pim[[parx]])
                      for (kk in 1:nsets)

@@ -477,7 +477,7 @@ remove.unused.occasions=function(data,ddl)
         }
         else
         {
-			if(data$model%in%c("RDMSOpenMisClass","RDMSMisClass") & names(parameters)[i]%in%c("pi","Omega"))
+			if(data$model%in%c("RDMSOpenMCSeas","RDMSOpenMisClass","RDMSMisClass") & names(parameters)[i]%in%c("pi","Omega"))
 			{
 			   subtract.stratum=data$strata.labels[nstrata]
 		    } else

@@ -272,7 +272,7 @@ robust.occasions<-function(times)
          inp.strata.labels=sort(ch.values[!(ch.values %in% c("0",".","1"))])
       else
          inp.strata.labels=sort(ch.values[!(ch.values %in% c("0","."))])
-	  if(model%in%c("RDMSOpenMisClass","RDMSMisClass","RDMS2MisClass"))
+	  if(model%in%c("RDMSOpenMisClass","RDMSMisClass","RDMS2MisClass","RDMSOpenMCSeas"))
 		  inp.strata.labels=inp.strata.labels[!inp.strata.labels%in%"u"]
       nstrata = length(inp.strata.labels)                  
       if(model.list$strata)

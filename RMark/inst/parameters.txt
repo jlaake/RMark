@@ -168,15 +168,15 @@ IELogitNormalMR	alpha	0	-1	0	Square	all	identity	~1					TRUE
 IELogitNormalMR	Nstar	0			Square	all	log	~session					TRUE						
 RDMSOpenMisClass	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
 RDMSOpenMisClass	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE				
-RDMSOpenMisClass	pi	0	-1		Square	all	mlogit	~1					FALSE	TRUE		1			
+RDMSOpenMisClass	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1			
 RDMSOpenMisClass	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
 RDMSOpenMisClass	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
 RDMSOpenMisClass	Delta	0	0	0	Square	all	logit	~1					TRUE	TRUE					
-RDMSOpenMisClass	pent	1	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
+RDMSOpenMisClass	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
 RDMSOpenMisClass	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE					
 RDMSMisClass	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
 RDMSMisClass	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE				
-RDMSMisClass	pi	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
+RDMSMisClass	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1			
 RDMSMisClass	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
 RDMSMisClass	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
 RDMSMisClass	Delta	0	0	0	Square	all	logit	~1					TRUE	TRUE					
@@ -431,3 +431,28 @@ RDMSOccRepro	Psi	1	-1	0	Square	all	logit	~1			FALSE		FALSE	TRUE					0
 RDMSOccRepro	R	1	-1	0	Square	all	logit	~1			FALSE		FALSE	TRUE	TRUE				02
 RDMSOccRepro	p	1	0	0	Square	all	logit	~1			FALSE		TRUE	TRUE					1
 RDMSOccRepro	Delta	1	0	0	Square	all	logit	~1			FALSE		TRUE	TRUE	TRUE				22
+RDMSOpenMCSeas	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
+RDMSOpenMCSeas	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE				
+RDMSOpenMCSeas	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1			
+RDMSOpenMCSeas	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
+RDMSOpenMCSeas	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
+RDMSOpenMCSeas	Delta	0	0	0	Triang	all	logit	~1					TRUE	TRUE					
+RDMSOpenMCSeas	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
+RDMSOpenMCSeas	d	1	-1	0	Square	all	logit	~1					TRUE	TRUE					
+RDMSOpenMCSeas	alpha	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
+RDMSOpenMCSeas	c	0	-1	1	Triang	all	logit	~1					TRUE	TRUE					
+PMDead	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
+PMDead	S	0	0	1	STriang	all	logit	~mixture			TRUE	0											
+PMDead	r	0	0	0	Triang	all	logit	~1											
+REDead	sigmaS	0	1		Square	all	log	~1											
+REDead	S	0	0	1	Triang	all	logit	~1											
+REDead	sigmar	0	1		Square	all	log	~1											
+REDead	r	0	0	0	Triang	all	logit	~1											
+BurnhamLDRE	sigmaS	0	1		Square	all	log	~1											
+BurnhamLDRE	S	0	0	1	Triang	all	logit	~1											
+BurnhamLDRE	sigmap	0	1		Square	all	log	~1											
+BurnhamLDRE	p	1	-1	0	Triang	all	logit	~1											
+BurnhamLDRE	sigmar	0	1		Square	all	log	~1											
+BurnhamLDRE	r	0	0	0	Triang	all	logit	~1											
+BurnhamLDRE	sigmaF	0	1		Square	all	log	~1											
+BurnhamLDRE	F	0	-1	1	Triang	all	logit	~1											

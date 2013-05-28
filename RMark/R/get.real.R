@@ -54,8 +54,8 @@
 #' real parameters
 #' @param show.fixed if TRUE fixed values are returned rather than NA in place
 #' of fixed values
-#' @param expand if TRUE, returns vcv matrix for all unique parameters and only 
-#' simplified if FALSE
+#' @param expand if TRUE, returns vcv matrix for unique parameters and only 
+#' simplified unique parameters if FALSE
 #' @return estimates: if \code{se=FALSE and Beta=NULL}, a matrix of estimates
 #' or list of matrices for more than one group, and if \code{se=TRUE or beta=is
 #' not NULL and vcv=FALSE} a dataframe of estimates with attached design data.
@@ -320,11 +320,10 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
               if(!is.matrix(estimates[[j]]))estimates[[j]]=matrix(estimates[[j]])
               colnames(estimates[[j]])=model$design.data[[parameter]]$time[model$pims[[parameter]][[j]]$pim[1,]-min(model$pims[[parameter]][[1]]$pim[1,])+1]
               if(is.null(colnames(estimates[[j]])))colnames(estimates[[j]])=rep("",ncol(estimates[[j]]))
-              if(dim(model$pims[[parameter]][[j]]$pim)[1]>1)
-                  rownames(estimates[[j]])=paste("mixture:",1:(model$mixtures-1),sep="")
+              if(!is.null(model$mixtures)&& model$mixtures>1 && !is.null(model$parameters[[parameter]]$rows))
+			      rownames(estimates[[j]])=paste("mixture:",1:(model$mixtures+model$parameters[[parameter]]$rows),sep="")
               else
-                  rownames(estimates[[j]])=""
-
+                  rownames(estimates[[j]])=rep("",nrow(estimates[[j]]))
            }
            else
               estimates=rbind(estimates,real[model$pims[[parameter]][[j]]$pim])

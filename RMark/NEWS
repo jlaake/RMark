@@ -1,4 +1,4 @@
-RMark 2.1.6 (9 May 2013)
+RMark 2.1.6 (28 May 2013)
 --------------------------
 NEW FEATURES
 
@@ -15,7 +15,10 @@ BUG FIXES
 
 * Fixed a problem in make.mark.model. If share=TRUE and non-default link function was specified, the link function for the shared parameter (eg c in closed model) was not changed resulting in
 different real parameter values for the shared parameter even though beta(s) were the same for the 2 types of parameters (eg p and c).
- 
+
+* Fixed a problem in model.average.list which was always using the non-revised variance formula for model averaging when the var-cov (vcv) was not specified. Thanks to Kristin Van Katwyk for reporting the discrepancy. The error does not affect model.average.marklist which is used for model averaging real parameters from MARK runs.
+
+* Fixed a problem in get.real that would fail if mixtures > 2 in displaying results for certain model parameters.
 
 RMark 2.1.5 (28 Mar 2013)
 --------------------------

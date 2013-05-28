@@ -31,8 +31,9 @@
   \item{show.fixed}{if TRUE fixed values are returned
   rather than NA in place of fixed values}
 
-  \item{expand}{if TRUE, returns vcv matrix for all unique
-  parameters and only simplified if FALSE}
+  \item{expand}{if TRUE, returns vcv matrix for unique
+  parameters and only simplified unique parameters if
+  FALSE}
 }
 \value{
   estimates: if \code{se=FALSE and Beta=NULL}, a matrix of

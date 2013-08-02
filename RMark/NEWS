@@ -1,4 +1,4 @@
-RMark 2.1.6 (28 May 2013)
+RMark 2.1.6 (2 Aug 2013)
 --------------------------
 NEW FEATURES
 
@@ -11,6 +11,14 @@ PMDead (Seber recovery with Pledger mixtures), BurnhamLDRE (Burnham Live/Dead wi
 
 * expand argument added to get.real to control whether the complete var-cov matrix is returned (expand=T) or only the var-cov of the unique parameters (expand=FALSE; the default)
 
+* parameters can now be fixed at a real value by adding a column named fix in the design data which contains NA if parameter is to be estimated or some value at which it is fixed. Please begin to use this instead of deleting design data which does not work in all circumstances.
+Note that you can override or add more fixed values for a specific model by using the fixed element of the parameter specification. 
+
+* in make.mark.model, if it finds duplicate indices to fix a parameter value it uses the latter one and issues a message. This will be the same behavior as previously because they would have
+both been written to the MARK inp file and MARK uses the latter one. The message was added to make the user aware in case it was unintended.
+
+* checks were added to process.data to make sure both ch(character) and freq (numeric) have proper values to avoid problems with data input.
+
 BUG FIXES
 
 * Fixed a problem in make.mark.model. If share=TRUE and non-default link function was specified, the link function for the shared parameter (eg c in closed model) was not changed resulting in
@@ -19,6 +27,8 @@ different real parameter values for the shared parameter even though beta(s) wer
 * Fixed a problem in model.average.list which was always using the non-revised variance formula for model averaging when the var-cov (vcv) was not specified. Thanks to Kristin Van Katwyk for reporting the discrepancy. The error does not affect model.average.marklist which is used for model averaging real parameters from MARK runs.
 
 * Fixed a problem in get.real that would fail if mixtures > 2 in displaying results for certain model parameters.
+
+* Renamed GammaPrime to aPrime and GammaDoublePrime to aDoublePrime in parameters.txt for Robust Design Barker models.
 
 RMark 2.1.5 (28 Mar 2013)
 --------------------------

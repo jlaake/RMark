@@ -262,6 +262,28 @@ robust.occasions<-function(times)
 #
    model.list=setup.model(model,nocc,mixtures)
 #
+#  data checks
+#
+   if(!is.character(data$ch))
+   {
+	   if(is.factor(data$ch))
+		   stop("\nch field is a factor and must be a character string\n")
+       else
+		   stop("\nch field must be a character string\n")
+   } else
+	  if(!model.list$occupancy)
+		  if(any(sapply(strsplit(data$ch,""),function(x) all(x=="0"))))
+	       stop("\nall 0 ch encountered. MARK will not accept them\n")
+   if(!is.null(data$freq))
+   {
+	   if(!is.numeric(data$freq))
+		   stop("\n freq field must be numeric\n")
+	   else
+		   if(any(data$freq<=0))
+			   stop("\n freq field must only contain non-zero positive values")
+   }
+   
+#
 #  If multistrata design, determine number of strata and their labels
 #  Make sure multistrata designs have at least 2 strata
 #

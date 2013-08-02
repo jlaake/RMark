@@ -1368,6 +1368,14 @@ create.agenest.var=function(data,init.agevar,time.intervals)
            fixlist=as.numeric(rn)
         }
      }
+#
+#    Add any values specified with fix column in ddl
+#
+	 if(!is.null(ddl[[parx]]$fix))
+	 {
+		 fixvalues=c(fixvalues,ddl[[parx]]$fix[!is.na(ddl[[parx]]$fix)])
+		 fixlist=c(fixlist,as.numeric(row.names(ddl[[parx]][!is.na(ddl[[parx]]$fix),])))
+	 }
      if(!is.null(parameters[[i]]$fixed)|!is.null(fixlist))
      {
 #
@@ -1439,6 +1447,15 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                     stop()
                  }
              }
+			 # check for duplicates and use latter values
+             if(any(duplicated(fixlist)))
+			 {
+				 message(paste("\nSome indices for fixed parameters were duplicated for ",parx,"; using latter values\n"))
+				 uniqIndices=which(!duplicated(rev(fixlist)))
+				 fixlist=rev(fixlist)[uniqIndices]
+				 fixvalues=rev(fixvalues)[uniqIndices]
+			 }
+             # assign all.different indices by adding first pim index-1
              fixlist=fixlist+ pim[[i]][[1]]$pim[1,1]-1
              for(k in 1:length(fixlist))
              {
@@ -1813,7 +1830,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
       if(!is.null(full.ddl[[parx]]$cohort))strings=paste(strings," c",full.ddl[[parx]]$cohort,sep="")
 	  if(!is.null(full.ddl[[parx]]$occ.cohort))strings=paste(strings," c",full.ddl[[parx]]$occ.cohort,sep="")
 	  if(!is.null(full.ddl[[parx]]$age))strings=paste(strings," a",full.ddl[[parx]]$age,sep="")
-	  if(!is.null(full.ddl[[parx]]$occ))strings=paste(strings," o",full.ddl[[parx]]$occ,sep="")
+	  if("occ"%in%names(full.ddl[[parx]]))strings=paste(strings," o",full.ddl[[parx]]$occ,sep="")
 	  if(model.list$robust && parameters[[parx]]$secondary)
          strings=paste(strings," s",full.ddl[[parx]]$session,sep="")
       if(!is.null(full.ddl[[parx]]$time))strings=paste(strings," t",full.ddl[[parx]]$time,sep="")

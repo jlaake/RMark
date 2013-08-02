@@ -1932,4 +1932,3 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   class(model)=c("mark",data$model)
   return(model)
 }
-

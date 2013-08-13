@@ -278,9 +278,6 @@ robust.occasions<-function(times)
    {
 	   if(!is.numeric(data$freq))
 		   stop("\n freq field must be numeric\n")
-	   else
-		   if(any(data$freq<=0))
-			   stop("\n freq field must only contain non-zero positive values")
    }
    
 #

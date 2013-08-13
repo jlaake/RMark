@@ -103,6 +103,7 @@ create.model.list<-function(model)
 	{
 		vec=ls(pattern=paste("^",n,"\\.",sep=""),envir=parent.frame())
 		if(length(vec)>0)
+		{
 			for (i in 1:length(vec))
 			{
 				if(eval(parse(text=paste("is.list(",vec[i],")",sep="")),envir=parent.frame()))
@@ -113,10 +114,11 @@ create.model.list<-function(model)
 						model.list[[n]]=c(model.list[[n]],vec[i])
 				}
 			}
-		
+		} else
+			cat("Using default formula for ",n,"\n")
 	}
 	if(length(model.list)==0)
-		stop("\nNo model specifications found. Use parameter.description notation (e.g., Phi.time)\n")
+		stop("\nNo model specifications found. Use case sensitive parameter.description notation (e.g., Phi.time)\n")
 	if(length(model.list)>1)
 	{
 		model.list=expand.grid(model.list)

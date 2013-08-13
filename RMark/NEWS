@@ -1,4 +1,4 @@
-RMark 2.1.6 (2 Aug 2013)
+RMark 2.1.6 (5 Aug 2013)
 --------------------------
 NEW FEATURES
 * Addition of RDMSOccRepro model with changes to create the unique model structure. Also added REDead (Seber recovery with random effects),PMDead (Seber recovery with Pledger mixtures), BurnhamLDRE (Burnham Live/Dead with random effects).
@@ -8,6 +8,7 @@ NEW FEATURES
 * parameters can now be fixed at a real value by adding a column named fix in the design data which contains NA if parameter is to be estimated or some value at which it is fixed. Please begin to use this instead of deleting design data which does not work in all circumstances. Note that you can override or add more fixed values for a specific model by using the fixed element of the parameter specification. 
 * in make.mark.model, if it finds duplicate indices to fix a parameter value it uses the latter one and issues a message. This will be the same behavior as previously because they would have both been written to the MARK inp file and MARK uses the latter one. The message was added to make the user aware in case it was unintended.
 * checks were added to process.data to make sure both ch(character) and freq (numeric) have proper values to avoid problems with data input.
+* create.model.list modified to make user aware when no specifications are found that default formula is used for parameter.
 
 BUG FIXES
 * Fixed a problem in make.mark.model. If share=TRUE and non-default link function was specified, the link function for the shared parameter (eg c in closed model) was not changed resulting in different real parameter values for the shared parameter even though beta(s) were the same for the 2 types of parameters (eg p and c).

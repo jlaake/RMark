@@ -1634,13 +1634,15 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
   complete.design.matrix=NULL
   nrows=0
+  lastpim=length( pim[[length(parameters)]])
+  lastindex=sum(sapply(full.ddl[1:length(parameters)],nrow))
+#  lastindex=max(pim[[length(parameters)]][[lastpim]]$pim)
   for(i in 1:length(parameters))
   {
+	 # parameters with NULL formula have been merged with a shared parameter
      if(!is.null(parameters[[i]]$formula))
      {    
         mat=NULL
-        lastpim=length( pim[[length(parameters)]])
-        lastindex=max(pim[[length(parameters)]][[lastpim]]$pim)
 		pair=parameters[[i]]$pair
 		if(!is.null(pair) && pair !="" && !is.null(parameters[[pair]]$share) && parameters[[pair]]$share)
 		{
@@ -1668,7 +1670,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   complete.design.matrix=as.data.frame(complete.design.matrix)
 
 #
-#  If there any initial values, output them to the MARK input file
+#  If there are any initial values, output them to the MARK input file
 #  after making sure that the vector length matches the number of parameters  
 #
    if(!is.null(initial))

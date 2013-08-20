@@ -17,11 +17,11 @@ pois.proc=process.data(PoissonMR,model="PoissonMR",
 pois.ddl=make.design.data(pois.proc)
 mod=mark(pois.proc,pois.ddl,
 		model.parameters=list(Phi=list(formula=~1,link="sin"),
-				              GammaDoublePrime=list(formula=~1,share=TRUE,link="sin"),
-							  alpha=list(formula=~-1+time,link="log"),
-							  U=list(formula=~-1+time,link="log"),
-							  sigma=list(formula=~-1+time,link="log")),
-		                      initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2)
+			      GammaDoublePrime=list(formula=~1,share=TRUE,link="sin"),
+			      alpha=list(formula=~-1+time,link="log"),
+				  U=list(formula=~-1+time,link="log"),
+				  sigma=list(formula=~-1+time,link="log")),
+		          initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2)
 summary(mod)
 }
 }

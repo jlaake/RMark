@@ -38,6 +38,7 @@
 #'  \item{vcv.beta}{variance-covariance matrix for beta} \item{GTrace}{trace of matrix G}
 #' @author Jeff Laake; Ben Augustine
 #' @export
+#' @import matrixcalc
 #' @references BURNHAM, K. P. and G. C. WHITE. 2002. Evaluation of some random
 #' effects methodology applicable to bird ringing data.  Journal of Applied
 #' Statistics 29: 245-264.
@@ -53,7 +54,8 @@
 #' df=md$design.data$Phi
 #' shrinkest=data.frame(time=1:6,value=varc$betarand$estimate)
 #' df=merge(df,shrinkest,by="time")
-#' md=mark(dipper,model.parameters=list(Phi=list(formula=~time,fixed=list(index=df$par.index,value=df$value))),adjust=FALSE)
+#' md=mark(dipper,model.parameters=list(Phi=list(formula=~time,
+#'   fixed=list(index=df$par.index,value=df$value))),adjust=FALSE)
 #' npar=md$results$npar+varc$GTrace
 #' md$results$lnl+2*(npar + (npar*(npar+1))/(md$results$n-npar-1))
 #' }

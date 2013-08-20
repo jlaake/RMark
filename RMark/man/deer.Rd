@@ -102,7 +102,8 @@ for bootstrapp analysis in MARK, not used in bfdeeR package}
 \examples{
 \donttest{
 data(deer)
-x=data.frame(ch=paste(deer$TI, deer$SL, sep=""), Survey=factor(deer$Group), Year=factor(deer$Year), Cluster=deer$Cluster, MgtUnit=factor(deer$MgmtUnit))
+x=data.frame(ch=paste(deer$TI, deer$SL, sep=""), Survey=factor(deer$Group),
+     Year=factor(deer$Year), Cluster=deer$Cluster, MgtUnit=factor(deer$MgmtUnit))
 x$ch=as.character(x$ch)
 bfrun=function(){
 x.proc=process.data(x, model="Huggins", groups=c("Survey", "Year", "MgtUnit"))
@@ -117,10 +118,12 @@ mod.1=mark(x.proc, x.ddl, model.parameters=list(p=p.shared), invisible=FALSE)
 p.sharetime=list(formula=~time, share=TRUE)
 mod.2=mark(x.proc, x.ddl, model.parameters=list(p=p.sharetime), invisible=FALSE)
 
-#2a Parameter Null Model, constant p, constant c, different p and c (one estimate for each; p ne c) not using share
+#2a Parameter Null Model, constant p, constant c,
+# different p and c (one estimate for each; p ne c) not using share
 mod.2a=mark(x.proc, x.ddl, model.parameters=list(p=list(formula=~1), c=list(formula=~1)))
 
-#Fully parameterized model, different p and c for each survey transect replicate, management unit, method (TI or SL) and any observers
+#Fully parameterized model, different p and c for each survey transect replicate,
+# management unit, method (TI or SL) and any observers
 p.survey=list(formula=~Survey*time, share=TRUE)
 mod.3=mark(x.proc, x.ddl, model.parameters=list(p=p.survey), invisible=FALSE)
 
@@ -145,7 +148,8 @@ return(collect.models())
 bf.out=bfrun()
 bf.out
 
-#export function to send dataset and covariates data to MARK for bootstrap analysis (not run but here for completeness)
+#export function to send dataset and covariates data to MARK for bootstrap analysis
+#(not run but here for completeness)
 #export.MARK(x.proc, "BFdeer", mod.3, replace=TRUE, ind.covariates="all")
 }
 }

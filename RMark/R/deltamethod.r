@@ -26,6 +26,7 @@
 #' variance-covariance matrix (ses=FALSE)
 #' @author Jeff Laake
 #' @export
+#' @import msm
 #' @keywords utility
 #' @examples
 #' \donttest{

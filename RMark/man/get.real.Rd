@@ -112,6 +112,7 @@ for(i in 1:length(Phi.estimates))
   cat(names(Phi.estimates)[i],"\\n")
   print(Phi.estimates[[i]]$pim,na.print="")
 }
+require(plotrix)
 #extract parameter estimates of capture probability p with se and conf intervals
 p.table=get.real(mod,"p",se=TRUE)
 print(p.table[p.table$region==1,])  # print values from region 1

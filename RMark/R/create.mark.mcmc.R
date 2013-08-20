@@ -15,6 +15,7 @@
 #' be used with the coda package
 #' @author Jeff Laake
 #' @export
+#' @import coda
 #' @keywords utility
 create.mark.mcmc <-function(filename,ncovs,nmeans,ndesigns,nsigmas,nrhos,nlogit,include=F)
 {

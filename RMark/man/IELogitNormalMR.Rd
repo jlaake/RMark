@@ -12,9 +12,9 @@
 \donttest{
 data(IELogitNormalMR)
 IElogitNor.proc=process.data(IELogitNormalMR,model="IELogitNormalMR",
-		counts=list("Marked Superpopulation"=c(28, 29, 30, 30, 30, 33, 33, 33, 33, 34, 34, 34),
-				"Unmarked Seen"=c(264, 161, 152, 217, 217, 160, 195, 159, 166, 152, 175, 190),
-				"Marked Unidentified"=c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)),
+	counts=list("Marked Superpopulation"=c(28, 29, 30, 30, 30, 33, 33, 33, 33, 34, 34, 34),
+	"Unmarked Seen"=c(264, 161, 152, 217, 217, 160, 195, 159, 166, 152, 175, 190),
+	"Marked Unidentified"=c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)),
 		         time.intervals=c(0,0,0,1,0,0,0,1,0,0,0))
 IElogitNor.ddl=make.design.data(IElogitNor.proc)
 mod1=mark(IElogitNor.proc,IElogitNor.ddl,

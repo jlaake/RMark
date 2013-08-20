@@ -27,27 +27,40 @@
 #' # brownie=import.chdata("brownie.inp",field.types=c("n","f"))
 #' \donttest{
 #'  data(brownie)
-#' # default ordering of ReleaseAge is alphabetic so it is Adult, Young which is why initial.ages=c(1,0)
+#' # default ordering of ReleaseAge is alphabetic so it is 
+#' # Adult, Young which is why initial.ages=c(1,0)
 #' # Seber Recovery
 #' br=process.data(brownie,model="Recovery",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
-#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),r=list(age.bins=c(0,1,10))),right=FALSE)
-#' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age:time,link="sin"),r=list(formula=~-1+age:time,link="sin")))
+#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
+#'                                            r=list(age.bins=c(0,1,10))),right=FALSE)
+#' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age:time,link="sin"),
+#'                                            r=list(formula=~-1+age:time,link="sin")))
 #' # Brownie Recovery
 #' br=process.data(brownie,model="Brownie",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
-#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),f=list(age.bins=c(0,1,10))),right=FALSE)
-#' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age:time,link="sin"),f=list(formula=~-1+age:time,link="sin")))
-#' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age,link="sin"),f=list(formula=~-1+age,link="sin")))
+#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
+#'                                f=list(age.bins=c(0,1,10))),right=FALSE)
+#' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age:time,link="sin"),
+#'                                f=list(formula=~-1+age:time,link="sin")))
+#' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age,link="sin"),
+#'                                f=list(formula=~-1+age,link="sin")))
 #' #Random effects Seber recovery
 #' br=process.data(brownie,model="REDead",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
-#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),r=list(age.bins=c(0,1,10))),right=FALSE)
+#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
+#'                                        r=list(age.bins=c(0,1,10))),right=FALSE)
 #' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~age),r=list(formula=~age)))
 #' #Pledger Mixture Seber recovery
-#' br=process.data(brownie,model="PMDead",groups="ReleaseAge",mixtures=3,age.var=1,initial.ages=c(1,0))
-#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),r=list(age.bins=c(0,1,10))),right=FALSE)
-#' mod=mark(br,br.ddl,model.parameters=list(pi=list(formula=~mixture),S=list(formula=~age+mixture),r=list(formula=~age)))
-#' br=process.data(brownie,model="PMDead",groups="ReleaseAge",mixtures=2,age.var=1,initial.ages=c(1,0))
-#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),r=list(age.bins=c(0,1,10))),right=FALSE)
-#' mod=mark(br,br.ddl,model.parameters=list(pi=list(formula=~age),S=list(formula=~age+mixture),r=list(formula=~age)))
+#' br=process.data(brownie,model="PMDead",groups="ReleaseAge",
+#'                            mixtures=3,age.var=1,initial.ages=c(1,0))
+#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
+#'                             r=list(age.bins=c(0,1,10))),right=FALSE)
+#' mod=mark(br,br.ddl,model.parameters=list(pi=list(formula=~mixture),
+#'                      S=list(formula=~age+mixture),r=list(formula=~age)))
+#' br=process.data(brownie,model="PMDead",groups="ReleaseAge",
+#'                      mixtures=2,age.var=1,initial.ages=c(1,0))
+#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
+#'                       r=list(age.bins=c(0,1,10))),right=FALSE)
+#' mod=mark(br,br.ddl,model.parameters=list(pi=list(formula=~age),
+#'                       S=list(formula=~age+mixture),r=list(formula=~age)))
 #' }
 
 NULL
@@ -196,7 +209,8 @@ NULL
 #' 
 #' \donttest{
 #' data(deer)
-#' x=data.frame(ch=paste(deer$TI, deer$SL, sep=""), Survey=factor(deer$Group), Year=factor(deer$Year), Cluster=deer$Cluster, MgtUnit=factor(deer$MgmtUnit))
+#' x=data.frame(ch=paste(deer$TI, deer$SL, sep=""), Survey=factor(deer$Group), 
+#'      Year=factor(deer$Year), Cluster=deer$Cluster, MgtUnit=factor(deer$MgmtUnit))
 #' x$ch=as.character(x$ch)
 #' bfrun=function(){
 #' x.proc=process.data(x, model="Huggins", groups=c("Survey", "Year", "MgtUnit"))
@@ -211,10 +225,12 @@ NULL
 #' p.sharetime=list(formula=~time, share=TRUE)
 #' mod.2=mark(x.proc, x.ddl, model.parameters=list(p=p.sharetime), invisible=FALSE)
 #' 
-#' #2a Parameter Null Model, constant p, constant c, different p and c (one estimate for each; p ne c) not using share
+#' #2a Parameter Null Model, constant p, constant c,
+#' # different p and c (one estimate for each; p ne c) not using share
 #' mod.2a=mark(x.proc, x.ddl, model.parameters=list(p=list(formula=~1), c=list(formula=~1)))
 #' 
-#' #Fully parameterized model, different p and c for each survey transect replicate, management unit, method (TI or SL) and any observers
+#' #Fully parameterized model, different p and c for each survey transect replicate, 
+#' # management unit, method (TI or SL) and any observers
 #' p.survey=list(formula=~Survey*time, share=TRUE)
 #' mod.3=mark(x.proc, x.ddl, model.parameters=list(p=p.survey), invisible=FALSE)
 #' 
@@ -239,7 +255,8 @@ NULL
 #' bf.out=bfrun()
 #' bf.out
 #' 
-#' #export function to send dataset and covariates data to MARK for bootstrap analysis (not run but here for completeness)
+#' #export function to send dataset and covariates data to MARK for bootstrap analysis 
+#' #(not run but here for completeness)
 #' #export.MARK(x.proc, "BFdeer", mod.3, replace=TRUE, ind.covariates="all")
 #' }
 NULL
@@ -924,9 +941,9 @@ NULL
 #' \donttest{
 #' data(IELogitNormalMR)
 #' IElogitNor.proc=process.data(IELogitNormalMR,model="IELogitNormalMR",
-#' 		counts=list("Marked Superpopulation"=c(28, 29, 30, 30, 30, 33, 33, 33, 33, 34, 34, 34),
-#' 				"Unmarked Seen"=c(264, 161, 152, 217, 217, 160, 195, 159, 166, 152, 175, 190),
-#' 				"Marked Unidentified"=c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)),
+#' 	counts=list("Marked Superpopulation"=c(28, 29, 30, 30, 30, 33, 33, 33, 33, 34, 34, 34),
+#' 	"Unmarked Seen"=c(264, 161, 152, 217, 217, 160, 195, 159, 166, 152, 175, 190),
+#' 	"Marked Unidentified"=c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)),
 #' 		         time.intervals=c(0,0,0,1,0,0,0,1,0,0,0))
 #' IElogitNor.ddl=make.design.data(IElogitNor.proc)
 #' mod1=mark(IElogitNor.proc,IElogitNor.ddl,
@@ -1014,7 +1031,8 @@ NULL
 #'    STimesq=mark(killdeer,model="Nest",
 #'        model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40,threads=2)
 #'    STime3=mark(killdeer,model="Nest",
-#'       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)^3))),nocc=40,threads=2)
+#'       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)^3))),
+#'                    nocc=40,threads=2)
 #'    return(collect.models())
 #' }
 #' # run defined models
@@ -1518,11 +1536,11 @@ NULL
 #' pois.ddl=make.design.data(pois.proc)
 #' mod=mark(pois.proc,pois.ddl,
 #' 		model.parameters=list(Phi=list(formula=~1,link="sin"),
-#' 				              GammaDoublePrime=list(formula=~1,share=TRUE,link="sin"),
-#' 							  alpha=list(formula=~-1+time,link="log"),
-#' 							  U=list(formula=~-1+time,link="log"),
-#' 							  sigma=list(formula=~-1+time,link="log")),
-#' 		                      initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2)
+#' 			      GammaDoublePrime=list(formula=~1,share=TRUE,link="sin"),
+#' 			      alpha=list(formula=~-1+time,link="log"),
+#' 				  U=list(formula=~-1+time,link="log"),
+#' 				  sigma=list(formula=~-1+time,link="log")),
+#' 		          initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2)
 #' summary(mod)
 #' }
 NULL
@@ -2246,22 +2264,35 @@ NULL
 #' wwdo.ddl=make.design.data(wwdo.proc)
 #' 
 #' #Fixing Phi Parameters for sampling periods where HY WWDO were not available in population
-#' 	hy.phi1=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & wwdo.ddl$Phi$time==1,]))
-#' 	hy.phi2=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & wwdo.ddl$Phi$time==2,]))
-#' 	hy.phi3=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & wwdo.ddl$Phi$time==3,]))
-#' 	hy.phi4=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & wwdo.ddl$Phi$time==4,]))
-#' 	hy.phi5=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & wwdo.ddl$Phi$time==5,]))
-#' 	hy.phi6=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & wwdo.ddl$Phi$time==6,]))
-#' 	hy.phi7=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & wwdo.ddl$Phi$time==7,]))
+#' 	hy.phi1=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & 
+#'                       wwdo.ddl$Phi$time==1,]))
+#' 	hy.phi2=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" &
+#'                       wwdo.ddl$Phi$time==2,]))
+#' 	hy.phi3=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & 
+#'                       wwdo.ddl$Phi$time==3,]))
+#' 	hy.phi4=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & 
+#'                       wwdo.ddl$Phi$time==4,]))
+#' 	hy.phi5=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & 
+#'                       wwdo.ddl$Phi$time==5,]))
+#' 	hy.phi6=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & 
+#'                       wwdo.ddl$Phi$time==6,]))
+#' 	hy.phi7=as.numeric(row.names(wwdo.ddl$Phi[wwdo.ddl$Phi$group=="HY" & 
+#'                       wwdo.ddl$Phi$time==7,]))
 #' 	hy.phi.fix=c(hy.phi1, hy.phi2, hy.phi3, hy.phi4, hy.phi5, hy.phi6, hy.phi7)
 #' 	
 #' #Fixing PENT Parameters for sampling period where HY WWDO were not available in population
-#' 	hy.pent2=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & wwdo.ddl$pent$time==2,]))
-#' 	hy.pent3=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & wwdo.ddl$pent$time==3,]))
-#' 	hy.pent4=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & wwdo.ddl$pent$time==4,]))
-#' 	hy.pent5=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & wwdo.ddl$pent$time==5,]))
-#' 	hy.pent6=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & wwdo.ddl$pent$time==6,]))
-#' 	hy.pent7=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & wwdo.ddl$pent$time==7,]))
+#' 	hy.pent2=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & 
+#'                        wwdo.ddl$pent$time==2,]))
+#' 	hy.pent3=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & 
+#'                        wwdo.ddl$pent$time==3,]))
+#' 	hy.pent4=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & 
+#'                        wwdo.ddl$pent$time==4,]))
+#' 	hy.pent5=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & 
+#'                        wwdo.ddl$pent$time==5,]))
+#' 	hy.pent6=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & 
+#'                        wwdo.ddl$pent$time==6,]))
+#' 	hy.pent7=as.numeric(row.names(wwdo.ddl$pent[wwdo.ddl$pent$group=="HY" & 
+#'                        wwdo.ddl$pent$time==7,]))
 #' 	hy.pent.fix=c(hy.pent2, hy.pent3, hy.pent4, hy.pent5, hy.pent6, hy.pent7)
 #' 	
 #' #####
@@ -2277,17 +2308,30 @@ NULL
 #' 	Phi.dot.fix=list(formula=~1, fixed=list(index=hy.phi.fix, value=c(0,0,0,0,0,0,0)))
 #' 	Phi.time.fix=list(formula=~time, fixed=list(index=hy.phi.fix, value=c(0,0,0,0,0,0,0)))
 #' 	Phi.age.fix=list(formula=~group, fixed=list(index=hy.phi.fix, value=c(0,0,0,0,0,0,0)))
-#' 	Phi.timeage.fix=list(formula=~time:group, fixed=list(index=hy.phi.fix, value=c(0,0,0,0,0,0,0)))
+#' 	Phi.timeage.fix=list(formula=~time:group, 
+#'      fixed=list(index=hy.phi.fix, value=c(0,0,0,0,0,0,0)))
 #' 	
 #' #Entry Process-always time dependent, otherwise makes no sense in my situation
 #' 	pent.time.fix=list(formula=~time, fixed=list(index=hy.pent.fix, value=c(0,0,0,0,0,0)))
 #' 	
-#' 	Model.1=mark(wwdo.proc, wwdo.ddl, model.parameters=list(Phi=Phi.dot.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), invisible=FALSE)
-#' 	Model.2=mark(wwdo.proc, wwdo.ddl, model.parameters=list(Phi=Phi.time.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), invisible=FALSE)
-#' 	Model.3=mark(wwdo.proc, wwdo.ddl, model.parameters=list(Phi=Phi.age.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), invisible=FALSE)
-#' 	Model.4=mark(wwdo.proc, wwdo.ddl, model.parameters=list(Phi=Phi.timeage.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), invisible=FALSE)
-#' 	Model.5=mark(wwdo.proc, wwdo.ddl, model.parameters=list(Phi=Phi.timeage.fix, p=p.time, pent=pent.time.fix, N=list(formula=~group)), invisible=FALSE)
-#' 	Model.6=mark(wwdo.proc, wwdo.ddl, model.parameters=list(Phi=Phi.timeage.fix, p=p.g.time, pent=pent.time.fix, N=list(formula=~group)), invisible=FALSE)
+#' 	Model.1=mark(wwdo.proc, wwdo.ddl, 
+#'    model.parameters=list(Phi=Phi.dot.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
+#'    invisible=FALSE)
+#' 	Model.2=mark(wwdo.proc, wwdo.ddl, 
+#'   model.parameters=list(Phi=Phi.time.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
+#'    invisible=FALSE)
+#' 	Model.3=mark(wwdo.proc, wwdo.ddl, 
+#'   model.parameters=list(Phi=Phi.age.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
+#'     invisible=FALSE)
+#' 	Model.4=mark(wwdo.proc, wwdo.ddl, 
+#'   model.parameters=list(Phi=Phi.timeage.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
+#'     invisible=FALSE)
+#' 	Model.5=mark(wwdo.proc, wwdo.ddl,  
+#'   model.parameters=list(Phi=Phi.timeage.fix, p=p.time, pent=pent.time.fix, N=list(formula=~group)), 
+#'    invisible=FALSE)
+#' 	Model.6=mark(wwdo.proc, wwdo.ddl, 
+#'    model.parameters=list(Phi=Phi.timeage.fix,p=p.g.time, pent=pent.time.fix,N=list(formula=~group)), 
+#'    invisible=FALSE)
 #' 	collect.models()
 #' }
 #' wwdo.out=wwdo.popan()

@@ -69,7 +69,8 @@ run.killdeer=function()
    STimesq=mark(killdeer,model="Nest",
        model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40,threads=2)
    STime3=mark(killdeer,model="Nest",
-      model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)^3))),nocc=40,threads=2)
+      model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)^3))),
+                   nocc=40,threads=2)
    return(collect.models())
 }
 # run defined models

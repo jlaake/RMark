@@ -1,4 +1,4 @@
-RMark 2.1.6 (5 Aug 2013)
+RMark 2.1.6 (20 Aug 2013)
 --------------------------
 NEW FEATURES
 * Addition of RDMSOccRepro model with changes to create the unique model structure. Also added REDead (Seber recovery with random effects),PMDead (Seber recovery with Pledger mixtures), BurnhamLDRE (Burnham Live/Dead with random effects).

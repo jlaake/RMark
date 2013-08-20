@@ -77,7 +77,8 @@ varc=var.components(z,design=matrix(rep(1,length(z)),ncol=1),vcv)
 df=md$design.data$Phi
 shrinkest=data.frame(time=1:6,value=varc$betarand$estimate)
 df=merge(df,shrinkest,by="time")
-md=mark(dipper,model.parameters=list(Phi=list(formula=~time,fixed=list(index=df$par.index,value=df$value))),adjust=FALSE)
+md=mark(dipper,model.parameters=list(Phi=list(formula=~time,
+  fixed=list(index=df$par.index,value=df$value))),adjust=FALSE)
 npar=md$results$npar+varc$GTrace
 md$results$lnl+2*(npar + (npar*(npar+1))/(md$results$n-npar-1))
 }

@@ -1,3 +1,6 @@
+RMark 2.1.6-1 (20 Aug 2013)
+* fix for CRAN - use of :::
+
 RMark 2.1.6 (20 Aug 2013)
 --------------------------
 NEW FEATURES

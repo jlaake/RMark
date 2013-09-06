@@ -146,9 +146,9 @@ mark.wrapper.parallel<-
 	if (!any(names(list.args)=="threads")) list.args$threads<-1
 #	if (any(names(list.args)=="threads")) list.args<-list.args[-which(names(list.args)=="threads")]
 #	require("parallel")
-	if (threads*cpus>parallel:::detectCores() | (threads<0 & cpus!=1)) 
+	if (threads*cpus>parallel::detectCores() | (threads<0 & cpus!=1)) 
 		stop("you've tried to use more cores than you have, try to combine threads and cpus to make ", 
-				 parallel:::detectCores(), " or less as a product\n")
+				 parallel::detectCores(), " or less as a product\n")
 	initiallist=NULL
 	if(class(initial)[1]=="marklist")
 		if(nrow(initial$model.table)!=nrow(model.list))

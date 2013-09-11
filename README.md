@@ -13,7 +13,7 @@ find additional documentation [here](http://www.phidot.org/software/mark/rmark/R
 
 The RMark package is available on [CRAN](http://cran.r-project.org/web/packages/RMark/index.html) and you can download the 
 CRAN version directly from R. I post a new version to CRAN about 6-10 times a year. I maintain the development version 
-here. Click here to [download source zip](https://github.com/jlaake/mrds/archive/master.zip).
+here. Click here to [download source zip](https://github.com/jlaake/RMark/archive/master.zip).
 
 Download [Windows package binary](https://docs.google.com/folder/d/0B77g1ScdUwVeOVJNUVVGS0YtWE0/edit). From link, browse to RMark and then click on
 the version of the package you want. You should see a listing of the package contents as files.  Select File/Download. 

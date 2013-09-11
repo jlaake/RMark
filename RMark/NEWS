@@ -1,4 +1,15 @@
+RMark 2.1.7 (6 Sept 2013)
+--------------------------
+NEW FEATURES
+* added arguments allgroups, strata.labels, and counts to mark function which are passed to process.data.
+* added support for RDMSOpenMCSeas model
+CHANGES 
+* removed model list from documentation; currently supported models are listed in MarkModels.pdf
+* fixed problem in mark which prevented use of retry with fixed parameters. Thanks to Tommy Garrison for reporting this problem.
+* fixed make.mark.model so indices of singular parameters were correct with fixed parameters; thanks to Brett Collier for reporting this problem. 
+
 RMark 2.1.6-1 (20 Aug 2013)
+--------------------------
 * fix for CRAN - use of :::
 
 RMark 2.1.6 (20 Aug 2013)

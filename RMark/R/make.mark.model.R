@@ -763,7 +763,11 @@ if(length(rownums)==1)
 	complete.design.matrix=subset(model$design.matrix,1:dim(model$design.matrix)[1]%in%rownums)
 else
 	complete.design.matrix=model$design.matrix[rownums,,drop=FALSE]
-#
+# for any fixed parameter set row to all 0s
+if(!is.null(model$fixed))
+	for (i in 1:num.fixed)
+	complete.design.matrix[fixed.parms$index[i],]="0"
+					#
 # Find any columns that are all 0; left from mlogit0 fix
 #
 dm=complete.design.matrix

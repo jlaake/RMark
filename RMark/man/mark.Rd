@@ -15,7 +15,8 @@
     external = FALSE, profile.int = FALSE, chat = NULL,
     reverse = FALSE, run = TRUE, input.links = NULL,
     parm.specific = FALSE, mlogit0 = FALSE, threads = -1,
-    hessian = FALSE, accumulate = TRUE)
+    hessian = FALSE, accumulate = TRUE, allgroups = FALSE,
+    strata.labels = NULL, counts = NULL)
 }
 \arguments{
   \item{data}{Either the raw data which is a dataframe with
@@ -143,6 +144,22 @@
 
   \item{accumulate}{if TRUE accumulate like data values
   into frequencies}
+
+  \item{allgroups}{Logical variable; if TRUE, all groups
+  are created from factors defined in \code{groups} even if
+  there are no observations in the group}
+
+  \item{strata.labels}{vector of single character values
+  used in capture history(ch) for ORDMS, CRDMS,
+  RDMSOccRepro models; it can contain one more value beyond
+  what is in ch for an unobservable state except for
+  RDMSOccRepro which is used to specify strata ordering (eg
+  0 not-occupied, 1 occupied no repro, 2 occupied with
+  repro.}
+
+  \item{counts}{named list of numeric vectors (one group)
+  or matrices (>1 group) containing counts for mark-resight
+  models}
 }
 \value{
   model: a MARK object containing output and extracted

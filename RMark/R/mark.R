@@ -120,6 +120,14 @@
 #' @param threads number of cpus to use with mark.exe if positive or number of cpus to remain idle if negative
 #' @param hessian if TRUE specifies to MARK to use hessian rather than second partial matrix
 #' @param accumulate if TRUE accumulate like data values into frequencies
+#' @param allgroups Logical variable; if TRUE, all groups are created from
+#' factors defined in \code{groups} even if there are no observations in the
+#' group
+#' @param strata.labels vector of single character values used in capture
+#' history(ch) for ORDMS, CRDMS, RDMSOccRepro models; it can contain one more value beyond what is
+#' in ch for an unobservable state except for RDMSOccRepro which is used to specify strata ordering (eg 0 not-occupied, 1 occupied no repro, 2 occupied with repro.
+#' @param counts named list of numeric vectors (one group) or matrices (>1
+#' group) containing counts for mark-resight models
 #' @return model: a MARK object containing output and extracted results. It is
 #' a list with the following elements \item{data}{name of the processed data
 #' frame} \item{model}{type of analysis model (see list above)}
@@ -196,7 +204,8 @@ mark <-
 function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,
 design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
 invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
-realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE,accumulate=TRUE)
+realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE,accumulate=TRUE,
+allgroups=FALSE,strata.labels=NULL,counts=NULL)
 {
 # -----------------------------------------------------------------------------------------------------------------------
 # mark -  a single function that processes data, creates the design data, makes the mark model and runs it.
@@ -258,7 +267,8 @@ if(is.null(data$data))
    }
    data.proc=process.data(data,begin.time=begin.time, model=model,mixtures=mixtures, 
                           groups = groups, age.var = age.var, initial.ages = initial.ages, 
-                          age.unit = age.unit, time.intervals = time.intervals,nocc=nocc,reverse=reverse)
+                          age.unit = age.unit, time.intervals = time.intervals,nocc=nocc,reverse=reverse,
+				          allgroups=allgroups, strata.labels=strata.labels,counts=counts)
 }   
 else
    data.proc=data
@@ -330,6 +340,7 @@ while(i<=retry & !converge)
          i=i+1
          converge=FALSE
          initial=runmodel$results$beta$estimate
+		 names(initial)=rownames(runmodel$results$beta)
          initial[runmodel$results$singular]=0
          next
       }

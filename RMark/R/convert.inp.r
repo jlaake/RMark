@@ -228,12 +228,8 @@ strip.comments=function(inp.filename,use.comments=TRUE,header=TRUE)
 #
 #  Read in file and strip out comments and blank lines
 #
-   if(!file.exists(inp.filename))
-   {
+   if(length(grep(".inp",inp.filename))==0)
       inp.filename=paste(inp.filename,".inp",sep="")
-      if(!file.exists(inp.filename))
-         stop("\nCannot find input file\n")
-   }
    x=readLines(inp.filename)
    if(header)
    {

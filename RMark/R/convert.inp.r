@@ -138,6 +138,8 @@ convert.inp=function(inp.filename,group.df=NULL,covariates=NULL,use.comments=FAL
 #
 # Call function to strip comments and return row names (rn) and out.filename
 #
+   if(length(grep(".inp",inp.filename))==0)
+		inp.filename=paste(inp.filename,".inp",sep="")
    strip.list=strip.comments(inp.filename,use.comments=use.comments,header=FALSE)
    rn=strip.list$rn
    out.filename=strip.list$out.filename
@@ -228,8 +230,6 @@ strip.comments=function(inp.filename,use.comments=TRUE,header=TRUE)
 #
 #  Read in file and strip out comments and blank lines
 #
-   if(length(grep(".inp",inp.filename))==0)
-      inp.filename=paste(inp.filename,".inp",sep="")
    x=readLines(inp.filename)
    if(header)
    {

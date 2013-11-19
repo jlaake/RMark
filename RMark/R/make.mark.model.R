@@ -1148,6 +1148,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # 
 #  Unless this is nest data, aggregate data
 #
+# Fix 9 Nov 2013; create unique covariates before selecting data
+  covariates=unique(covariates)
   if(!is.null(covariates))
 	    zzd=data.frame(cbind(zz,data$data[,covariates]))
   else
@@ -1176,7 +1178,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(model.list$strata)string=paste(string," strata=",data$nstrata,sep="")
   if(!is.null(covariates))
   {
-     covariates=unique(covariates)
 	 covar10=covariates[duplicated((substr(covariates,1,10)))]
 	 if(length(covar10)>0) stop(paste("\nFollowing covariates are duplicates of another covariate within the first 10 characters\n",paste(covar10,collapse=", ")))
      string=paste(string," icovar = ",length(covariates))
@@ -1188,11 +1189,12 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   time.int=data$time.intervals
   if(!is.null(data$reverse) &&(data$reverse | data$model=="MultScalOcc")) time.int[time.int==0]=1
   string=paste(string," ICMeans NoHist hist=",nrow(zz),
-           ";\n time interval ",paste(time.int,collapse=" "),";")
-  if(model.list$strata)string=paste(string,"\n strata=",paste(data$strata.labels[1:data$nstrata],collapse=" "),";",sep="")
+           ";\n time interval ",paste(time.int,collapse=" "),";\n")
+  if(model.list$strata)string=paste(string,"strata=",paste(data$strata.labels[1:data$nstrata],collapse=" "),";\n",sep="")
+  write(string,file=outfile)
   if(!is.null(covariates))
   {
-     string=paste(string,"\nicovariates ",paste(covariates,collapse=" "),";")
+     string=paste(string,"icovariates ",paste(covariates,collapse=" "),";")
      any.factors=sapply(data$data[,covariates,drop=FALSE],is.factor)
      if(any(any.factors))
         stop(paste("The following individual covariates are not allowed because they are factor variables: ",paste(names(data$data[,covariates,drop=FALSE])[any.factors],collapse=",")))
@@ -1203,10 +1205,9 @@ create.agenest.var=function(data,init.agevar,time.intervals)
            stop(paste("The following individual covariates are not allowed because they contain NA: ",paste(names(data$data[,covariates,drop=FALSE])[any.na],collapse=",")))
         else
             zz=zzd
-#           zz=data.frame(cbind(zz,data$data[,covariates]))
      }
   }
-  write(string,file=outfile)
+  write(strwrap(string,100),file=outfile,append=TRUE)
 #
 #  Output group labels
 #
@@ -1235,7 +1236,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
      }
   }
   else
-     write.table(zz,file=outfile,eol=";\n",sep=" ",col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
+#     write.table(zz,file=outfile,eol=";\n",sep=" ",col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
+      apply(zz,1,function(x) write(strwrap(paste(paste(x,collapse=" "),";",sep=""),80),file=outfile,append=TRUE))	 
 #
 # Output counts section of Mark-resight models if appropriate
 #
@@ -1277,9 +1279,9 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # Next output proc Estimate 
 #
   if(!hessian)
-     string=paste(paste("proc estimate link=",spell(link),sep=""),"NOLOOP varest=2ndPart ",options," ;\nmodel={",model.name,"};")
+     string=paste(paste("proc estimate link=",spell(link),sep=""),"NOLOOP varest=2ndPart ",options," ;\nmodel={",substr(model.name,1,160),"};")
   else
-     string=paste(paste("proc estimate link=",spell(link),sep=""),"NOLOOP varest=Hessian ",options," ;\nmodel={",model.name,"};")
+     string=paste(paste("proc estimate link=",spell(link),sep=""),"NOLOOP varest=Hessian ",options," ;\nmodel={",substr(model.name,1,160),"};")
  write(string,file=outfile,append=TRUE)
 #
 # Next compute PIMS for each parameter in the model - these are the all different PIMS

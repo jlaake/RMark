@@ -616,7 +616,10 @@ if(type%in%c("Triang","STriang"))
      if(is.null(socc))
 	    session.designation=paste("Session",session)
 	 else
-		 session.designation=paste("Sampling Occasion",session)
+		 if(!socc)
+			 session.designation=paste("Primary",session)
+		 else
+		     session.designation=paste("Sampling Occasion",session)
  if (parameters$type == "Triang")
          string = paste(paste("group=", group,sep=""), param.name, stratum.designation, session.designation, 
                            paste(" rows=",ncol," cols=",ncol,sep=""), parameters$type, ";")
@@ -1823,7 +1826,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
 # write out labels for real parameters
 #
-
   labstring=NULL
   rnames=NULL
   ipos=0
@@ -1852,6 +1854,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
          ipos=ipos+plimit
       }
   }
+  if(any(duplicated(rnames))) stop("Contact package maintainer. Following row names are duplicated:",paste(rnames[duplicated(rnames)],collapse=" "))
   if(!simplify) write(labstring,file=outfile,append=TRUE)
   row.names(complete.design.matrix)=rnames
 #

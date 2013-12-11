@@ -85,7 +85,7 @@
 #' @param model Type of analysis model. See \code{\link{mark}} for a list of
 #' possible values for \code{model}
 #' @param mixtures Number of mixtures in closed capture models with
-#' heterogeneity
+#' heterogeneity or number of secondary samples for MultScaleOcc model
 #' @param groups Vector of factor variable names (in double quotes) in
 #' \code{data} that will be used to create groups in the data. A group is
 #' created for each unique combination of the levels of the factor variables in
@@ -145,49 +145,6 @@ process.data <-
 function(data,begin.time=1,model="CJS",mixtures=1,groups=NULL,allgroups=FALSE,age.var=NULL,
 initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,counts=NULL,reverse=FALSE)
 {
-# -----------------------------------------------------------------------------------------------------------------
-#
-# process.data - processes data by adding groups if any, and creates a list that
-#                contains the original data and input values that are used in other 
-#                routines (e.g., number of occasions)
-#
-#  Arguments: 
-#
-#  data			        - data frame with at least one field ch which is the
-#                         capture history stored as a character string
-#                         data can also have a field freq which is the frequency
-#                         of that capture history; it can also have individual covariates
-#  begin.time           - time of first capture occasion for all or by group – used for labels
-#  model                - type of analysis model
-#  mixtures             - number of mixtures in heterogeneity models
-#  groups               - vector of factor variable names for creating groups
-#  allgroups            - logical variable; if TRUE all groups are created even if there are no data
-#  age.var              - index in groups vector for age variable (if any)
-#  initial.ages         - vector of initial ages for each level of age factor
-#  age.unit             - age increment for each increment of time interval
-#  time.intervals       - intervals of time between the capture occasions
-#  nocc                 - number of occasions for Nest type; either nocc or time.intervals
-#                          must be specified
-#  strata.labels        - vector of single character labels for strata in ORDMS, CRDMS, RDMSOccRepro
-#  counts               - list of numeric vectors (one group) or matrices (>1 group) 
-#              	           containing counts for mark-resight models
-#  reverse              - only valid for Multistrata model; reverses timing of movement and survival
-#
-#  Value: result (list with the following elements)
-#
-#  data 		            - original raw data with group factor variable added if groups were defined
-#  model                - type of analysis model (eg, "CJS", "Burnham", "Barker")
-#  freq			            - matrix of frequencies (same # of rows as data,
-#                         number of columns is the number of groups in the data
-#  nocc                 - number of capture occasions 
-#  time.intervals       - length of time intervals between capture occasions
-#  begin.time           - time of first capture occasion
-#  age.unit             - increment of age for each increment of time
-#  initial.ages         - an initial age for group 
-#  group.covariates     - covariates used to define groups 
-#
-#  Functions used: setup.model
-# -------------------------------------------------------------------------------------
 robust.occasions<-function(times)
 {
    if(times[1] !=0 | times[length(times)]!=0)
@@ -350,7 +307,7 @@ robust.occasions<-function(times)
 #
 #  If this is a robust design, compute number of primary and secondary occasions
 #
-   if(model.list$robust)
+   if(model.list$robust &model!="MultScalOcc")
    {
       if(is.null(time.intervals))
          stop("\nTime intervals must be specified for a robust design\n")
@@ -370,15 +327,29 @@ robust.occasions<-function(times)
    }
    else
    {
-      nocc=model.list$nocc
-      nocc.secondary=NULL
-      num=model.list$num
+	   nocc=model.list$nocc
+	   nocc.secondary=NULL
+	   num=model.list$num
+	   if(model=="MultScalOcc"){
+		   nocc.secondary=mixtures
+		   if(nocc==nocc.secondary*(nocc %/% nocc.secondary))
+		   {
+		      nocc=nocc/nocc.secondary
+			  nocc.secondary=rep(nocc.secondary,nocc)
+		   }
+		   else
+			  stop("# of mixtures (secondary samples) not an even multiple of ch length")
+		   model.list$mixtures=1
+	   }
 #
 #     If time intervals specified make sure there are nocc-1 of them
 #     If none specified assume they are 1
 #
       if(is.null(time.intervals))
-         time.intervals=rep(1,nocc+model.list$num)
+          if(model=="MultScalOcc")
+			  time.intervals=rep(1,nocc.secondary[1]*nocc-1)
+	      else
+		      time.intervals=rep(1,nocc+model.list$num)
       else
          if(length(time.intervals)!=(nocc+num))
              stop("Incorrect number of time intervals")

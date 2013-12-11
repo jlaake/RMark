@@ -275,8 +275,8 @@ ORDMSState	p	0	0	0	Square	all	logit	~1					TRUE	TRUE
 2SpecConOccup	rBA	0	0	0	Square	all	logit	~1	FALSE	rBa									
 2SpecConOccup	rBa	0	0	0	Square	all	logit			rBA									
 MultScalOcc	Psi	0	1		Square	all	logit	~1					FALSE						
-MultScalOcc	Delta	0	0		Square	all	logit	~1					FALSE						
-MultScalOcc	p	0	0	0	Square	all	logit	~1					TRUE					TRUE	
+MultScalOcc	Theta	0	0		Square	all	logit	~1					FALSE						
+MultScalOcc	p	0	0	0	Square	all	logit	~1					TRUE					FALSE	
 RDPdGClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGClosed	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
@@ -429,7 +429,7 @@ RDBarkHFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE
 RDMSOccRepro	Phi0	1	0	0	Square	all	logit	~1			FALSE		FALSE	FALSE		0			
 RDMSOccRepro	Psi	1	-1	0	Square	all	logit	~1			FALSE		FALSE	TRUE					0
 RDMSOccRepro	R	1	-1	0	Square	all	logit	~1			FALSE		FALSE	TRUE	TRUE				02
-RDMSOccRepro	p	1	0	0	Square	all	logit	~1			FALSE		TRUE	TRUE					1
+RDMSOccRepro	p	0	0	0	Square	all	logit	~1			FALSE		TRUE	TRUE					1
 RDMSOccRepro	Delta	1	0	0	Square	all	logit	~1			FALSE		TRUE	TRUE	TRUE				22
 RDMSOpenMCSeas	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
 RDMSOpenMCSeas	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE				

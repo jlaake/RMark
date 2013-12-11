@@ -85,7 +85,7 @@
 #' @param invisible If TRUE, window for running MARK is hidden
 #' @param adjust If TRUE, adjusts npar to number of cols in design matrix,
 #' modifies AIC and records both
-#' @param mixtures number of mixtures for heterogeneity model
+#' @param mixtures number of mixtures for heterogeneity model or number of secondary samples for MultScaleOcc model
 #' @param se if TRUE, se and confidence intervals are shown in summary sent to
 #' screen
 #' @param filename base filename for files created by MARK.EXE. Files are named
@@ -207,53 +207,6 @@ invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,filename=NULL,prefix="mark",defau
 realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE,accumulate=TRUE,
 allgroups=FALSE,strata.labels=NULL,counts=NULL)
 {
-# -----------------------------------------------------------------------------------------------------------------------
-# mark -  a single function that processes data, creates the design data, makes the mark model and runs it.
-#
-# Arguments:
-#
-#  data                 - either the raw data which is a dataframe with at least one column named 
-#                         ch which is a character field containing the capture history or a processed dataframe
-#  ddl                  - design data list which contains an element for each parameter type; if NULL it is created
-#  begin.time           - time of first capture(release) occasion
-#  model.name           - optional model name
-#  model                - type of c-r model (eg CJS, Burnham, Barker) 
-#  title                - a title for the analysis 
-#  model.parameters     - list of parameter model specifications
-#  initial              - vector of initial values for beta parameters
-#  design.parameters    - specification of any grouping variables for design data for each parameter
-#  right                - if TRUE, any intervals created in design.parameters are closed on the right and open on left and vice-versa if FALSE
-#  groups               - list of factors for creating groups
-#  age.var              - index in groups of a variable that represents age
-#  initial.ages         - an initial age for each age group
-#  age.unit             - increment of age for each increment of time
-#  time.intervals       - intervals of time between the capture occasions
-#  nocc                 - number of occasions specification for Nest type
-#  output               - if TRUE produces summary of model input and model output
-#  invisible            - if TRUE, window for running MARK is hidden
-#  adjust               - if TRUE, adjusts npar to # of cols in design matrix, modifies AIC and records both
-#  mixtures             - # of mixtures for heterogeneity model
-#  se                   - if TRUE, se and confidence intervals are shown in summary sent to screen
-#  filename             - base filename for MARK input and output files (filename.* - no numeric sequence is added)
-#  prefix               - base filename prefix for MARK input and output files; eg mark001.* etc
-#  default.fixed        - if TRUE, default fixed values are assigned to any parameters missing from the full design data
-#  silent               - if TRUE, errors that are encountered are suppressed
-#  retry                - number of reanalyses to perform with new starting values when one or more parameters are singular
-#  options              - character string of options for Proc Estimate statement in MARK .inp file
-#  brief                - if TRUE and output=TRUE only gives a brief summary of model
-#  realvcv              - if TRUE the vcv matrix of the real parameters is extracted and stored in the model results
-#  delete               - if TRUE the output files are deleted after the results are extracted
-#  external             - if TRUE the mark object is saved externally rather than in the workspace; the filename is kept in its place
-#  profile.int          - if TRUE will request profile intervals for each real parameter; or you can give a vector of real parameter indices
-#  chat                 - value of chat used for profile intervals
-#
-#  Value: 
-#
-#  model - a MARK object model containing output and extracted results
-#
-#  Functions used: process.data, make.design.data, make.mark.model, run.mark.model, summary.mark
-# 
-# -----------------------------------------------------------------------------------------------------------------------
 #
 #  If the data haven't been processed (data$data is NULL) do it now with specified or default arguments
 # 

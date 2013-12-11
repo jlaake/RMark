@@ -35,14 +35,6 @@ setup.model <-
 function(model,nocc,mixtures=1)
 {
 #
-# setup.model - defines list of acceptable models and creates some global fields for the model
-#
-# Arguments:
-# 
-#   model    - name of model (must be in valid.models)
-#   nocc     - length of capture history string
-#   mixtures - number of mixtures
-#
 # Value: 
 #
 #   model.list - a list with following elements

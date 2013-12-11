@@ -446,8 +446,11 @@ remove.unused.occasions=function(data,ddl)
 	 limits=NULL
      if(data$mixtures==1)
      {
-        parameters[[i]]$mix=FALSE
-        parameters[[i]]$rows=1
+        if(!is.null(parameters[[i]]$mix)) 
+		{
+			parameters[[i]]$mix=FALSE
+            parameters[[i]]$rows=1
+		}
      }
      if(!is.null(parameters[[i]]$bystratum) && parameters[[i]]$bystratum)
      {

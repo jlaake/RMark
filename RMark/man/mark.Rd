@@ -77,6 +77,7 @@
   design matrix, modifies AIC and records both}
 
   \item{mixtures}{number of mixtures for heterogeneity
+  model or number of secondary samples for MultScaleOcc
   model}
 
   \item{se}{if TRUE, se and confidence intervals are shown

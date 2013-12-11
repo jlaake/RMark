@@ -1,10 +1,10 @@
 Package: RMark
 Version: 2.1.7
-Date: 2013-9-6
+Date: 2013-12-11
 Title: R Code for MARK Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with code contributions from Eldar
     Rakhimberdiev, Ben Augustine and Daniel Turek, and example data and
-    analysis from Bret Collier, Jay Rotella and Andrew Paul.
+    analysis from Bret Collier, Jay Rotella, David Pavlacky, and Andrew Paul.
 Description: This package provides an interface to the
     software package MARK developed by Gary White. MARK is
     freely available at

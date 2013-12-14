@@ -1194,7 +1194,6 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   string=paste(string," ICMeans NoHist hist=",nrow(zz),
            ";\n time interval ",paste(time.int,collapse=" "),";\n")
   if(model.list$strata)string=paste(string,"strata=",paste(data$strata.labels[1:data$nstrata],collapse=" "),";\n",sep="")
-  write(string,file=outfile)
   if(!is.null(covariates))
   {
      string=paste(string,"icovariates ",paste(covariates,collapse=" "),";")

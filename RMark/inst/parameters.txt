@@ -144,7 +144,7 @@ RDHHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE
 RDHHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
 ORDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
 ORDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-ORDMS	pent	1	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
+ORDMS	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
 ORDMS	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE					
 ORDMS	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
 CRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
@@ -249,7 +249,7 @@ CRDMSOFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE	TRUE
 ORDPdMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
 ORDPdMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
 ORDPdMS	Gamma	0	-1	1	Square	all	logit	~1					FALSE	TRUE	TRUE	-1			
-ORDPdMS	pent	1	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
+ORDPdMS	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
 ORDPdMS	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE					
 ORDPdMS	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
 ORDMSState	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					

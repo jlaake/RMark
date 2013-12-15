@@ -1,4 +1,4 @@
-RMark 2.1.7 (11 Dec 2013)
+RMark 2.1.7 (15 Dec 2013)
 --------------------------
 NEW FEATURES
 * added arguments allgroups, strata.labels, and counts to mark function which are passed to process.data.
@@ -14,7 +14,7 @@ CHANGES
 * in make.mark.model, code was changed to output data on multiple lines as in MARK interface; also model name truncated to 160 characters.
 * added test in make.mark.model for duplicate names in the design matrix which should not happen. It reports the duplicated names with a message to contact me.
 * modified structure of MultScalOcc model to match changes in MARK (Psi, Theta (primary), p(secondary); note that previous structure is no longer valid.
-* modified parameters.txt for p parameter in RDMSOccRepro so time file would be numbered correctly.
+* modified parameters.txt for p parameter in RDMSOccRepro so time file would be numbered correctly. Also, changed definition of pent for all models except POPAN such that it aligns with MARK in that the last pent is computed by subtraction. This just changed values for design data.
 
 BUG FIXES
 * Fixed a serious bug in make.mark.model which was passing individual covariate data out of synch with the variable names when there were more than one individual covariates used in the formulas and they same covariates were used in multiple formula. Thanks to Jonathon Cohen who reported a discrepancy when the model was exported to MARK, re-run and the results were different because MARK passes all covariate data to the inp file in the same order for all models.

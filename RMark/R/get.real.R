@@ -363,7 +363,11 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
          rownames(estimates)=output.labels
      }
   } else
-     estimates=cbind(estimates,model$design.data[[parameter]])
+  {
+	  dd=model$design.data[[parameter]]
+	  estimates=cbind(estimates,dd[,!names(dd)%in%c("par.index","model.index")])
+	  
+  }
 #
 # Return extracted estimates in chosen format
 #

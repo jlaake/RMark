@@ -1,3 +1,10 @@
+RMark 2.1.8 (10 Jan 2014)
+--------------------------
+
+CHANGES 
+
+* Modified get.real to remove par.index and model.index from design data before appending to estimates to avoid multiple field names with same name/value
+
 RMark 2.1.7 (15 Dec 2013)
 --------------------------
 NEW FEATURES

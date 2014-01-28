@@ -3,7 +3,9 @@
 \title{Compute estimates of real parameters for multiple covariate values}
 \usage{
   covariate.predictions(model, data = NULL, indices = NULL,
-    drop = TRUE)
+    drop = TRUE, revised = TRUE, mata = FALSE,
+    normal.lm = FALSE, residual.dfs = 0, alpha = 0.025,
+    ...)
 }
 \arguments{
   \item{model}{MARK model object or marklist}
@@ -18,13 +20,42 @@
 
   \item{drop}{if TRUE, models with any non-positive
   variance for betas are dropped}
+
+  \item{revised}{if TRUE it uses eq 6.12 from Burnham and
+  Anderson (2002) for model averaged se; otherwise it uses
+  eq 4.9}
+
+  \item{mata}{if TRUE, create model averaged tail area
+  confidence intervals as described by Turek and Fletcher}
+
+  \item{alpha}{The desired lower and upper error rate.
+  Specifying alpha=0.025 corresponds to a 95% MATA-Wald
+  confidence interval, an' alpha=0.05 to a 90% interval.
+  'alpha' must be between 0 and 0.5. Default value is
+  alpha=0.025.}
+
+  \item{normal.lm}{Specify normal.lm=TRUE for the normal
+  linear model case, and normal.lm=FALSE otherwise.  When
+  normal.lm=TRUE, the argument 'residual.dfs' must also be
+  supplied.  See USAGE section, and Turek and Fletcher
+  (2012) for additional details.}
+
+  \item{residual.dfs}{A vector containing the residual
+  (error) degrees of freedom under each candidate model.
+  This argument must be provided when the argument
+  normal.lm=TRUE.}
+
+  \item{...}{additional arguments passed to specific
+  functions}
 }
 \value{
-  A list is returned containing a dataframe of estimates
-  and and a var-cov matrix: \item{estimates}{ data frame
-  containing estimates, se, confidence interval and the
-  data values used to compute the estimates}
+  A list is returned containing a dataframe of estimates, a
+  var-cov matrix, and a reals list: \item{estimates}{ data
+  frame containing estimates, se, confidence interval and
+  the data values used to compute the estimates}
   \item{vcv}{variance-covariance matrix of real estimates}
+  \item{reaks}{list of dataframes with the estimate and se
+  used for each model}
 }
 \description{
   Computes real estimates for a dataframe of covariate

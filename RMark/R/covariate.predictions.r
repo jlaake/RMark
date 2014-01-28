@@ -75,10 +75,27 @@
 #' parameters to be computed
 #' @param drop if TRUE, models with any non-positive variance for betas are
 #' dropped
-#' @return A list is returned containing a dataframe of estimates and and a
-#' var-cov matrix: \item{estimates}{ data frame containing estimates, se,
+#' @param revised if TRUE it uses eq 6.12 from Burnham and Anderson (2002) for
+#' model averaged se; otherwise it uses eq 4.9
+#' @param mata if TRUE, create model averaged tail area confidence intervals as described by Turek and Fletcher
+#' @param alpha The desired lower and upper error rate.  Specifying alpha=0.025
+#' corresponds to a 95% MATA-Wald confidence interval, an' 
+#' alpha=0.05 to a 90% interval.  'alpha' must be between 0 and 0.5.
+#' Default value is alpha=0.025.
+#' @param normal.lm Specify normal.lm=TRUE for the normal linear model case, and 
+#' normal.lm=FALSE otherwise.  When normal.lm=TRUE, the argument 
+#' 'residual.dfs' must also be supplied.  See USAGE section, 
+#' and Turek and Fletcher (2012) for additional details.
+#' @param residual.dfs A vector containing the residual (error) degrees of freedom 
+#' under each candidate model.  This argument must be provided 
+#' when the argument normal.lm=TRUE.
+#' @param ... additional arguments passed to specific functions
+#' @return A list is returned containing a dataframe of estimates, a
+#' var-cov matrix, and a reals list: 
+#' \item{estimates}{ data frame containing estimates, se,
 #' confidence interval and the data values used to compute the estimates}
 #' \item{vcv}{variance-covariance matrix of real estimates}
+#' \item{reaks}{list of dataframes with the estimate and se used for each model}
 #' @author Jeff Laake
 #' @export
 #' @seealso \code{\link{compute.real}},\code{\link{model.average}}
@@ -254,7 +271,7 @@
 #' }
 #' }
 #' 
-covariate.predictions <- function(model,data=NULL,indices=NULL,drop=TRUE)
+covariate.predictions <- function(model,data=NULL,indices=NULL,drop=TRUE, revised=TRUE, mata=FALSE, normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
 {
 # ------------------------------------------------------------------------------------------------
 #
@@ -340,6 +357,12 @@ if(drop)
 }
 }
 else
+{
+	model.indices=unique(model$simplify$pim.translation[indices])
+	used.beta=which(apply(model$design.matrix[model.indices,,drop=FALSE],2,function(x)!all(x=="0")))
+	if(any(diag(model$results$beta.vcv[used.beta,used.beta])<0))
+		cat("\nModel has one or more beta variances that are not positive\n")
+}
   dropped.models=NULL
 reals=vector("list",length=number.of.models)
 firstmodel=TRUE
@@ -563,7 +586,6 @@ for (j in 1:number.of.models)
       estimates=data.frame(vcv.index=model.indices,model.index=model.indices,par.index=indices,data,estimate=real,se=se.real,
             lcl=real.lcl,ucl=real.ucl,fixed=fixed)
    }
-   
    reals[[j]]=subset(estimates,select=c("estimate","se"))
 #
 #  If this is a single model return results
@@ -573,47 +595,98 @@ for (j in 1:number.of.models)
       return(list(estimates=estimates,vcv=vcv.real))
    }
    else
+#  otherwise construct list for model averaging
+   {
+	   if(firstmodel)
+	   {
+		   firstmodel=FALSE
+		   nreals=dim(estimates)[1]
+		   estimate.mat=matrix(NA,nrow=number.of.models,ncol=nreals)
+		   se.mat=matrix(NA,nrow=number.of.models,ncol=nreals)
+		   estimates.average=estimates
+		   weight=vector("numeric",length=number.of.models)
+		   mavg.vcv=vector("list",length=number.of.models)
+	   }
+	   mavg.vcv[[j]]=vcv.real
+	   estimate.mat[j,]=reals[[j]]$estimate
+	   if(any(reals[[j]]$se<0)) 
+	   {
+		   warning("Negative variances for parameters ",paste((1:nreals)[reals[[j]]$se<0],collapse=", ")," for model ",j,". Setting those variances to 0")
+		   reals[[j]]$se[reals[[j]]$se<0]=0
+	   }
+	   se.mat[j,]=reals[[j]]$se
+	   weight[j]=model.table$weight[as.numeric(row.names(model.table))==j]	   
+   }
 #
 #  Otherwise if this is the first model in the list setup dataframe for
 #  average estimates and average correlation matrix.
 #
-   if(firstmodel)
-   {
-      firstmodel=FALSE
-      nreals=dim(estimates)[1]
-      estimates.average=estimates
-      estimates.average$estimate=0
-      cor.average=matrix(0,nrow=nreals,ncol=nreals)
-   }
+#   if(firstmodel)
+#   {
+#      firstmodel=FALSE
+#      nreals=dim(estimates)[1]
+#      estimates.average=estimates
+#      estimates.average$estimate=0
+#      cor.average=matrix(0,nrow=nreals,ncol=nreals)
+#   }
 #
 #  For each model the estimates are averaged and so is the correlation matrix
 #
-   estimates.average$estimate=estimates.average$estimate+
-         estimates$estimate*model.table$weight[as.numeric(row.names(model.table))==j]
-   cor.average=cor.average+vcv.real*model.table$weight[as.numeric(row.names(model.table))==j]/
-            outer(estimates$se,estimates$se,"*")
+#   estimates.average$estimate=estimates.average$estimate+
+#         estimates$estimate*model.table$weight[as.numeric(row.names(model.table))==j]
+#   cor=vcv.real/outer(estimates$se,estimates$se,"*")
+#   if(any(is.infinite(diag(cor)))) 
+#	   warning("Infinite correlation (se=0) for model  ",j, " for estimate ",which(is.infinite(diag(cor))),"\n")
+#   diag(cor)=1
+#   cor.average=cor.average+cor*model.table$weight[as.numeric(row.names(model.table))==j]
 }
+if(nreals==1){
+	estimate.mat=as.vector(estimate.mat)
+	se.mat=as.vector(se.mat)
+}
+if(!mata)
+	mavg.res=model.average.list(x=list(estimate=estimate.mat,weight=weight,vcv=mavg.vcv),revised=revised, mata=mata, normal.lm=normal.lm, residual.dfs=residual.dfs, alpha=alpha,...)
+else
+	mavg.res=model.average.list(x=list(estimate=estimate.mat,weight=weight,se=se.mat),revised=revised, mata=mata, normal.lm=normal.lm, residual.dfs=residual.dfs, alpha=alpha,...)
 #
 #  After processing each model, the model averaged se and v-c matrix is
 #  computed.
 #
-se.average=rep(0,nreals)
-for (i in 1:dim(model.table)[1])
+#revised=TRUE
+#se.average=rep(0,nreals)
+#for (i in 1:dim(model.table)[1])
+#{
+#   if(i %in% dropped.models) next   
+#   if(revised)
+#	   se.average=se.average+model.table$weight[as.numeric(row.names(model.table))==i]*
+#			   (reals[[i]]$se^2 + (reals[[i]]$estimate-estimates.average$estimate)^2)  
+#   else
+#	   se.average=se.average+model.table$weight[as.numeric(row.names(model.table))==i]*
+#			   sqrt(reals[[i]]$se^2 + (reals[[i]]$estimate-estimates.average$estimate)^2)
+#}
+#if(revised) se.average=sqrt(se.average)
+
+names(reals)=1:number.of.models
+estimates.average$estimate=mavg.res$estimate
+estimates.average$se=mavg.res$se
+vcv.real=mavg.res$vcv
+#vcv.real=cor.average*outer(se.average,se.average,"*")
+#vcv.real[is.nan(vcv.real)]=0
+#vcv.real[is.infinite(abs(vcv.real))]=0
+if(!mata)
 {
-   if(i %in% dropped.models) next
-   se.average=se.average+model.table$weight[as.numeric(row.names(model.table))==i]*
-              sqrt(reals[[i]]$se^2 + (reals[[i]]$estimate-estimates.average$estimate)^2)
+	link.list=compute.links.from.reals(estimates.average$estimate,model.list[[1]],parm.indices=estimates.average$par.index,vcv.real=vcv.real,use.mlogits=FALSE)
+	estimates.average$lcl=link.list$estimates-1.96*sqrt(diag(link.list$vcv))
+	estimates.average$ucl=link.list$estimates+1.96*sqrt(diag(link.list$vcv))
+	estimates.average$lcl=apply(data.frame(x=estimates.average$lcl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
+	estimates.average$ucl=apply(data.frame(x=estimates.average$ucl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
+	estimates.average$lcl[is.na(estimates.average$lcl)]=estimates.average$estimate[is.na(estimates.average$lcl)]
+	estimates.average$ucl[is.na(estimates.average$ucl)]=estimates.average$estimate[is.na(estimates.average$ucl)]
 }
-estimates.average$se=se.average
-vcv.real=cor.average*outer(se.average,se.average,"*")
-vcv.real[is.nan(vcv.real)]=0
-vcv.real[is.infinite(abs(vcv.real))]=0  
-link.list=compute.links.from.reals(estimates.average$estimate,model.list[[1]],parm.indices=estimates.average$par.index,vcv.real=vcv.real,use.mlogits=FALSE)
-estimates.average$lcl=link.list$estimates-1.96*sqrt(diag(link.list$vcv))
-estimates.average$ucl=link.list$estimates+1.96*sqrt(diag(link.list$vcv))
-estimates.average$lcl=apply(data.frame(x=estimates.average$lcl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
-estimates.average$ucl=apply(data.frame(x=estimates.average$ucl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
-estimates.average$lcl[is.na(estimates.average$lcl)]=estimates.average$estimate[is.na(estimates.average$lcl)]
-estimates.average$ucl[is.na(estimates.average$ucl)]=estimates.average$estimate[is.na(estimates.average$ucl)]
-return(list(estimates=estimates.average,vcv=vcv.real))
+else
+{
+	estimates.average$lcl=mavg.res$lcl
+	estimates.average$ucl=mavg.res$ucl
+}
+return(list(estimates=estimates.average,vcv=vcv.real,reals=reals))
 }

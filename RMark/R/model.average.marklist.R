@@ -338,7 +338,9 @@ for (i in 1:dim(model.table)[1])
              outer(reals[[i]]$se,reals[[i]]$se,"*")
       full.vcv[is.nan(full.vcv)]=0
       full.vcv[is.infinite(full.vcv)]=0
-      diag(full.vcv)=1
+	  if(any(is.infinite(diag(full.vcv)))) 
+		  warning("Infinite correlation (se=0) for model  ",i, " for estimate ",which(is.infinite(diag(full.vcv))),"\n")
+	  diag(full.vcv)=1
       cor.average=cor.average+full.vcv*model.table$weight[as.numeric(row.names(model.table))==i]
    }
 }

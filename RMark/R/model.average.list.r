@@ -185,7 +185,15 @@ model.average.list=function(x,revised=TRUE, mata=FALSE, normal.lm=FALSE, residua
   estimate=colSums(estimates*weights)
   if("vcv" %in% xnames)
   {
-     se=t(sapply(x$vcv,function(x) sqrt(diag(x))))
+	  for (i in 1:length(x$vcv))
+	  {
+		  if(any(diag(x$vcv[[i]])<0)) 
+	      {
+		      warning("Negative variances for parameters ",paste((1:ncol(x$vcv[[i]]))[diag(x$vcv[[i]])<0],collapse=", ")," for model ",i,". Setting those variances to 0")
+		      diag(x$vcv[[i]])[diag(x$vcv[[i]])<0]=0
+	      }
+	  }
+	 se=t(sapply(x$vcv,function(x) sqrt(diag(x))))
 	 if(nrow(x$vcv[[1]])==1)se=t(se)
      if(revised)
         se=sqrt(apply((se^2+(t(t(estimates)-estimate))^2)*weights,2,sum,na.rm=TRUE))
@@ -196,6 +204,10 @@ model.average.list=function(x,revised=TRUE, mata=FALSE, normal.lm=FALSE, residua
      {
        xse=sqrt(diag(x$vcv[[i]]))
        cor=cor+weights[i]*x$vcv[[i]]/outer(xse,xse,"*")
+	   bad=is.infinite(diag(cor))|is.nan(diag(cor))
+       if(any(bad)) 
+          warning("Infinite correlation (se=0) for model  ",i, " for estimate ",which(bad))
+       diag(cor)=1   
      }
      vcv=cor*outer(se,se,"*")
 	 if(!mata)

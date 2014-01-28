@@ -270,7 +270,10 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
 #
 #     Add rows to existing design data
 #
-        design.data=rbind(design.data,add.design.data)
+#        if(is.null(design.data) || ncol(add.design.data)==ncol(design.data))
+          design.data=rbind(design.data,add.design.data)
+#		else
+#		  browser()
 #
 #      If trianular pim type, decrement number of cols
 #

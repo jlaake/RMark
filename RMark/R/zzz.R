@@ -64,6 +64,7 @@ create_markpath=function()
 	   }
     } else
 	{
+		if(exists("MarkPath"))cat("no mark.exe found in specified MarkPath location. Looking for an exe in operating system Path.\n")
 		if(!exists("markpath") || length(markpath)>1)
 		{
 			inPath=Sys.which(markstrings)!=""

@@ -275,11 +275,11 @@ while(i<=retry & !converge)
 #
 # Run model
 #
-   runmodel<-try(run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads,ignore.stderr=silent),silent=silent)
-   if(class(runmodel)[1]=="try-error")
+   runmodel<-run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads,ignore.stderr=silent)
+   if(is.null(runmodel))
    {
      cat("\n\n********Following model failed to run :",model$model.name,"**********\n\n")
-     return(model)
+     return(invisible())
    }
    else
    {

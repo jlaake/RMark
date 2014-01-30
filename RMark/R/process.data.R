@@ -430,13 +430,14 @@ else
 #    var[i]=paste(dataname,"$",groups[i],sep="")
 #    vari=eval.parent(parse(text=var[i]))
     if(!is.factor(vari))
-        stop(paste("\n ",groups[i]," is not a factor variable\n"))
-     else
-     {
-        n.levels[i]=length(levels(vari))
-        facmat=cbind(facmat,as.numeric(vari)-1)
-        faclabs[[i]]=levels(vari)
-     }       
+	{
+		warning(paste("\n ",groups[i]," is not a factor variable. Coercing to factor.\n"))
+	    data[,groups[i]]=factor(data[,groups[i]])
+		vari=data[,groups[i]]
+	}
+    n.levels[i]=length(levels(vari))
+    facmat=cbind(facmat,as.numeric(vari)-1)
+    faclabs[[i]]=levels(vari)
   }
   cumlevels=cumprod(n.levels)
   number.of.groups=cumlevels[length(cumlevels)]

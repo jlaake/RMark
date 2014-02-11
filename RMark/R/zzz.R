@@ -48,7 +48,7 @@ create_markpath=function()
 				   markpath=shQuote(markpath[3])
 			   else
 			   {
-				   cat("\n Warning:mark64.exe does not exist. Using mark32.exe\n")
+				   warning("\n Warning:mark64.exe does not exist. Using mark32.exe\n")
 				   markpath=shQuote(markpath[2])
 			   }
 		   } else
@@ -57,14 +57,14 @@ create_markpath=function()
 				   markpath=shQuote(markpath[2])
 			   else
 			   {
-				   cat("\n Warning:mark32.exe does not exist. Using mark64.exe\n")
+				   warning("\n Warning:mark32.exe does not exist. Using mark64.exe\n")
 				   markpath=shQuote(markpath[3])
 			   }
 	       }
 	   }
     } else
 	{
-		if(exists("MarkPath"))cat("no mark.exe found in specified MarkPath location. Looking for an exe in operating system Path.\n")
+		if(exists("MarkPath"))message("no mark.exe found in specified MarkPath location. Looking for an exe in operating system Path.\n")
 		if(!exists("markpath") || length(markpath)>1)
 		{
 			inPath=Sys.which(markstrings)!=""

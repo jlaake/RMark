@@ -316,7 +316,7 @@ search.output.files=function(x,string)
 		if(length(positions)!=0)
 		{
 			indices=c(indices,i)
-			cat("\nModel ",i," Messages: ",paste(output[positions],sep="\n"))
+			message("\nModel ",i," Messages: ",paste(output[positions],sep="\n"))
 		}
 	}
 	return(indices)

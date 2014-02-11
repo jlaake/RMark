@@ -73,6 +73,6 @@ function(model.list=NULL,type=NULL, save=TRUE, ...)
         if(save)save.image()
      }
   }
-  if(!run)cat("All defined models have been run\n")
+  if(!run)message("All defined models have been run\n")
 invisible()
 }

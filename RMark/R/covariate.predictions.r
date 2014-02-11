@@ -343,7 +343,7 @@ if(drop)
       if(any(diag(model$results$beta.vcv[used.beta,used.beta])<0))
       {
          dropped.models=c(dropped.models,i)
-         cat("\nModel ",i,"dropped from the model averaging because one or more beta variances are not positive\n")
+         message("\nModel ",i,"dropped from the model averaging because one or more beta variances are not positive\n")
       }
    }
 #
@@ -361,7 +361,7 @@ else
 	model.indices=unique(model$simplify$pim.translation[indices])
 	used.beta=which(apply(model$design.matrix[model.indices,,drop=FALSE],2,function(x)!all(x=="0")))
 	if(any(diag(model$results$beta.vcv[used.beta,used.beta])<0))
-		cat("\nModel has one or more beta variances that are not positive\n")
+		message("\nModel has one or more beta variances that are not positive\n")
 }
   dropped.models=NULL
 reals=vector("list",length=number.of.models)

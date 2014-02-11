@@ -53,7 +53,7 @@ function(model,parameter,beta=NULL,design=NULL,data=NULL,vcv=FALSE)
   model=load.model(model)
   if(is.null(model$results)) 
   {
-     cat("Model output is not available\n")
+     message("Model output is not available\n")
      invisible()
   }
 #

@@ -187,7 +187,7 @@ while(i<=retry & !converge)
 #
    if(output & i==1)
    {
-     cat("\n")
+     message("\n")
      print(summary(model))
    }
 #
@@ -204,7 +204,7 @@ while(i<=retry & !converge)
 #
       if(retry>0 && !is.null(runmodel$results$singular))
       {
-         cat("\nRe-running analysis with new starting values\n")
+         message("\nRe-running analysis with new starting values\n")
          i=i+1
          converge=FALSE
          initial=runmodel$results$beta$estimate
@@ -220,7 +220,7 @@ while(i<=retry & !converge)
 #
    if(output)
    {
-      cat("\n")
+      message("\n")
       print(summary(runmodel,se=se))
    }
 #

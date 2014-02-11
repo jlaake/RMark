@@ -115,7 +115,7 @@ create.model.list<-function(model)
 				}
 			}
 		} else
-			cat("Using default formula for ",n,"\n")
+			message("Using default formula for ",n,"\n")
 	}
 	if(length(model.list)==0)
 		stop("\nNo model specifications found. Use case sensitive parameter.description notation (e.g., Phi.time)\n")

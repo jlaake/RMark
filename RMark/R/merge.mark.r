@@ -60,7 +60,7 @@ merge.mark=function(...,table=TRUE)
 #       an error message and skip over it.
 #
         else
-           cat(paste("Objects must be of class mark or marklist.",names(args)[i],"ignored"))
+           message(paste("Objects must be of class mark or marklist.",names(args)[i],"ignored"))
   }
 #
 # Add a model table for the mark models if requested; assign class of marklist and

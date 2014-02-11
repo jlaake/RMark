@@ -108,15 +108,15 @@ else
 #
 # return result as an mcmc object or list dataframe
 #
-cat("\n");
-cat("+----------------------------------------------------------------+\n");
-cat("| Conversion of MARK MCMC output for CODA processing complete... |\n");
-cat("+----------------------------------------------------------------+\n\n");
+message("\n");
+message("+----------------------------------------------------------------+\n");
+message("| Conversion of MARK MCMC output for CODA processing complete... |\n");
+message("+----------------------------------------------------------------+\n\n");
 
-cat("(The mcmc.bin.read.R script has created a MCMC object called \n");
-cat(" 'mcmcdata' which can now be processed by the CODA package...if new\n");
-cat("  to R, this is most easily accomplished by invoking the codamenu() \n")
-cat("  command from within the R console.\n\n");
+message("(The mcmc.bin.read.R script has created a MCMC object called \n");
+message(" 'mcmcdata' which can now be processed by the CODA package...if new\n");
+message("  to R, this is most easily accomplished by invoking the codamenu() \n")
+message("  command from within the R console.\n\n");
 
 return(mcmclist)
 

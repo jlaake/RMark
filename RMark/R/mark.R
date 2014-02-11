@@ -215,7 +215,7 @@ if(is.null(data$data))
 {
    if(!is.null(ddl))
    {
-      cat("Warning: specification of ddl ignored, as data have not been processed\n")
+      message("Warning: specification of ddl ignored, as data have not been processed\n")
       ddl=NULL
    }
    data.proc=process.data(data,begin.time=begin.time, model=model,mixtures=mixtures, 
@@ -232,16 +232,14 @@ if(is.null(ddl)) ddl=make.design.data(data.proc,design.parameters,right=right)
 #
 #  check to make sure all entered as lists
 #
-tryCatch(length(model.parameters), error = function(e) cat("Make sure you have a tilde at the beginning of each formula\n"))
+tryCatch(length(model.parameters), error = function(e) message("Make sure you have a tilde at the beginning of each formula\n"))
 if(length(model.parameters)!=0)
 	for(i in 1:length(model.parameters))
 	{
 		if(!is.list(model.parameters[[i]]))
-		{
-			cat("\nEach parameter distribution must be specified as a list\n")
-			stop()
-		}
-		if(is.language(model.parameters[[i]][[1]])&(is.null(names(model.parameters[[i]])) || names(model.parameters[[i]])[1]==""))cat("Make sure you have an = between formula and tilde for formula\n")
+			stop("\nEach parameter distribution must be specified as a list\n")
+		if(is.language(model.parameters[[i]][[1]])&(is.null(names(model.parameters[[i]])) || names(model.parameters[[i]])[1]==""))
+			message("Make sure you have an = between formula and tilde for formula\n")
 	}
 #
 # Run model as many as times requested if needed
@@ -289,7 +287,7 @@ while(i<=retry & !converge)
 #
       if(retry>0 && !is.null(runmodel$results$singular))
       {
-         cat("\nRe-running analysis with new starting values\n")
+         message("\nRe-running analysis with new starting values\n")
          i=i+1
          converge=FALSE
          initial=runmodel$results$beta$estimate

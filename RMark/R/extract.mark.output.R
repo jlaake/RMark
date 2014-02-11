@@ -87,7 +87,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   x2=grep("Real Function Parameters",out,ignore.case=TRUE)
   x3=length(out)
   if(length(grep("proc stop",out,ignore.case=TRUE))==0)
-     cat("\nWarning: output from MARK was not complete\n")
+     message("\nWarning: output from MARK was not complete\n")
   x4=grep("Variable   Value",out,ignore.case=FALSE)+1
   if(length(x4)==0)x4=x2
 #
@@ -148,8 +148,8 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   }
   if(nbeta!=npar & adjust)
   {
-    cat("\nNote: only ",npar," parameters counted of ",nbeta," specified parameters\n") 
-    cat("AICc and parameter count have been adjusted upward\n")
+    message("\nNote: only ",npar," parameters counted of ",nbeta," specified parameters\n") 
+    message("AICc and parameter count have been adjusted upward\n")
     AICc.unadjusted=AICc
     npar.unadjusted=npar    
     AICc=lnl+ 2*nbeta +2*nbeta*(nbeta+1)/(n - nbeta -1)
@@ -203,7 +203,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   else
   {
      param=NULL
-     cat("\nV-C file is missing. Skipping over it.\n")
+     message("\nV-C file is missing. Skipping over it.\n")
   }
   if(realvcv)
     real.vcv=param$real.vcv

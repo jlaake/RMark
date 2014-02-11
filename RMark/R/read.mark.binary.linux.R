@@ -54,7 +54,7 @@ whatread=readBin(z,raw(),16)
 whatread=readBin(z,numeric(),nlogit,size=8)
 if(length(whatread)!=nlogit)
 {
-  cat("\n Incomplete read of the binary file\n")
+  warning("\n Incomplete read of the binary file\n")
   real.vcv=NULL
   cont=FALSE
   break

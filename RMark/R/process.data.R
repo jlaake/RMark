@@ -267,7 +267,7 @@ robust.occasions<-function(times)
            if(!all(inp.strata.labels %in% strata.labels))
               stop(paste("Some strata labels in data",paste(inp.strata.labels),"are not in strata.labels"))
            if(sum(as.numeric(strata.labels %in% inp.strata.labels))< (nstrata-1))
-              cat("Note: More than one non-observable state has been specified")
+              message("Note: More than one non-observable state has been specified")
         }
         if(nstrata<2)stop("\nAny multistrata model must have at least 2 strata\n")
       } else

@@ -10,6 +10,7 @@ CHANGES
 * mata.wald code was modified to allow se=0; previously it was testing se<=0 instead of se<0 for a negative se.
 * If a variable assigned to groups argument is not a factor variable, a warning message is given and then it is coerced to factor. Previously the code would stop.
 * If mark.exe fails the output file will be opened in MarkViewer (typically notepad) so the user can view the output file to discern the problem.
+* Replaced cat function with message so user can suppress messages if they wish. Thanks to Roman Lustrik for the suggestion.
 
 RMark 2.1.7 (15 Dec 2013)
 --------------------------

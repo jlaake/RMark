@@ -47,7 +47,7 @@ function(model,parameters)
      for(i in 1:length(parameters))
         if(!(names(parameters)[i]%in% default.parameters))
         {
-          cat(paste("\n",names(parameters)[i],"parameter not valid in",model,"model.\nThe following parameters are valid:",paste(default.parameters,collapse=" "),"\n"))
+          warning(paste("\n",names(parameters)[i],"parameter not valid in",model,"model.\nThe following parameters are valid:",paste(default.parameters,collapse=" "),"\n"))
           return(FALSE)
         }
      return(TRUE)
@@ -60,7 +60,7 @@ function(model,parameters)
         return(TRUE)
      else
      {
-          cat(paste("\n",parameters,"parameter not valid in",model,"model.\nThe following parameters are valid:",paste(default.parameters,collapse=" "),"\n"))
+          warning(paste("\n",parameters,"parameter not valid in",model,"model.\nThe following parameters are valid:",paste(default.parameters,collapse=" "),"\n"))
           return(FALSE)
      }     
 }

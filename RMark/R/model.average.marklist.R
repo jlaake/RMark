@@ -174,7 +174,7 @@ if(is.null(model.list$model.table))
 if(!is.null(parameter))
 {
    if(!is.null(indices))
-      cat("\nNote: indices value has been ignored because parameter was set\n")
+      message("\nNote: indices value has been ignored because parameter was set\n")
    if(!parameter%in%names(model$parameters))
       stop(paste("\n",parameter,"is not a valid parameter for these results\n"))
    parameters=setup.parameters(model$model)
@@ -197,7 +197,7 @@ for (i in 1:dim(model.table)[1])
   model=load.model(model.list[[i]])
   if(is.null(model$output) || is.null(model$results))
   {
-     cat("\nModel ",i,"is missing results and was excluded from model averaging\n")
+     message("\nModel ",i,"is missing results and was excluded from model averaging\n")
      dropped.models=c(dropped.models,i)
   }
 }
@@ -219,7 +219,7 @@ if(drop)
 #      if(any(diag(model$results$beta.vcv)<0))
       {
          dropped.models=c(dropped.models,i)
-         cat("\nModel ",i,"dropped from the model averaging because one or more beta variances are not positive\n")
+         message("\nModel ",i,"dropped from the model averaging because one or more beta variances are not positive\n")
       }
    }
 #

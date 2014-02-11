@@ -209,7 +209,7 @@ delete=FALSE,external=FALSE,threads=-1,ignore.stderr=FALSE)
   if(class(results)=="try-error") 
   {
 	  print.mark(model)
-	  cat("\nProblem extracting output. Look at MARK output file to see what is wrong.\n")
+	  message("\nProblem extracting output. Look at MARK output file to see what is wrong.\n")
 	  return(NULL)
   }
 #

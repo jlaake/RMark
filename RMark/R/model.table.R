@@ -183,7 +183,7 @@ for(i in 1:length(model.list))
       model = eval(parse(text = paste("load.model(",model.list[i],")")), envir = model.table)
    if(is.null(model$result))
    {
-        cat(paste("Model ",i,": ",model.list[i]," has not been run.\n",sep=""))
+        message(paste("Model ",i,": ",model.list[i]," has not been run.\n",sep=""))
         next
    }
    param.names=names(setup.parameters(model$model))
@@ -212,7 +212,7 @@ for(i in 1:length(model.list))
              if(!warned)
              {
                warned=TRUE
-               cat("Warning: Model list contains models of differing types\n")
+               warning("Model list contains models of differing types\n")
                ncol=dim(result.table)[2]
                result.table=result.table[,(ncol-3):ncol]
              }
@@ -260,7 +260,7 @@ for(i in 1:length(model.list))
        qdeviance=c(qdeviance,model$result$deviance/chat)
 }
 row.names(result.table)=model.numbers
-if(any(chat.values!=chat.values[1]))cat("Warning: Different chat values in collection of models\n")
+if(any(chat.values!=chat.values[1]))waning("Different chat values in collection of models\n")
 anychat=any(chat.values!=1)
 # 
 # Compute model weight

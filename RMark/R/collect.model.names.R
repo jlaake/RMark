@@ -82,9 +82,9 @@ if(length(model.list)==0)
   if(warning)
   {
      if(is.null(type))
-        cat(paste("\nNo mark models found\n"))
+        message(paste("\nNo mark models found\n"))
      else
-        cat(paste("\nNo",type,"mark models found\n"))
+        message(paste("\nNo",type,"mark models found\n"))
   }
   return(NULL)
 }

@@ -107,7 +107,7 @@ for (i in 1:nrow(model.list))
         model.parameters=c(model.parameters,eval(parse(text=(as.character(model.list[i,j]))),envir=parent.frame()))
   }
   model.name=paste(model.list[i,],collapse=".")
-  cat("\n",model.name,"\n")
+  message("\n",model.name,"\n")
   if(use.initial)
   {
 	  initial=NULL
@@ -144,7 +144,7 @@ for (i in 1:nrow(model.list))
 	model.names[i]=model.name
     if(!run)
     {
-       cat("\n Design matrix columns: ", dim(mymodel$design.matrix)[2],"\n")
+       message("\n Design matrix columns: ", dim(mymodel$design.matrix)[2],"\n")
        print(colnames(mymodel$design.matrix))
     }
   }

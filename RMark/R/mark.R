@@ -253,11 +253,16 @@ while(i<=retry & !converge)
 #
    if(is.list(model.parameters))
    {
-      model<-make.mark.model(data.proc,title=title,parameters=model.parameters,
+      model<-try(make.mark.model(data.proc,title=title,parameters=model.parameters,
              ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
              model.name=model.name,options=options,profile.int=profile.int,chat=chat,
-			 input.links=input.links,parm.specific=parm.specific,mlogit0=mlogit0,hessian=hessian,accumulate=accumulate)
-      model$model.parameters=model.parameters
+			 input.links=input.links,parm.specific=parm.specific,mlogit0=mlogit0,hessian=hessian,accumulate=accumulate))
+      if(class(model)[1]=="try-error")
+	  {
+		  stop("Misspecification of model or internal error in code")
+	  }
+	  else
+         model$model.parameters=model.parameters
 	  if(!run)return(model)
    }
    else

@@ -1151,7 +1151,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # 
 #  Unless this is nest data, aggregate data
 #
-# Fix 9 Nov 2013; create unique covariates before selecting data
+# Fix 9 Nov 2013; create unique covariate names before selecting data
   covariates=unique(covariates)
   if(!is.null(covariates))
 	    zzd=data.frame(cbind(zz,data$data[,covariates]))
@@ -1165,8 +1165,16 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 		  freq=t(sapply(split(data$freq,pasted.data ),colSums))
 	  else
 		  freq=sapply(split(data$freq, pasted.data),sum)
-	  zzd=unique(zzd[order(pasted.data),])
-	  zzd[,2:(1+ng)]=freq
+	  zzd=zzd[order(pasted.data),]
+	  zzd=zzd[!duplicated(pasted.data[order(pasted.data)]),]
+	  if(ng>1)
+	  {
+		  if(nrow(freq)!=nrow(zzd))
+			  stop("problem with accumulating data. Set accumulate=FALSE and contact maintainer")
+	  }else
+	  if(length(freq)!=nrow(zzd))
+		  stop("problem with accumulating data. Set accumulate=FALSE and contact maintainer")
+	  zzd[,2:(ng+1)]=freq
 	  zz=zzd[,1:(ng+1)]
   }
 #

@@ -260,7 +260,7 @@ for(i in 1:length(model.list))
        qdeviance=c(qdeviance,model$result$deviance/chat)
 }
 row.names(result.table)=model.numbers
-if(any(chat.values!=chat.values[1]))waning("Different chat values in collection of models\n")
+if(any(chat.values!=chat.values[1]))warning("Different chat values in collection of models\n")
 anychat=any(chat.values!=1)
 # 
 # Compute model weight

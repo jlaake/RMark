@@ -1,4 +1,4 @@
-RMark 2.1.8 (30 Jan 2014)
+RMark 2.1.8 (12 Feb 2014)
 --------------------------
 NEW FEATURES
 * A new return value was added to covariate.predictions which provides for each model a dataframe with the estimates and std errors for that model. Also, warnings are issues for parameters that have a negative or 0 variance. Those with a negative variance are set to 0. This same behavior was added to model.average.list.
@@ -11,6 +11,14 @@ CHANGES
 * If a variable assigned to groups argument is not a factor variable, a warning message is given and then it is coerced to factor. Previously the code would stop.
 * If mark.exe fails the output file will be opened in MarkViewer (typically notepad) so the user can view the output file to discern the problem.
 * Replaced cat function with message so user can suppress messages if they wish. Thanks to Roman Lustrik for the suggestion.
+
+BUG FIXES
+* If digits were greater than 7 for continuous covariate in the data that was used in the formula, make.mark.model could fail when accumulating records. Unless accumulate=FALSE,
+records that have same capture history and covariates are collapsed into together and the frequency of the records with the same value is used for each group if any. This is
+done by pasting all the values which uses options()$digits in converting from numeric to character. The code was also using unique function on the data frame and this produced a
+different number of records due to extra precision and the code would fail.  This has been fixed but it is important to understand that the value of options()$digits controls the amount
+of accumulation with numeric covariates. Thanks to Rebecca Reeves for reporting this problem. Covariates rarely have that many digits but this occurred for Rebecca in copying data from Excel.
+One can always set accumulate=FALSE if there is a concern about this.   
 
 RMark 2.1.7 (15 Dec 2013)
 --------------------------

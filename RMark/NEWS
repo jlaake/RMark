@@ -1,7 +1,7 @@
 RMark 2.1.8 (12 Feb 2014)
 --------------------------
 NEW FEATURES
-* A new return value was added to covariate.predictions which provides for each model a dataframe with the estimates and std errors for that model. Also, warnings are issues for parameters that have a negative or 0 variance. Those with a negative variance are set to 0. This same behavior was added to model.average.list.
+* A new return value was added to covariate.predictions which provides for each model a dataframe with the estimates and std errors for that model. Also, warnings are issued for parameters that have a negative or 0 variance. Those with a negative variance are set to 0. This same behavior was added to model.average.list.
 * Time intervals are checked for robust design to make sure there are at least 2 secondary occasions per primary session.
  
 CHANGES 
@@ -13,12 +13,9 @@ CHANGES
 * Replaced cat function with message so user can suppress messages if they wish. Thanks to Roman Lustrik for the suggestion.
 
 BUG FIXES
-* If digits were greater than 7 for continuous covariate in the data that was used in the formula, make.mark.model could fail when accumulating records. Unless accumulate=FALSE,
-records that have same capture history and covariates are collapsed into together and the frequency of the records with the same value is used for each group if any. This is
-done by pasting all the values which uses options()$digits in converting from numeric to character. The code was also using unique function on the data frame and this produced a
-different number of records due to extra precision and the code would fail.  This has been fixed but it is important to understand that the value of options()$digits controls the amount
-of accumulation with numeric covariates. Thanks to Rebecca Reeves for reporting this problem. Covariates rarely have that many digits but this occurred for Rebecca in copying data from Excel.
-One can always set accumulate=FALSE if there is a concern about this.   
+* If digits were greater than 7 for continuous covariate in the data that was used in the formula, make.mark.model could fail when accumulating records. Unless accumulate=FALSE, records that have same capture history and covariates are collapsed into a single record and the frequency of the records with the same value is used for each group if any. This is done by pasting all the values which uses options()$digits in converting from numeric to character. The code was also using unique function on the data frame and this produced a different number of records due to extra precision and the code would fail.  This has been fixed but it is important to understand that the value of options()$digits controls the amount of accumulation with numeric covariates. Thanks to Rebecca Reeves for reporting this problem. Covariates rarely have that many digits but this occurred for Rebecca in copying data from Excel. One can always set accumulate=FALSE if there is a concern about this.
+* In v2.1.6 a bug was introduced to model.average.list when the revised variance formula was added. When only std errors were provided instead of var-cov matrix, the se was not being pulled from x. The code should have failed unless you had a variable named se in your workspace. Thanks to Mark Herzog for tracking this down and reporting it.
+  
 
 RMark 2.1.7 (15 Dec 2013)
 --------------------------
@@ -44,7 +41,7 @@ BUG FIXES
 
 RMark 2.1.6-1 (20 Aug 2013)
 --------------------------
-* fix for CRAN - use of :::
+* fix for CRAN - removed use of :::
 
 RMark 2.1.6 (20 Aug 2013)
 --------------------------

@@ -228,9 +228,9 @@ model.average.list=function(x,revised=TRUE, mata=FALSE, normal.lm=FALSE, residua
    else
    {
 	 if(revised)
-		   se=sqrt(apply((se^2+(t(t(estimates)-estimate))^2)*weights,2,sum,na.rm=TRUE))
+		   se=sqrt(apply((x$se^2+(t(t(estimates)-estimate))^2)*weights,2,sum,na.rm=TRUE))
 	 else 
-		   se=apply(sqrt(se^2+(t(t(estimates)-estimate))^2)*weights,2,sum,na.rm=TRUE)
+		   se=apply(sqrt(x$se^2+(t(t(estimates)-estimate))^2)*weights,2,sum,na.rm=TRUE)
 	 if(!mata)
 		 return(list(estimate=estimate,se=se))
 	 else

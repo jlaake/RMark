@@ -4,11 +4,11 @@
 \alias{popan.derived}
 \title{Computes some derived abundance estimates for POPAN models}
 \usage{
-  popan.derived(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=FALSE)
+popan.derived(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=FALSE)
 
-  popan.Nt(Phi,pent,Ns,vc,time.intervals)
+popan.Nt(Phi,pent,Ns,vc,time.intervals)
 
-  popan.NGross(Phi,pent,Ns,vc,time.intervals)
+popan.NGross(Phi,pent,Ns,vc,time.intervals)
 }
 \arguments{
   \item{x}{processed data list resulting from
@@ -47,49 +47,47 @@
   \item{time.intervals}{vector of time interval values}
 }
 \value{
-  \code{popan.derived} returns a list with the following
-  elements depending on the values of \code{N} and
-  \code{NGross}: \preformatted{ N - dataframe of estimates
-  by group and occasion and se, lcl,ucl and group/occasion
-  data N.vcv - variance-covariance matrix of abundance
-  estimates in N Nbyocc - dataframe of estimates by
-  occasion (summed across groups) and se, lcl,ucl and
-  occasion data Nbyocc.vcv - variance-covariance matrix of
-  abundance estimates in Nbyocc NGross - dataframe of gross
-  abundance estimates by group and se, lcl,and ucl
-  NGross.vcv - variance-covariance matrix of NGross
-  abundance estimates }
+\code{popan.derived} returns a list with the following
+elements depending on the values of \code{N} and
+\code{NGross}: \preformatted{ N - dataframe of estimates by
+group and occasion and se, lcl,ucl and group/occasion data
+N.vcv - variance-covariance matrix of abundance estimates
+in N Nbyocc - dataframe of estimates by occasion (summed
+across groups) and se, lcl,ucl and occasion data Nbyocc.vcv
+- variance-covariance matrix of abundance estimates in
+Nbyocc NGross - dataframe of gross abundance estimates by
+group and se, lcl,and ucl NGross.vcv - variance-covariance
+matrix of NGross abundance estimates }
 
-  \code{popan.Nt} returns a list with the following
-  elements: \preformatted{ N - dataframe of estimates by
-  group and occasion and se, lcl,ucl and group/occasion
-  data N.vcv - variance-covariance matrix of abundance
-  estimates in N }
+\code{popan.Nt} returns a list with the following elements:
+\preformatted{ N - dataframe of estimates by group and
+occasion and se, lcl,ucl and group/occasion data N.vcv -
+variance-covariance matrix of abundance estimates in N }
 
-  \code{popan.NGross} returns a list with the following
-  elements: \preformatted{ NGross - vector of gross
-  abundance estimates by group vcv - variance-covariance
-  matrix of abundance estimates in NGross }
+\code{popan.NGross} returns a list with the following
+elements: \preformatted{ NGross - vector of gross abundance
+estimates by group vcv - variance-covariance matrix of
+abundance estimates in NGross }
 }
 \description{
-  Computes estimates, standard errors, confidence intervals
-  and var-cov matrix for population size of each group at
-  each occasion and the sum across groups by occasion for
-  POPAN models. If a \code{marklist} is provided the
-  estimates are model averaged.
+Computes estimates, standard errors, confidence intervals
+and var-cov matrix for population size of each group at
+each occasion and the sum across groups by occasion for
+POPAN models. If a \code{marklist} is provided the
+estimates are model averaged.
 }
 \details{
-  \code{popan.derived} computes all of the real parameters
-  using \code{\link{covariate.predictions}} and handles all
-  of the computation using \code{popan.Nt}.  Description
-  for functions \code{popan.Nt} and \code{popan.NGross} are
-  given here for completeness but it is not intended that
-  they be called directly.
+\code{popan.derived} computes all of the real parameters
+using \code{\link{covariate.predictions}} and handles all
+of the computation using \code{popan.Nt}.  Description for
+functions \code{popan.Nt} and \code{popan.NGross} are given
+here for completeness but it is not intended that they be
+called directly.
 
-  If a \code{model} is a \code{marklist} of models, the
-  values returned by \code{popan.derived} are model
-  averaged using model weights in the \code{model.table};
-  otherwise, it returns the values for the specified model.
+If a \code{model} is a \code{marklist} of models, the
+values returned by \code{popan.derived} are model averaged
+using model weights in the \code{model.table}; otherwise,
+it returns the values for the specified model.
 }
 \examples{
 \donttest{
@@ -124,12 +122,12 @@ popan.derived(dipper.processed,dipper.popan.results)
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \references{
-  BURNHAM, K. P., AND D. R. ANDERSON. 2002. Model selection
-  and multimodel inference. A practical
-  information-theoretic approach. Springer, New York.
+BURNHAM, K. P., AND D. R. ANDERSON. 2002. Model selection
+and multimodel inference. A practical information-theoretic
+approach. Springer, New York.
 }
 \keyword{utility}
 

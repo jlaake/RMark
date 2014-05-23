@@ -2,8 +2,7 @@
 \alias{strip.comments}
 \title{Strip comments}
 \usage{
-  strip.comments(inp.filename, use.comments = TRUE,
-    header = TRUE)
+strip.comments(inp.filename, use.comments = TRUE, header = TRUE)
 }
 \arguments{
   \item{inp.filename}{name of input file; inp extension is
@@ -17,13 +16,13 @@
   field names}
 }
 \value{
-  \item{rn}{row names} \item{out.filename}{output filename}
+\item{rn}{row names} \item{out.filename}{output filename}
 }
 \description{
-  Read in file and strip out comments and blank lines.
+Read in file and strip out comments and blank lines.
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \keyword{utility}
 

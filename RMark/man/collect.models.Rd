@@ -3,8 +3,8 @@
 \title{Collect MARK models into a list and optionally construct a table of model
 results}
 \usage{
-  collect.models(lx = NULL, type = NULL, table = TRUE,
-    adjust = TRUE, external = FALSE)
+collect.models(lx = NULL, type = NULL, table = TRUE, adjust = TRUE,
+  external = FALSE)
 }
 \arguments{
   \item{lx}{if NULL, constructs vector of object names
@@ -26,66 +26,65 @@ results}
   filename for each object is kept in its place}
 }
 \value{
-  model.list: a list of \code{mark} models and optionally a
-  table of model results.
+model.list: a list of \code{mark} models and optionally a
+table of model results.
 }
 \description{
-  Collects \code{mark} models contained in \code{lx} of
-  specified \code{type} (if any) and returns models in a
-  list with a table of model results if \code{table=TRUE}.
+Collects \code{mark} models contained in \code{lx} of
+specified \code{type} (if any) and returns models in a list
+with a table of model results if \code{table=TRUE}.
 }
 \details{
-  If \code{lx} is NULL a vector of object names in the
-  parent frame is constructed for \code{lx}.  Within
-  \code{lx} all \code{mark} model objects (i.e.,
-  \code{class(x)[1]=="mark"}) are returned if \code{type}
-  is NULL.  If \code{type} is specified and is valid, then
-  the names of all \code{mark} model objects of the
-  specified \code{type} (i.e., \code{class(x) =
-  c("mark",type)}) in \code{lx} are returned.  If
-  \code{table=TRUE} a table of model selection results is
-  also included in the returned list.
+If \code{lx} is NULL a vector of object names in the parent
+frame is constructed for \code{lx}.  Within \code{lx} all
+\code{mark} model objects (i.e.,
+\code{class(x)[1]=="mark"}) are returned if \code{type} is
+NULL.  If \code{type} is specified and is valid, then the
+names of all \code{mark} model objects of the specified
+\code{type} (i.e., \code{class(x) = c("mark",type)}) in
+\code{lx} are returned.  If \code{table=TRUE} a table of
+model selection results is also included in the returned
+list.
 
-  This function was written to be able to easily collect a
-  series of mark models in a list without specifying the
-  names of each model object.  This is useful in
-  constructing a return value of a function that runs a
-  series of models for a particular analysis. For an
-  example see \code{\link{dipper}}.
+This function was written to be able to easily collect a
+series of mark models in a list without specifying the
+names of each model object.  This is useful in constructing
+a return value of a function that runs a series of models
+for a particular analysis. For an example see
+\code{\link{dipper}}.
 }
 \note{
-  This function and others that use it or use
-  \code{\link{collect.model.names}} to collect a series of
-  models or assign a value to a series of models (e.g.,
-  \code{\link{adjust.chat}}) should be used with a degree
-  of caution. It is important to understand the scope of
-  the collection.  If the call to this function is made at
-  the R prompt, then it will collect all models (of a
-  particular \code{type} if any) within the current .Rdata
-  file.  If the call to this function (or one like it) is
-  called from within a function that runs a series of
-  analyses then the collection is limited to the function
-  frame (i.e., only models defined within the function).
-  Thus, it is wise to either use a different .Rdata file
-  for each data set (e.g., one for dipper, another for
-  edwards.eberhardt, etc) or to run everything within
-  functions as illustrated by \code{\link{dipper}} or
-  \code{\link{edwards.eberhardt}}. Using a separate .Rdata
-  file is equivalent to having separate .DBF/.FPT files
-  with MARK. It is important to note that functions such as
-  \code{\link{adjust.chat}} will adjust the value of chat
-  across analyses unless specifically given a list of
-  models to adjust.
+This function and others that use it or use
+\code{\link{collect.model.names}} to collect a series of
+models or assign a value to a series of models (e.g.,
+\code{\link{adjust.chat}}) should be used with a degree of
+caution. It is important to understand the scope of the
+collection.  If the call to this function is made at the R
+prompt, then it will collect all models (of a particular
+\code{type} if any) within the current .Rdata file.  If the
+call to this function (or one like it) is called from
+within a function that runs a series of analyses then the
+collection is limited to the function frame (i.e., only
+models defined within the function). Thus, it is wise to
+either use a different .Rdata file for each data set (e.g.,
+one for dipper, another for edwards.eberhardt, etc) or to
+run everything within functions as illustrated by
+\code{\link{dipper}} or \code{\link{edwards.eberhardt}}.
+Using a separate .Rdata file is equivalent to having
+separate .DBF/.FPT files with MARK. It is important to note
+that functions such as \code{\link{adjust.chat}} will
+adjust the value of chat across analyses unless
+specifically given a list of models to adjust.
 }
 \examples{
 # see examples in dipper, edwards.eberhardt and example.data
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{merge.mark}},\code{\link{remove.mark}},
-  \code{\link{collect.model.names}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
+\code{\link{merge.mark}},\code{\link{remove.mark}},
+\code{\link{collect.model.names}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
 }
 \keyword{utility}
 

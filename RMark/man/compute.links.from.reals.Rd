@@ -2,8 +2,8 @@
 \alias{compute.links.from.reals}
 \title{Compute link values from real parameters}
 \usage{
-  compute.links.from.reals(x, model, parm.indices = NULL,
-    vcv.real = NULL, use.mlogits = TRUE)
+compute.links.from.reals(x, model, parm.indices = NULL, vcv.real = NULL,
+  use.mlogits = TRUE)
 }
 \arguments{
   \item{x}{vector of real estimates to be converted to link
@@ -25,37 +25,37 @@
   mlogit for creating confidence intervals for each value}
 }
 \value{
-  A list with the estimates (link values) and the links
-  that were used.  If vcv.real = TRUE, then the v-c matrix
-  of the links is also returned.
+A list with the estimates (link values) and the links that
+were used.  If vcv.real = TRUE, then the v-c matrix of the
+links is also returned.
 }
 \description{
-  Computes link values from reals using 1-1 real to
-  beta(=link) transformation. Also, creates a v-c matrix
-  for the link values if vcv.real is specified.
+Computes link values from reals using 1-1 real to
+beta(=link) transformation. Also, creates a v-c matrix for
+the link values if vcv.real is specified.
 }
 \details{
-  It has 2 uses both related to model averaged estimates.
-  Firstly, it is used to transform model averaged estimates
-  so the normal confidence interval can be constructed on
-  the link values and then back-transformed to real space.
-  The second function is to enable parametric bootstrapping
-  in which the error distbution is assumed to be
-  multivariate normal for the link values. From a single
-  model, the link values are easily constructed from the
-  betas and design matrix so this function is not needed.
-  But for model averaging there is no equivalent because
-  the real parameters are averaged over a variety of models
-  with the same real parameter structure but differing
-  design structures.  This function allows for link values
-  and their var-cov matrix to be created from the model
-  averaged real estimates.
+It has 2 uses both related to model averaged estimates.
+Firstly, it is used to transform model averaged estimates
+so the normal confidence interval can be constructed on the
+link values and then back-transformed to real space. The
+second function is to enable parametric bootstrapping in
+which the error distbution is assumed to be multivariate
+normal for the link values. From a single model, the link
+values are easily constructed from the betas and design
+matrix so this function is not needed.  But for model
+averaging there is no equivalent because the real
+parameters are averaged over a variety of models with the
+same real parameter structure but differing design
+structures.  This function allows for link values and their
+var-cov matrix to be created from the model averaged real
+estimates.
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{model.average}}
+\code{\link{model.average}}
 }
 \keyword{utility}
 

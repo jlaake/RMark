@@ -2,8 +2,7 @@
 \alias{make.time.factor}
 \title{Make time-varying dummy variables from time-varying factor variable}
 \usage{
-  make.time.factor(x, var.name, times, intercept = NULL,
-    delete = TRUE)
+make.time.factor(x, var.name, times, intercept = NULL, delete = TRUE)
 }
 \arguments{
   \item{x}{dataframe containing set of factor variables
@@ -20,40 +19,40 @@
   variables are removed from the returned dataframe}
 }
 \value{
-  x: a dataframe containing the original data (with
-  time-varying factor variables removed if delete=TRUE) and
-  the time-varying dummy variables added.
+x: a dataframe containing the original data (with
+time-varying factor variables removed if delete=TRUE) and
+the time-varying dummy variables added.
 }
 \description{
-  Create a new dataframe with time-varying dummy variables
-  from a time-varying factor variable.  The time-varying
-  dummy variables are named appropriately to be used as a
-  set of time dependent individual covariates in a
-  parameter specification
+Create a new dataframe with time-varying dummy variables
+from a time-varying factor variable.  The time-varying
+dummy variables are named appropriately to be used as a set
+of time dependent individual covariates in a parameter
+specification
 }
 \details{
-  An example of the var.name and times is
-  var.name="observer", times=1:5. The code expects to find
-  observer1,...,observer5 to be factor variables in x. If
-  there are k unique levels (excluding ".") across the time
-  varying factor variables, then k-1 dummy variables are
-  created for each of the named factor variables.  They are
-  named with var.name, level[i], times[j] concatenated
-  together where level[i] is the name of the facto level i.
-  If there a m times then the new data set will contain
-  m*(k-1) dummy variables. If the factor variable includes
-  any "." values these are ignored because they are used to
-  indicate a missing value that is paired with a missing
-  value in the encounter history. Note that it will create
-  each dummy variable for each factor even if a particular
-  level is not contained within a factor (eg observers 1 to
-  3 used but only 1 and 2 on occasion 1).
+An example of the var.name and times is
+var.name="observer", times=1:5. The code expects to find
+observer1,...,observer5 to be factor variables in x. If
+there are k unique levels (excluding ".") across the time
+varying factor variables, then k-1 dummy variables are
+created for each of the named factor variables.  They are
+named with var.name, level[i], times[j] concatenated
+together where level[i] is the name of the facto level i.
+If there a m times then the new data set will contain
+m*(k-1) dummy variables. If the factor variable includes
+any "." values these are ignored because they are used to
+indicate a missing value that is paired with a missing
+value in the encounter history. Note that it will create
+each dummy variable for each factor even if a particular
+level is not contained within a factor (eg observers 1 to 3
+used but only 1 and 2 on occasion 1).
 }
 \examples{
 # see example in weta
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \keyword{utility}
 

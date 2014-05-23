@@ -4,11 +4,11 @@
 \alias{transition.pairs}
 \title{Multi-state Transition Functions}
 \usage{
-  TransitionMatrix(x,vcv.real=NULL)
+TransitionMatrix(x,vcv.real=NULL)
 
-  find.possible.transitions(ch)
+        find.possible.transitions(ch)
 
-  transition.pairs(ch)
+        transition.pairs(ch)
 }
 \arguments{
   \item{x}{Estimate table from \code{\link{get.real}} with
@@ -21,38 +21,37 @@
   multi-state analysis}
 }
 \value{
-  TransitionMatrix: returns either a transition matrix
-  (vcv.real=NULL) or a list of matrices (vcv.real
-  specified) named TransitionMat (transition matrix),
-  se.TransitionMat (se of each transition),
-  lcl.TransitionMat (lower confidence interval limit for
-  each transition), and ucl.TransitionMat (upper confidence
-  interval limit for each transition).
-  find.possible.transitions returns a 0/1 table where 1
-  means that t both values are in one or more ch strings
-  and transition.pairs returns a table of counts of
-  transition pairs.
+TransitionMatrix: returns either a transition matrix
+(vcv.real=NULL) or a list of matrices (vcv.real specified)
+named TransitionMat (transition matrix), se.TransitionMat
+(se of each transition), lcl.TransitionMat (lower
+confidence interval limit for each transition), and
+ucl.TransitionMat (upper confidence interval limit for each
+transition). find.possible.transitions returns a 0/1 table
+where 1 means that t both values are in one or more ch
+strings and transition.pairs returns a table of counts of
+transition pairs.
 }
 \description{
-  TransitionMatrix: Creates a transition matrix of movement
-  parameters for a multi-state(strata) model. It computes
-  all Psi values for a multi-strata mark model and
-  constructs a transition matrix.  Standard errors and
-  confidence intervals can also be obtained.
+TransitionMatrix: Creates a transition matrix of movement
+parameters for a multi-state(strata) model. It computes all
+Psi values for a multi-strata mark model and constructs a
+transition matrix.  Standard errors and confidence
+intervals can also be obtained.
 }
 \details{
-  find.possible.transitions: Finds possible transitions;
-  essentially it identifies where stratum label A and B are
-  in the same ch for all labels but the the transition
-  could be from A to B or B to A or even ACB which is
-  really an A to C and C to B transition.
+find.possible.transitions: Finds possible transitions;
+essentially it identifies where stratum label A and B are
+in the same ch for all labels but the the transition could
+be from A to B or B to A or even ACB which is really an A
+to C and C to B transition.
 
-  transition.pairs: Computes counts of transition pairs.
-  The rows are the "from stratum" and the columns are the
-  "to stratum". So AB would be in the first row second
-  column and BA would be in the second row first column.
-  All intervening 0s are ignored. These are transition
-  pairs so AB0C is A to B and B to C but not A to C.
+transition.pairs: Computes counts of transition pairs. The
+rows are the "from stratum" and the columns are the "to
+stratum". So AB would be in the first row second column and
+BA would be in the second row first column.  All
+intervening 0s are ignored. These are transition pairs so
+AB0C is A to B and B to C but not A to C.
 }
 \examples{
 \donttest{
@@ -134,10 +133,10 @@ TransitionMatrix(Psivalues[Psivalues$time==1,],vcv.real=Psilist$vcv.real)
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{get.real}}
+\code{\link{get.real}}
 }
 \keyword{utility}
 

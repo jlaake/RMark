@@ -2,8 +2,8 @@
 \alias{get.link}
 \title{Compute sets of link values for real parameters}
 \usage{
-  get.link(model, parameter, beta = NULL, design = NULL,
-    data = NULL, vcv = FALSE)
+get.link(model, parameter, beta = NULL, design = NULL, data = NULL,
+  vcv = FALSE)
 }
 \arguments{
   \item{model}{MARK model object}
@@ -24,31 +24,31 @@
   the subset of the link values}
 }
 \value{
-  estimates: If \code{vcv=TRUE}, a list is returned with
-  elements \code{vcv.link} and the dataframe
-  \code{estimates}. If \code{vcv=FALSE}, only the estimates
-  dataframe is returned which has the same structure as in
-  \code{\link{get.real}}.
+estimates: If \code{vcv=TRUE}, a list is returned with
+elements \code{vcv.link} and the dataframe
+\code{estimates}. If \code{vcv=FALSE}, only the estimates
+dataframe is returned which has the same structure as in
+\code{\link{get.real}}.
 }
 \description{
-  Computes link values for real parameters for a particular
-  type of parameter (parameter) and returns in a table
-  (dataframe) format.
+Computes link values for real parameters for a particular
+type of parameter (parameter) and returns in a table
+(dataframe) format.
 }
 \details{
-  This function is very similar to \code{\link{get.real}}
-  except that it provides estimates of link values before
-  they are transformed to real estimates using the
-  inverse-link.  Also, the value is always a dataframe for
-  the estimates and design data and optionally a
-  variance-covariance matrix. See \code{\link{get.real}}
-  for further details about the arguments.
+This function is very similar to \code{\link{get.real}}
+except that it provides estimates of link values before
+they are transformed to real estimates using the
+inverse-link.  Also, the value is always a dataframe for
+the estimates and design data and optionally a
+variance-covariance matrix. See \code{\link{get.real}} for
+further details about the arguments.
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{compute.link}},\code{\link{get.real}}
+\code{\link{compute.link}},\code{\link{get.real}}
 }
 \keyword{utility}
 

@@ -5,7 +5,7 @@
 \format{A data frame with 68 observations on the following 1 variables.
 \describe{ \item{ch}{a character vector} }}
 \description{
-  Data and example illustrating Poisson Mark-Resight model.
+Data and example illustrating Poisson Mark-Resight model.
 }
 \examples{
 \donttest{

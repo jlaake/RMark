@@ -2,8 +2,7 @@
 \alias{export.chdata}
 \title{Export capture-history data to MARK .inp format}
 \usage{
-  export.chdata(data, filename, covariates = NULL,
-    replace = FALSE)
+export.chdata(data, filename, covariates = NULL, replace = FALSE)
 }
 \arguments{
   \item{data}{processed data list resulting from
@@ -18,29 +17,29 @@
   be over-written}
 }
 \value{
-  None
+None
 }
 \description{
-  Creates a MARK .inp file from processed data list that
-  can be used to create a MARK .dbf file for use with MARK
-  directly rather than with the RMark package.
+Creates a MARK .inp file from processed data list that can
+be used to create a MARK .dbf file for use with MARK
+directly rather than with the RMark package.
 }
 \details{
-  The default is to include none of the covariates in the
-  processed data list. All of the covariates can be passed
-  by setting covariates="all".
+The default is to include none of the covariates in the
+processed data list. All of the covariates can be passed by
+setting covariates="all".
 
-  After you have created the MARK .dbf/.fpt files with the
-  exported .inp file, then you can use
-  \code{\link{export.chdata}} to export models that can be
-  imported into the MARK interface.  However note the
-  following: ***Warning*** Make sure that you use the .inp
-  created by \code{\link{export.chdata}} with your
-  processed data to create the MARK .dbf file rather than
-  using a separate similar .inp file.  It is essential that
-  the group structure and ordering of groups matches
-  between the .inp file and the exported models or you can
-  get erroneous results.
+After you have created the MARK .dbf/.fpt files with the
+exported .inp file, then you can use
+\code{\link{export.chdata}} to export models that can be
+imported into the MARK interface.  However note the
+following: ***Warning*** Make sure that you use the .inp
+created by \code{\link{export.chdata}} with your processed
+data to create the MARK .dbf file rather than using a
+separate similar .inp file.  It is essential that the group
+structure and ordering of groups matches between the .inp
+file and the exported models or you can get erroneous
+results.
 }
 \examples{
 data(dipper)
@@ -54,10 +53,10 @@ export.chdata(dipper.processed, filename="dipper",
 # because it is not a numeric field
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{import.chdata}}
+\code{\link{import.chdata}}
 }
 \keyword{utility}
 

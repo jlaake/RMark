@@ -203,11 +203,10 @@ model.average.list=function(x,revised=TRUE, mata=FALSE, normal.lm=FALSE, residua
      for (i in 1:length(x$vcv))
      {
        xse=sqrt(diag(x$vcv[[i]]))
-       cor=cor+weights[i]*x$vcv[[i]]/outer(xse,xse,"*")
-	   bad=is.infinite(diag(cor))|is.nan(diag(cor))
-       if(any(bad)) 
-          warning("Infinite correlation (se=0) for model  ",i, " for estimate ",which(bad))
-       diag(cor)=1   
+	   xcor=x$vcv[[i]]/outer(xse,xse,"*")
+	   xcor[is.infinite(xcor)|is.nan(xcor)]=0
+	   diag(xcor)=1
+       cor=cor+weights[i]*xcor
      }
      vcv=cor*outer(se,se,"*")
 	 if(!mata)

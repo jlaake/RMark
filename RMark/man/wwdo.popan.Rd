@@ -10,99 +10,95 @@
 \item{E0-E13}{0/1 representing whether a dove was captured (1) or not captured (0) during that (E) sampling occasion}
 \item{Age}{Age class with AHY=after-hatch year and HY=hatch year} }}
 \description{
-  This dataset represents 2 years of capture-mark-recapture
-  data collected on uniquely identifiable leg-banded (size
-  4) white-winged dove captured in Alice, Texas, USA
-  (Latitude 27.25, Longitude -98.07) between mid-February
-  and mid-September during 2009 and 2010.  The package was
-  developed such that others could recreate the analysis
-  developed by Collier, B. A., S. R. Kremer, C. D. Mason,
-  J. Stone, K. W. Calhoun, and M. J. Peterson.  2012.
-  Immigration and recruitment in an urban white-winged dove
-  breeding colony.  Journal of Fish and Wildlife
-  Management, In review., and see how the data and results
-  were used to estimate population level recruitment
-  (number juveniles in population over number adults in
-  population).
+This dataset represents 2 years of capture-mark-recapture
+data collected on uniquely identifiable leg-banded (size 4)
+white-winged dove captured in Alice, Texas, USA (Latitude
+27.25, Longitude -98.07) between mid-February and
+mid-September during 2009 and 2010.  The package was
+developed such that others could recreate the analysis
+developed by Collier, B. A., S. R. Kremer, C. D. Mason, J.
+Stone, K. W. Calhoun, and M. J. Peterson.  2012.
+Immigration and recruitment in an urban white-winged dove
+breeding colony.  Journal of Fish and Wildlife Management,
+In review., and see how the data and results were used to
+estimate population level recruitment (number juveniles in
+population over number adults in population).
 }
 \details{
-  White-winged doves were captured (aged: AHY=after-hatch
-  year, HY=hatch year) continuously in baited walk-in dove
-  traps beginning in Februrary and ending in September in
-  each year (2009 and 2010). During 2009 5,101 white-winged
-  doves were captured (2,894 AHY, 2,207 HY) while in 2010
-  3,502 white-winged doves were captured (3,106 AHY, 486
-  HY). We used approximately 2 week date windows to
-  categorized our encounter histories for analysis in MARK
-  \url{http://www.phidot.org/software/mark/} via RMark
-  \url{http://cran.r-project.org/web/packages/RMark/index.html}
-  using these dates: 27 Feb; 13 March; 27 March; 10 April;
-  24 April; 8 May; 22 May; 5 June; 19 June; 3 July; 17
-  July; 31 July; 14 August-End; giving us 13 encounter
-  occasions.
+White-winged doves were captured (aged: AHY=after-hatch
+year, HY=hatch year) continuously in baited walk-in dove
+traps beginning in Februrary and ending in September in
+each year (2009 and 2010). During 2009 5,101 white-winged
+doves were captured (2,894 AHY, 2,207 HY) while in 2010
+3,502 white-winged doves were captured (3,106 AHY, 486 HY).
+We used approximately 2 week date windows to categorized
+our encounter histories for analysis in MARK
+\url{http://www.phidot.org/software/mark/} via RMark
+\url{http://cran.r-project.org/web/packages/RMark/index.html}
+using these dates: 27 Feb; 13 March; 27 March; 10 April; 24
+April; 8 May; 22 May; 5 June; 19 June; 3 July; 17 July; 31
+July; 14 August-End; giving us 13 encounter occasions.
 
-  I wanted to force b0=0 for the first time frame, as none
-  could be there when we started as they had not arrived
-  yet in any real number. If you take the first column out,
-  the numbers get ridiculously screwy for the super
-  population size and the entry parameters, because the
-  initial population has individuals in it, thus the
-  JSPOPAN estimates something like 40% of the birds were
-  already in the population pre-trapping, which is
-  biologically impossible.
+I wanted to force b0=0 for the first time frame, as none
+could be there when we started as they had not arrived yet
+in any real number. If you take the first column out, the
+numbers get ridiculously screwy for the super population
+size and the entry parameters, because the initial
+population has individuals in it, thus the JSPOPAN
+estimates something like 40% of the birds were already in
+the population pre-trapping, which is biologically
+impossible.
 
-  Initially, because of the parameter structure in a
-  JS-POPAN model and the fact that the initial entry
-  probability is 1 minus the sum of the resultant entry
-  probabilities for subsequent sampling occasions, and
-  because occasionally a couple of doves were captured
-  during the initial time frame, we were getting entry
-  values for the initial time period representing >40% of
-  the total doves captured. This was not plausible because
-  these doves migrate in from Mexico/S. America and very
-  few birds have arrived prior to trapping. To obtain
-  reasonable results a 'fake' encounter occasion (time -1)
-  with no captures ("0") was appended to beginning of each
-  capture history to force b0=0. As such, the data for
-  \code{wwdo.09} and \code{wwdo.10} will have 14, not 13
-  encounter histories.
+Initially, because of the parameter structure in a JS-POPAN
+model and the fact that the initial entry probability is 1
+minus the sum of the resultant entry probabilities for
+subsequent sampling occasions, and because occasionally a
+couple of doves were captured during the initial time
+frame, we were getting entry values for the initial time
+period representing >40% of the total doves captured. This
+was not plausible because these doves migrate in from
+Mexico/S. America and very few birds have arrived prior to
+trapping. To obtain reasonable results a 'fake' encounter
+occasion (time -1) with no captures ("0") was appended to
+beginning of each capture history to force b0=0. As such,
+the data for \code{wwdo.09} and \code{wwdo.10} will have
+14, not 13 encounter histories.
 
-  Important to note, in case you don't read Collier et al.
-  (2012), is the fact that the 2010 dataset is kind of
-  screwy relative to the estimation of the entry parameters
-  for HY wwdo.  Basically, what happened was we caught a
-  bunch of AHY birds, but when we captured HY birds, we
-  only caught a few (~400 in 2010) and of those we
-  captured, we rarely, if ever had any recaptures.  Without
-  getting into a bunch of speculation on what happened, as
-  we don't really know, we suspect it had something to do
-  with the fact that 2009 was a extreme drought in Texas,
-  as to where 2010 was extremely wet, so mast based food
-  sources (mulberry tree's are everywhere) and such were
-  readily available in the urban environment, as such,
-  lower trapping success.  So, when you fit the 2010
-  dataset using the same candidate model set at the 2009,
-  you get pretty nonsensical answers for the entry \code{b}
-  parameters.  As such, we did not use a group specific
-  entry model for 2010.  If you want more detail, see
-  Collier et al. (2012).
+Important to note, in case you don't read Collier et al.
+(2012), is the fact that the 2010 dataset is kind of screwy
+relative to the estimation of the entry parameters for HY
+wwdo.  Basically, what happened was we caught a bunch of
+AHY birds, but when we captured HY birds, we only caught a
+few (~400 in 2010) and of those we captured, we rarely, if
+ever had any recaptures.  Without getting into a bunch of
+speculation on what happened, as we don't really know, we
+suspect it had something to do with the fact that 2009 was
+a extreme drought in Texas, as to where 2010 was extremely
+wet, so mast based food sources (mulberry tree's are
+everywhere) and such were readily available in the urban
+environment, as such, lower trapping success.  So, when you
+fit the 2010 dataset using the same candidate model set at
+the 2009, you get pretty nonsensical answers for the entry
+\code{b} parameters.  As such, we did not use a group
+specific entry model for 2010.  If you want more detail,
+see Collier et al. (2012).
 
-  Within the model code below, you can see that we fixed
-  the both the \code{Phi} and \code{p} parameters for those
-  periods in the analysis when HY birds could not be in the
-  population (e.g., when all birds migrated into the
-  breeding colony and no HY birds had been produced yet).
-  There is probably a little slack in the range, as it is
-  possible that there were some HY white-winged doves in
-  the population in the last period we fixed, but we did
-  not catch any there so we opted to fix it as well.
+Within the model code below, you can see that we fixed the
+both the \code{Phi} and \code{p} parameters for those
+periods in the analysis when HY birds could not be in the
+population (e.g., when all birds migrated into the breeding
+colony and no HY birds had been produced yet).  There is
+probably a little slack in the range, as it is possible
+that there were some HY white-winged doves in the
+population in the last period we fixed, but we did not
+catch any there so we opted to fix it as well.
 
-  Note that the R function \code{wwdo.popan} is set up in
-  RMark speak, and will run either the \code{wwdo.09} or
-  \code{wwdo.10} datasets as long as you specify one in the
-  lines where I have listed \code{data(wwdo.09)} and
-  \code{wwdo=wwdo.09}.  If you want to see the 2010
-  analysis, just change those lines to \code{wwdo.10}.
+Note that the R function \code{wwdo.popan} is set up in
+RMark speak, and will run either the \code{wwdo.09} or
+\code{wwdo.10} datasets as long as you specify one in the
+lines where I have listed \code{data(wwdo.09)} and
+\code{wwdo=wwdo.09}.  If you want to see the 2010 analysis,
+just change those lines to \code{wwdo.10}.
 }
 \examples{
 \donttest{
@@ -188,11 +184,10 @@ wwdo.out
 }
 }
 \references{
-  Collier, B. A., S. R. Kremer, C. D. Mason, J. Stone, K.
-  W. Calhoun, and M. J. Peterson.  2012. Immigration and
-  recruitment in an urban white-winged dove breeding
-  colony.  Journal of Fish and Wildlife Management, In
-  review.
+Collier, B. A., S. R. Kremer, C. D. Mason, J. Stone, K. W.
+Calhoun, and M. J. Peterson.  2012. Immigration and
+recruitment in an urban white-winged dove breeding colony.
+Journal of Fish and Wildlife Management, In review.
 }
 \keyword{datasets}
 

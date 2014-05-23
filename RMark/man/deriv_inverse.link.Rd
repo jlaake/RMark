@@ -3,7 +3,7 @@
 \alias{deriv_inverse.link}
 \title{Derivatives of inverse of link function (internal use)}
 \usage{
-  deriv_inverse.link(real, x, link)
+deriv_inverse.link(real, x, link)
 }
 \arguments{
   \item{real}{Vector of values of real parameters}
@@ -13,32 +13,32 @@
   \item{link}{Type of link function (e.g., "logit")}
 }
 \value{
-  Vector of derivative values computed at values of real
-  parameters
+Vector of derivative values computed at values of real
+parameters
 }
 \description{
-  Computes derivatives of inverse of link functions (real
-  estimates) with respect to the beta parameters which are
-  used for delta method computation of the var-cov matrix
-  of real parameters.
+Computes derivatives of inverse of link functions (real
+estimates) with respect to the beta parameters which are
+used for delta method computation of the var-cov matrix of
+real parameters.
 }
 \details{
-  Note: that function was renamed to deriv_inverse.link to
-  avoid S3 generic class conflicts. The derivatives of the
-  inverse of the link functions are simple computations
-  using the real values and the design matrix values.  The
-  body of the function is as follows:
+Note: that function was renamed to deriv_inverse.link to
+avoid S3 generic class conflicts. The derivatives of the
+inverse of the link functions are simple computations using
+the real values and the design matrix values.  The body of
+the function is as follows:
 
-  \preformatted{switch(link, logit=x*real*(1-real),
-  log=x*real, loglog=-real*x*log(real),
-  cloglog=-log(1-real)*x*(1-real), identity=x,
-  mlogit=x*real*(1-real)) }
+\preformatted{switch(link, logit=x*real*(1-real),
+log=x*real, loglog=-real*x*log(real),
+cloglog=-log(1-real)*x*(1-real), identity=x,
+mlogit=x*real*(1-real)) }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{inverse.link}}, \code{\link{compute.real}}
+\code{\link{inverse.link}}, \code{\link{compute.real}}
 }
 \keyword{utility}
 

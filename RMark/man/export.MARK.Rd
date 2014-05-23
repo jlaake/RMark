@@ -2,9 +2,8 @@
 \alias{export.MARK}
 \title{Export data and models for import in MARK}
 \usage{
-  export.MARK(x, project.name, model = NULL,
-    replace = FALSE, chat = 1, title = "",
-    ind.covariates = "all")
+export.MARK(x, project.name, model = NULL, replace = FALSE, chat = 1,
+  title = "", ind.covariates = "all")
 }
 \arguments{
   \item{x}{processed data list used to build models}
@@ -27,34 +26,33 @@
   all present}
 }
 \value{
-  None
+None
 }
 \description{
-  Creates a .Rinp, .inp and optionally renamed output files
-  that can be imported into MARK to create a new MARK
-  project with all the data and output files.
+Creates a .Rinp, .inp and optionally renamed output files
+that can be imported into MARK to create a new MARK project
+with all the data and output files.
 }
 \details{
-  If you use Nest model and NestAge covariate you should
-  use the processed data list (model$data) from a model
-  using NestAge in the formula because the necessary
-  individual covariates are added to the processed data
-  list.  Also, use default of ind.covariates="all".
+If you use Nest model and NestAge covariate you should use
+the processed data list (model$data) from a model using
+NestAge in the formula because the necessary individual
+covariates are added to the processed data list.  Also, use
+default of ind.covariates="all".
 
-  After running this function to export the data and models
-  to the working directory, start program MARK and select
-  the File/RMARK Import menu item. Navigate to the working
-  directory and select the "project.name".Rinp file. MARK
-  will take over and create the project files and will
-  import any specified model output files.
+After running this function to export the data and models
+to the working directory, start program MARK and select the
+File/RMARK Import menu item. Navigate to the working
+directory and select the "project.name".Rinp file. MARK
+will take over and create the project files and will import
+any specified model output files.
 
-  DO NOT use a "project name" that is the same as a
-  filename you use as input (*.inp) to RMark because this
-  function will create a file "project name".inp and it
-  would over-write your existing file and the format could
-  change. If you try this, the code will return an error
-  that the filename is invalid because the file already
-  exists.
+DO NOT use a "project name" that is the same as a filename
+you use as input (*.inp) to RMark because this function
+will create a file "project name".inp and it would
+over-write your existing file and the format could change.
+If you try this, the code will return an error that the
+filename is invalid because the file already exists.
 }
 \examples{
 \donttest{
@@ -139,10 +137,10 @@ export.MARK(robust.proc,"robust",	model.1,replace=TRUE)
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{export.chdata}}, \code{\link{export.model}}
+\code{\link{export.chdata}}, \code{\link{export.model}}
 }
 \keyword{utility}
 

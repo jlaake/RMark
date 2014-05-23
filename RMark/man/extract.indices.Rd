@@ -7,17 +7,17 @@
 \alias{search.output.files}
 \title{Various utility functions}
 \usage{
-  extract.indices(model,parameter,df)
+extract.indices(model,parameter,df)
 
-  nat.surv(model,df)
+	        nat.surv(model,df)
 
-  pop.est(ns,ps,design,p.vcv)
+         pop.est(ns,ps,design,p.vcv)
 
-  compute.Sn(x,df,criterion)
+         compute.Sn(x,df,criterion)
 
-  logitCI(x,se)
+         logitCI(x,se)
 
-  search.output.files(x,string)
+         search.output.files(x,string)
 }
 \arguments{
   \item{model}{a mark model object}
@@ -52,70 +52,69 @@
   contained in models in x}
 }
 \description{
-  Miscellaneous set of functions that can be used with
-  results from the package.
+Miscellaneous set of functions that can be used with
+results from the package.
 }
 \details{
-  Function \code{extract.indices} extracts the parameter
-  indices from the parameter index matrices (PIMS) for a
-  particular type of \code{parameter} that match a set of
-  group numbers and rows and columns that are defined in
-  the dataframe \code{df}. It returns a vector of indices
-  which can be used to specify the set of real parameters
-  to be extracted by \code{\link{covariate.predictions}}
-  using the index column in \code{data} or the
-  \code{indices} argument. If df is NULL, it returns a
-  dataframe with all of the indices with model.index being
-  the unique index across all parameters and the par.index
-  which is an index to the row in the design data. If
-  parameter is NULL then the the dataframe is given for all
-  of the parameters.
+Function \code{extract.indices} extracts the parameter
+indices from the parameter index matrices (PIMS) for a
+particular type of \code{parameter} that match a set of
+group numbers and rows and columns that are defined in the
+dataframe \code{df}. It returns a vector of indices which
+can be used to specify the set of real parameters to be
+extracted by \code{\link{covariate.predictions}} using the
+index column in \code{data} or the \code{indices} argument.
+If df is NULL, it returns a dataframe with all of the
+indices with model.index being the unique index across all
+parameters and the par.index which is an index to the row
+in the design data. If parameter is NULL then the the
+dataframe is given for all of the parameters.
 
-  Function \code{nat.surv} produces estimates of natural
-  survival (Sn) from total survival (S) and recovery rate
-  (r) from a joint live-dead model in which all harvest
-  recoveries are reported. In that case, Taylor et al 2005
-  suggest the following estimator of natural survival Sn=S
-  + (1-S)*r.  The arguments for the function are a mark
-  \code{model} object and a dataframe \code{df} that
-  defines the set of groups and times (row,col) for the
-  natural survival computations. It returns a list with
-  elements: 1) \code{Sn} - a vector of estimates for
-  natural survival; one for each entry in \code{df} and 2)
-  \code{vcv} - a variance-covariance matrix for the
-  estimates of natural survival.
+Function \code{nat.surv} produces estimates of natural
+survival (Sn) from total survival (S) and recovery rate (r)
+from a joint live-dead model in which all harvest
+recoveries are reported. In that case, Taylor et al 2005
+suggest the following estimator of natural survival Sn=S +
+(1-S)*r.  The arguments for the function are a mark
+\code{model} object and a dataframe \code{df} that defines
+the set of groups and times (row,col) for the natural
+survival computations. It returns a list with elements: 1)
+\code{Sn} - a vector of estimates for natural survival; one
+for each entry in \code{df} and 2) \code{vcv} - a
+variance-covariance matrix for the estimates of natural
+survival.
 
-  Function \code{pop.est} produces estimates of abundance
-  using a vector of counts of animals captured (\code{ns})
-  and estimates of capture probabilities (\code{ps}).  The
-  estimates can be aggregated or averaged using the
-  \code{design} matrix argument.  If individual estimates
-  are needed, use an nxn identity matrix for design where n
-  is the length of \code{ns}. To get a total of all the
-  estimates use a nx1 column matrix of 1s.  Any other
-  \code{design} matrix can be specified to subset,
-  aggregate and/or average the estimates.  The argument
-  \code{p.vcv} is needed to compute the variance-covariance
-  matrix for the abundance estimates using the formula
-  described in Taylor et al. (2002).  The function returns
-  a list with elements: 1) \code{Nhat} - a vector of
-  abundance estimates and 2) \code{vcv} -
-  variance-covariance matrix for the abundance estimates.
+Function \code{pop.est} produces estimates of abundance
+using a vector of counts of animals captured (\code{ns})
+and estimates of capture probabilities (\code{ps}).  The
+estimates can be aggregated or averaged using the
+\code{design} matrix argument.  If individual estimates are
+needed, use an nxn identity matrix for design where n is
+the length of \code{ns}. To get a total of all the
+estimates use a nx1 column matrix of 1s.  Any other
+\code{design} matrix can be specified to subset, aggregate
+and/or average the estimates.  The argument \code{p.vcv} is
+needed to compute the variance-covariance matrix for the
+abundance estimates using the formula described in Taylor
+et al. (2002).  The function returns a list with elements:
+1) \code{Nhat} - a vector of abundance estimates and 2)
+\code{vcv} - variance-covariance matrix for the abundance
+estimates.
 
-  Function \code{Compute.Sn} creates list structure for
-  natural survival using \code{nat.surv} to be used for
-  model averaging natural survival estimates (e.g.,
-  \code{model.average(compute.Sn(x,df,criterion))}). It
-  returns a list with elements estimates, vcv, weight: 1)
-  estimates - matrix of estimates of natural survival,
-  2)vcv - list of var-cov matrix for the estimates, and 3)
-  weight - vector of model weights.
+Function \code{Compute.Sn} creates list structure for
+natural survival using \code{nat.surv} to be used for model
+averaging natural survival estimates (e.g.,
+\code{model.average(compute.Sn(x,df,criterion))}). It
+returns a list with elements estimates, vcv, weight: 1)
+estimates - matrix of estimates of natural survival, 2)vcv
+- list of var-cov matrix for the estimates, and 3) weight -
+vector of model weights.
 
-  Function \code{search.output.files}searches for
-  occurrence of a specific string in output files
-  associated with models in a marklist x. It returns a
-  vector of model numbers in the marklist which have an
-  output file containing the string.
+Function \code{search.output.files}searches for occurrence
+of a specific string in output files associated with models
+in a marklist x. It returns a vector of model numbers in
+the marklist which have an output file containing the
+string.
 }
 \examples{
 \donttest{
@@ -141,18 +140,17 @@ pop.est(ns,p.list$estimates$estimate,
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \references{
-  TAYLOR, M. K., J. LAAKE, H. D. CLUFF, M. RAMSAY and F.
-  MESSIER. 2002. Managing the risk from hunting for the
-  Viscount Melville Sound polar bear population. Ursus 13:
-  185-202.
+TAYLOR, M. K., J. LAAKE, H. D. CLUFF, M. RAMSAY and F.
+MESSIER. 2002. Managing the risk from hunting for the
+Viscount Melville Sound polar bear population. Ursus 13:
+185-202.
 
-  TAYLOR, M. K., J. LAAKE, P. D. MCLOUGHLIN, E. W. BORN, H.
-  D. CLUFF, S. H. FERGUSON, A. ROSING-ASVID, R.
-  SCHWEINSBURG and F.  MESSIER. 2005. Demography and
-  viability of a hunted population of polar bears. Arctic
-  58: 203-214.
+TAYLOR, M. K., J. LAAKE, P. D. MCLOUGHLIN, E. W. BORN, H.
+D. CLUFF, S. H. FERGUSON, A. ROSING-ASVID, R. SCHWEINSBURG
+and F.  MESSIER. 2005. Demography and viability of a hunted
+population of polar bears. Arctic 58: 203-214.
 }
 

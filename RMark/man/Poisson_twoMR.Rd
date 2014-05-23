@@ -6,8 +6,8 @@
 \describe{ \item{ch}{a character vector} \item{pg}{a factor
 with levels \code{group1} \code{group2}} }}
 \description{
-  Data and example illustrating Poisson Mark-Resight model
-  with 2 groups and one occasion.
+Data and example illustrating Poisson Mark-Resight model
+with 2 groups and one occasion.
 }
 \examples{
 \donttest{

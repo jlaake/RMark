@@ -8,11 +8,11 @@ the presence (state 1), presence (state 2), and absence (0) for each visit
 to the site, and a "." if the site was not visited} \item{freq}{frequency of
 sites with that history} }}
 \description{
-  An occupancy data set for modelling multi-state data
-  (0,1,2).
+An occupancy data set for modelling multi-state data
+(0,1,2).
 }
 \details{
-  This is a data set from Nichols et al (2007).
+This is a data set from Nichols et al (2007).
 }
 \examples{
 \donttest{
@@ -68,10 +68,10 @@ p1.plust.p2.by.time=list(formula=~time+p2,share=TRUE)
 }
 }
 \references{
-  Nichols, J. D., J. E. Hines, D. I. MacKenzie, M. E.
-  Seamans, and R. J. Gutierrez.  2007. Occupancy estimation
-  and modeling with multiple states and state uncertainty.
-  Ecology 88:1395-1400.
+Nichols, J. D., J. E. Hines, D. I. MacKenzie, M. E.
+Seamans, and R. J. Gutierrez.  2007. Occupancy estimation
+and modeling with multiple states and state uncertainty.
+Ecology 88:1395-1400.
 }
 \keyword{datasets}
 

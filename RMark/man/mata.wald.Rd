@@ -4,14 +4,11 @@
 \alias{tailarea.z}
 \title{Model-Averaged Tail Area Wald (MATA-Wald) confidence intervals}
 \usage{
-  mata.wald(theta.hats, se.theta.hats, model.weights,
-    normal.lm=FALSE, residual.dfs=0, alpha=0.025)
+mata.wald(theta.hats, se.theta.hats, model.weights, normal.lm=FALSE, residual.dfs=0, alpha=0.025)
 
-  tailarea.z(theta, theta.hats, se.theta.hats,
-    model.weights, alpha)
+       tailarea.z(theta, theta.hats, se.theta.hats, model.weights, alpha)
 
-  tailarea.t(theta, theta.hats, se.theta.hats,
-    model.weights, alpha, residual.dfs)
+       tailarea.t(theta, theta.hats, se.theta.hats, model.weights, alpha, residual.dfs)
 }
 \arguments{
   \item{theta}{value for root finding in tailarea.z and
@@ -47,37 +44,37 @@
   normal.lm=TRUE.}
 }
 \description{
-  A generic function to compute model averaged estimates
-  and their standard errors or variance-covariance matrix
-  model-averaged tail area (MATA) construction.
+A generic function to compute model averaged estimates and
+their standard errors or variance-covariance matrix
+model-averaged tail area (MATA) construction.
 }
 \details{
-  The main function, mata.wald(...), may be used to
-  construct model-averaged confidence intervals, using the
-  model-averaged tail area (MATA) construction. The idea
-  underlying this construction is similar to that of a
-  model-averaged Bayesian credible interval.  This function
-  returns the lower and upper confidence limits of a
-  MATA-Wald interval.
+The main function, mata.wald(...), may be used to construct
+model-averaged confidence intervals, using the
+model-averaged tail area (MATA) construction. The idea
+underlying this construction is similar to that of a
+model-averaged Bayesian credible interval.  This function
+returns the lower and upper confidence limits of a
+MATA-Wald interval.
 
-  Two usages are supported.  For the normal linear model
-  case, and quantity of interest theta, >
-  mata.wald(theta.hats, se.theta.hats, model.weights,
-  alpha, normal.lm=TRUE, residual.dfs) returns a
-  (1-2*alpha)100% MATA-Wald confidence interval for theta.
-  Corresponds to the solutions of equations (2) and (3) of
-  Turek and Fletcher (2012).  The argument 'residual.dfs'
-  is required for this usage.
+Two usages are supported.  For the normal linear model
+case, and quantity of interest theta, >
+mata.wald(theta.hats, se.theta.hats, model.weights, alpha,
+normal.lm=TRUE, residual.dfs) returns a (1-2*alpha)100%
+MATA-Wald confidence interval for theta. Corresponds to the
+solutions of equations (2) and (3) of Turek and Fletcher
+(2012).  The argument 'residual.dfs' is required for this
+usage.
 
-  When the sampling distribution for the estimate of theta
-  is asymptotically normal (e.g. MLEs), possibly after a
-  transformation, > mata.wald(theta.hats, se.theta.hats,
-  model.weights, alpha, normal.lm=FALSE) returns a
-  (1-2*alpha)100% MATA-Wald confidence interval for theta,
-  possibly on a transformed scale.  Back-transformation of
-  both confidence limits may be necessary.  Corresponds to
-  solutions to the equations in Section 3.2 of Turek and
-  Fletcher (2012).
+When the sampling distribution for the estimate of theta is
+asymptotically normal (e.g. MLEs), possibly after a
+transformation, > mata.wald(theta.hats, se.theta.hats,
+model.weights, alpha, normal.lm=FALSE) returns a
+(1-2*alpha)100% MATA-Wald confidence interval for theta,
+possibly on a transformed scale.  Back-transformation of
+both confidence limits may be necessary.  Corresponds to
+solutions to the equations in Section 3.2 of Turek and
+Fletcher (2012).
 }
 \examples{
 # The example code below, uncommented, generates single-model Wald
@@ -126,11 +123,11 @@ mata.wald(theta.hats=theta.hats, se.theta.hats=se.theta.hats,
         model.weights=model.weights, normal.lm=TRUE, residual.dfs=residual.dfs)
 }
 \author{
-  Daniel Turek<danielturek@gmail.com>
+Daniel Turek<danielturek@gmail.com>
 }
 \references{
-  Turek, D. and Fletcher, D. (2012). Model-Averaged Wald
-  Confidence Intervals. Computational Statistics and Data
-  Analysis, 56(9), p.2809-2815.
+Turek, D. and Fletcher, D. (2012). Model-Averaged Wald
+Confidence Intervals. Computational Statistics and Data
+Analysis, 56(9), p.2809-2815.
 }
 

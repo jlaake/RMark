@@ -3,9 +3,9 @@
 \alias{splitCH}
 \title{Split/collapse capture histories}
 \usage{
-  splitCH(x="ch", data=NULL, prefix="Time")
+splitCH(x="ch", data=NULL, prefix="Time")
 
-  collapseCH(chmat=NULL, data=NULL, prefix="Time")
+	        collapseCH(chmat=NULL, data=NULL, prefix="Time")
 }
 \arguments{
   \item{x}{A vector containing the character strings of
@@ -20,19 +20,19 @@
   \item{chmat}{capture history matrix}
 }
 \value{
-  A data frame if data specified and a matrix if vector ch
-  is specified
+A data frame if data specified and a matrix if vector ch is
+specified
 }
 \description{
-  splitCH will split a character string vector of capture
-  histories into a matrix. The matrix is appended to the
-  original data set (data) if one is specified. Will handle
-  character and numeric values in ch. Results will differ
-  depending on content of ch. collapseCH will collapse a
-  capture history matrix back into a character vector.
-  Argument can either be a capture history matrix (chmat)
-  or a dataframe (data) that contains fields with a
-  specified prefix.
+splitCH will split a character string vector of capture
+histories into a matrix. The matrix is appended to the
+original data set (data) if one is specified. Will handle
+character and numeric values in ch. Results will differ
+depending on content of ch. collapseCH will collapse a
+capture history matrix back into a character vector.
+Argument can either be a capture history matrix (chmat) or
+a dataframe (data) that contains fields with a specified
+prefix.
 }
 \examples{
 \donttest{
@@ -49,6 +49,6 @@ newdipper=collapseCH(data=newdipper)
 }
 }
 \author{
-  Devin Johnson; Jeff Laake
+Devin Johnson; Jeff Laake
 }
 

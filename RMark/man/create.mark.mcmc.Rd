@@ -2,8 +2,8 @@
 \alias{create.mark.mcmc}
 \title{Create mcmc object for analysis with coda}
 \usage{
-  create.mark.mcmc(filename, ncovs, nmeans, ndesigns,
-    nsigmas, nrhos, nlogit, include = F)
+create.mark.mcmc(filename, ncovs, nmeans, ndesigns, nsigmas, nrhos, nlogit,
+  include = F)
 }
 \arguments{
   \item{filename}{name of file containing mcmc values}
@@ -23,16 +23,16 @@
   \item{include}{if TRUE it includes ir/propJumps fields}
 }
 \value{
-  An mcmc object if one chain and an mcmc list if more than
-  one chain. Each can be used with the coda package
+An mcmc object if one chain and an mcmc list if more than
+one chain. Each can be used with the coda package
 }
 \description{
-  Reads in mcmc file from program MARK in binary and
-  returns an mcmc object that can be used with coda
-  functions which are most easily accessed via codamenu().
+Reads in mcmc file from program MARK in binary and returns
+an mcmc object that can be used with coda functions which
+are most easily accessed via codamenu().
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \keyword{utility}
 

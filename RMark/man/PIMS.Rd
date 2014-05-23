@@ -2,8 +2,7 @@
 \alias{PIMS}
 \title{Display PIM for a parameter}
 \usage{
-  PIMS(model, parameter, simplified = TRUE,
-    use.labels = TRUE)
+PIMS(model, parameter, simplified = TRUE, use.labels = TRUE)
 }
 \arguments{
   \item{model}{mark model object}
@@ -18,12 +17,11 @@
   for columns and rows respectively}
 }
 \value{
-  None
+None
 }
 \description{
-  Extract PIMS for a particular parameter and display
-  either the full PIM structure or the simplified PIM
-  structure.
+Extract PIMS for a particular parameter and display either
+the full PIM structure or the simplified PIM structure.
 }
 \examples{
 \donttest{
@@ -34,10 +32,10 @@ PIMS(results,"Phi",simplified=FALSE)
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{make.design.data}}
+\code{\link{make.design.data}}
 }
 \keyword{utility}
 

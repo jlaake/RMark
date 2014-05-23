@@ -5,8 +5,8 @@
 \format{A data frame with 34 observations on the following variable.
 \describe{ \item{ch}{a character vector} }}
 \description{
-  Data and example illustrating Immigration-Emigration
-  LogitNormal Mark-Resight model
+Data and example illustrating Immigration-Emigration
+LogitNormal Mark-Resight model
 }
 \examples{
 \donttest{

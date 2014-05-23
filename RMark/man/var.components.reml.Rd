@@ -2,9 +2,8 @@
 \alias{var.components.reml}
 \title{Variance components estimation using REML or maximum likelihood}
 \usage{
-  var.components.reml(theta, design, vcv = NULL,
-    rdesign = NULL, initial = NULL, interval = c(-25, 10),
-    REML = TRUE)
+var.components.reml(theta, design, vcv = NULL, rdesign = NULL,
+  initial = NULL, interval = c(-25, 10), REML = TRUE)
 }
 \arguments{
   \item{theta}{vector of parameter estimates}
@@ -27,33 +26,33 @@
   \item{REML}{if TRUE uses reml else maximum likelihood}
 }
 \value{
-  A list with the following elements \item{neglnl}{negative
-  log-likelihood for fitted model} \item{AICc}{small sample
-  corrected AIC for model selection} \item{sigma}{variance
-  component estimates; if rdesign=NULL, only an iid error;
-  otherwise, iid error and random effect error}
-  \item{beta}{dataframe with estimates and standard errors
-  of betas for design} \item{vcv.beta}{variance-covariance
-  matrix for beta}
+A list with the following elements \item{neglnl}{negative
+log-likelihood for fitted model} \item{AICc}{small sample
+corrected AIC for model selection} \item{sigma}{variance
+component estimates; if rdesign=NULL, only an iid error;
+otherwise, iid error and random effect error}
+\item{beta}{dataframe with estimates and standard errors of
+betas for design} \item{vcv.beta}{variance-covariance
+matrix for beta}
 }
 \description{
-  Computes estimated effects, standard errors and variance
-  components for a set of estimates
+Computes estimated effects, standard errors and variance
+components for a set of estimates
 }
 \details{
-  The function \code{\link{var.components}} uses method of
-  moments to estimate a single process variance but cannot
-  fit a more complex example.  It can only estimate an iid
-  process variance.  However, if you have a more
-  complicated structure in which you have random year
-  effects and want to estimate a fixed age effect then
-  \code{\link{var.components}} will not work because it
-  will assume an iid error rather than allowing a common
-  error for each year as well as an iid error.  This
-  function uses restricted maximum likelihood (reml) or
-  maximum likelihood to fit a fixed effects model with an
-  optional random effects structure.  The example below
-  provides an illustration as to how this can be useful.
+The function \code{\link{var.components}} uses method of
+moments to estimate a single process variance but cannot
+fit a more complex example.  It can only estimate an iid
+process variance.  However, if you have a more complicated
+structure in which you have random year effects and want to
+estimate a fixed age effect then
+\code{\link{var.components}} will not work because it will
+assume an iid error rather than allowing a common error for
+each year as well as an iid error.  This function uses
+restricted maximum likelihood (reml) or maximum likelihood
+to fit a fixed effects model with an optional random
+effects structure.  The example below provides an
+illustration as to how this can be useful.
 }
 \examples{
 \donttest{
@@ -86,6 +85,6 @@ lme(estimate~-1+age,data=z,random=~1|time)
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 

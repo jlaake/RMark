@@ -8,17 +8,17 @@
 factor with levels \code{F} \code{M}} \item{region}{a factor with levels
 \code{1} \code{2} \code{3} \code{4}} }}
 \description{
-  A simulated data set from CJS model to demonstrate use of
-  grouping variables and individual covariates in an
-  analysis of a \code{mark} model. The true model for the
-  simulated data is S(age+year)p(year).
+A simulated data set from CJS model to demonstrate use of
+grouping variables and individual covariates in an analysis
+of a \code{mark} model. The true model for the simulated
+data is S(age+year)p(year).
 }
 \details{
-  The \code{weight}, \code{age} and \code{region} are
-  static variables that are defined based on the values
-  when the animal was released. \code{age} is a factor
-  variable representing an age level.  The actual ages (at
-  time of release) are 0,1,2 for the 3 levels respectively.
+The \code{weight}, \code{age} and \code{region} are static
+variables that are defined based on the values when the
+animal was released. \code{age} is a factor variable
+representing an age level.  The actual ages (at time of
+release) are 0,1,2 for the 3 levels respectively.
 }
 \examples{
 \donttest{

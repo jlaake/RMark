@@ -2,11 +2,10 @@
 \alias{rerun.mark}
 \title{Runs a previous MARK model with new starting values}
 \usage{
-  rerun.mark(model, data, ddl, initial, output = TRUE,
-    title = "", invisible = TRUE, adjust = TRUE,
-    se = FALSE, filename = NULL, prefix = "mark",
-    default.fixed = TRUE, silent = FALSE, retry = 0,
-    realvcv = FALSE, external = FALSE, threads = -1)
+rerun.mark(model, data, ddl, initial, output = TRUE, title = "",
+  invisible = TRUE, adjust = TRUE, se = FALSE, filename = NULL,
+  prefix = "mark", default.fixed = TRUE, silent = FALSE, retry = 0,
+  realvcv = FALSE, external = FALSE, threads = -1)
 }
 \arguments{
   \item{model}{previously run MARK model}
@@ -61,30 +60,29 @@
   positive or number of cpus to remain idle if negative}
 }
 \value{
-  model: MARK model object with the base filename stored in
-  \code{output} and the extracted \code{results} from the
-  output file appended onto list; see \code{\link{mark}}
-  for a detailed description of a \code{mark} object.
+model: MARK model object with the base filename stored in
+\code{output} and the extracted \code{results} from the
+output file appended onto list; see \code{\link{mark}} for
+a detailed description of a \code{mark} object.
 }
 \description{
-  Runs a previous MARK model with new starting values but
-  without specifying the model parameter formulas.  This
-  function is most useful with \code{mark.wrapper} in which
-  a list of models is analyzed and the set of formulas are
-  not specified for each model.
+Runs a previous MARK model with new starting values but
+without specifying the model parameter formulas.  This
+function is most useful with \code{mark.wrapper} in which a
+list of models is analyzed and the set of formulas are not
+specified for each model.
 }
 \details{
-  This is a simple function that restarts an analysis with
-  MARK typically using another model for initial values of
-  the beta parameters.  The processed dataframe
-  (\code{data}) and design data list (\code{ddl}) must be
-  specified but the \code{model.parameters} are extracted
-  from \code{model}. \code{initial} values are not optional
-  otherwise this would be no different than the original
-  call to \code{mark}. More complete definitions of the
-  arguments can be found in \code{\link{mark}} or
-  \code{\link{run.mark.model}} or
-  \code{\link{make.mark.model}}.
+This is a simple function that restarts an analysis with
+MARK typically using another model for initial values of
+the beta parameters.  The processed dataframe (\code{data})
+and design data list (\code{ddl}) must be specified but the
+\code{model.parameters} are extracted from \code{model}.
+\code{initial} values are not optional otherwise this would
+be no different than the original call to \code{mark}. More
+complete definitions of the arguments can be found in
+\code{\link{mark}} or \code{\link{run.mark.model}} or
+\code{\link{make.mark.model}}.
 }
 \examples{
 \dontrun{
@@ -157,13 +155,13 @@ nat
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{make.mark.model}}, \code{\link{run.models}},
-  \code{\link{extract.mark.output}},
-  \code{\link{adjust.parameter.count}}, \code{\link{mark}},
-  \code{\link{cleanup}}
+\code{\link{make.mark.model}}, \code{\link{run.models}},
+\code{\link{extract.mark.output}},
+\code{\link{adjust.parameter.count}}, \code{\link{mark}},
+\code{\link{cleanup}}
 }
 \keyword{model}
 

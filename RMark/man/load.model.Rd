@@ -2,20 +2,20 @@
 \alias{load.model}
 \title{Load external model}
 \usage{
-  load.model(model)
+load.model(model)
 }
 \arguments{
   \item{model}{name of MARK model object stored externally}
 }
 \value{
-  None; side effect only to load object with name model
-  (not name given to model)
+None; side effect only to load object with name model (not
+name given to model)
 }
 \description{
-  Loads external model into workspace with name model
+Loads external model into workspace with name model
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \keyword{utility}
 

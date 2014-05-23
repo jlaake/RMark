@@ -1,8 +1,11 @@
 print.RMark.version <- function()
 { library(help=RMark)$info[[1]] -> version
 	version <- version[pmatch("Version",version)]
-	um <- strsplit(version," ")[[1]]
-	version <- um[nchar(um)>0][2]
+	if(!is.null(version))
+	{
+		um <- strsplit(version," ")[[1]]
+  	    version <- um[nchar(um)>0][2]
+	}
 	hello <- paste("This is RMark ",version,"\n",sep="")
 	packageStartupMessage(hello)
 }

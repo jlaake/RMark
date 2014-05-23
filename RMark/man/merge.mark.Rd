@@ -2,7 +2,7 @@
 \alias{merge.mark}
 \title{Merge mark model objects and lists of mark model objects}
 \usage{
-  \method{merge}{mark}(...,table=TRUE)
+\method{merge}{mark}(...,table=TRUE)
 }
 \arguments{
   \item{...}{an unspecified number of marklist and/or mark
@@ -12,22 +12,22 @@
   included in the returned list}
 }
 \value{
-  model.list: a list of \code{mark} models and optionally a
-  table of model results.
+model.list: a list of \code{mark} models and optionally a
+table of model results.
 }
 \description{
-  Merge an unspecified number of marklist and mark model
-  objects into a single marklist with an optional table of
-  model results if \code{table=TRUE}.
+Merge an unspecified number of marklist and mark model
+objects into a single marklist with an optional table of
+model results if \code{table=TRUE}.
 }
 \examples{
 # see example in dipper
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{collect.models}},\code{\link{remove.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
+\code{\link{collect.models}},\code{\link{remove.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
 }
 \keyword{utility}
 

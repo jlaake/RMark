@@ -5,27 +5,26 @@
 \format{A data frame with 76 observations on the following variable.
 \describe{ \item{ch}{a character vector} }}
 \source{
-  Edwards, W.R. and L.L. Eberhardt 1967.  Estimating
-  cottontail abundance from live trapping data. J. Wildl.
-  Manage. 31:87-96.
+Edwards, W.R. and L.L. Eberhardt 1967.  Estimating
+cottontail abundance from live trapping data. J. Wildl.
+Manage. 31:87-96.
 }
 \description{
-  A capture-recapture data set on rabbits derived from
-  Edwards and Eberhardt (1967) that accompanies MARK as an
-  example analysis using the closed population models.
+A capture-recapture data set on rabbits derived from
+Edwards and Eberhardt (1967) that accompanies MARK as an
+example analysis using the closed population models.
 }
 \details{
-  This data set is used in MARK to illustrate the various
-  closed population models including "Closed", "HetClosed",
-  "FullHet","Huggins","HugHet", and "FullHugHet".  The
-  first 3 include N in the likelihood whereas the last 3
-  are based on the Huggins approach which does not use N in
-  the likelihood. The Het... and FullHet... models are
-  based on the Pledger mixture model approach. Some of the
-  examples demonstrate the use of the \code{share} argument
-  in the \code{model.parameters} list for parameter
-  \code{p} which allows sharing common values for \code{p}
-  and \code{c}.
+This data set is used in MARK to illustrate the various
+closed population models including "Closed", "HetClosed",
+"FullHet","Huggins","HugHet", and "FullHugHet".  The first
+3 include N in the likelihood whereas the last 3 are based
+on the Huggins approach which does not use N in the
+likelihood. The Het... and FullHet... models are based on
+the Pledger mixture model approach. Some of the examples
+demonstrate the use of the \code{share} argument in the
+\code{model.parameters} list for parameter \code{p} which
+allows sharing common values for \code{p} and \code{c}.
 }
 \examples{
 \donttest{

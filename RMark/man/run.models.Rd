@@ -2,8 +2,7 @@
 \alias{run.models}
 \title{Runs a set of MARK models}
 \usage{
-  run.models(model.list = NULL, type = NULL, save = TRUE,
-    ...)
+run.models(model.list = NULL, type = NULL, save = TRUE, ...)
 }
 \arguments{
   \item{model.list}{either a vector of model names or NULL
@@ -22,30 +21,30 @@
   \code{\link{run.mark.model}}}
 }
 \value{
-  None; models are stored in parent frame.
+None; models are stored in parent frame.
 }
 \description{
-  Runs either a collection of models as defined in
-  \code{model.list} or runs all defined MARK object models
-  in the frame of the calling function with no
-  \code{output} (\code{model.list=NULL}) or just those of a
-  particular type (e.g., \code{type="CJS"})
+Runs either a collection of models as defined in
+\code{model.list} or runs all defined MARK object models in
+the frame of the calling function with no \code{output}
+(\code{model.list=NULL}) or just those of a particular type
+(e.g., \code{type="CJS"})
 }
 \details{
-  The model names in \code{model.list} must be in the frame
-  of the function that calls \code{run.models}. If
-  \code{model.list=NULL} or the MARK models are collected
-  from the frame of the calling function (the parent). If
-  \code{type} is specified only the models of that type
-  (e.g., "CJS") are run. In each case the models are run
-  and saved in the parent frame.
+The model names in \code{model.list} must be in the frame
+of the function that calls \code{run.models}. If
+\code{model.list=NULL} or the MARK models are collected
+from the frame of the calling function (the parent). If
+\code{type} is specified only the models of that type
+(e.g., "CJS") are run. In each case the models are run and
+saved in the parent frame.
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{collect.model.names}},
-  \code{\link{run.mark.model}}
+\code{\link{collect.model.names}},
+\code{\link{run.mark.model}}
 }
 \keyword{utility}
 

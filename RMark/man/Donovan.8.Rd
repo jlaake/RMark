@@ -7,16 +7,16 @@ variables.  \describe{ \item{ch}{a character vector containing the counts
 for each of 5 visits to the site} \item{freq}{frequency of sites (always 1)}
 }}
 \description{
-  An example occupancy data set used as exercise 8 in the
-  occupancy website developed by Donovan and Hines.
+An example occupancy data set used as exercise 8 in the
+occupancy website developed by Donovan and Hines.
 }
 \details{
-  This is a data set from exercise 8 of Donovan and Hines
-  occupancy web site
-  (\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
-  In MARK, it uses 2 digits to allow a count of 0 to 99 at
-  each site, so the history has 10 digits for 5 visits
-  (occasions).
+This is a data set from exercise 8 of Donovan and Hines
+occupancy web site
+(\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
+In MARK, it uses 2 digits to allow a count of 0 to 99 at
+each site, so the history has 10 digits for 5 visits
+(occasions).
 }
 \examples{
 \donttest{

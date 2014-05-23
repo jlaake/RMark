@@ -3,7 +3,7 @@
 \alias{summary_ch}
 \title{Provides a summary for the capture histories}
 \usage{
-  summary_ch(x, bygroup = TRUE, marray = FALSE)
+summary_ch(x, bygroup = TRUE, marray = FALSE)
 }
 \arguments{
   \item{x}{Processed data list; resulting value from
@@ -16,31 +16,30 @@
   MARK}
 }
 \value{
-  list of dataframes (one for each group in the data); each
-  dataframe has rows for each release cohort and columns
-  for each recapture occasion. The rows and columns are
-  labelled with the occasion time labels.  If
-  \code{marray==FALSE} the first column is the number
-  initially released and the remaining columns (one for
-  each recapture/resighting occasion) are the number
-  recaught in each of the following occasions and the
-  number caught in at least one of the occasions.  If
-  \code{marray==TRUE} the first column is the number
-  released which includes those initially released and ones
-  released after recapture from a previous cohort. The
-  remaining columns are the number first recaught in each
-  of the following occasions.  Once re-caught they become
-  one of the following rows (ie release-recap pairs) unless
-  it is the last time they were captured and they were not
-  released (eg negative frequency).
+list of dataframes (one for each group in the data); each
+dataframe has rows for each release cohort and columns for
+each recapture occasion. The rows and columns are labelled
+with the occasion time labels.  If \code{marray==FALSE} the
+first column is the number initially released and the
+remaining columns (one for each recapture/resighting
+occasion) are the number recaught in each of the following
+occasions and the number caught in at least one of the
+occasions.  If \code{marray==TRUE} the first column is the
+number released which includes those initially released and
+ones released after recapture from a previous cohort. The
+remaining columns are the number first recaught in each of
+the following occasions.  Once re-caught they become one of
+the following rows (ie release-recap pairs) unless it is
+the last time they were captured and they were not released
+(eg negative frequency).
 }
 \description{
-  For each release (initial capture) cohort, the number of
-  recaptured (resighted) individuals from that cohort is
-  tallied for each of the following occasions.  A summary
-  table with number released (initially caught) and the
-  number recaptured is given for each group if
-  \code{bygroup=TRUE}.
+For each release (initial capture) cohort, the number of
+recaptured (resighted) individuals from that cohort is
+tallied for each of the following occasions.  A summary
+table with number released (initially caught) and the
+number recaptured is given for each group if
+\code{bygroup=TRUE}.
 }
 \examples{
 data(dipper)
@@ -83,7 +82,7 @@ summary_ch(dipper.processed,marray=TRUE)
 #6       48 0  0  0  0  0 28    28
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \keyword{utility}
 

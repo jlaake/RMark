@@ -7,13 +7,13 @@ variables.  \describe{ \item{ch}{a character vector containing the presence
 (1) and absence (0) for each of 5 visits to the site} \item{freq}{frequency
 of sites (always 1)} }}
 \description{
-  An example occupancy data set used as exercise 7 in the
-  occupancy website developed by Donovan and Hines.
+An example occupancy data set used as exercise 7 in the
+occupancy website developed by Donovan and Hines.
 }
 \details{
-  This is a data set from exercise 7 of Donovan and Hines
-  occupancy web site
-  (\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
+This is a data set from exercise 7 of Donovan and Hines
+occupancy web site
+(\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
 }
 \examples{
 # Donovan.7 can be created with

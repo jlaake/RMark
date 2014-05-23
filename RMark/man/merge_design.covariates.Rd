@@ -3,8 +3,7 @@
 \alias{merge_design.covariates}
 \title{Merge time (occasion) and/or group specific covariates into design data}
 \usage{
-  merge_design.covariates(ddl, df, bygroup = FALSE,
-    bytime = TRUE)
+merge_design.covariates(ddl, df, bygroup = FALSE, bytime = TRUE)
 }
 \arguments{
   \item{ddl}{current design dataframe for a specific
@@ -23,45 +22,43 @@
   then be time specific.}
 }
 \value{
-  Design dataframe (for a particular parameter) with new
-  fields added. See \code{\link{make.design.data}} for a
-  description of the design data list structure. The return
-  value is only one element in the list rather than the
-  entire list as with the older function
-  \code{merge.occasion.data}.
+Design dataframe (for a particular parameter) with new
+fields added. See \code{\link{make.design.data}} for a
+description of the design data list structure. The return
+value is only one element in the list rather than the
+entire list as with the older function
+\code{merge.occasion.data}.
 }
 \description{
-  Adds new design data fields from a dataframe into a
-  design data list (\code{ddl}) by matching via time and/or
-  group field in the design data.
+Adds new design data fields from a dataframe into a design
+data list (\code{ddl}) by matching via time and/or group
+field in the design data.
 }
 \details{
-  Design data can be added to the parameter specific design
-  dataframes with R commands.  This function simplifies the
-  process by enabling the merging of a dataframe with a
-  time and/or group field and one or more time and/or group
-  specific covariates into the design data list for a
-  specific model parameter. This is a replacement for the
-  older function \code{merge.occasion.data}. Unlike the
-  older function, it uses the R function
-  \code{\link{merge}} but before merging it makes sure all
-  of the fields exist and that you are not merging data
-  that already exists in the design data.  It also
-  maintains the row names in the case where design data
-  have been deleted prior to merging the design covariate
-  data.
+Design data can be added to the parameter specific design
+dataframes with R commands.  This function simplifies the
+process by enabling the merging of a dataframe with a time
+and/or group field and one or more time and/or group
+specific covariates into the design data list for a
+specific model parameter. This is a replacement for the
+older function \code{merge.occasion.data}. Unlike the older
+function, it uses the R function \code{\link{merge}} but
+before merging it makes sure all of the fields exist and
+that you are not merging data that already exists in the
+design data.  It also maintains the row names in the case
+where design data have been deleted prior to merging the
+design covariate data.
 
-  If \code{bytime=TRUE},the dataframe \code{df} must have a
-  field named \code{time} that matches 1-1 for each value
-  of \code{time} in the design data list (\code{ddl}).  All
-  fields in \code{df} (other than time/group) are added to
-  the design data.  If you set \code{bygroup=TRUE} and have
-  a field named \code{group} in \code{df} and its values
-  match the group fields in the design data then
-  group-specific values can be assigned for each time if
-  \code{bytime=TRUE}. If \code{bygroup=TRUE} and
-  \code{bytime=FALSE} then it matches by group and not by
-  time.
+If \code{bytime=TRUE},the dataframe \code{df} must have a
+field named \code{time} that matches 1-1 for each value of
+\code{time} in the design data list (\code{ddl}).  All
+fields in \code{df} (other than time/group) are added to
+the design data.  If you set \code{bygroup=TRUE} and have a
+field named \code{group} in \code{df} and its values match
+the group fields in the design data then group-specific
+values can be assigned for each time if \code{bytime=TRUE}.
+If \code{bygroup=TRUE} and \code{bytime=FALSE} then it
+matches by group and not by time.
 }
 \examples{
 data(dipper)
@@ -85,11 +82,11 @@ merge_design.covariates(dipper.ddl$p,df,bygroup=TRUE)
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{make.design.data}},
-  \code{\link{process.data}}, \code{\link{add.design.data}}
+\code{\link{make.design.data}}, \code{\link{process.data}},
+\code{\link{add.design.data}}
 }
 \keyword{utility}
 

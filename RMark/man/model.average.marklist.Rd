@@ -2,9 +2,7 @@
 \alias{model.average.marklist}
 \title{Compute model averaged estimates of real parameters}
 \usage{
-  \method{model.average}{marklist}(x, parameter, data, vcv,
-    drop=TRUE, indices=NULL, revised=TRUE, mata=FALSE,
-    normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
+\method{model.average}{marklist}(x, parameter, data, vcv, drop=TRUE, indices=NULL, revised=TRUE, mata=FALSE, normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
 }
 \arguments{
   \item{x}{a list of mark model results and a model.table
@@ -59,48 +57,47 @@
   functions}
 }
 \value{
-  If vcv=FALSE, the return value is a dataframe of model
-  averaged estimates and standard errors for a particular
-  type of real parameter (e.g., Phi).  The design data are
-  appended to the dataframe to enable subsettting of the
-  estimates based on features of the design data such as
-  age, time, cohort and grouping variables.
+If vcv=FALSE, the return value is a dataframe of model
+averaged estimates and standard errors for a particular
+type of real parameter (e.g., Phi).  The design data are
+appended to the dataframe to enable subsettting of the
+estimates based on features of the design data such as age,
+time, cohort and grouping variables.
 
-  If vcv=TRUE, confidence interval (lcl,ucl) limits are
-  added to the dataframe which is contained in a list with
-  the var-cov matrix.
+If vcv=TRUE, confidence interval (lcl,ucl) limits are added
+to the dataframe which is contained in a list with the
+var-cov matrix.
 }
 \description{
-  Computes model averaged estimates and standard errors of
-  real parameters for a list of models with a
-  \code{model.table} constructed from
-  \code{\link{collect.models}}. It can also optionally
-  compute the var-cov matrix of the averaged parameters and
-  their confidence intervals by transforming with the link
-  functions, setting normal confidence intervals on the
-  transformed values and then back-transforming for the
-  real estimates.
+Computes model averaged estimates and standard errors of
+real parameters for a list of models with a
+\code{model.table} constructed from
+\code{\link{collect.models}}. It can also optionally
+compute the var-cov matrix of the averaged parameters and
+their confidence intervals by transforming with the link
+functions, setting normal confidence intervals on the
+transformed values and then back-transforming for the real
+estimates.
 }
 \details{
-  If there are any models in the \code{model.list} which do
-  not have any output or results they are dropped.  If any
-  have non-positive variances for the betas and
-  \code{drop=TRUE}, then the model is reported and dropped
-  from the model averaging.  The weights are renormalized
-  for the remaining models that are not dropped before they
-  are averaged.
+If there are any models in the \code{model.list} which do
+not have any output or results they are dropped.  If any
+have non-positive variances for the betas and
+\code{drop=TRUE}, then the model is reported and dropped
+from the model averaging.  The weights are renormalized for
+the remaining models that are not dropped before they are
+averaged.
 
-  If \code{parameter=NULL}, all real parameters are model
-  averaged but the design data is not copied over because
-  it can vary by the type of parameter. It is only
-  necessary to model average all parameters at once to get
-  covariances of model averaged parameters of differing
-  types.
+If \code{parameter=NULL}, all real parameters are model
+averaged but the design data is not copied over because it
+can vary by the type of parameter. It is only necessary to
+model average all parameters at once to get covariances of
+model averaged parameters of differing types.
 
-  If \code{data=NULL}, the average covariate values are
-  used for any models using covariates. Note that this will
-  only work with models created after v1.5.0 such that
-  average covariate values are stored in each model object.
+If \code{data=NULL}, the average covariate values are used
+for any models using covariates. Note that this will only
+work with models created after v1.5.0 such that average
+covariate values are stored in each model object.
 }
 \examples{
 \donttest{
@@ -193,20 +190,19 @@ model.average(dipper.results,vcv=TRUE,indices=c(1,43))
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \references{
-  Burnham, K. P. and D. R. Anderson. 2002. Model Selection
-  and Multimodel Inference: A Practical
-  Information-Theoretic Approach, Second edition. Springer,
-  New York.
+Burnham, K. P. and D. R. Anderson. 2002. Model Selection
+and Multimodel Inference: A Practical Information-Theoretic
+Approach, Second edition. Springer, New York.
 }
 \seealso{
-  \code{\link{collect.models}},
-  \code{\link{covariate.predictions}},
-  \code{\link{model.table}},
-  \code{\link{compute.links.from.reals}},
-  \code{\link{model.average.list}}
+\code{\link{collect.models}},
+\code{\link{covariate.predictions}},
+\code{\link{model.table}},
+\code{\link{compute.links.from.reals}},
+\code{\link{model.average.list}}
 }
 \keyword{utility}
 

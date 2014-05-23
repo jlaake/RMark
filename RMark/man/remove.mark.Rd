@@ -2,7 +2,7 @@
 \alias{remove.mark}
 \title{Remove mark models from list}
 \usage{
-  remove.mark(marklist, model.numbers)
+remove.mark(marklist, model.numbers)
 }
 \arguments{
   \item{marklist}{an object of class "marklist" created by
@@ -12,20 +12,20 @@
   remove from the marklist}
 }
 \value{
-  model.list: a list of \code{mark} models and a table of
-  model results.
+model.list: a list of \code{mark} models and a table of
+model results.
 }
 \description{
-  Remove one or more mark models from a marklist
+Remove one or more mark models from a marklist
 }
 \examples{
 # see example in dipper
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{collect.models}},\code{\link{merge.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
+\code{\link{collect.models}},\code{\link{merge.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
 }
 \keyword{utility}
 

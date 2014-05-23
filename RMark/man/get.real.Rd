@@ -2,9 +2,8 @@
 \alias{get.real}
 \title{Extract or compute sets of real parameters}
 \usage{
-  get.real(model, parameter, beta = NULL, se = FALSE,
-    design = NULL, data = NULL, vcv = FALSE,
-    show.fixed = TRUE, expand = FALSE)
+get.real(model, parameter, beta = NULL, se = FALSE, design = NULL,
+  data = NULL, vcv = FALSE, show.fixed = TRUE, expand = FALSE)
 }
 \arguments{
   \item{model}{MARK model object}
@@ -36,67 +35,67 @@
   FALSE}
 }
 \value{
-  estimates: if \code{se=FALSE and Beta=NULL}, a matrix of
-  estimates or list of matrices for more than one group,
-  and if \code{se=TRUE or beta=is not NULL and vcv=FALSE} a
-  dataframe of estimates with attached design data. If
-  \code{vcv=TRUE}, a list is returned with elements
-  \code{vcv.real} and the dataframe \code{estimates} as
-  returned with \code{se=TRUE}.
+estimates: if \code{se=FALSE and Beta=NULL}, a matrix of
+estimates or list of matrices for more than one group, and
+if \code{se=TRUE or beta=is not NULL and vcv=FALSE} a
+dataframe of estimates with attached design data. If
+\code{vcv=TRUE}, a list is returned with elements
+\code{vcv.real} and the dataframe \code{estimates} as
+returned with \code{se=TRUE}.
 }
 \description{
-  Extracts or computes real parameters for a particular
-  type of parameter (parameter) and returns in either a
-  table (dataframe) format or in PIM format.
+Extracts or computes real parameters for a particular type
+of parameter (parameter) and returns in either a table
+(dataframe) format or in PIM format.
 }
 \details{
-  This function is called by \code{\link{summary.mark}} to
-  extract(from \code{model$results$real}) sets of
-  parameters for display.  But, it can also be useful to
-  compute particular sets of real parameters for output,
-  manipulation or plotting etc.  It is closely related to
-  \code{\link{compute.real}} and it uses that function when
-  it computes (rather than extracts) real parameters. It
-  provides an easier way to extract/compute real estimates
-  of a particular type (\code{parameter}).
+This function is called by \code{\link{summary.mark}} to
+extract(from \code{model$results$real}) sets of parameters
+for display.  But, it can also be useful to compute
+particular sets of real parameters for output, manipulation
+or plotting etc.  It is closely related to
+\code{\link{compute.real}} and it uses that function when
+it computes (rather than extracts) real parameters. It
+provides an easier way to extract/compute real estimates of
+a particular type (\code{parameter}).
 
-  The real parameter estimates are computed when either 1)
-  \code{model$chat} > 1, 2) \code{design}, \code{data}, or
-  \code{beta} are are specified with non-NULL values for
-  those arguments, or 3) vcv=TRUE.  If none of the above
-  hold, then the estimates are extracted.
+The real parameter estimates are computed when either 1)
+\code{model$chat} > 1, 2) \code{design}, \code{data}, or
+\code{beta} are are specified with non-NULL values for
+those arguments, or 3) vcv=TRUE.  If none of the above
+hold, then the estimates are extracted.
 
-  If \code{se=FALSE} and estimates are shown in triangular
-  or square PIM structure depending on the model and
-  parameter.  For triangular, the lower half of the matrix
-  is shown as NA (not applicable in this case). If
-  \code{se=TRUE}, the estimate, standard error and
-  confidence interval for the real parameters with the
-  accompanying design data are combined into a dataframe.
+If \code{se=FALSE} and estimates are shown in triangular or
+square PIM structure depending on the model and parameter.
+For triangular, the lower half of the matrix is shown as NA
+(not applicable in this case). If \code{se=TRUE}, the
+estimate, standard error and confidence interval for the
+real parameters with the accompanying design data are
+combined into a dataframe.
 
-  If the model contains individual covariates, there are 3
-  options for specifying the covariate values that are used
-  for the real estimates.  If neither \code{design} nor
-  \code{data} are specified, then the real estimates are
-  computed with the average covariate values used in the
-  MARK output. This is what is done in the call from
-  \code{\link{summary.mark}}. Alternatively, the argument
-  \code{design} can be given a numeric design matrix for
-  the model with the covariates given specific values.
-  This can be done with \code{\link{find.covariates}} and
-  \code{\link{fill.covariates}}. Finally, a quicker
-  approach is to specify a dataframe for \code{data} which
-  is averaged for the numeric covariate values and these
-  are automatically filled into the design matrix of the
-  model with calls to \code{\link{find.covariates}} and
-  \code{\link{fill.covariates}} from
-  \code{\link{compute.real}} which is used for computation.
-  The second and third options are essentially the same but
-  creating the completed design matrix will be quicker if
-  multiple calls are made with the same completed design
-  matrix for different parameters.  The dataframe for
-  \code{data} can contain a single entry to specify certain
-  values for computation.
+If the model contains individual covariates, there are 3
+options for specifying the covariate values that are used
+for the real estimates.  If neither \code{design} nor
+\code{data} are specified, then the real estimates are
+computed with the average covariate values used in the MARK
+output. This is what is done in the call from
+\code{\link{summary.mark}}. Alternatively, the argument
+\code{design} can be given a numeric design matrix for the
+model with the covariates given specific values.  This can
+be done with \code{\link{find.covariates}} and
+\code{\link{fill.covariates}}. Finally, a quicker approach
+is to specify a dataframe for \code{data} which is averaged
+for the numeric covariate values and these are
+automatically filled into the design matrix of the model
+with calls to \code{\link{find.covariates}} and
+\code{\link{fill.covariates}} from
+\code{\link{compute.real}} which is used for computation.
+The second and third options are essentially the same but
+creating the completed design matrix will be quicker if
+multiple calls are made with the same completed design
+matrix for different parameters.  The dataframe for
+\code{data} can contain a single entry to specify certain
+values for computation.
 }
 \examples{
 data(example.data)
@@ -124,10 +123,10 @@ plotCI(c(1:4),estimates,ucl-estimates,estimates-lcl,xlab="Region",
 		ylim=c(.5,1),main="Capture probability estimates by region")
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{summary.mark}},\code{\link{compute.real}}
+\code{\link{summary.mark}},\code{\link{compute.real}}
 }
 \keyword{utility}
 

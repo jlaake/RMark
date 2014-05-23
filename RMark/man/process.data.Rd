@@ -2,11 +2,10 @@
 \alias{process.data}
 \title{Process encounter history dataframe for MARK analysis}
 \usage{
-  process.data(data, begin.time = 1, model = "CJS",
-    mixtures = 1, groups = NULL, allgroups = FALSE,
-    age.var = NULL, initial.ages = c(0), age.unit = 1,
-    time.intervals = NULL, nocc = NULL,
-    strata.labels = NULL, counts = NULL, reverse = FALSE)
+process.data(data, begin.time = 1, model = "CJS", mixtures = 1,
+  groups = NULL, allgroups = FALSE, age.var = NULL, initial.ages = c(0),
+  age.unit = 1, time.intervals = NULL, nocc = NULL,
+  strata.labels = NULL, counts = NULL, reverse = FALSE)
 }
 \arguments{
   \item{data}{A data frame with at least one field named
@@ -71,131 +70,127 @@
   transition (Psi) and survival (S) in Multistratum models}
 }
 \value{
-  processed.data (a list with the following elements)
-  \item{data}{original raw dataframe with group factor
-  variable added if groups were defined} \item{model}{type
-  of analysis model (eg, "CJS", "Burnham", "Barker")}
-  \item{freq}{a dataframe of frequencies (same number of
-  rows as data, number of columns is the number of groups
-  in the data. The column names are the group labels
-  representing the unique groups that have one or more
-  capture histories.} \item{nocc}{number of capture
-  occasions} \item{time.intervals}{length of time intervals
-  between capture occasions} \item{begin.time}{time of
-  first capture occasion} \item{age.unit}{increment of age
-  for each increment of time} \item{initial.ages}{an
-  initial age for each group in the data; Note that this is
-  not the original argument but is a vector with the
-  initial age for each group. In the first example below
-  \code{proc.example.data$initial.ages} is a vector with 16
-  elements as follows 0 1 1 2 0 1 1 2 0 1 1 2 0 1 1 2}
-  \item{nstrata}{number of strata in Multistrata models}
-  \item{strata.labels}{vector of alphabetic characters used
-  to identify strata in Multistrata models}
-  \item{group.covariates}{factor covariates used to define
-  groups}
+processed.data (a list with the following elements)
+\item{data}{original raw dataframe with group factor
+variable added if groups were defined} \item{model}{type of
+analysis model (eg, "CJS", "Burnham", "Barker")}
+\item{freq}{a dataframe of frequencies (same number of rows
+as data, number of columns is the number of groups in the
+data. The column names are the group labels representing
+the unique groups that have one or more capture histories.}
+\item{nocc}{number of capture occasions}
+\item{time.intervals}{length of time intervals between
+capture occasions} \item{begin.time}{time of first capture
+occasion} \item{age.unit}{increment of age for each
+increment of time} \item{initial.ages}{an initial age for
+each group in the data; Note that this is not the original
+argument but is a vector with the initial age for each
+group. In the first example below
+\code{proc.example.data$initial.ages} is a vector with 16
+elements as follows 0 1 1 2 0 1 1 2 0 1 1 2 0 1 1 2}
+\item{nstrata}{number of strata in Multistrata models}
+\item{strata.labels}{vector of alphabetic characters used
+to identify strata in Multistrata models}
+\item{group.covariates}{factor covariates used to define
+groups}
 }
 \description{
-  Prior to analyzing the data, this function initializes
-  several variables (e.g., number of capture occasions,
-  time intervals) that are often specific to the
-  capture-recapture model being fitted to the data.  It
-  also is used to 1) define groups in the data that
-  represent different levels of one or more factor
-  covariates (e.g., sex), 2) define time intervals between
-  capture occasions (if not 1), and 3) create an age
-  structure for the data, if any.
+Prior to analyzing the data, this function initializes
+several variables (e.g., number of capture occasions, time
+intervals) that are often specific to the capture-recapture
+model being fitted to the data.  It also is used to 1)
+define groups in the data that represent different levels
+of one or more factor covariates (e.g., sex), 2) define
+time intervals between capture occasions (if not 1), and 3)
+create an age structure for the data, if any.
 }
 \details{
-  For examples of \code{data}, see
-  \code{\link{dipper}},\code{\link{edwards.eberhardt}},\code{\link{example.data}}.
-  The structure of the encounter history and the analysis
-  depends on the analysis model to some extent. Thus, it is
-  necessary to process a dataframe with the encounter
-  history (\code{ch}) and a chosen \code{model} to define
-  the relevant values.  For example, number of capture
-  occasions (\code{nocc}) is automatically computed based
-  on the length of the encounter history (\code{ch}) in
-  \code{data}; however, this is dependent on the type of
-  analysis model.  For models such as "CJS", "Pradel" and
-  others, it is simply the length of \code{ch}.  Whereas,
-  for "Burnham" and "Barker" models,the encounter history
-  contains both capture and resight/recovery values so
-  \code{nocc} is one-half the length of \code{ch}.
-  Likewise, the number of \code{time.intervals} depends on
-  the model.  For models, such as "CJS", "Pradel" and
-  others, the number of \code{time.intervals} is
-  \code{nocc-1}; whereas, for capture&recovery(resight)
-  models the number of \code{time.intervals} is
-  \code{nocc}. The default time interval is unit time (1)
-  and if this is adequate, the function will assign the
-  appropriate length.  A processed data frame can only be
-  analyzed using the model that was specified.  The
-  \code{model} value is used by the functions
-  \code{\link{make.design.data}},
-  \code{\link{add.design.data}}, and
-  \code{\link{make.mark.model}} to define the model
-  structure as it relates to the data. Thus, if the data
-  are going to be analysed with different underlying
-  models, create different processed data sets with the
-  model name as an extension.  For example,
-  \code{dipper.cjs=process.data(dipper)} and
-  \code{dipper.popan=process.data(dipper,model="POPAN")}.
+For examples of \code{data}, see
+\code{\link{dipper}},\code{\link{edwards.eberhardt}},\code{\link{example.data}}.
+The structure of the encounter history and the analysis
+depends on the analysis model to some extent. Thus, it is
+necessary to process a dataframe with the encounter history
+(\code{ch}) and a chosen \code{model} to define the
+relevant values.  For example, number of capture occasions
+(\code{nocc}) is automatically computed based on the length
+of the encounter history (\code{ch}) in \code{data};
+however, this is dependent on the type of analysis model.
+For models such as "CJS", "Pradel" and others, it is simply
+the length of \code{ch}.  Whereas, for "Burnham" and
+"Barker" models,the encounter history contains both capture
+and resight/recovery values so \code{nocc} is one-half the
+length of \code{ch}. Likewise, the number of
+\code{time.intervals} depends on the model.  For models,
+such as "CJS", "Pradel" and others, the number of
+\code{time.intervals} is \code{nocc-1}; whereas, for
+capture&recovery(resight) models the number of
+\code{time.intervals} is \code{nocc}. The default time
+interval is unit time (1) and if this is adequate, the
+function will assign the appropriate length.  A processed
+data frame can only be analyzed using the model that was
+specified.  The \code{model} value is used by the functions
+\code{\link{make.design.data}},
+\code{\link{add.design.data}}, and
+\code{\link{make.mark.model}} to define the model structure
+as it relates to the data. Thus, if the data are going to
+be analysed with different underlying models, create
+different processed data sets with the model name as an
+extension.  For example,
+\code{dipper.cjs=process.data(dipper)} and
+\code{dipper.popan=process.data(dipper,model="POPAN")}.
 
-  This function will report inconsistencies in the lengths
-  of the capture history values and when invalid entries
-  are given in the capture history. For example, with the
-  "CJS" model, the capture history should only contain 0
-  and 1 whereas for "Barker" it can contain 0,1,2.  For
-  "Multistrata" models, the code will automatically
-  identify the number of strata and strata labels based on
-  the unique alphabetic codes used in the capture
-  histories.
+This function will report inconsistencies in the lengths of
+the capture history values and when invalid entries are
+given in the capture history. For example, with the "CJS"
+model, the capture history should only contain 0 and 1
+whereas for "Barker" it can contain 0,1,2.  For
+"Multistrata" models, the code will automatically identify
+the number of strata and strata labels based on the unique
+alphabetic codes used in the capture histories.
 
-  The argument \code{begin.time} specifies the time for the
-  first capture occasion.  This is used in creating the
-  levels of the time factor variable in the design data and
-  for labelling parameters. If the \code{begin.time} varies
-  by group, enter a vector of times with one for each
-  group. Note that the time values for survivals are based
-  on the beginning of the survival interval and capture
-  probabilities are labeled based on the time of the
-  capture occasion.  Likewise, age labels for survival are
-  the ages at the beginning times of the intervals and for
-  capture probabilities it is the age at the time of
-  capture/recapture.
+The argument \code{begin.time} specifies the time for the
+first capture occasion.  This is used in creating the
+levels of the time factor variable in the design data and
+for labelling parameters. If the \code{begin.time} varies
+by group, enter a vector of times with one for each group.
+Note that the time values for survivals are based on the
+beginning of the survival interval and capture
+probabilities are labeled based on the time of the capture
+occasion.  Likewise, age labels for survival are the ages
+at the beginning times of the intervals and for capture
+probabilities it is the age at the time of
+capture/recapture.
 
-  \code{groups} is a vector of variable names that are
-  contained in \code{data}.  Each must be a factor
-  variable. A group is created for each unique combination
-  of the levels of the factor variables.  In the first
-  example given below
-  \code{groups=c("sex","age","region")}. which creates
-  groups defined by the levels of \code{sex}, \code{age}
-  and \code{region}. There should be
-  2(sexes)*3(ages)*4(regions)=24 groups but in actuality
-  there are only 16 in the data because there are only 2
-  age groups for each sex. Age group 1 and 2 for M and age
-  groups 2 and 3 for F.  This was done to demonstrate that
-  the code will only use groups that have 1 or more capture
-  histories unless \code{allgroups=TRUE}.
+\code{groups} is a vector of variable names that are
+contained in \code{data}.  Each must be a factor variable.
+A group is created for each unique combination of the
+levels of the factor variables.  In the first example given
+below \code{groups=c("sex","age","region")}. which creates
+groups defined by the levels of \code{sex}, \code{age} and
+\code{region}. There should be
+2(sexes)*3(ages)*4(regions)=24 groups but in actuality
+there are only 16 in the data because there are only 2 age
+groups for each sex. Age group 1 and 2 for M and age groups
+2 and 3 for F.  This was done to demonstrate that the code
+will only use groups that have 1 or more capture histories
+unless \code{allgroups=TRUE}.
 
-  The argument \code{age.var=2} specifies that the second
-  grouping variable in \code{groups} represents an age
-  variable.  It could have been named something different
-  than age. If a variable in \code{groups} is named
-  \code{age} then it is not necessary to specify
-  \code{age.var}. \code{initial.age} specifies that the age
-  at first capture of the age levels is 0,1 and 2 while the
-  age classes were designated as 1,2,3. The actual ages for
-  the age classes do not have to be sequential or ordered,
-  but ordering will cause less confusion.  Thus levels
-  1,2,3 could represent initial ages of 0,4,6 or 6,0,4. The
-  argument age.unit is the amount an animal ages for each
-  unit of time and the default is 1.  The default for
-  \code{initial.age} is 0 for each group, in which case,
-  \code{age} represents time since marking (first capture)
-  rather than the actual age of the animal.
+The argument \code{age.var=2} specifies that the second
+grouping variable in \code{groups} represents an age
+variable.  It could have been named something different
+than age. If a variable in \code{groups} is named
+\code{age} then it is not necessary to specify
+\code{age.var}. \code{initial.age} specifies that the age
+at first capture of the age levels is 0,1 and 2 while the
+age classes were designated as 1,2,3. The actual ages for
+the age classes do not have to be sequential or ordered,
+but ordering will cause less confusion.  Thus levels 1,2,3
+could represent initial ages of 0,4,6 or 6,0,4. The
+argument age.unit is the amount an animal ages for each
+unit of time and the default is 1.  The default for
+\code{initial.age} is 0 for each group, in which case,
+\code{age} represents time since marking (first capture)
+rather than the actual age of the animal.
 }
 \examples{
 data(example.data)
@@ -207,12 +202,11 @@ data(dipper)
 dipper.process=process.data(dipper)
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{import.chdata}}, \code{\link{dipper}},
-  \code{\link{edwards.eberhardt}},
-  \code{\link{example.data}}
+\code{\link{import.chdata}}, \code{\link{dipper}},
+\code{\link{edwards.eberhardt}}, \code{\link{example.data}}
 }
 \keyword{utility}
 

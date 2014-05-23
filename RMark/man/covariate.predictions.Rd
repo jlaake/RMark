@@ -2,10 +2,9 @@
 \alias{covariate.predictions}
 \title{Compute estimates of real parameters for multiple covariate values}
 \usage{
-  covariate.predictions(model, data = NULL, indices = NULL,
-    drop = TRUE, revised = TRUE, mata = FALSE,
-    normal.lm = FALSE, residual.dfs = 0, alpha = 0.025,
-    ...)
+covariate.predictions(model, data = NULL, indices = NULL, drop = TRUE,
+  revised = TRUE, mata = FALSE, normal.lm = FALSE, residual.dfs = 0,
+  alpha = 0.025, ...)
 }
 \arguments{
   \item{model}{MARK model object or marklist}
@@ -49,101 +48,99 @@
   functions}
 }
 \value{
-  A list is returned containing a dataframe of estimates, a
-  var-cov matrix, and a reals list: \item{estimates}{ data
-  frame containing estimates, se, confidence interval and
-  the data values used to compute the estimates}
-  \item{vcv}{variance-covariance matrix of real estimates}
-  \item{reaks}{list of dataframes with the estimate and se
-  used for each model}
+A list is returned containing a dataframe of estimates, a
+var-cov matrix, and a reals list: \item{estimates}{ data
+frame containing estimates, se, confidence interval and the
+data values used to compute the estimates}
+\item{vcv}{variance-covariance matrix of real estimates}
+\item{reaks}{list of dataframes with the estimate and se
+used for each model}
 }
 \description{
-  Computes real estimates for a dataframe of covariate
-  values and the var-cov matrix of the real estimates.
+Computes real estimates for a dataframe of covariate values
+and the var-cov matrix of the real estimates.
 }
 \details{
-  This function has a similar use as
-  \code{\link{compute.real}} except that it is specifically
-  designed to compute real parameter estimates for multiple
-  covariate values for either a single model or to compute
-  model averaged estimates across a range of models within
-  a marklist. This is particularly useful for computing and
-  plotting the real parameter as a function of the
-  covariate with pointwise confidence bands (see example
-  below). The function also computes a variance-covariance
-  matrix for the real parameters.  For example, assume you
-  had a model with two age classes of young and adult and
-  survial for young was a function of weight and you wanted
-  to estimate survivorship to some adult age as a function
-  of weight.  To do that you need the survival for young as
-  a function of weight, the adult survival, the variance of
-  each and their covariance.  This function will allow you
-  to accomplish tasks like these and many others.
+This function has a similar use as
+\code{\link{compute.real}} except that it is specifically
+designed to compute real parameter estimates for multiple
+covariate values for either a single model or to compute
+model averaged estimates across a range of models within a
+marklist. This is particularly useful for computing and
+plotting the real parameter as a function of the covariate
+with pointwise confidence bands (see example below). The
+function also computes a variance-covariance matrix for the
+real parameters.  For example, assume you had a model with
+two age classes of young and adult and survial for young
+was a function of weight and you wanted to estimate
+survivorship to some adult age as a function of weight.  To
+do that you need the survival for young as a function of
+weight, the adult survival, the variance of each and their
+covariance.  This function will allow you to accomplish
+tasks like these and many others.
 
-  When a variance-covariance matrix is computed for the
-  real parameters, it can get too large for available
-  memory for a large set of real parameters. Most models
-  contain many possible real parameters to accomodate the
-  general structure even if there are very few unique ones.
-  It is necessary to use the most general structure to
-  accomodate model averaging.  Most of the time you will
-  only want to compute the values of a limited set of real
-  parameters but possibly for a range of covariate values.
-  Use the argument \code{indices} to select the real
-  parameters to be computed.  The index is the value that
-  the real parameter has been assigned with the
-  all-different PIM structure. If you looked at the row
-  numbers in the design data for the \code{\link{dipper}}
-  example, you would see that the parameter for p and Phi
-  are both numbered 1 to 21.  But to deal with multiple
-  parameters effectively they are given a unique number in
-  a specific order.  For the CJS model, p follows Phi, so
-  for the dipper example, Phi are numbered 1 to 21 and then
-  p are numbered 22 to 42. You can use the function
-  \code{\link{PIMS}} to lookup the parameter numbers for a
-  parameter type if you use \code{simplified=FALSE}. For
-  example, with the \code{\link{dipper}} data, you could
-  enter \code{PIMS(dipper.model,"p",simplified=FALSE)} and
-  you would see that they are numbered 22 to 42.
-  Alternatively, you can use \code{\link{summary.mark}}
-  with the argument \code{se=TRUE} to see the list of
-  indices named \code{all.diff.index}.  They are included
-  in a dataframe for each model parameter which enables
-  them to be selected based on the attached data values
-  (e.g., time, group etc).  For example, if you fitted a
-  model called \code{dipper.model} then you could use
-  \code{summary(dipper.model,se=TRUE)$real} to list the
-  indices for each parameter.
+When a variance-covariance matrix is computed for the real
+parameters, it can get too large for available memory for a
+large set of real parameters. Most models contain many
+possible real parameters to accomodate the general
+structure even if there are very few unique ones. It is
+necessary to use the most general structure to accomodate
+model averaging.  Most of the time you will only want to
+compute the values of a limited set of real parameters but
+possibly for a range of covariate values.  Use the argument
+\code{indices} to select the real parameters to be
+computed.  The index is the value that the real parameter
+has been assigned with the all-different PIM structure. If
+you looked at the row numbers in the design data for the
+\code{\link{dipper}} example, you would see that the
+parameter for p and Phi are both numbered 1 to 21.  But to
+deal with multiple parameters effectively they are given a
+unique number in a specific order.  For the CJS model, p
+follows Phi, so for the dipper example, Phi are numbered 1
+to 21 and then p are numbered 22 to 42. You can use the
+function \code{\link{PIMS}} to lookup the parameter numbers
+for a parameter type if you use \code{simplified=FALSE}.
+For example, with the \code{\link{dipper}} data, you could
+enter \code{PIMS(dipper.model,"p",simplified=FALSE)} and
+you would see that they are numbered 22 to 42.
+Alternatively, you can use \code{\link{summary.mark}} with
+the argument \code{se=TRUE} to see the list of indices
+named \code{all.diff.index}.  They are included in a
+dataframe for each model parameter which enables them to be
+selected based on the attached data values (e.g., time,
+group etc).  For example, if you fitted a model called
+\code{dipper.model} then you could use
+\code{summary(dipper.model,se=TRUE)$real} to list the
+indices for each parameter.
 
-  The argument \code{data} is a dataframe containing values
-  for the covariates used in the models.  The names for the
-  fields should match the names of the covariates used in
-  the model.  If a time-varying covariate is used then you
-  need to specify the covariate name with the time index
-  included as it is specified in the data. You do not need
-  to specify all covariates that were used.  If a covariate
-  in one or more models is not included in \code{data} then
-  the mean value will be used for each missing covariate.
-  That can be very useful when you are only interested in
-  prediction for one type of parameters (eg Phi) when there
-  are many covariates that are not interesting in another
-  parameter (e.g., p).  For each row in \code{data}, each
-  parameter specified in \code{indices} is computed with
-  those covariate values.  So if there were 5 rows in data
-  and 10 parameters were specified there would be 10 sets
-  of 5 (50) estimates produced.  If you do not want the
-  full pairing of data and estimates, create a field called
-  \code{index} in \code{data} and the estimate for that
-  parameter will be computed with those specific values.
-  For example, if you wanted parameter 1 to be computed
-  with 5 different values of a covariate and then parameter
-  7 with 2 different covariate values, you could create a
-  dataframe with 5 rows each having an \code{index} with
-  the value 1 along with the relevant covariate data and an
-  additional 2 rows with the \code{index} with the value 7.
-  If you include the field \code{index} in \code{data} then
-  you do not need to give a value for the argument
-  \code{indices}.
+The argument \code{data} is a dataframe containing values
+for the covariates used in the models.  The names for the
+fields should match the names of the covariates used in the
+model.  If a time-varying covariate is used then you need
+to specify the covariate name with the time index included
+as it is specified in the data. You do not need to specify
+all covariates that were used.  If a covariate in one or
+more models is not included in \code{data} then the mean
+value will be used for each missing covariate.  That can be
+very useful when you are only interested in prediction for
+one type of parameters (eg Phi) when there are many
+covariates that are not interesting in another parameter
+(e.g., p).  For each row in \code{data}, each parameter
+specified in \code{indices} is computed with those
+covariate values.  So if there were 5 rows in data and 10
+parameters were specified there would be 10 sets of 5 (50)
+estimates produced.  If you do not want the full pairing of
+data and estimates, create a field called \code{index} in
+\code{data} and the estimate for that parameter will be
+computed with those specific values. For example, if you
+wanted parameter 1 to be computed with 5 different values
+of a covariate and then parameter 7 with 2 different
+covariate values, you could create a dataframe with 5 rows
+each having an \code{index} with the value 1 along with the
+relevant covariate data and an additional 2 rows with the
+\code{index} with the value 7.  If you include the field
+\code{index} in \code{data} then you do not need to give a
+value for the argument \code{indices}.
 }
 \examples{
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")
@@ -317,10 +314,10 @@ for (i in 1:7)
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{compute.real}},\code{\link{model.average}}
+\code{\link{compute.real}},\code{\link{model.average}}
 }
 \keyword{utility}
 

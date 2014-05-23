@@ -3,11 +3,10 @@
 \title{Compute design data for a specific parameter in the MARK model (internal
 use)}
 \usage{
-  compute.design.data(data, begin, num, type = "Triang",
-    mix = FALSE, rows = 0, pim.type = "all", secondary,
-    nstrata = 1, tostrata = FALSE, strata.labels = NULL,
-    subtract.stratum = strata.labels, common.zero = FALSE,
-    sub.stratum = 0, limits = NULL)
+compute.design.data(data, begin, num, type = "Triang", mix = FALSE,
+  rows = 0, pim.type = "all", secondary, nstrata = 1, tostrata = FALSE,
+  strata.labels = NULL, subtract.stratum = strata.labels,
+  common.zero = FALSE, sub.stratum = 0, limits = NULL)
 }
 \arguments{
   \item{data}{data list created by
@@ -55,49 +54,49 @@ use)}
   col (if any) start on states}
 }
 \value{
-  design.data: a data frame containing all of the design
-  data fields for a particular type of parameter
-  \item{group}{group factor level} \item{age}{age factor
-  level} \item{time}{time factor level}
-  \item{cohort}{cohort factor level} \item{Age}{age as a
-  continuous variable} \item{Time}{time as a continuous
-  variable} \item{Cohort}{cohort as a continuous variable}
-  \item{mixture}{mixture factor level} \item{other
-  fields}{any factor variables used to define groups}
+design.data: a data frame containing all of the design data
+fields for a particular type of parameter
+\item{group}{group factor level} \item{age}{age factor
+level} \item{time}{time factor level} \item{cohort}{cohort
+factor level} \item{Age}{age as a continuous variable}
+\item{Time}{time as a continuous variable}
+\item{Cohort}{cohort as a continuous variable}
+\item{mixture}{mixture factor level} \item{other
+fields}{any factor variables used to define groups}
 }
 \description{
-  For a specific type of parameter (e.g., Phi, p, r etc),
-  it creates a data frame containing design data for each
-  parameter of that type in the model as structured by an
-  all different PIM (parameter information matrix). The
-  design data are used in constructing the design matrix
-  for MARK with user-specified model formulae as in
-  \code{\link{make.mark.model}}.
+For a specific type of parameter (e.g., Phi, p, r etc), it
+creates a data frame containing design data for each
+parameter of that type in the model as structured by an all
+different PIM (parameter information matrix). The design
+data are used in constructing the design matrix for MARK
+with user-specified model formulae as in
+\code{\link{make.mark.model}}.
 }
 \details{
-  This function is called by \code{\link{make.design.data}}
-  to create all of the default design data for a particular
-  type of model and by \code{\link{add.design.data}} to add
-  binned design data fields for a particular type of
-  parameter. The design data created by this function
-  include \code{group}, \code{age}, \code{time} and
-  \code{cohort} as factors variables and continuous
-  (non-factor) versions of all but \code{group}.  In
-  addition, if groups have been defined for the data, then
-  a data column is added for each factor variable used to
-  define the groups.  Also for specific closed capture
-  heterogeneity models (\code{model}="HetClosed",
-  "FullHet", "HetHug", "FullHetHug") the data column
-  \code{mixture} is added to the design data. The arguments
-  for this function are defined for each model by the
-  function \code{\link{setup.model}}.
+This function is called by \code{\link{make.design.data}}
+to create all of the default design data for a particular
+type of model and by \code{\link{add.design.data}} to add
+binned design data fields for a particular type of
+parameter. The design data created by this function include
+\code{group}, \code{age}, \code{time} and \code{cohort} as
+factors variables and continuous (non-factor) versions of
+all but \code{group}.  In addition, if groups have been
+defined for the data, then a data column is added for each
+factor variable used to define the groups.  Also for
+specific closed capture heterogeneity models
+(\code{model}="HetClosed", "FullHet", "HetHug",
+"FullHetHug") the data column \code{mixture} is added to
+the design data. The arguments for this function are
+defined for each model by the function
+\code{\link{setup.model}}.
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{make.design.data}},
-  \code{\link{add.design.data}}
+\code{\link{make.design.data}},
+\code{\link{add.design.data}}
 }
 \keyword{utility}
 

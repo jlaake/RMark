@@ -7,27 +7,26 @@
 each bird} \item{freq}{frequency of that encounter history} \item{ReleaseAge}{the age of the bird when it was
 released}}}
 \description{
-  A recovery data set for mallards in San Luis Valley
-  Colorado
+A recovery data set for mallards in San Luis Valley
+Colorado
 }
 \details{
-  This is a data set that accompanies program MARK as an
-  example for Brownie and Seber recovery model.  In those
-  input files it is in a summarized format. Here it is in
-  the LD encounter history format. The data can be
-  stratified using ReleaseAge (Adult, Young) as a grouping
-  variable.
+This is a data set that accompanies program MARK as an
+example for Brownie and Seber recovery model.  In those
+input files it is in a summarized format. Here it is in the
+LD encounter history format. The data can be stratified
+using ReleaseAge (Adult, Young) as a grouping variable.
 
-  Note that in the MARK example the variable is named Age.
-  In the R code, the fields "age" and "Age" have specific
-  meanings in the design data related to time since
-  release.  These will override the use of a field with the
-  same name in the individual covariate data, so the names
-  "time", "Time", "cohort", "Cohort", "age", and "Age"
-  should not be used in the individual covariate data with
-  possibly the exception of "cohort" which is not defined
-  for models with "Square" PIMS such as POPAN and other
-  Jolly-Seber type models.
+Note that in the MARK example the variable is named Age.
+In the R code, the fields "age" and "Age" have specific
+meanings in the design data related to time since release.
+These will override the use of a field with the same name
+in the individual covariate data, so the names "time",
+"Time", "cohort", "Cohort", "age", and "Age" should not be
+used in the individual covariate data with possibly the
+exception of "cohort" which is not defined for models with
+"Square" PIMS such as POPAN and other Jolly-Seber type
+models.
 }
 \examples{
 # brownie=import.chdata("brownie.inp",field.types=c("n","f"))

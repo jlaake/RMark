@@ -16,37 +16,36 @@ vegetation thickness} \item{PpnGrass}{proportion grass in vicinity of nest}
 \item{AgeFound}{age of nest in days the day the nest was found}
 \item{AgeDay1}{age of nest at beginning of study} }}
 \source{
-  Rotella, J.J., S. J. Dinsmore, T.L. Shaffer.  2004.
-  Modeling nest-survival data: a comparison of recently
-  developed methods that can be implemented in MARK and
-  SAS.  Animal Biodiversity and Conservation 27:187-204.
+Rotella, J.J., S. J. Dinsmore, T.L. Shaffer.  2004.
+Modeling nest-survival data: a comparison of recently
+developed methods that can be implemented in MARK and SAS.
+Animal Biodiversity and Conservation 27:187-204.
 }
 \description{
-  A nest survival data set on mallards.  The data set and
-  analysis is described by Rotella et al.(2004).
+A nest survival data set on mallards.  The data set and
+analysis is described by Rotella et al.(2004).
 }
 \details{
-  The first 5 fields must be named as they are shown for
-  nest survival models. \code{Freq} and the remaining
-  fields are optional.  See \code{\link{killdeer}} for more
-  description of the nest survival data structure and the
-  use of the special field \code{AgeDay1}. The habitat
-  variables
-  \code{Native},\code{Planted},\code{Wetland},\code{Roadside}
-  were originally coded as 0/1 dummy variables to enable
-  easier modelling with MARK.  A better alternative in
-  RMark is to create a single variable \code{habitat} with
-  values of \code{"Native"},\code{"Planted"},
-  \code{"Wetland"}, and \code{"Roadside"}. Then the Hab
-  model in the example below would become:
+The first 5 fields must be named as they are shown for nest
+survival models. \code{Freq} and the remaining fields are
+optional.  See \code{\link{killdeer}} for more description
+of the nest survival data structure and the use of the
+special field \code{AgeDay1}. The habitat variables
+\code{Native},\code{Planted},\code{Wetland},\code{Roadside}
+were originally coded as 0/1 dummy variables to enable
+easier modelling with MARK.  A better alternative in RMark
+is to create a single variable \code{habitat} with values
+of \code{"Native"},\code{"Planted"}, \code{"Wetland"}, and
+\code{"Roadside"}. Then the Hab model in the example below
+would become:
 
-  \preformatted{ Hab=mark(mallard,nocc=90,model="Nest",
-  model.parameters=list(S=list(formula=~habitat)),
-  groups="habitat") } For this example, that doesn't make a
-  big difference but if you have more than one factor and
-  you want to construct an interaction or you have a factor
-  with many levels, then it is more efficient to use factor
-  variables rather than dummy variables.
+\preformatted{ Hab=mark(mallard,nocc=90,model="Nest",
+model.parameters=list(S=list(formula=~habitat)),
+groups="habitat") } For this example, that doesn't make a
+big difference but if you have more than one factor and you
+want to construct an interaction or you have a factor with
+many levels, then it is more efficient to use factor
+variables rather than dummy variables.
 }
 \examples{
 # Last updated June 2, 2011
@@ -241,7 +240,7 @@ cleanup(ask=FALSE)
 }
 }
 \author{
-  Jay Rotella
+Jay Rotella
 }
 \keyword{datasets}
 

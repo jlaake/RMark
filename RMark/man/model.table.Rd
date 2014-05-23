@@ -2,9 +2,9 @@
 \alias{model.table}
 \title{Create table of MARK model selection results}
 \usage{
-  model.table(model.list = NULL, type = NULL, sort = TRUE,
-    adjust = TRUE, ignore = TRUE, pf = 1, use.lnl = FALSE,
-    use.AIC = FALSE, model.name = TRUE)
+model.table(model.list = NULL, type = NULL, sort = TRUE, adjust = TRUE,
+  ignore = TRUE, pf = 1, use.lnl = FALSE, use.AIC = FALSE,
+  model.name = TRUE)
 }
 \arguments{
   \item{model.list}{a vector of model names or a list
@@ -43,31 +43,30 @@
   elements}
 }
 \value{
-  result.table - dataframe containing summary of models
-  \item{model.name}{name of fitted model}
-  \item{parameter.name - an entry for each
-  parameter}{formula for parameter} \item{npar}{number of
-  estimated parameters} \item{AICc or QAICc}{AICc value or
-  QAICc if chat>1} \item{DeltaAICc or
-  DeltaQAICc}{difference between AICc or QAICc value from
-  model with smallest value} \item{weight}{model weight
-  based on exp(-.5*DeltaAICc) or exp(-.5*QDeltaAICc)}
-  \item{Deviance or QDeviance}{residual deviance from
-  saturated model} \item{chat}{overdispersion constant if
-  not 1}
+result.table - dataframe containing summary of models
+\item{model.name}{name of fitted model}
+\item{parameter.name - an entry for each parameter}{formula
+for parameter} \item{npar}{number of estimated parameters}
+\item{AICc or QAICc}{AICc value or QAICc if chat>1}
+\item{DeltaAICc or DeltaQAICc}{difference between AICc or
+QAICc value from model with smallest value}
+\item{weight}{model weight based on exp(-.5*DeltaAICc) or
+exp(-.5*QDeltaAICc)} \item{Deviance or QDeviance}{residual
+deviance from saturated model} \item{chat}{overdispersion
+constant if not 1}
 }
 \description{
-  Constructs a table of model selection results for MARK
-  analyses. The table includes the formulas, model name,
-  number of parameters, deviance, AICc, DeltaAICc, model
-  weight and residual deviance.  If chat>1 QAICc,
-  QDeltaAICc and QDeviance are used instead.
+Constructs a table of model selection results for MARK
+analyses. The table includes the formulas, model name,
+number of parameters, deviance, AICc, DeltaAICc, model
+weight and residual deviance.  If chat>1 QAICc, QDeltaAICc
+and QDeviance are used instead.
 }
 \details{
-  This function is used by \code{\link{collect.models}} to
-  construct a table of model selection results with the
-  models that it collects; however it can be called
-  directly to construct the table.
+This function is used by \code{\link{collect.models}} to
+construct a table of model selection results with the
+models that it collects; however it can be called directly
+to construct the table.
 }
 \examples{
 \donttest{
@@ -135,10 +134,10 @@ write.table(model.DeltaAICc.matrix,"DipperDeltaAICc.txt",sep="\\t")
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{collect.model.names}},
-  \code{\link{collect.models}}
+\code{\link{collect.model.names}},
+\code{\link{collect.models}}
 }
 

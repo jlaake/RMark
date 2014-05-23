@@ -182,8 +182,17 @@ vcv.real=deriv.real%*%model$results$beta.vcv%*%t(deriv.real)
   {
     templinks[ind]="log"
     pseudo.real=as.vector(convert.link.to.real(design%*%beta,links=templinks))
-    pseudo.real[fixedparms]=fixedvalues[fixedparms]
-    pseudo.real[ind][fixedparms[ind]]=exp(pseudo.real[ind][fixedparms[ind]])
+#   IF fixed parameters are included in mlogit set, need to recompute the real parameters using 1 in
+#   mlogit calculation for every fixed parameter
+	if(any(fixedparms[ind]))
+	{
+		pseudo.real[fixedparms]=0
+		pseudo.real[ind][fixedparms[ind]]=exp(pseudo.real[ind][fixedparms[ind]])
+		sums=by(pseudo.real[ind],model$links[ind],sum)
+		sums=sums[match(model$links[ind],names(sums))]
+		real[ind]=pseudo.real[ind]/(1+sums[ind])
+		real[fixedparms]=fixedvalues[fixedparms]
+	}
 #
 #   Compute first derivatives of pseudo-real (for any mlogit parameter)
 #   estimates with respect to beta parameters

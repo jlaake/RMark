@@ -3,7 +3,7 @@
 \alias{model.average.default}
 \title{Compute model averaged estimates}
 \usage{
-  model.average(x, ...)
+model.average(x, ...)
 }
 \arguments{
   \item{x}{is either a list with a prescribed structure as
@@ -15,18 +15,18 @@
   functions}
 }
 \value{
-  The structure of the returned value depends on which
-  function is called.
+The structure of the returned value depends on which
+function is called.
 }
 \description{
-  A generic function to compute model averaged estimates
-  and their standard errors or variance-covariance matrix.
+A generic function to compute model averaged estimates and
+their standard errors or variance-covariance matrix.
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{model.average.marklist}},\code{\link{model.average.list}}
+\code{\link{model.average.marklist}},\code{\link{model.average.list}}
 }
 \keyword{utility}
 

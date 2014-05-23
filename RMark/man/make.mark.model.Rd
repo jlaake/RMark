@@ -2,12 +2,11 @@
 \alias{make.mark.model}
 \title{Create a MARK model for analysis}
 \usage{
-  make.mark.model(data, ddl, parameters = list(),
-    title = "", model.name = NULL, initial = NULL,
-    call = NULL, default.fixed = TRUE, options = NULL,
-    profile.int = FALSE, chat = NULL, simplify = TRUE,
-    input.links = NULL, parm.specific = FALSE,
-    mlogit0 = FALSE, hessian = FALSE, accumulate = TRUE)
+make.mark.model(data, ddl, parameters = list(), title = "",
+  model.name = NULL, initial = NULL, call = NULL, default.fixed = TRUE,
+  options = NULL, profile.int = FALSE, chat = NULL, simplify = TRUE,
+  input.links = NULL, parm.specific = FALSE, mlogit0 = FALSE,
+  hessian = FALSE, accumulate = TRUE)
 }
 \arguments{
   \item{data}{Data list resulting from function
@@ -64,444 +63,430 @@
   into frequencies}
 }
 \value{
-  model: a MARK object except for the elements
-  \code{output} and \code{results}. See \code{\link{mark}}
-  for a detailed description of the list contents.
+model: a MARK object except for the elements \code{output}
+and \code{results}. See \code{\link{mark}} for a detailed
+description of the list contents.
 }
 \description{
-  Creates a MARK model object that contains a MARK input
-  file with PIMS and design matrix specific to the data and
-  model structure and formulae specified for the model
-  parameters.
+Creates a MARK model object that contains a MARK input file
+with PIMS and design matrix specific to the data and model
+structure and formulae specified for the model parameters.
 }
 \details{
-  This function is called by \code{\link{mark}} to create
-  the model but it can be called directly to create but not
-  run the model.  All of the arguments have default values
-  except for the first 2 that specify the processed data
-  list (\code{data}) and the design data list (\code{ddl}).
-  If only these 2 arguments are specified default models
-  are used for the parameters.  For example, following with
-  the example from \code{\link{process.data}} and
-  \code{\link{make.design.data}}, the default model can be
-  created with:
+This function is called by \code{\link{mark}} to create the
+model but it can be called directly to create but not run
+the model.  All of the arguments have default values except
+for the first 2 that specify the processed data list
+(\code{data}) and the design data list (\code{ddl}). If
+only these 2 arguments are specified default models are
+used for the parameters.  For example, following with the
+example from \code{\link{process.data}} and
+\code{\link{make.design.data}}, the default model can be
+created with:
 
-  \code{mymodel=make.mark.model(proc.example.data,ddl)}
+\code{mymodel=make.mark.model(proc.example.data,ddl)}
 
-  The call to \code{make.mark.model} creates a model object
-  but does not do the analysis.  The function returns a
-  list that includes several fields including a design
-  matrix and the MARK input file that will be used with
-  \code{MARK.EXE} to run the analysis from function
-  \code{\link{run.mark.model}}. The following shows the
-  names of the list elements in mymodel:
+The call to \code{make.mark.model} creates a model object
+but does not do the analysis.  The function returns a list
+that includes several fields including a design matrix and
+the MARK input file that will be used with \code{MARK.EXE}
+to run the analysis from function
+\code{\link{run.mark.model}}. The following shows the names
+of the list elements in mymodel:
 
-  \preformatted{ names(mymodel) [1] "data" "model" "title"
-  "model.name" "links" [6] "mixtures" "call" "parameters"
-  "input" "number.of.groups" [11] "group.labels" "nocc"
-  "begin.time" "covariates" "fixed" [16] "design.matrix"
-  "pims" "design.data" "strata.labels" "mlogit.list" [21]
-  "simplify" }
+\preformatted{ names(mymodel) [1] "data" "model" "title"
+"model.name" "links" [6] "mixtures" "call" "parameters"
+"input" "number.of.groups" [11] "group.labels" "nocc"
+"begin.time" "covariates" "fixed" [16] "design.matrix"
+"pims" "design.data" "strata.labels" "mlogit.list" [21]
+"simplify" }
 
-  The list is defined to be a mark object which is done by
-  assigning a class vector to the list.  The classes for an
-  R object can be viewed with the class function as shown
-  below:
+The list is defined to be a mark object which is done by
+assigning a class vector to the list.  The classes for an R
+object can be viewed with the class function as shown
+below:
 
-  \preformatted{ class(mymodel) [1] "mark" "CJS" } Each
-  MARK model has 2 class values.  The first identifies it
-  as a mark object and the second identifies the type of
-  mark analysis, which is the default "CJS" (recaptures
-  only) in this case.  The use of the class feature has
-  advantages in using generic functions and identifying
-  types of objects.  An object of class \code{mark} is
-  defined in more detail in function \code{\link{mark}}.
+\preformatted{ class(mymodel) [1] "mark" "CJS" } Each MARK
+model has 2 class values.  The first identifies it as a
+mark object and the second identifies the type of mark
+analysis, which is the default "CJS" (recaptures only) in
+this case.  The use of the class feature has advantages in
+using generic functions and identifying types of objects.
+An object of class \code{mark} is defined in more detail in
+function \code{\link{mark}}.
 
-  To fit non-trivial models it is necessary to understand
-  the remaining calling arguments of \code{make.mark.model}
-  and R formula notation. The model formulae are specified
-  with the calling argument \code{parameters}. It uses a
-  similar list structure as the \code{parameters} argument
-  in \code{\link{make.design.data}}. It expects to get a
-  list with elements named to match the parameters in the
-  particular analysis (e.g., Phi and p in CJS) and each
-  list element is a list, so it is a list of lists).  For
-  each parameter, the possible list elements are
-  \code{formula, link, fixed, component, component.name,
-  remove.intercept}. In addition, for closed capture models
-  and robust design model, the element \code{share} is
-  included in the list for p (capture probabilities) and
-  GammaDoublePrime (respectively) to indicate whether the
-  model is shared (share=TRUE) or not-shared (the default)
-  (share=FALSE) with c (recapture probabilities) and
-  GammaPrime respectively.
+To fit non-trivial models it is necessary to understand the
+remaining calling arguments of \code{make.mark.model} and R
+formula notation. The model formulae are specified with the
+calling argument \code{parameters}. It uses a similar list
+structure as the \code{parameters} argument in
+\code{\link{make.design.data}}. It expects to get a list
+with elements named to match the parameters in the
+particular analysis (e.g., Phi and p in CJS) and each list
+element is a list, so it is a list of lists).  For each
+parameter, the possible list elements are \code{formula,
+link, fixed, component, component.name, remove.intercept}.
+In addition, for closed capture models and robust design
+model, the element \code{share} is included in the list for
+p (capture probabilities) and GammaDoublePrime
+(respectively) to indicate whether the model is shared
+(share=TRUE) or not-shared (the default) (share=FALSE) with
+c (recapture probabilities) and GammaPrime respectively.
 
-  \code{formula} specifies the model for the parameter
-  using R formula notation. An R formula is denoted with a
-  \code{~} followed by variables in an equation format
-  possibly using the \code{+} , \code{*}, and \code{:}
-  operators.  For example, \code{~sex+age} is an additive
-  model with the main effects of \code{sex} and \code{age}.
-  Whereas, \code{~sex*age} includes the main effects and
-  the interaction and it is equivalent to the formula
-  specified as \code{~sex+age+sex:age} where \code{sex:age}
-  is the interaction term.  The model \code{~age+sex:age}
-  is slightly different in that the main effect for
-  \code{sex} is dropped which means that intercept of the
-  \code{age} effect is common among the sexes but the age
-  pattern could vary between the sexes.  The model
-  \code{~sex*Age} which is equivalent to \code{~sex + Age +
-  sex:Age} has only 4 parameters and specifies a linear
-  trend with age and both the intercept and slope vary by
-  sex.  One additional operator that can be useful is
-  \code{I()} which allows computation of variables on the
-  fly.  For example, the addition of the Agesq variable in
-  the design data (as described above) can be avoided by
-  using the notation \code{~Age + I(Age^2)} which specifies
-  use of a linear and quadratic effect for age.  Note that
-  specifying the model \code{~age + I(age^2)} would be
-  incorrect and would create an error because \code{age} is
-  a factor variable whereas \code{Age} is not.
+\code{formula} specifies the model for the parameter using
+R formula notation. An R formula is denoted with a \code{~}
+followed by variables in an equation format possibly using
+the \code{+} , \code{*}, and \code{:} operators.  For
+example, \code{~sex+age} is an additive model with the main
+effects of \code{sex} and \code{age}. Whereas,
+\code{~sex*age} includes the main effects and the
+interaction and it is equivalent to the formula specified
+as \code{~sex+age+sex:age} where \code{sex:age} is the
+interaction term.  The model \code{~age+sex:age} is
+slightly different in that the main effect for \code{sex}
+is dropped which means that intercept of the \code{age}
+effect is common among the sexes but the age pattern could
+vary between the sexes.  The model \code{~sex*Age} which is
+equivalent to \code{~sex + Age + sex:Age} has only 4
+parameters and specifies a linear trend with age and both
+the intercept and slope vary by sex.  One additional
+operator that can be useful is \code{I()} which allows
+computation of variables on the fly.  For example, the
+addition of the Agesq variable in the design data (as
+described above) can be avoided by using the notation
+\code{~Age + I(Age^2)} which specifies use of a linear and
+quadratic effect for age.  Note that specifying the model
+\code{~age + I(age^2)} would be incorrect and would create
+an error because \code{age} is a factor variable whereas
+\code{Age} is not.
 
-  As an example, consider developing a model in which Phi
-  varies by age and p follows a linear trend over time.
-  This model could be specified and run as follows:
+As an example, consider developing a model in which Phi
+varies by age and p follows a linear trend over time. This
+model could be specified and run as follows:
 
-  \preformatted{ p.Time=list(formula=~Time)
-  Phi.age=list(formula=~age)
-  Model.p.Time.Phi.age=make.mark.model(proc.example.data,ddl,
-  parameters=list(Phi=Phi.age,p=p.Time))
-  Model.p.Time.Phi.age=run.mark.model(Model.p.Time.Phi.age)
-  }
+\preformatted{ p.Time=list(formula=~Time)
+Phi.age=list(formula=~age)
+Model.p.Time.Phi.age=make.mark.model(proc.example.data,ddl,
+parameters=list(Phi=Phi.age,p=p.Time))
+Model.p.Time.Phi.age=run.mark.model(Model.p.Time.Phi.age) }
 
-  The first 2 commands define the p and Phi models that are
-  used in the \code{parameter} list in the call to
-  \code{make.mark.model}. This is a good approach for
-  defining models because it clearly documents the models,
-  the definitions can then be used in many calls to
-  \code{make.mark.model} and it will allow a variety of
-  models to be developed quickly by creating different
-  combinations of the parameter models.  Using the notation
-  above with the period separating the parameter name and
-  the description (eg., p.Time) gives the further advantage
-  that all possible models can be developed quickly with
-  the functions \code{\link{create.model.list}} and
-  \code{\link{mark.wrapper}}.
+The first 2 commands define the p and Phi models that are
+used in the \code{parameter} list in the call to
+\code{make.mark.model}. This is a good approach for
+defining models because it clearly documents the models,
+the definitions can then be used in many calls to
+\code{make.mark.model} and it will allow a variety of
+models to be developed quickly by creating different
+combinations of the parameter models.  Using the notation
+above with the period separating the parameter name and the
+description (eg., p.Time) gives the further advantage that
+all possible models can be developed quickly with the
+functions \code{\link{create.model.list}} and
+\code{\link{mark.wrapper}}.
 
-  Model formula can use any field in the design data and
-  any individual covariates defined in \code{data}.  The
-  restrictions on individual covariates that was present in
-  versions before 1.3 have now been removed. You can now
-  use interactions of individual covariates with all design
-  data covariates and products of individual covariates.
-  You can specify interactions of individual covariates and
-  factor variables in the design data with the formula
-  notation.  For example, \code{~region*x1} describes a
-  model in which the slope of \code{x1} varies by
-  \code{region}. Also, \code{~time*x1} describes a model in
-  which the slope for \code{x1} varied by time; however,
-  there would be only one value of the covariate per animal
-  so this is not a time varying covariate model.  Models
-  with time varying covariates are now more easily
-  described with the improvements in version 1.3 but there
-  are restrictions on how the time varying individual
-  covariates are named.  An example would be a trap
-  dependence model in which capture probability on occasion
-  i+1 depends on whether they were captured on occasion i.
-  If there are n occasions in a CJS model, the 0/1 (not
-  caught/caught) for occasions 1 to n-1 would be n-1
-  individual covariates to describe recapture probability
-  for occasions 2 to n. For times 2 to n, a design data
-  field could be defined such that the variable timex is 1
-  if time==x and 0 otherwise.  The time varying covariates
-  must be named with a time suffix on the base name of the
-  covariate. In this example they would be named as
-  \code{x2,. . .,xn} and the model could be specified as
-  \code{~time + x} for time variation and a constant trap
-  effect or as \code{~time + time:x} for a trap effect that
-  varied by time.  If in the \code{\link{process.data}}
-  call, the argument \code{begin.time} was set to the year
-  1990, then the variables would have to be named
-  x1991,x1992,... because the first recapture occasion
-  would be 1991.  Note that the times are different for
-  different parameters.  For example, survival is labeled
-  based on the beginning of the time interval which would
-  be 1990 so the variables should be named appropriately
-  for the parameter model in which they will be used.
+Model formula can use any field in the design data and any
+individual covariates defined in \code{data}.  The
+restrictions on individual covariates that was present in
+versions before 1.3 have now been removed. You can now use
+interactions of individual covariates with all design data
+covariates and products of individual covariates.  You can
+specify interactions of individual covariates and factor
+variables in the design data with the formula notation.
+For example, \code{~region*x1} describes a model in which
+the slope of \code{x1} varies by \code{region}. Also,
+\code{~time*x1} describes a model in which the slope for
+\code{x1} varied by time; however, there would be only one
+value of the covariate per animal so this is not a time
+varying covariate model.  Models with time varying
+covariates are now more easily described with the
+improvements in version 1.3 but there are restrictions on
+how the time varying individual covariates are named.  An
+example would be a trap dependence model in which capture
+probability on occasion i+1 depends on whether they were
+captured on occasion i.  If there are n occasions in a CJS
+model, the 0/1 (not caught/caught) for occasions 1 to n-1
+would be n-1 individual covariates to describe recapture
+probability for occasions 2 to n. For times 2 to n, a
+design data field could be defined such that the variable
+timex is 1 if time==x and 0 otherwise.  The time varying
+covariates must be named with a time suffix on the base
+name of the covariate. In this example they would be named
+as \code{x2,. . .,xn} and the model could be specified as
+\code{~time + x} for time variation and a constant trap
+effect or as \code{~time + time:x} for a trap effect that
+varied by time.  If in the \code{\link{process.data}} call,
+the argument \code{begin.time} was set to the year 1990,
+then the variables would have to be named x1991,x1992,...
+because the first recapture occasion would be 1991.  Note
+that the times are different for different parameters.  For
+example, survival is labeled based on the beginning of the
+time interval which would be 1990 so the variables should
+be named appropriately for the parameter model in which
+they will be used.
 
-  In previous versions to handle time varying covariates
-  with a constant effect, it was necessary to use the
-  component feature of the parameter specification to be
-  able to append one or more arbitrary columns to the
-  design matrix.  That is no longer required for individual
-  covariates and the component feature was removed in
-  v2.0.8.
+In previous versions to handle time varying covariates with
+a constant effect, it was necessary to use the component
+feature of the parameter specification to be able to append
+one or more arbitrary columns to the design matrix.  That
+is no longer required for individual covariates and the
+component feature was removed in v2.0.8.
 
-  There are three other elements of the parameter list that
-  can be useful on occasion.  The first is \code{link}
-  which specifies the link function for transforming
-  between the beta and real parameters.  The possible
-  values are "logit", "log", "identity" and "mlogit(*)"
-  where * is a numeric identifier. The "sin" link is not
-  allowed because all models are specified using a design
-  matrix.  The typical default values are assigned to each
-  parameter (eg "logit" for probabilities, "log" for N, and
-  "mlogit" for pent in POPAN), so in most cases it will not
-  be necessary to specify a link function.
+There are three other elements of the parameter list that
+can be useful on occasion.  The first is \code{link} which
+specifies the link function for transforming between the
+beta and real parameters.  The possible values are "logit",
+"log", "identity" and "mlogit(*)" where * is a numeric
+identifier. The "sin" link is not allowed because all
+models are specified using a design matrix.  The typical
+default values are assigned to each parameter (eg "logit"
+for probabilities, "log" for N, and "mlogit" for pent in
+POPAN), so in most cases it will not be necessary to
+specify a link function.
 
-  The second is \code{fixed} which allows real parameters
-  to be set at fixed values.  The values for \code{fixed}
-  can be either a single value or a list with 5 alternate
-  forms for ease in specifying the fixed parameters.
-  Specifying \code{fixed=value} will set all parameters of
-  that type to the specified value.  For example,
-  \code{Phi=list(fixed=1)} will set all Phi to 1.  This can
-  be useful for situations like specifying F in the
-  Burnham/Barker models to all have the same value of 1.
-  Fixed values can also be specified as a list in which
-  values are specified for certain indices, times, ages,
-  cohorts, and groups.  The first 3 will be the most
-  useful.  The first list format is the most general and
-  flexible but it requires an understanding of the PIM
-  structure and index numbers for the real parameters.  For
-  example,
+The second is \code{fixed} which allows real parameters to
+be set at fixed values.  The values for \code{fixed} can be
+either a single value or a list with 5 alternate forms for
+ease in specifying the fixed parameters. Specifying
+\code{fixed=value} will set all parameters of that type to
+the specified value.  For example, \code{Phi=list(fixed=1)}
+will set all Phi to 1.  This can be useful for situations
+like specifying F in the Burnham/Barker models to all have
+the same value of 1.  Fixed values can also be specified as
+a list in which values are specified for certain indices,
+times, ages, cohorts, and groups.  The first 3 will be the
+most useful.  The first list format is the most general and
+flexible but it requires an understanding of the PIM
+structure and index numbers for the real parameters.  For
+example,
 
-  \code{Phi=list(formula=~time,
-  fixed=list(index=c(1,4,7),value=1))}
+\code{Phi=list(formula=~time,
+fixed=list(index=c(1,4,7),value=1))}
 
-  specifies Phi varying by time, but the real parameters
-  1,4,7 are set to 1. The \code{value} field is either a
-  single constant or its length must match the number of
-  indices.  For example,
+specifies Phi varying by time, but the real parameters
+1,4,7 are set to 1. The \code{value} field is either a
+single constant or its length must match the number of
+indices.  For example,
 
-  \code{Phi=list(formula=~time,
-  fixed=list(index=c(1,4,7),value=c(1,0,1)))}
+\code{Phi=list(formula=~time,
+fixed=list(index=c(1,4,7),value=c(1,0,1)))}
 
-  sets real parameters 1 and 7 to 1 and real parameter 4 to
-  0.  Technically, the index/value format for fixed is not
-  wedded to the parameter type (i.e., values for p can be
-  assigned within Phi list), but for the sake of clarity
-  they should be restricted to fixing real parameters
-  associated with the particular parameter type.  The
-  \code{time} and \code{age} formats for fixed will
-  probably be the most useful.  The format
-  fixed=list(time=x, value=y) will set all real parameters
-  (of that type) for time x to value y.  For example,
+sets real parameters 1 and 7 to 1 and real parameter 4 to
+0.  Technically, the index/value format for fixed is not
+wedded to the parameter type (i.e., values for p can be
+assigned within Phi list), but for the sake of clarity they
+should be restricted to fixing real parameters associated
+with the particular parameter type.  The \code{time} and
+\code{age} formats for fixed will probably be the most
+useful.  The format fixed=list(time=x, value=y) will set
+all real parameters (of that type) for time x to value y.
+For example,
 
-  \code{p=list(formula=~time,fixed=list(time=1986,value=1))}
+\code{p=list(formula=~time,fixed=list(time=1986,value=1))}
 
-  sets up time varying capture probability but all values
-  of p for 1986 are set to 1.  This can be quite useful to
-  set all values to 0 in years with no sampling (e.g.,
-  \preformatted{fixed=list(time=c(1982,1984,1986),
-  value=0)}). The \code{age}, \code{cohort} and
-  \code{group} formats work in a similar fashion.  It is
-  important to recognize that the value you specify for
-  \code{time}, \code{age}, \code{cohort} and \code{group}
-  must match the values in the design data list.  This is
-  another reason to add binned fields for age, time etc
-  with \code{\link{add.design.data}} after creating the
-  default design data with \code{\link{make.design.data}}.
-  Also note that the values for \code{time} and
-  \code{cohort} are affected by the \code{begin.time}
-  argument specified in \code{\link{process.data}}.  Had I
-  not specified \code{begin.time=1980}, to set p in the
-  last occasion (1986), the specification would be
+sets up time varying capture probability but all values of
+p for 1986 are set to 1.  This can be quite useful to set
+all values to 0 in years with no sampling (e.g.,
+\preformatted{fixed=list(time=c(1982,1984,1986),
+value=0)}). The \code{age}, \code{cohort} and \code{group}
+formats work in a similar fashion.  It is important to
+recognize that the value you specify for \code{time},
+\code{age}, \code{cohort} and \code{group} must match the
+values in the design data list.  This is another reason to
+add binned fields for age, time etc with
+\code{\link{add.design.data}} after creating the default
+design data with \code{\link{make.design.data}}.  Also note
+that the values for \code{time} and \code{cohort} are
+affected by the \code{begin.time} argument specified in
+\code{\link{process.data}}.  Had I not specified
+\code{begin.time=1980}, to set p in the last occasion
+(1986), the specification would be
 
-  \code{p=list(formula=~time,fixed=list(time=7,value=1))}
+\code{p=list(formula=~time,fixed=list(time=7,value=1))}
 
-  because begin.time defaults to 1.  The advantage of the
-  time-, age-, and cohort- formats over the index-format is
-  that it will work regardless of the group definition
-  which can easily be changed by changing the \code{groups}
-  argument in \code{\link{process.data}}.  The index-format
-  will be dependent on the group structure because the
-  indexing of the PIMS will most likely change with changes
-  in the group structure.
+because begin.time defaults to 1.  The advantage of the
+time-, age-, and cohort- formats over the index-format is
+that it will work regardless of the group definition which
+can easily be changed by changing the \code{groups}
+argument in \code{\link{process.data}}.  The index-format
+will be dependent on the group structure because the
+indexing of the PIMS will most likely change with changes
+in the group structure.
 
-  Parameters can also be fixed at default values by
-  deleting the specific rows of the design data. See
-  \code{\link{make.design.data}} and material below. The
-  default value for fixing parameters for deleted design
-  data can be changed with the \code{default=value} in the
-  parameter list.
+Parameters can also be fixed at default values by deleting
+the specific rows of the design data. See
+\code{\link{make.design.data}} and material below. The
+default value for fixing parameters for deleted design data
+can be changed with the \code{default=value} in the
+parameter list.
 
-  The final useful element of the parameter list is the
-  \code{remove.intercept} argument.  It is set to TRUE to
-  forcefully remove the intercept.  In R notation this can
-  be done by specifiying the formula notation ~-1+... but
-  in formula with nested interactions of factor variables
-  and additive factor variables the -1 notation will not
-  remove the intercept. It will simply adjust the column
-  definitions but will keep the same number of columns and
-  the model will be overparameterized.  The problem occurs
-  with nested factor variables like tostratum within
-  stratum for multistrata designs (see
-  \code{\link{mstrata}}).  As shown in that example, you
-  can build a formula -1+stratum:tostratum to have
-  transitions that are stratum-specific.  If however you
-  also want to add a sex effect and you specify
-  -1+sex+stratum:tostratum it will add 2 columns for sex
-  labelled M and F when in fact you only want to add one
-  column because the intercept is already contained within
-  the stratum:tostratum term.  The argument
-  remove.intercept will forcefully remove the intercept but
-  it needs to be able to find a column with all 1's.  For
-  example,
-  Psi=list(formula=~sex+stratum:tostratum,remove.intercept=TRUE)
-  will work but
-  Psi=list(formula=~-1+sex+stratum:tostratum,remove.intercept=TRUE)
-  will not work.  Also, the -1 notation should be used when
-  there is not an added factor variable because
-  \preformatted{Psi=list(formula=~stratum:tostratum,remove.intercept=TRUE)}
-  will not work because while the stratum:tostratum
-  effectively includes an intercept it is equivalent to
-  using an identity matrix and is not specified as
-  treatment contrast with one of the columns as all 1's.
+The final useful element of the parameter list is the
+\code{remove.intercept} argument.  It is set to TRUE to
+forcefully remove the intercept.  In R notation this can be
+done by specifiying the formula notation ~-1+... but in
+formula with nested interactions of factor variables and
+additive factor variables the -1 notation will not remove
+the intercept. It will simply adjust the column definitions
+but will keep the same number of columns and the model will
+be overparameterized.  The problem occurs with nested
+factor variables like tostratum within stratum for
+multistrata designs (see \code{\link{mstrata}}).  As shown
+in that example, you can build a formula
+-1+stratum:tostratum to have transitions that are
+stratum-specific.  If however you also want to add a sex
+effect and you specify -1+sex+stratum:tostratum it will add
+2 columns for sex labelled M and F when in fact you only
+want to add one column because the intercept is already
+contained within the stratum:tostratum term.  The argument
+remove.intercept will forcefully remove the intercept but
+it needs to be able to find a column with all 1's.  For
+example,
+Psi=list(formula=~sex+stratum:tostratum,remove.intercept=TRUE)
+will work but
+Psi=list(formula=~-1+sex+stratum:tostratum,remove.intercept=TRUE)
+will not work.  Also, the -1 notation should be used when
+there is not an added factor variable because
+\preformatted{Psi=list(formula=~stratum:tostratum,remove.intercept=TRUE)}
+will not work because while the stratum:tostratum
+effectively includes an intercept it is equivalent to using
+an identity matrix and is not specified as treatment
+contrast with one of the columns as all 1's.
 
-  The argument simplify determines whether the pims are
-  simplified such that only indices for unique and fixed
-  real parameters are used.  For example, with an all
-  different PIM structure with CJS with K occasions there
-  are K*(K-1) real parameters for Phi and p.  However, if
-  you use simplify=TRUE with the default model of
-  Phi(.)p(.), the pims are re-indexed to be 1 for all the
-  Phi's and 2 for all the p's because there are only 2
-  unique real parameters for that model.  Using simplify
-  can speed analysis markedly and probably should always be
-  used.  This was left as an argument only to test that the
-  simplification was working and produced the same
-  likelihood and real parameter estimates with and without
-  simplification. It only adjust the rows of the design
-  matrix and not the columns.  There are some restrictions
-  for simplification.  Real parameters that are given a
-  fixed value are maintained in the design matrix although
-  it does simplify amongst the fixed parameters.  For
-  example, if there are 50 real parameters all fixed to a
-  value of 1 and 30 all fixed to a value of 0, they are
-  reduced to 2 real parameters fixed to 1 and 0. Also, real
-  parameters such as Psi in Multistrata and pent in POPAN
-  that use multinomial logits are not simplified because
-  they must maintain the structure created by the
-  multinomial logit link.  All other parameters in those
-  models are simplified.  The only downside of
-  simplification is that the labels for real parameters in
-  the MARK output are unreliable because there is no longer
-  a single label for the real parameter because it may
-  represent many different real parameters in the
-  all-different PIM structure.  This is not a problem with
-  the labels in R because the real parameter estimates are
-  translated back to the all-different PIM structure with
-  the proper labels.
+The argument simplify determines whether the pims are
+simplified such that only indices for unique and fixed real
+parameters are used.  For example, with an all different
+PIM structure with CJS with K occasions there are K*(K-1)
+real parameters for Phi and p.  However, if you use
+simplify=TRUE with the default model of Phi(.)p(.), the
+pims are re-indexed to be 1 for all the Phi's and 2 for all
+the p's because there are only 2 unique real parameters for
+that model.  Using simplify can speed analysis markedly and
+probably should always be used.  This was left as an
+argument only to test that the simplification was working
+and produced the same likelihood and real parameter
+estimates with and without simplification. It only adjust
+the rows of the design matrix and not the columns.  There
+are some restrictions for simplification.  Real parameters
+that are given a fixed value are maintained in the design
+matrix although it does simplify amongst the fixed
+parameters.  For example, if there are 50 real parameters
+all fixed to a value of 1 and 30 all fixed to a value of 0,
+they are reduced to 2 real parameters fixed to 1 and 0.
+Also, real parameters such as Psi in Multistrata and pent
+in POPAN that use multinomial logits are not simplified
+because they must maintain the structure created by the
+multinomial logit link.  All other parameters in those
+models are simplified.  The only downside of simplification
+is that the labels for real parameters in the MARK output
+are unreliable because there is no longer a single label
+for the real parameter because it may represent many
+different real parameters in the all-different PIM
+structure.  This is not a problem with the labels in R
+because the real parameter estimates are translated back to
+the all-different PIM structure with the proper labels.
 
-  The argument \code{default.fixed} is related to deletion
-  of design data (see \code{\link{make.design.data}}).  If
-  design data are deleted and \code{default.fixed=T} the
-  missing real parameters are fixed at a reasonable default
-  to represent structural "zeros".  For example, p is set
-  to 0, Phi is set to 1, pent is set to 0, etc.  For some
-  parameters there are no reasonable values (e.g., N in
-  POPAN), so not all parameters will have defaults.  If a
-  parameter does not have a default or if
-  \code{default.fixed=F} then the row in the design matrix
-  for that parameter is all zeroes and its real value will
-  depend on the link function.  For example, with "logit"
-  link the real parameter value will be 0.5 and for the log
-  link it will be 1.  As long as the inverse link is
-  defined for 0 it will not matter in those cases in which
-  the real parameter is not used because it represents data
-  that do not exist.  For example, in a "CJS" model if
-  initial captures (releases) only occur every other
-  occasion, but recaptures (resightings) occurred every
-  occasion, then every other cohort (row) in the PIM would
-  have no data.  Those rows (cohorts) could be deleted from
-  the design data and it would not matter if the real
-  parameter was fixed. However, for the case of a
-  Jolly-Seber type model (eg POPAN or Pradel models) in
-  which the likelihood includes a probability for the
-  leading zeroes and first 1 in a capture history (a
-  likelihood component for the first capture of unmaked
-  animals), and groups represent cohorts that enter through
-  time, you must fix the real parameters for the unused
-  portion of the PIM (ie for occasions prior to time of
-  birth for the cohort) such that the estimated probability
-  of observing the structural 0 is 1.  This is easily done
-  by setting the pent (probability of entry) to 0 or by
-  setting the probability of capture to 0 or both.  In that
-  case if \code{default.fixed=F}, the probabilities for all
-  those parameters would be incorrectly set to 0.5 for p
-  and something non-zero but not predetermined for pent
-  because of the multinomial logit.  Now it may be possible
-  that the model would correctly estimate these as 0 if the
-  real parameters were kept in the design, but we know what
-  those values are in that case and they need not be
-  estimated. If it is acceptable to set
-  \code{default.fixed=F}, the functions such as
-  \code{\link{summary.mark}} recognize the non-estimated
-  real parameters and they are not shown in the summaries
-  because in essence they do not exist.  If
-  \code{default.fixed=T} the parameters are displayed with
-  their fixed value and for
-  \code{summary.mark(mymodel,se=TRUE)}, they are listed as
-  "Fixed".
+The argument \code{default.fixed} is related to deletion of
+design data (see \code{\link{make.design.data}}).  If
+design data are deleted and \code{default.fixed=T} the
+missing real parameters are fixed at a reasonable default
+to represent structural "zeros".  For example, p is set to
+0, Phi is set to 1, pent is set to 0, etc.  For some
+parameters there are no reasonable values (e.g., N in
+POPAN), so not all parameters will have defaults.  If a
+parameter does not have a default or if
+\code{default.fixed=F} then the row in the design matrix
+for that parameter is all zeroes and its real value will
+depend on the link function.  For example, with "logit"
+link the real parameter value will be 0.5 and for the log
+link it will be 1.  As long as the inverse link is defined
+for 0 it will not matter in those cases in which the real
+parameter is not used because it represents data that do
+not exist.  For example, in a "CJS" model if initial
+captures (releases) only occur every other occasion, but
+recaptures (resightings) occurred every occasion, then
+every other cohort (row) in the PIM would have no data.
+Those rows (cohorts) could be deleted from the design data
+and it would not matter if the real parameter was fixed.
+However, for the case of a Jolly-Seber type model (eg POPAN
+or Pradel models) in which the likelihood includes a
+probability for the leading zeroes and first 1 in a capture
+history (a likelihood component for the first capture of
+unmaked animals), and groups represent cohorts that enter
+through time, you must fix the real parameters for the
+unused portion of the PIM (ie for occasions prior to time
+of birth for the cohort) such that the estimated
+probability of observing the structural 0 is 1.  This is
+easily done by setting the pent (probability of entry) to 0
+or by setting the probability of capture to 0 or both.  In
+that case if \code{default.fixed=F}, the probabilities for
+all those parameters would be incorrectly set to 0.5 for p
+and something non-zero but not predetermined for pent
+because of the multinomial logit.  Now it may be possible
+that the model would correctly estimate these as 0 if the
+real parameters were kept in the design, but we know what
+those values are in that case and they need not be
+estimated. If it is acceptable to set
+\code{default.fixed=F}, the functions such as
+\code{\link{summary.mark}} recognize the non-estimated real
+parameters and they are not shown in the summaries because
+in essence they do not exist.  If \code{default.fixed=T}
+the parameters are displayed with their fixed value and for
+\code{summary.mark(mymodel,se=TRUE)}, they are listed as
+"Fixed".
 
-  Missing design data does have implications for specifying
-  formula but only when interactions are specified.  With
-  missing design data various factors may not be fully
-  crossed.  For example, with 2 factors A and B, each with
-  2 levels, the data are fully crossed if there are data
-  with values A1&B1, A1&B2, A2&B1 and A2&B2.  If data exist
-  for each of the 4 combinations then you can described the
-  interaction model as ~A*B and it will estimate 4 values.
-  However, if data are missing for one of more of the 4
-  cells then the "interaction" formula should be specified
-  as ~-1+A:B or ~-1+B:A or ~-1+A%in%B or ~-1+B%in%A to
-  estimate all of the parameters represented by the
-  combinations with data.  An example of this could be a
-  marking program with multiple sites which resighted at
-  all occasions but which only marked at sites on
-  alternating occasions.  In that case time is nested
-  within site and time-site interaction models would be
-  specified as ~-1+time:site.
+Missing design data does have implications for specifying
+formula but only when interactions are specified.  With
+missing design data various factors may not be fully
+crossed.  For example, with 2 factors A and B, each with 2
+levels, the data are fully crossed if there are data with
+values A1&B1, A1&B2, A2&B1 and A2&B2.  If data exist for
+each of the 4 combinations then you can described the
+interaction model as ~A*B and it will estimate 4 values.
+However, if data are missing for one of more of the 4 cells
+then the "interaction" formula should be specified as
+~-1+A:B or ~-1+B:A or ~-1+A%in%B or ~-1+B%in%A to estimate
+all of the parameters represented by the combinations with
+data.  An example of this could be a marking program with
+multiple sites which resighted at all occasions but which
+only marked at sites on alternating occasions.  In that
+case time is nested within site and time-site interaction
+models would be specified as ~-1+time:site.
 
-  The argument \code{title} supplies a character string
-  that is used to label the output. The argument
-  \code{model.name} is a descriptor for the model used in
-  the analysis.  The code constructs a model name from the
-  formula specified in the call (e.g.,
-  \code{Phi(~1)p(~time)}) but on occasion the name may be
-  too long or verbose, so it can be over-ridden with the
-  \code{model.name} argument.
+The argument \code{title} supplies a character string that
+is used to label the output. The argument \code{model.name}
+is a descriptor for the model used in the analysis.  The
+code constructs a model name from the formula specified in
+the call (e.g., \code{Phi(~1)p(~time)}) but on occasion the
+name may be too long or verbose, so it can be over-ridden
+with the \code{model.name} argument.
 
-  The final argument \code{initial} can be used to provide
-  initial estimates for the beta parameters. It is either
-  1) a single starting value for each parameter, 2) an
-  unnamed vector of values (one for each parameter), 3)
-  named vector of values, or 4) the name of \code{mark}
-  object that has already been run. For cases 3 and 4, the
-  code only uses appropriate initial beta estimates in
-  which the column names of the design matrix (for model)
-  or vector names match the column names in the design
-  matrix of the model to be run.  Any remaining beta
-  parameters without an initial value specified are
-  assigned a 0 initial value.  If case 4 is used the models
-  must have the same number of rows in the design matrix
-  and thus presumably the same structure. As long as the
-  vector elements are named (#3), the length of the
-  \code{initial} vector no longer needs to match the number
-  of parameters in the new model as long as the elements
-  are named. The names can be retrieved either from the
-  column names of the design matrix or from
-  \code{rownames(x$results$beta)} where \code{x} is the
-  name of the \code{mark} object.
+The final argument \code{initial} can be used to provide
+initial estimates for the beta parameters. It is either 1)
+a single starting value for each parameter, 2) an unnamed
+vector of values (one for each parameter), 3) named vector
+of values, or 4) the name of \code{mark} object that has
+already been run. For cases 3 and 4, the code only uses
+appropriate initial beta estimates in which the column
+names of the design matrix (for model) or vector names
+match the column names in the design matrix of the model to
+be run.  Any remaining beta parameters without an initial
+value specified are assigned a 0 initial value.  If case 4
+is used the models must have the same number of rows in the
+design matrix and thus presumably the same structure. As
+long as the vector elements are named (#3), the length of
+the \code{initial} vector no longer needs to match the
+number of parameters in the new model as long as the
+elements are named. The names can be retrieved either from
+the column names of the design matrix or from
+\code{rownames(x$results$beta)} where \code{x} is the name
+of the \code{mark} object.
 
-  \code{options} is a character string that is tacked onto
-  the \code{Proc Estimate} statement for the MARK .inp
-  file.  It can be used to request options such as
-  NoStandDM (to not standardize the design matrix) or
-  SIMANNEAL (to request use of the simulated annealing
-  optimization method) or any existing or new options that
-  can be set on the estimate proc.
+\code{options} is a character string that is tacked onto
+the \code{Proc Estimate} statement for the MARK .inp file.
+It can be used to request options such as NoStandDM (to not
+standardize the design matrix) or SIMANNEAL (to request use
+of the simulated annealing optimization method) or any
+existing or new options that can be set on the estimate
+proc.
 }
 \examples{
 \donttest{
@@ -544,11 +529,11 @@ dipper.phiFlood.pdot=make.mark.model(dipper.processed,dipper.ddl,
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{process.data}},\code{\link{make.design.data}},
-  \code{\link{run.mark.model}} \code{\link{mark}}
+\code{\link{process.data}},\code{\link{make.design.data}},
+\code{\link{run.mark.model}} \code{\link{mark}}
 }
 \keyword{model}
 

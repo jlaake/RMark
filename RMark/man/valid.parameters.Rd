@@ -2,7 +2,7 @@
 \alias{valid.parameters}
 \title{Determine validity of parameters for a model (internal use)}
 \usage{
-  valid.parameters(model, parameters)
+valid.parameters(model, parameters)
 }
 \arguments{
   \item{model}{type of c-r model ("CJS", "Burnham" etc)}
@@ -11,18 +11,18 @@
   "Phi" or "p" or "S")}
 }
 \value{
-  Logical; TRUE if all parameters are acceptable and FALSE
-  otherwise
+Logical; TRUE if all parameters are acceptable and FALSE
+otherwise
 }
 \description{
-  Checks to make sure specified parameters are valid for a
-  particular type of model.
+Checks to make sure specified parameters are valid for a
+particular type of model.
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{setup.parameters}}, \code{\link{setup.model}}
+\code{\link{setup.parameters}}, \code{\link{setup.model}}
 }
 \keyword{utility}
 

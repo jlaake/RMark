@@ -6,13 +6,13 @@
 \describe{ \item{ch}{a character vector of encounter histories}
 \item{freq}{a numeric vector of frequencies of each history} }}
 \source{
-  This example was constructed by Andrew Paul who is with
-  Fish and Wildlife Division of the Alberta Provincial
-  Government
+This example was constructed by Andrew Paul who is with
+Fish and Wildlife Division of the Alberta Provincial
+Government
 }
 \description{
-  Data and Script to simulate the MSCRD example of 15.7.1
-  from the MARK book Cooch and White
+Data and Script to simulate the MSCRD example of 15.7.1
+from the MARK book Cooch and White
 }
 \examples{
 \donttest{
@@ -93,8 +93,8 @@ cleanup(ask=FALSE)
 }
 }
 \references{
-  For Cooch and White book see
-  \url{http://www.phidot.org/software/mark/}
+For Cooch and White book see
+\url{http://www.phidot.org/software/mark/}
 }
 \keyword{datasets}
 

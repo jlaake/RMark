@@ -2,7 +2,7 @@
 \alias{adjust.parameter.count}
 \title{Adjust count of estimated parameters}
 \usage{
-  adjust.parameter.count(model, npar)
+adjust.parameter.count(model, npar)
 }
 \arguments{
   \item{model}{MARK model object}
@@ -10,43 +10,42 @@
   \item{npar}{Value of count of estimated parameters}
 }
 \value{
-  model: the mark model object with the adjustments made
+model: the mark model object with the adjustments made
 }
 \description{
-  Modifies number of estimated parameters and the resulting
-  AICc value for model selection.
+Modifies number of estimated parameters and the resulting
+AICc value for model selection.
 }
 \details{
-  When a model is run the parameter count determined by
-  MARK is stored in \code{results$npar} and the AICc value
-  is stored in \code{results$AICc}.  If the argument
-  \code{adjust} is set to TRUE in the call to
-  \code{\link{run.mark.model}} and MARK determined that the
-  design matrix was not full rank (i.e., the parameter
-  count is less than the columns of the design matrix),
-  then the parameter count from MARK is stored in
-  \code{results$npar.unadjusted} and AICc in
-  \code{results$AICc.unadjusted} and \code{results$npar} is
-  set to the number of columns of the design matrix and
-  \code{results$AICc} uses the assumed full rank value of
-  \code{npar}. This function allows the parameter count to
-  be reset to any value less than or equal to the number of
-  columns in the design matrix.  If
-  \code{results$npar.unadjusted} exists it is kept as is.
-  If it doesn't exist, then the current values of
-  \code{results$npar} and \code{results$AICc} are stored in
-  the \code{.unadjusted} fields to maintain the values from
-  MARK, and the new adjusted values defined by the function
-  argument \code{npar} are stored in \code{results$npar}
-  and \code{results$AICc}. In the example below, the CJS
-  model Phi(t)p(t) is fitted with the call to
-  \code{\link{mark}} which defaults to \code{adjust=TRUE}.
-  This is used to show how \code{adjust.parameter.count}
-  can be used to adjust the count to 11 from the full rank
-  count of 12. Alternatively, the argument
-  \code{adjust=FALSE} can be added to prevent the
-  adjustment which is appropriate in this case because
-  Phi(6) and p(6) are confounded.
+When a model is run the parameter count determined by MARK
+is stored in \code{results$npar} and the AICc value is
+stored in \code{results$AICc}.  If the argument
+\code{adjust} is set to TRUE in the call to
+\code{\link{run.mark.model}} and MARK determined that the
+design matrix was not full rank (i.e., the parameter count
+is less than the columns of the design matrix), then the
+parameter count from MARK is stored in
+\code{results$npar.unadjusted} and AICc in
+\code{results$AICc.unadjusted} and \code{results$npar} is
+set to the number of columns of the design matrix and
+\code{results$AICc} uses the assumed full rank value of
+\code{npar}. This function allows the parameter count to be
+reset to any value less than or equal to the number of
+columns in the design matrix.  If
+\code{results$npar.unadjusted} exists it is kept as is.  If
+it doesn't exist, then the current values of
+\code{results$npar} and \code{results$AICc} are stored in
+the \code{.unadjusted} fields to maintain the values from
+MARK, and the new adjusted values defined by the function
+argument \code{npar} are stored in \code{results$npar} and
+\code{results$AICc}. In the example below, the CJS model
+Phi(t)p(t) is fitted with the call to \code{\link{mark}}
+which defaults to \code{adjust=TRUE}.  This is used to show
+how \code{adjust.parameter.count} can be used to adjust the
+count to 11 from the full rank count of 12. Alternatively,
+the argument \code{adjust=FALSE} can be added to prevent
+the adjustment which is appropriate in this case because
+Phi(6) and p(6) are confounded.
 }
 \examples{
 \donttest{
@@ -60,10 +59,10 @@ dipper.phitime.ptime=mark(dipper,model.parameters=list(Phi=Phitime, p=ptime),
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{run.mark.model}},\code{\link{model.table}}
+\code{\link{run.mark.model}},\code{\link{model.table}}
 }
 \keyword{utility}
 

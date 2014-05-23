@@ -3,8 +3,8 @@
 \alias{adjust.value}
 \title{Adjust over-dispersion scale or a result value such as effective sample size}
 \usage{
-  adjust.value(field="n",value,model.list)
-    adjust.chat(chat=1,model.list)
+adjust.value(field="n",value,model.list)
+       adjust.chat(chat=1,model.list)
 }
 \arguments{
   \item{field}{Character string containing name of the
@@ -25,38 +25,38 @@
   ("CJS")}
 }
 \value{
-  model.list with all models given the new chat value and
-  model.table adjusted for chat values
+model.list with all models given the new chat value and
+model.table adjusted for chat values
 }
 \description{
-  Adjust value of over-dispersion constant or another
-  result value for a collection of models which modifies
-  model selection criterion and estimated standard errors.
+Adjust value of over-dispersion constant or another result
+value for a collection of models which modifies model
+selection criterion and estimated standard errors.
 }
 \details{
-  The value of \code{chat} is stored with the model object
-  except when there is no over-dispersion (\code{chat}=1).
-  This function assigns a new value of \code{chat} for the
-  collection of models specified by \code{model.list}
-  and/or \code{type}.  The value of \code{chat} is used by
-  \code{\link{model.table}} for model selection in
-  computing QAICc unless \code{chat=1}.  It is also used in
-  \code{\link{summary.mark}}, \code{\link{get.real}} and
-  \code{\link{compute.real}} to adjust standard errors and
-  confidence intervals. Note that the standard errors and
-  confidence intervals in
-  \code{results$beta},\code{results$beta.vcv}
-  \code{results$real}, \code{results$derived} and
-  \code{results$derived.vcv} are not modified and always
-  assume \code{chat=1}.
+The value of \code{chat} is stored with the model object
+except when there is no over-dispersion (\code{chat}=1).
+This function assigns a new value of \code{chat} for the
+collection of models specified by \code{model.list} and/or
+\code{type}.  The value of \code{chat} is used by
+\code{\link{model.table}} for model selection in computing
+QAICc unless \code{chat=1}.  It is also used in
+\code{\link{summary.mark}}, \code{\link{get.real}} and
+\code{\link{compute.real}} to adjust standard errors and
+confidence intervals. Note that the standard errors and
+confidence intervals in
+\code{results$beta},\code{results$beta.vcv}
+\code{results$real}, \code{results$derived} and
+\code{results$derived.vcv} are not modified and always
+assume \code{chat=1}.
 
-  It can also be used to modify a field in
-  \code{model$results} such as \code{n} which is ESS
-  (effective sample size) from MARK output that is used in
-  AICc/QAICc calculations.
+It can also be used to modify a field in
+\code{model$results} such as \code{n} which is ESS
+(effective sample size) from MARK output that is used in
+AICc/QAICc calculations.
 }
 \note{
-  See note in \code{\link{collect.models}}
+See note in \code{\link{collect.models}}
 }
 \examples{
 #
@@ -82,11 +82,11 @@ POPAN.results
 }
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{model.table}}, \code{\link{summary.mark}},
-  \code{\link{get.real}} ,\code{\link{compute.real}}
+\code{\link{model.table}}, \code{\link{summary.mark}},
+\code{\link{get.real}} ,\code{\link{compute.real}}
 }
 \keyword{utility}
 

@@ -1217,7 +1217,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
             zz=zzd
      }
   }
-  write(strwrap(string,100),file=outfile,append=TRUE)
+  write(strwrap(string,100,prefix=" "),file=outfile,append=TRUE)
 #
 #  Output group labels
 #
@@ -1877,13 +1877,13 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
   model$profile.int=profile.int
   model$chat=chat
-# Assign Mlogits that are set to 0 to a Logit link so they can be simplified
+# Assign Mlogits that are set to a fixed value to a Logit link so they can be simplified
   if(mlogit0)
   {
-	  fixedzero=model$fixed$index[model$fixed$value==0]
+	  fixedvalue=model$fixed$index
 	  mlogit.indices=grep("mlogit",model$links)
-	  if(length(mlogit.indices)>0 & length(fixedzero)>0)
-		  model$links[fixedzero[fixedzero%in%mlogit.indices]]="Logit"
+	  if(length(mlogit.indices)>0 & length(fixedvalue)>0)
+		  model$links[fixedvalue[fixedvalue%in%mlogit.indices]]="Logit"
   }
 # Simplify the pim structure
   if(simplify) model=simplify.pim.structure(model)

@@ -2,7 +2,7 @@
 \alias{fill.covariates}
 \title{Fill covariate entries in MARK design matrix with values}
 \usage{
-  fill.covariates(model, values)
+fill.covariates(model, values)
 }
 \arguments{
   \item{model}{MARK model object}
@@ -12,26 +12,25 @@
   entered}
 }
 \value{
-  New design matrix with user-defined covariate values
-  entered in place of covariate names
+New design matrix with user-defined covariate values
+entered in place of covariate names
 }
 \description{
-  Replaces covariate names in design matrix with specific
-  values to compute estimates of real parameters at those
-  values using the dataframe from
-  \code{\link{find.covariates}} after any value
-  replacement.
+Replaces covariate names in design matrix with specific
+values to compute estimates of real parameters at those
+values using the dataframe from
+\code{\link{find.covariates}} after any value replacement.
 }
 \details{
-  The design matrix for a MARK model with individual
-  covariates contains the covariate names used in the
-  model.  In computing the real parameters for the
-  encounter history of an individual it replaces instances
-  of covariate names with the individual covariate values.
-  This function replaces the cells in the design matrix
-  that contain individidual covariates with user-specified
-  values which is an edited version (if needed) of the
-  dataframe returned by \code{\link{find.covariates}}.
+The design matrix for a MARK model with individual
+covariates contains the covariate names used in the model.
+In computing the real parameters for the encounter history
+of an individual it replaces instances of covariate names
+with the individual covariate values.  This function
+replaces the cells in the design matrix that contain
+individidual covariates with user-specified values which is
+an edited version (if needed) of the dataframe returned by
+\code{\link{find.covariates}}.
 }
 \examples{
 data(dipper)
@@ -69,10 +68,10 @@ survival.by.sex$vcv.real[1,2]/prod(survival.by.sex$se.real[1:2])
 # sampling correlation of the estimates
 }
 \author{
-  Jeff Laake
+Jeff Laake
 }
 \seealso{
-  \code{\link{find.covariates}}, \code{\link{compute.real}}
+\code{\link{find.covariates}}, \code{\link{compute.real}}
 }
 \keyword{utility}
 

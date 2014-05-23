@@ -7,13 +7,13 @@ variables.  \describe{ \item{ch}{a character vector containing the presence
 (1) and absence (0) with 2 primary occasions with 48 and 31 visits to the
 site} \item{freq}{frequency of sites (always 1)} }}
 \description{
-  A robust design occupancy data set for modelling
-  presence/absence data for salamanders.
+A robust design occupancy data set for modelling
+presence/absence data for salamanders.
 }
 \details{
-  This is a data set that I got from Gary White which is
-  suppose to be salamander data collected with a robust
-  design.
+This is a data set that I got from Gary White which is
+suppose to be salamander data collected with a robust
+design.
 }
 \examples{
 \donttest{

@@ -2,8 +2,8 @@
 \alias{var.components}
 \title{Variance components estimation}
 \usage{
-  var.components(theta, design, vcv, alpha = 0.05,
-    upper = 10 * max(vcv), LAPACK = TRUE)
+var.components(theta, design, vcv, alpha = 0.05, upper = 10 * max(vcv),
+  LAPACK = TRUE)
 }
 \arguments{
   \item{theta}{vector of parameter estimates}
@@ -22,48 +22,46 @@
   decomposition and inversion}
 }
 \value{
-  A list with the following elements \item{sigmasq}{process
-  variance estimate and confidence interval; estimate may
-  be <0} \item{sigma}{sqrt of process variance; set to o if
-  sigmasq<0} \item{beta}{dataframe with estimates and
-  standard errors of betas for design}
-  \item{betarand}{dataframe of shrinkage estimates}
-  \item{vcv.beta}{variance-covariance matrix for beta}
-  \item{GTrace}{trace of matrix G}
+A list with the following elements \item{sigmasq}{process
+variance estimate and confidence interval; estimate may be
+<0} \item{sigma}{sqrt of process variance; set to o if
+sigmasq<0} \item{beta}{dataframe with estimates and
+standard errors of betas for design}
+\item{betarand}{dataframe of shrinkage estimates}
+\item{vcv.beta}{variance-covariance matrix for beta}
+\item{GTrace}{trace of matrix G}
 }
 \description{
-  Computes estimated effects, standard errors and process
-  variance for a set of estimates
+Computes estimated effects, standard errors and process
+variance for a set of estimates
 }
 \details{
-  Computes estimated effects, standard errors and process
-  variance for a set of estimates using the method of
-  moments estimator described by Burnham and White (2002).
-  The \code{design} matrix specifies the manner in which
-  the estimates (\code{theta}) are combined.  The number of
-  rows of the design matrix must match the length of
-  \code{theta}.
+Computes estimated effects, standard errors and process
+variance for a set of estimates using the method of moments
+estimator described by Burnham and White (2002). The
+\code{design} matrix specifies the manner in which the
+estimates (\code{theta}) are combined.  The number of rows
+of the design matrix must match the length of \code{theta}.
 
-  If you select specific values of theta, you must select
-  the equivalent sub-matrix of the variance-covariance
-  matrix.  For instance, if the parameter indices are
-  \code{$estimates[c(1:5,8)]} then the appropriate
-  definition of the vcv matrix would be vcv=vcv[c(1:5,8),
-  c(1:5,8)], if vcv is nxn for n estimates. Note that
-  get.real will only return the vcv matrix of the unique
-  reals so the dimensions of estimates and vcv will not
-  always match as in the example below where estimates has
-  21 rows but with the time model there are only 6 unique
-  Phis so vcv is 6x6.
+If you select specific values of theta, you must select the
+equivalent sub-matrix of the variance-covariance matrix.
+For instance, if the parameter indices are
+\code{$estimates[c(1:5,8)]} then the appropriate definition
+of the vcv matrix would be vcv=vcv[c(1:5,8), c(1:5,8)], if
+vcv is nxn for n estimates. Note that get.real will only
+return the vcv matrix of the unique reals so the dimensions
+of estimates and vcv will not always match as in the
+example below where estimates has 21 rows but with the time
+model there are only 6 unique Phis so vcv is 6x6.
 
-  To get a mean estimate use a column matrix of 1's (e.g.,
-  \code{design=matrix(1,ncol=1,nrow=length(theta))}. The
-  function returns a list with the estimates of the
-  coefficients for the design matrix (\code{beta}) with one
-  value per column in the design matrix and the
-  variance-covariance matrix (\code{vcv.beta}) for the
-  \code{beta} estimates. The process variance is returned
-  as \code{sigma}.
+To get a mean estimate use a column matrix of 1's (e.g.,
+\code{design=matrix(1,ncol=1,nrow=length(theta))}. The
+function returns a list with the estimates of the
+coefficients for the design matrix (\code{beta}) with one
+value per column in the design matrix and the
+variance-covariance matrix (\code{vcv.beta}) for the
+\code{beta} estimates. The process variance is returned as
+\code{sigma}.
 }
 \examples{
 \donttest{
@@ -84,11 +82,11 @@ md$results$lnl+2*(npar + (npar*(npar+1))/(md$results$n-npar-1))
 }
 }
 \author{
-  Jeff Laake; Ben Augustine
+Jeff Laake; Ben Augustine
 }
 \references{
-  BURNHAM, K. P. and G. C. WHITE. 2002. Evaluation of some
-  random effects methodology applicable to bird ringing
-  data.  Journal of Applied Statistics 29: 245-264.
+BURNHAM, K. P. and G. C. WHITE. 2002. Evaluation of some
+random effects methodology applicable to bird ringing data.
+Journal of Applied Statistics 29: 245-264.
 }
 

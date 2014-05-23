@@ -3,9 +3,8 @@
 \title{Constructs and runs in parallel a set of MARK models from a dataframe of parameter
 specifications}
 \usage{
-  mark.wrapper.parallel(model.list, silent = FALSE,
-    use.initial = FALSE, initial = NULL, parallel = TRUE,
-    cpus = 2, threads = 1, ...)
+mark.wrapper.parallel(model.list, silent = FALSE, use.initial = FALSE,
+  initial = NULL, parallel = TRUE, cpus = 2, threads = 1, ...)
 }
 \arguments{
   \item{model.list}{a dataframe of parameter specification
@@ -33,82 +32,81 @@ specifications}
   These must be specified as argument=value pairs.}
 }
 \value{
-  marklist - list of mark models that were run and a
-  model.table of results
+marklist - list of mark models that were run and a
+model.table of results
 }
 \description{
-  This is a convenience function that uses a dataframe of
-  parameter specifications created by
-  \code{\link{create.model.list}} and it constructs and
-  runs each model and names the models by concatenating
-  each of the parameter specification names separated by a
-  period.  The results are returned as a marklist with a
-  model.table constructed by \code{\link{collect.models}}.
+This is a convenience function that uses a dataframe of
+parameter specifications created by
+\code{\link{create.model.list}} and it constructs and runs
+each model and names the models by concatenating each of
+the parameter specification names separated by a period.
+The results are returned as a marklist with a model.table
+constructed by \code{\link{collect.models}}.
 }
 \details{
-  The model names in \code{model.list} must be in the frame
-  of the function that calls \code{run.models}. If
-  \code{model.list=NULL} or the MARK models are collected
-  from the frame of the calling function (the parent). If
-  \code{type} is specified only the models of that type
-  (e.g., "CJS") are run. In each case the models are run
-  and saved in the parent frame. To fully understand, how
-  this function works and its limitations, see
-  \code{\link{create.model.list}}.
+The model names in \code{model.list} must be in the frame
+of the function that calls \code{run.models}. If
+\code{model.list=NULL} or the MARK models are collected
+from the frame of the calling function (the parent). If
+\code{type} is specified only the models of that type
+(e.g., "CJS") are run. In each case the models are run and
+saved in the parent frame. To fully understand, how this
+function works and its limitations, see
+\code{\link{create.model.list}}.
 
-  If \code{use.initial=TRUE}, prior to running a model it
-  looks for the first model that has already been run (if
-  any) for each parameter formula and constructs an
-  \code{initial} vector from that previous run. For
-  example, if you provided 5 models for p and 3 for Phi in
-  a CJS model, as soon as the first model for p is run, in
-  the subsequent 2 models with different Phi models, the
-  initial values for p are assigned based on the run with
-  the first Phi model.  At the outset this seemed like a
-  good idea to speed up execution times, but from the one
-  set of examples I ran where several parameters were at
-  boundaries, the results were discouraging because the
-  models converged to a sub-optimal likelihood value than
-  the runs using the default initial values.  I've left
-  sthis option in but set its default value to FALSE.
+If \code{use.initial=TRUE}, prior to running a model it
+looks for the first model that has already been run (if
+any) for each parameter formula and constructs an
+\code{initial} vector from that previous run. For example,
+if you provided 5 models for p and 3 for Phi in a CJS
+model, as soon as the first model for p is run, in the
+subsequent 2 models with different Phi models, the initial
+values for p are assigned based on the run with the first
+Phi model.  At the outset this seemed like a good idea to
+speed up execution times, but from the one set of examples
+I ran where several parameters were at boundaries, the
+results were discouraging because the models converged to a
+sub-optimal likelihood value than the runs using the
+default initial values.  I've left sthis option in but set
+its default value to FALSE.
 
-  A possibly more useful argument is the argument
-  \code{initial}.  Previously, you could use
-  \code{initial=model} as part of the ... arguments and it
-  would use the estimates from that model to assign initial
-  values for any model in the set. Now I've defined
-  \code{initial} as a specific argument and it can be used
-  as above or you can also use it to specify a
-  \code{marklist} of previously run models. When you do
-  that, the code will lookup each new model to be run in
-  the set of models specified by \code{initial} and if it
-  finds one with the matching name then it will use the
-  estimates for any matching parameters as initial values
-  in the same way as \code{initial=model} does. The model
-  name is based on concatenating the names of each of the
-  parameter specification objects.  To make this useful,
-  you'll want to adapt to an approach that I've started to
-  use of naming the objects something like p.1,p.2 etc
-  rather than naming them something like p.dot, p.time as
-  done in many of the examples.  I've found that using
-  numeric approach is much less typing and cumbersome
-  rather than trying to reflect the formula in the name. By
-  default, the formula is shown in the model selection
-  results table, so it was a bit redundant.  Now where I
-  see this being the most benefit. Individual covariate
-  models tend to run rather slowly. So one approach is to
-  run the sequence of models (eg results stored in
-  initial_marklist), including the set of formulas with all
-  of the variables other than individual covariates.  Then
-  run another set with the same numbering scheme, but
-  adding the individual covariates to the formula and using
-  \code{initial=initial_marklist} That will work if each
-  parameter specification has the same name (eg.,
-  p.1=list(formula=~time) and then
-  p.1=list(formula=~time+an_indiv_covariate)).  All of the
-  initial values will be assigned for the previous run
-  except for any added parameters (eg. an_indiv_covariate)
-  which will start with a 0 initial value.
+A possibly more useful argument is the argument
+\code{initial}.  Previously, you could use
+\code{initial=model} as part of the ... arguments and it
+would use the estimates from that model to assign initial
+values for any model in the set. Now I've defined
+\code{initial} as a specific argument and it can be used as
+above or you can also use it to specify a \code{marklist}
+of previously run models. When you do that, the code will
+lookup each new model to be run in the set of models
+specified by \code{initial} and if it finds one with the
+matching name then it will use the estimates for any
+matching parameters as initial values in the same way as
+\code{initial=model} does. The model name is based on
+concatenating the names of each of the parameter
+specification objects.  To make this useful, you'll want to
+adapt to an approach that I've started to use of naming the
+objects something like p.1,p.2 etc rather than naming them
+something like p.dot, p.time as done in many of the
+examples.  I've found that using numeric approach is much
+less typing and cumbersome rather than trying to reflect
+the formula in the name. By default, the formula is shown
+in the model selection results table, so it was a bit
+redundant.  Now where I see this being the most benefit.
+Individual covariate models tend to run rather slowly. So
+one approach is to run the sequence of models (eg results
+stored in initial_marklist), including the set of formulas
+with all of the variables other than individual covariates.
+Then run another set with the same numbering scheme, but
+adding the individual covariates to the formula and using
+\code{initial=initial_marklist} That will work if each
+parameter specification has the same name (eg.,
+p.1=list(formula=~time) and then
+p.1=list(formula=~time+an_indiv_covariate)).  All of the
+initial values will be assigned for the previous run except
+for any added parameters (eg. an_indiv_covariate) which
+will start with a 0 initial value.
 }
 \examples{
 \dontrun{
@@ -144,11 +142,11 @@ xx=do.MSOccupancy()
 }
 }
 \author{
-  Eldar Rakhimberdiev
+Eldar Rakhimberdiev
 }
 \seealso{
-  \code{\link{collect.models}}, \code{\link{mark}},
-  \code{\link{create.model.list}}
+\code{\link{collect.models}}, \code{\link{mark}},
+\code{\link{create.model.list}}
 }
 \keyword{utility}
 

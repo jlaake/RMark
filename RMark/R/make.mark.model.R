@@ -1247,7 +1247,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   }
   else
 #     write.table(zz,file=outfile,eol=";\n",sep=" ",col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
-      apply(zz,1,function(x) write(strwrap(paste(paste(x,collapse=" "),";",sep=""),80),file=outfile,append=TRUE))	 
+      apply(zz,1,function(x) write(strwrap(paste(paste(x,collapse=" "),";",sep=""),80,prefix=" "),file=outfile,append=TRUE))	 
 #
 # Output counts section of Mark-resight models if appropriate
 #

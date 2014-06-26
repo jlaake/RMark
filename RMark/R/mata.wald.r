@@ -25,7 +25,8 @@
 #' of Turek and Fletcher (2012).
 #' @aliases mata.wald tailarea.z tailarea.t 
 #' @usage 
-#'        mata.wald(theta.hats, se.theta.hats, model.weights, normal.lm=FALSE, residual.dfs=0, alpha=0.025)
+#'        mata.wald(theta.hats, se.theta.hats, model.weights, normal.lm=FALSE, 
+#'                           residual.dfs=0, alpha=0.025)
 #'  
 #'        tailarea.z(theta, theta.hats, se.theta.hats, model.weights, alpha)
 #' 

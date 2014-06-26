@@ -22,8 +22,9 @@
 #' using covariates. Note that this will only work with models created after
 #' v1.5.0 such that average covariate values are stored in each model object.
 #' 
-#' @usage \method{model.average}{marklist}(x, parameter, data, vcv, drop=TRUE, indices=NULL, revised=TRUE, mata=FALSE, normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
-#' @S3method model.average marklist
+#' @usage \method{model.average}{marklist}(x, parameter, data, vcv, drop=TRUE, indices=NULL, revised=TRUE, mata=FALSE,
+#'         normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
+#' @export model.average.marklist
 #' @param x a list of mark model results and a model.table constructed by
 #' \code{\link{collect.models}}
 #' @param parameter name of model parameter (e.g., "Phi" for CJS models); if

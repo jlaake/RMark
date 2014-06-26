@@ -56,9 +56,9 @@
 #' @param brief if TRUE, does not show real parameter estimates
 #' @param ... additional non-specified argument for S3 generic function
 #' @param x list resulting from call to \code{summary}
-#' @S3method summary mark
-#' @S3method print summary.mark
-#' @S3method coef mark
+#' @export summary.mark
+#' @export print.summary.mark
+#' @export coef.mark
 #' @return A list with each of the summarized objects that depends on the
 #' argument values. Only the first 4 are given if it is a summary of a model
 #' that has not been run. \item{model}{type of model (e.g., CJS)}

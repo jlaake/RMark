@@ -257,7 +257,7 @@ popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=
            N.list=model.average(list(estimate=estimate,weight=model$model.table$weight,vcv=vcv),revised=revised)
            NGross.df=data.frame(NGross=N.list$estimate,se=N.list$se)
            NGross.df$LCL=conf.int(NGross.df$NGross,NGross.df$se,normal)
-           NGross.df$UCL=conf.int(NGross.df$N,NGross.df$se,normal,FALSE)
+           NGross.df$UCL=conf.int(NGross.df$NGross,NGross.df$se,normal,FALSE)
            NGross.vcv=N.list$vcv
          }
         if(N&NGross)return(list(N=N.df,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv, NGross=NGross.df, NGross.vcv=NGross.vcv) )

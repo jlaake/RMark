@@ -11,7 +11,7 @@
 #' @return model.list: a list of \code{mark} models and optionally a table of
 #' model results.
 #' @author Jeff Laake
-#' @export
+#' @export merge.mark
 #' @seealso
 #' \code{\link{collect.models}},\code{\link{remove.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
 #' @keywords utility

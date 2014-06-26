@@ -29,8 +29,9 @@
 #' model-averaged estimates is computed using equation 4.9 of Burnham and
 #' Anderson (2002) if if \code{revised=FALSE}; otherwise it uses eq 6.12.
 #' 
-#' @usage \method{model.average}{list}(x, revised=TRUE, mata=FALSE, normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
-#' @S3method model.average list
+#' @usage \method{model.average}{list}(x, revised=TRUE, mata=FALSE, normal.lm=FALSE, 
+#'                                        residual.dfs=0, alpha=0.025,...)
+#' @export model.average.list
 #' @param x a list containing the following elements: 1) \code{estimate} - a
 #' vector or matrix of estimates, 2)a vector of model selection criterion value
 #' named \code{AIC,AICc,QAIC,QAICc} or a \code{weight} variable that sums to 1

@@ -44,14 +44,14 @@ Pradlambda	p	0	0	0	Square	all	logit	~1
 Pradlambda	Lambda	0	-1	1	Square	all	log	~1											
 Closed	p	0	0	0	Square	all	logit	~1	FALSE	c									
 Closed	c	1	-1	0	Square	all	logit			p									
-Closed	N	0	1		Square	all	log	~1											
+Closed	f0	0	1		Square	all	log	~1											
 FullHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
 FullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0							
 FullHet	c	1	-1	0	Square	all	logit			p	TRUE	0							
-FullHet	N	0	1		Square	all	log	~1			FALSE								
+FullHet	f0	0	1		Square	all	log	~1			FALSE								
 HetClosed	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
 HetClosed	p	0	1	0	Square	all	logit	~1			TRUE	0							
-HetClosed	N	0	1		Square	all	log	~1			FALSE								
+HetClosed	f0	0	1		Square	all	log	~1			FALSE								
 Huggins	p	0	0	0	Square	all	logit	~1	FALSE	c									
 Huggins	c	1	-1	0	Square	all	logit			p									
 HugHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
@@ -112,13 +112,13 @@ Robust	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE
 Robust	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
 Robust	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
 Robust	c	1	-1	0	Square	all	logit			p			TRUE						
-Robust	N	0			Square	all	log	~session					TRUE						
+Robust	f0	0			Square	all	log	~session					TRUE						
 RDHet	S	0	-1	1	Triang	all	logit	~1					FALSE						
 RDHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
 RDHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
 RDHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDHet	N	0			Square	all	log	~session			FALSE		TRUE						
+RDHet	f0	0			Square	all	log	~session			FALSE		TRUE						
 RDHFHet	S	0	-1	1	Triang	all	logit	~1					FALSE						
 RDHFHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
 RDHFHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
@@ -131,7 +131,7 @@ RDFullHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE
 RDFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
 RDFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDFullHet	N	0			Square	all	log	~session			FALSE		TRUE						
+RDFullHet	f0	0			Square	all	log	~session			FALSE		TRUE						
 RDHuggins	S	0	-1	1	Triang	all	logit	~1					FALSE						
 RDHuggins	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
 RDHuggins	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
@@ -151,7 +151,7 @@ CRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE
 CRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
 CRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE	TRUE					
 CRDMS	c	1	-1	0	Square	all	logit			p			TRUE	TRUE					
-CRDMS	N	0			Square	all	log	~session					TRUE	TRUE					
+CRDMS	f0	0			Square	all	log	~session					TRUE	TRUE					
 LogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE						
 LogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE						
 LogitNormalMR	N	0			Square	all	log	~session					TRUE						
@@ -214,13 +214,13 @@ HetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE
 HetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
 HetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE					
 HetRDMS	p	0		0	Square	all	logit	~1			TRUE	0	TRUE	TRUE					
-HetRDMS	N	0			Square	all	log	~-1+stratum:session			FALSE		TRUE	TRUE					
+HetRDMS	f0	0			Square	all	log	~-1+stratum:session			FALSE		TRUE	TRUE					
 FHetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
 FHetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
 FHetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE					
 FHetRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE	TRUE					
 FHetRDMS	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE	TRUE					
-FHetRDMS	N	0			Square	all	log	~-1+stratum:session			FALSE		TRUE	TRUE					
+FHetRDMS	f0	0			Square	all	log	~-1+stratum:session			FALSE		TRUE	TRUE					
 HHetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
 HHetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
 HHetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE					
@@ -281,7 +281,7 @@ RDPdGClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE
 RDPdGClosed	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
 RDPdGClosed	c	1	-1	0	Square	all	logit			p			TRUE						
-RDPdGClosed	N	0			Square	all	log	~session					TRUE						
+RDPdGClosed	f0	0			Square	all	log	~session					TRUE						
 RDPdGHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGHuggins	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
@@ -290,13 +290,13 @@ RDPdGHet	Phi	0	-1	1	Square	all	logit	~1					FALSE
 RDPdGHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDPdGHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDPdGHet	N	0			Square	all	log	~session					TRUE						
+RDPdGHet	f0	0			Square	all	log	~session					TRUE						
 RDPdGFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGFullHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDPdGFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
 RDPdGFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDPdGFullHet	N	0			Square	all	log	~session			FALSE		TRUE						
+RDPdGFullHet	f0	0			Square	all	log	~session			FALSE		TRUE						
 RDPdGHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGHugFullHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdGHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
@@ -306,7 +306,7 @@ RDPdLClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE
 RDPdLClosed	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdLClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
 RDPdLClosed	c	1	-1	0	Square	all	logit			p			TRUE						
-RDPdLClosed	N	0			Square	all	log	~session					TRUE						
+RDPdLClosed	f0	0			Square	all	log	~session					TRUE						
 RDPdLHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdLHuggins	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdLHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
@@ -315,13 +315,13 @@ RDPdLHet	Phi	0	-1	1	Square	all	logit	~1					FALSE
 RDPdLHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdLHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDPdLHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDPdLHet	N	0			Square	all	log	~session					TRUE						
+RDPdLHet	f0	0			Square	all	log	~session					TRUE						
 RDPdLFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdLFullHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdLFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDPdLFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
 RDPdLFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDPdLFullHet	N	0			Square	all	log	~session			FALSE		TRUE						
+RDPdLFullHet	f0	0			Square	all	log	~session			FALSE		TRUE						
 RDPdLHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdLHugFullHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdLHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
@@ -331,7 +331,7 @@ RDPdfClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE
 RDPdfClosed	f	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdfClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
 RDPdfClosed	c	1	-1	0	Square	all	logit			p			TRUE						
-RDPdfClosed	N	0			Square	all	log	~session					TRUE						
+RDPdfClosed	f0	0			Square	all	log	~session					TRUE						
 RDPdfHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdfHuggins	f	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdfHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
@@ -340,13 +340,13 @@ RDPdfHet	Phi	0	-1	1	Square	all	logit	~1					FALSE
 RDPdfHet	f	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdfHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDPdfHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDPdfHet	N	0			Square	all	log	~session					TRUE						
+RDPdfHet	f0	0			Square	all	log	~session					TRUE						
 RDPdfFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdfFullHet	f	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdfFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDPdfFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
 RDPdfFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDPdfFullHet	N	0			Square	all	log	~session			FALSE		TRUE						
+RDPdfFullHet	f0	0			Square	all	log	~session			FALSE		TRUE						
 RDPdfHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdfHugFullHet	f	0	-1	1	Square	all	logit	~1					FALSE						
 RDPdfHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
@@ -376,7 +376,7 @@ RDBarker	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE
 RDBarker	F	0	-1	1	Triang	all	logit	~1					FALSE						
 RDBarker	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
 RDBarker	c	1	-1	0	Square	all	logit			p			TRUE						
-RDBarker	N	0			Square	all	log	~session					TRUE						
+RDBarker	f0	0			Square	all	log	~session					TRUE						
 RDBarkHet	S	0	0	1	Triang	all	logit	~1					FALSE						
 RDBarkHet	r	0	0	0	Triang	all	logit	~1					FALSE						
 RDBarkHet	R	0	0	0	Triang	all	logit	~1					FALSE						
@@ -386,7 +386,7 @@ RDBarkHet	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE
 RDBarkHet	F	0	-1	1	Triang	all	logit	~1					FALSE						
 RDBarkHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDBarkHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDBarkHet	N	0			Square	all	log	~session					TRUE						
+RDBarkHet	f0	0			Square	all	log	~session					TRUE						
 RDBarkFHet	S	0	0	1	Triang	all	logit	~1					FALSE						
 RDBarkFHet	r	0	0	0	Triang	all	logit	~1					FALSE						
 RDBarkFHet	R	0	0	0	Triang	all	logit	~1					FALSE						
@@ -397,7 +397,7 @@ RDBarkFHet	F	0	-1	1	Triang	all	logit	~1					FALSE
 RDBarkFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
 RDBarkFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
 RDBarkFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDBarkFHet	N	0			Square	all	log	~session					TRUE						
+RDBarkFHet	f0	0			Square	all	log	~session					TRUE						
 RDBarkHug	S	0	0	1	Triang	all	logit	~1					FALSE						
 RDBarkHug	r	0	0	0	Triang	all	logit	~1					FALSE						
 RDBarkHug	R	0	0	0	Triang	all	logit	~1					FALSE						

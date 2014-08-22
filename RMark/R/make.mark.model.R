@@ -780,7 +780,7 @@ complete.design.matrix=dm[,!allzero,drop=FALSE]
 # Look for setting of initial values in the input file; if found write them 
 # exclude columns that are now all 0s.
 #
-if(length(grep("initial ",model$input))!=0)
+if(length(grep("XXXinitialXXX ",model$input))!=0)
 {
   if(any(allzero))
   {
@@ -1726,8 +1726,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
             }
          }
       }
-      string=paste("initial ",paste(initial.values,collapse=" "),";")
-      write(string,file=outfile,append=TRUE)
+      if(simplify)
+		  string=paste("XXXinitialXXX ",paste(initial.values,collapse=" "),";")
+	  else
+		  string=paste("initial ",paste(initial.values,collapse=" "),";")
+	  write(string,file=outfile,append=TRUE)
    }
 #
 #  If model will not be simplified, output design matrix to the MARK input file

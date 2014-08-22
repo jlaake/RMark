@@ -1,11 +1,11 @@
-RMark 2.1.9 (18 July 2014)
+RMark 2.1.9 (19 Aug 2014)
 --------------------------
 CHANGES 
 * For closed full likelihood models the parameter is named f0 instead of N
 
 BUG FIXES
 * Excepted mark-resight LogitNormal from check on all 0 capture histories because they are allowed for those models. Thanks to Brian Taras for pointing out the problem.
-
+* Fixed bug in make.mark.model which could be fooled by when "initial " was found in a formula and it was expecting initial parameter values. Thanks to Christian Kampichler for pointing out the problem.
 
 RMark 2.1.8 (26 June 2014)
 --------------------------

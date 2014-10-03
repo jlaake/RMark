@@ -784,13 +784,13 @@ if(length(grep("XXXinitialXXX ",model$input))!=0)
 {
   if(any(allzero))
   {
-	  initial=strsplit(model$input[grep("initial ", model$input)]," ")[[1]]
+	  initial=strsplit(model$input[grep("XXXinitialXXX ", model$input)]," ")[[1]]
 	  initial=initial[-c(1:2,length(initial))]
 	  initial=initial[!allzero]
 	  string=paste("initial ",paste(initial,collapse=" ")," ;",collapse=" ")
   } else
   {
-	  string=model$input[grep("initial ",model$input)]
+	  string=model$input[grep("XXXinitialXXX ",model$input)]
   }		
   write(string, file = outfile, append = TRUE)
 }

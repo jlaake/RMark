@@ -407,6 +407,14 @@ remove.unused.occasions=function(data,ddl)
 }
 #### start of make.design.data
 #
+#
+#
+if(!is.list(data))
+	stop("data argument is not a processed data list")
+else
+	if(!"data"%in%names(data)|!"model"%in%names(data))
+		stop("data argument is not a processed data list")
+#
 # Check validity of parameter list; stop if not valid
 #
   if(!valid.parameters(data$model,parameters)) stop()

@@ -782,17 +782,11 @@ complete.design.matrix=dm[,!allzero,drop=FALSE]
 #
 if(length(grep("XXXinitialXXX ",model$input))!=0)
 {
-  if(any(allzero))
-  {
-	  initial=strsplit(model$input[grep("XXXinitialXXX ", model$input)]," ")[[1]]
-	  initial=initial[-c(1:2,length(initial))]
-	  initial=initial[!allzero]
-	  string=paste("initial ",paste(initial,collapse=" ")," ;",collapse=" ")
-  } else
-  {
-	  string=model$input[grep("XXXinitialXXX ",model$input)]
-  }		
-  write(string, file = outfile, append = TRUE)
+	initial=strsplit(model$input[grep("XXXinitialXXX ", model$input)]," ")[[1]]
+	initial=initial[-c(1:2,length(initial))]
+	if(any(allzero)) initial=initial[!allzero]
+	string=paste("initial ",paste(initial,collapse=" ")," ;",collapse=" ")
+    write(string, file = outfile, append = TRUE)
 }
 #
 #  If profile intervals requested write out needed statements

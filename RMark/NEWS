@@ -1,4 +1,4 @@
-RMark 2.1.9 (19 Aug 2014)
+RMark 2.1.9 (6 Oct 2014)
 --------------------------
 CHANGES 
 * For closed full likelihood models the parameter is named f0 instead of N

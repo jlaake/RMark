@@ -156,9 +156,9 @@ popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=
 #     Compute observed number in each group and compute real parameters and their
 #     variance-covariance matrix
 	  if(ng==1)
-		  Mt1=sum(x$freq)
+		  Mt1=sum(abs(x$freq))
 	  else
-		  Mt1=colSums(x$freq)
+		  Mt1=colSums(abs(x$freq))
       dd=covariate.predictions(model,data.frame(index=index),drop=drop)
 #     Call popan.Nt to compute abundance estimates for each group-occasion and their
 #     var-cov matrix.

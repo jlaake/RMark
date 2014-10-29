@@ -1,3 +1,10 @@
+RMark 2.1.10 (29 Oct 2014)
+--------------------------
+CHANGES 
+
+BUG FIXES
+* popan.derived was not handling loss on captures correctly because it was summing frequencies without taking absolute values. This was fixed in this version.
+
 RMark 2.1.9 (6 Oct 2014)
 --------------------------
 CHANGES 
@@ -6,6 +13,7 @@ CHANGES
 BUG FIXES
 * Excepted mark-resight LogitNormal from check on all 0 capture histories because they are allowed for those models. Thanks to Brian Taras for pointing out the problem.
 * Fixed bug in make.mark.model which could be fooled by when "initial " was found in a formula and it was expecting initial parameter values. Thanks to Christian Kampichler for pointing out the problem.
+
 
 RMark 2.1.8 (26 June 2014)
 --------------------------

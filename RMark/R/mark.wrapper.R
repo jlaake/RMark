@@ -107,7 +107,7 @@ for (i in 1:nrow(model.list))
         model.parameters=c(model.parameters,eval(parse(text=(as.character(model.list[i,j]))),envir=parent.frame()))
   }
   model.name=paste(model.list[i,],collapse=".")
-  message("\n",model.name,"\n")
+  if(!silent)message("\n",model.name,"\n")
   if(use.initial)
   {
 	  initial=NULL
@@ -155,7 +155,10 @@ rm(mymodel)
 #
 rm(initial)
 if(run)
-   return(collect.models())
+	if(silent)
+      return(suppressMessages(collect.models()))
+    else
+	  return(collect.models())
 else
    return(list.of.models)
 }

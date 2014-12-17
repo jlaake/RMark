@@ -172,7 +172,7 @@ mark.wrapper.parallel<-
 				model.parameters=c(model.parameters,eval(parse(text=(as.character(model.list[i,j]))),envir=parent.frame()))
 		}
 		model.name=paste(model.list[i,],collapse=".")
-		message("\n",model.name,"\n")
+		if(!silent)message("\n",model.name,"\n")
 		if(use.initial)
 		{
 			initial=NULL

@@ -1,6 +1,12 @@
-RMark 2.1.10 (29 Oct 2014)
+RMark 2.1.10 (11 Dec 2014)
 --------------------------
+NEW FEATURES
+* A new function MS_popan was added to enable abundance estimation with multistate model.
+
 CHANGES 
+* code was added to popan.derived to provide cumulative summation of B_Gross over time for each occasion and its v-c matrix. The last occasion for each group is NGross for that group.
+* extract.mark.output, mark, run.mark.model, mark.wrapper, and mark.wrapper.parallel were modified so that all messages are suppressed when silent=TRUE and if there was an error with the MARK run it does not pop open editor with the output file.
+* strata.labels are checked to make sure that they are all single characters
 
 BUG FIXES
 * popan.derived was not handling loss on captures correctly because it was summing frequencies without taking absolute values. This was fixed in this version.

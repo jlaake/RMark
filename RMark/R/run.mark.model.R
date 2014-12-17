@@ -201,7 +201,11 @@ delete=FALSE,external=FALSE,threads=-1,ignore.stderr=FALSE)
 #
 # Extract relevant parts of output
 #
-  results=try(extract.mark.output(out,model,adjust,realvcv,vcvfile))
+  if(ignore.stderr)
+	  results=suppressMessages(try(extract.mark.output(out,model,adjust,realvcv,vcvfile)))
+   else
+	  results=try(extract.mark.output(out,model,adjust,realvcv,vcvfile))
+   
 #  file.rename("markxxx.vcv",vcvfile)
   model$results=results
 #
@@ -210,10 +214,13 @@ delete=FALSE,external=FALSE,threads=-1,ignore.stderr=FALSE)
 #
   model$output=basefile
   model$input=NULL
-  if(class(results)=="try-error") 
+  if(class(results)=="try-error")
   {
-	  print.mark(model)
-	  message("\nProblem extracting output. Look at MARK output file to see what is wrong.\n")
+	  if(!ignore.stderr) 
+	  {
+	     print.mark(model)
+	     message("\nProblem extracting output. Look at MARK output file to see what is wrong.\n")
+	  }
 	  return(NULL)
   }
 #

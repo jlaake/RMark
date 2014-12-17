@@ -56,6 +56,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   locate=function(x)
   {
 	  loc=regexpr("} = ",out[x])
+	  if(length(loc)==0)return(NULL)
 	  if(loc[1]==-1)loc=regexpr(" = ",out[x])-1
 	  return(loc)
   }
@@ -67,24 +68,62 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   nbeta=dim(design.matrix)[2]
   x=grep("Effective sample size ",out,ignore.case=TRUE)
   if(length(x)==0)
-    stop("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+  {
+	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  return(NULL)
+  }
   n=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))
   x=grep("-2logL {",out,fixed=TRUE)
-#  x=grep("-2logL {",out,ignore.case=TRUE, extended=FALSE)
+  if(length(x)==0)
+  {
+	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  return(NULL)
+  }
+  #  x=grep("-2logL {",out,ignore.case=TRUE, extended=FALSE)
   lnl=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))
   x=grep("Number of Estimated",out,ignore.case=TRUE)
+  if(length(x)==0)
+  {
+	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  return(NULL)
+  }
   npar=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))
   x=grep("DEVIANCE ",out,ignore.case=TRUE)
+  if(length(x)==0)
+  {
+	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  return(NULL)
+  }
   deviance=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))[1]
   x = grep("DEVIANCE Degrees of Freedom ", out, ignore.case = TRUE)
+  if(length(x)==0)
+  {
+	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  return(NULL)
+  }
   deviance.df = type.convert(substr(out[x], locate(x)+4, nchar(out[x])))[1]
   x=grep("AICc",out,ignore.case=TRUE)
+  if(length(x)==0)
+  {
+	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  return(NULL)
+  }
   AICc=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))
   if(length(links)==1)
      x1=grep(paste(links,"link"),out,ignore.case=TRUE)
   else 
      x1=grep("parm-specific link",out,ignore.case=TRUE)
-  x2=grep("Real Function Parameters",out,ignore.case=TRUE)
+ if(length(x1)==0)
+ {
+	 message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	 return(NULL)
+ }
+ x2=grep("Real Function Parameters",out,ignore.case=TRUE)
+  if(length(x2)==0)
+  {
+	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  return(NULL)
+  }
   x3=length(out)
   if(length(grep("proc stop",out,ignore.case=TRUE))==0)
      message("\nWarning: output from MARK was not complete\n")

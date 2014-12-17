@@ -278,10 +278,13 @@ while(i<=retry & !converge)
 #
 # Run model
 #
-   runmodel<-run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads,ignore.stderr=silent)
+   if(silent)
+	   runmodel<-suppressMessages(run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads,ignore.stderr=silent))
+   else
+       runmodel<-run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads,ignore.stderr=silent)
    if(is.null(runmodel))
    {
-     cat("\n\n********Following model failed to run :",model$model.name,"**********\n\n")
+     if(!silent)message("\n\n********Following model failed to run :",model$model.name,"**********\n\n")
      return(invisible())
    }
    else
@@ -292,7 +295,7 @@ while(i<=retry & !converge)
 #
       if(retry>0 && !is.null(runmodel$results$singular))
       {
-         message("\nRe-running analysis with new starting values\n")
+		 if(!silent)message("\nRe-running analysis with new starting values\n")
          i=i+1
          converge=FALSE
          initial=runmodel$results$beta$estimate

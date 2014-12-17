@@ -1,15 +1,14 @@
 Package: RMark
 Version: 2.1.10
 Date: 2014-10-29
-Title: R Code for MARK Analysis
+Title: R Code for Mark Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with code contributions from Eldar
     Rakhimberdiev, Ben Augustine and Daniel Turek, and example data and
     analysis from Bret Collier, Jay Rotella, David Pavlacky, and Andrew Paul.
-Description: This package provides an interface to the
-    software package MARK developed by Gary White. MARK is
-    freely available at
-    (http://www.phidot.org/software/mark/download/) but is
-    not open source.
+Description: An interface to the software package MARK that constructs input
+    files for MARK and extracts the output. MARK was developed by Gary White
+    and is freely available at (http://www.phidot.org/software/mark/download/)
+    but is not open source.
 SystemRequirements: notepad.exe, mark.exe (>= 8.0) (or mark32.exe and
     mark64.exe) and rel_32.exe (see README.txt)
 Depends:

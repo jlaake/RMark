@@ -166,8 +166,21 @@ popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=
           Mt1+dd$estimates$estimate[N.index],dd$vcv,time.intervals)
 #     Call popan.NGross to compute gross abundance estimates for each group and their
 #     var-cov matrix.
-      if(NGross) NGross.list=popan.NGross(dd$estimates$estimate[phi.index],dd$estimates$estimate[pent.index],
-          Mt1+dd$estimates$estimate[N.index],dd$vcv, time.intervals)      
+      if(NGross) 
+	  {
+		  NGross.list=popan.NGross(dd$estimates$estimate[phi.index],dd$estimates$estimate[pent.index],
+          Mt1+dd$estimates$estimate[N.index],dd$vcv, time.intervals)  
+          if(is.null(x$group.covariates))ng=1
+          gindex=rep(1:ng,each=k+1)
+		  if(ng>1)
+		  {
+			  NGross.list$BiGross.df=x$group.covariates[gindex,,drop=FALSE]
+		      NGross.list$BiGross.df$occasion=rep(1:(k+1),ng)
+		  } else
+			  NGross.list$BiGross.df=data.frame(occasion=rep(1:(k+1),ng))
+		  NGross.list$BiGross.df$estimate=as.vector(t(NGross.list$BiGross))
+		  NGross.list$BiGross.df$se=sqrt(diag(NGross.list$vcv))
+	  }
 #     Construct dataframe with estimates, se and conf limits (95% normal)
       if(N)
       {
@@ -191,8 +204,8 @@ popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=
         Nbyocc=cbind(Occasion=1:(k+1),Nbyocc)
       }
 #     Return list of results
-      if(N&NGross) return(list(N=N.ests,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv, NGross=NGross.list$NGross, NGross.vcv=NGross.list$vcv) )
-      if(!N&NGross) return(list(NGross=NGross.list$NGross, NGross.vcv=NGross.list$vcv) )
+      if(N&NGross) return(list(N=N.ests,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv, NGross=NGross.list$NGross, NGross.vcv=NGross.list$NGross.vcv,BiGross=NGross.list$BiGross.df, BiGross.vcv=NGross.list$vcv) )
+      if(!N&NGross) return(list(NGross=NGross.list$NGross, NGross.vcv=NGross.list$NGross.vcv,BiGross=NGross.list$BiGross.df, BiGross.vcv=NGross.list$vcv) )
       if(N&!NGross) return(list(N=N.ests,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv) )
    }
 #  First check that x is a processed data list of type POPAN
@@ -259,9 +272,24 @@ popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=
            NGross.df$LCL=conf.int(NGross.df$NGross,NGross.df$se,normal)
            NGross.df$UCL=conf.int(NGross.df$NGross,NGross.df$se,normal,FALSE)
            NGross.vcv=N.list$vcv
-         }
-        if(N&NGross)return(list(N=N.df,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv, NGross=NGross.df, NGross.vcv=NGross.vcv) )
-        if(!N&NGross)return(list(NGross=NGross.df, NGross.vcv=NGross.vcv) )
+           # Ngross over time (cummulative sum of BiGross over time)
+		   estimate=matrix(0,nrow=nmodels,ncol=nrow(popan.list[[1]]$BiGross))
+		   vcv=vector("list",nmodels)
+		   for (i in 1:nmodels)
+		   {
+			   estimate[i,]=popan.list[[i]]$BiGross$estimate
+			   vcv[[i]]=popan.list[[i]]$BiGross.vcv
+		   }
+		   N.list=model.average(list(estimate=estimate,weight=model$model.table$weight,vcv=vcv),revised=revised)
+		   BiGross.df=popan.list[[1]]$BiGross
+		   BiGross.df$estimate=N.list$estimate
+		   BiGross.df$se=N.list$se
+		   BiGross.df$LCL=conf.int(BiGross.df$estimate,BiGross.df$se,normal)
+		   BiGross.df$UCL=conf.int(BiGross.df$estimate,BiGross.df$se,normal,FALSE)
+		   BiGross.vcv=N.list$vcv
+	   }
+        if(N&NGross)return(list(N=N.df,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv, NGross=NGross.df, NGross.vcv=NGross.vcv,BiGross=BiGross.df, BiGross.vcv=BiGross.vcv) )
+        if(!N&NGross)return(list(NGross=NGross.df, NGross.vcv=NGross.vcv,BiGross=BiGross.df, BiGross.vcv=BiGross.vcv) )
         if(N&!NGross)return(list(N=N.df,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv) )
      }
 }
@@ -341,7 +369,7 @@ popan.NGross<-function(Phi,pent,Ns,vc,time.intervals)
 #   N    - dataframe of estimates by group and occasion and se, lcl,ucl and group/occasion data
 #   vcv  - var-cov matrix of N estimates
 #
-# Define function to return matrix of first partials for N with respect to real parameters
+# Define function to return BiGross, NGross and matrix of first partials for BiGross with respect to real parameters
   partial.NGross=function(Phi,pent,Ns)
   {
      k=length(Phi)
@@ -352,34 +380,48 @@ popan.NGross<-function(Phi,pent,Ns,vc,time.intervals)
      BiGross=Bi*c(1,log(Phi)/(Phi-1))
      BiGross[is.nan(BiGross)]=Bi[is.nan(BiGross)]
      NGross=sum(BiGross)
-     partial=matrix(0,nrow=1,ncol=2*k+1)
-# Partial for phi
-     partial[1,1:k]=Bi[-1]*(time.intervals*(Phi-1)-time.intervals*Phi*log(Phi))/(Phi.unit*(Phi-1)^2)
-# Partial for pent
-     partial[1,(k+1):(2*k)]=Ns*(log(Phi)/(Phi-1)-1)
-# Partial for N
-     partial[1,2*k+1]=NGross/Ns
-     partial[is.nan(partial)]=0
-     return(list(NGross=NGross,partial=partial))
+     partial=matrix(0,nrow=k+1,ncol=2*k+1)
+#    Partial for phi
+	 partial[1,1:k]=0
+     for (j in 1:k)	
+        partial[j+1,j]=Bi[j+1]*(time.intervals[j]*(Phi[j]-1)-time.intervals[j]*Phi[j]*log(Phi[j]))/(Phi.unit[j]*(Phi[j]-1)^2)
+#    Partial for pent
+	 partial[1,(k+1):(2*k)]=-Ns
+	 for (j in 1:k)	
+        partial[j+1,k+j]=Ns*log(Phi[j])/(Phi[j]-1)
+#    Partial for Ns
+	 partial[1:(k+1),2*k+1]=BiGross/Ns
+#    If partial not a number set to 0 - usually if Phi=1 - divide by 0
+	 partial[is.nan(partial)]=0
+     return(list(NGross=NGross,BiGross=BiGross,partial=partial))
   }
 # For each group, call partial.NGross (defined above) and create a partial matrix for
 # all groups combined
   ng=length(Ns)
   NGross=NULL
+  BiGross=NULL
   k=length(Phi)/ng
-  partial=matrix(0,nrow=ng,ncol=ng*(2*k+1))
+  partial=matrix(0,nrow=ng*(k+1),ncol=ng*(2*k+1))
   for(i in 1:ng)
   {
      index=(i-1)*k+(1:k)
      indexp=(i-1)*(2*k+1)+(1:(2*k+1))
      partial.list=partial.NGross(Phi[index],pent[index],Ns[i])
      NGross=c(NGross,partial.list$NGross)
-     partial[i,indexp]=partial.list$partial
+	 BiGross=rbind(BiGross,partial.list$BiGross)
+     partial[((k+1)*(i-1)+1):(i*(k+1)),indexp]=partial.list$partial
   }
+  sumpart=matrix(0,nrow=ng*(k+1),ncol=ng*(k+1))
+  for(j in 1:ng)
+	  for(m in 1:(k+1))
+		  sumpart[((j-1)*(k+1)+1):((j-1)*(k+1)+m),(k+1)*(j-1)+m]=1
 # Construct vc matrix
   vcv=partial%*%vc%*%t(partial)
+  vcv=t(sumpart)%*%vcv%*%sumpart
+  ss=seq(k+1,ng*(k+1),k+1)
 # Return estimates and v-c matrix of the estimates
-  return(list(NGross=as.vector(NGross),vcv=vcv))
+  return(list(NGross=as.vector(NGross),BiGross=t(apply(BiGross,1,cumsum))
+  ,vcv=vcv,NGross.vcv=vcv[ss,ss]))
 }
 
 

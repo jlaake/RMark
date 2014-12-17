@@ -227,6 +227,18 @@ convert.inp=function(inp.filename,group.df=NULL,covariates=NULL,use.comments=FAL
 #' @keywords utility
 strip.comments=function(inp.filename,use.comments=TRUE,header=TRUE)
 {
+   if(!substr(inp.filename,1,4)=="http")
+   {
+	   if(!file.exists(inp.filename))
+	   {
+		   inp.filename=paste(inp.filename,".inp",sep="")
+		   if(!file.exists(inp.filename))
+		   {
+			   cat("\nCannot find input file. Make sure filename is correct.\n")
+			   stop()
+		   }
+	   }
+   }
 #
 #  Read in file and strip out comments and blank lines
 #

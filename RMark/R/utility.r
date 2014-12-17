@@ -321,3 +321,81 @@ search.output.files=function(x,string)
 	}
 	return(indices)
 }
+
+#' Convert Multistate data for POPAN-style abundance estimation
+#' 
+#' Converts data and optionally creates and structures design data list
+#' such that population size can be derived with multistate data.
+#' @param x an RMark dataframe
+#' @param augment_num the number to add with a capture history of all 0s; this is the expected number that were in the population and not ever seen
+#' @param augment_stratum the single character to represent outside of the population; use a value not used in the data capture history
+#' @param enter_stratum the single character to represent inside of the population but not yet entered; use a value not used in the data capture history
+#' @param strata vector of single characters for observed and unobserved states
+#' @param ps vector of capture probability estimates which match counts
+#' @param begin.time beginning time of observed occasions; two occasions are added to the fron of the capture history at times begin.time-1 and begin.time-2
+#' @param groups vector of character variable names of factor variables to use for grouping
+#' @param ddl if TRUE, will return processed data and a design data list with the appropriate fixed parameters.
+#' @param time.intervals intervals of time between observed occasions
+#' @author Jeff Laake
+#' @export 
+#' @examples
+#' data(dipper)
+#' popan_N=summary(mark(dipper,model="POPAN",model.parameters=list(pent=list(formula=~time))),se=T)$reals$N
+#' data.list=MS_popan(dipper,ddl=TRUE,augment_num=30)
+#' modMS=mark(data.list$data,data.list$ddl,model.parameters=list(Psi=list(formula=~B:toB:time)),brief=TRUE)
+#' Psi_estimates=summary(modMS,se=TRUE)$reals$Psi
+#' Nhat_MS=Psi_estimates$estimate[1]*sum(abs(data.list$data$data$freq))
+#' se_Nhat_MS=Psi_estimates$se[1]*Nhat_MS
+#' cat("Popan N = ",popan_N$estimate," (se = ",popan_N$se,")\n")
+#' cat("MS N = ",Nhat_MS," (se = ",se_Nhat_MS,")\n")
+MS_popan=function(x,augment_num=100,augment_stratum="A",enter_stratum="B",strata=NULL,begin.time=1,groups=NULL,ddl=FALSE,time.intervals=NULL)
+{
+	xp=process.data(x,groups=groups)
+	x$ch=paste(augment_stratum,"0",x$ch,sep="")
+	if(is.null(x$freq)) x$freq=1
+	if(is.null(groups))
+	{
+		x=rbind(x[1,],x)
+		if(!length(augment_num)==1)stop("length of augmented numbers does not match number of groups")
+		x$freq[1]=augment_num
+		x$ch[1]=paste(augment_stratum,"0",paste(rep(0,xp$nocc),collapse=""),sep="")
+	}else {
+		x=rbind(x[1:nrow(xp$group.covariates),],x)
+		if(!length(augment_num)==nrow(xp$group.covariates)&!length(augment_num)==1)stop("length of augmented numbers does not match number of groups")
+		x$freq[1:nrow(xp$group.covariates)]=augment_num
+		x[1:nrow(xp$group.covariates),colnames(xp$group.covariates)]=xp$group.covariates
+		x$ch[1:nrow(xp$group.covariates)]=paste(augment_stratum,"0",paste(rep(0,xp$nocc),collapse=""),sep="")
+	}
+	rownames(x)=1:nrow(x)
+	if(!ddl) return(x)
+	
+	if(!is.null(time.intervals)) time.intervals=c(0,0,time.intervals)
+	if(is.null(strata)) {
+		char=unique(unlist(strsplit(dipper$ch,"")))
+		strata=char[char!="0"]
+	}
+	
+	dp=process.data(x,model="Multistrata",strata=c(augment_stratum,enter_stratum,strata),groups=groups,begin.time=begin.time-2,time.intervals=time.intervals)
+	
+	ddl=make.design.data(dp,parameters=list(Psi=list(subtract.stratum=c(augment_stratum,strata[1],strata))))
+	
+	ddl$Psi$fix=NA
+	ddl$Psi$fix[ddl$Psi$stratum==augment_stratum&ddl$Psi$tostratum%in%strata]=0
+	ddl$Psi$fix[ddl$Psi$stratum==augment_stratum&ddl$Psi$tostratum==enter_stratum&ddl$Psi$Time>0]=0
+	
+	ddl$Psi$fix[ddl$Psi$stratum==enter_stratum&ddl$Psi$tostratum==augment_stratum]=0
+	ddl$Psi$fix[ddl$Psi$stratum==enter_stratum&ddl$Psi$tostratum==enter_stratum&as.numeric(ddl$Psi$time)==max(as.numeric(ddl$Psi$time))]=0
+	ddl$Psi$fix[ddl$Psi$stratum==enter_stratum&ddl$Psi$tostratum==enter_stratum&as.numeric(ddl$Psi$time)==min(as.numeric(ddl$Psi$time))]=1
+	
+	ddl$Psi$fix[ddl$Psi$stratum=="1"&ddl$Psi$tostratum%in%c(augment_stratum,enter_stratum)]=0
+	
+	ddl$S$fix=NA
+	ddl$S$fix[ddl$S$stratum%in%c(augment_stratum,enter_stratum)]=1
+	
+	ddl$p$fix=NA
+	ddl$p$fix[ddl$S$stratum%in%c(augment_stratum,enter_stratum)]=0
+	return(list(data=dp,ddl=ddl))
+}
+
+
+

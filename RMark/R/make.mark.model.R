@@ -958,15 +958,14 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   {
 	  if(max(ddl[[i]]$par.index) != nrow(ddl[[i]])) 
 	  {
-		  cat(paste("\nMissing rows in design dataframe for parameter",names(ddl)[i]),"\n")
-		  stop("\n Deleting rows from design data is no longer supported\n")
+		  warning(paste("\nMissing rows in design dataframe for parameter",names(ddl)[i],
+				  "\n Deleting rows from design data is still allowed but see warning in help for make.design.data\n"))
 	  }
-	 if(any(ddl[[i]]$par.index != 1:nrow(ddl[[i]]))) 
+	 if(any(ddl[[i]]$par.index != sort(ddl[[i]]$par.index))) 
 	 {
-		 cat(paste("\nRows of design dataframe for parameter",names(ddl)[i],
+		 stop(paste("\nRows of design dataframe for parameter",names(ddl)[i],
 				 "are out of order.\nThey should be in order of par.index.\n"))
-         stop()		 
-	 }
+ 	 }
   }
 #
 # Outfile is assigned a temporary name

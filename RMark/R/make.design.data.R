@@ -142,6 +142,7 @@
 #' \code{time} in the data (e.g. Phi(t) or p(t) in MARK) and \code{~timebin}
 #' creates a model with 2 factor levels 1980-1983 and 1984-1986.
 #' 
+#' 
 #' Some circumstances may require direct manipulation of the design data to
 #' create the needed variable when simple binning is not sufficient or when the
 #' design data is a variable other than one related to \code{time}, \code{age},
@@ -176,10 +177,12 @@
 #' to add simple functions of variables to a formula without defining them in
 #' the design data.
 #' 
+#' 
 #' The above manipulations are sufficient if there is only one or two variables
 #' that need to be added to the design data.  If there are many covariates that
 #' are time(occasion)-specific then it may be easier to setup a dataframe with
 #' the covariate data and use \code{\link{merge_design.covariates}}.
+#' 
 #' 
 #' The fields that are automatically created in the design data depends on the
 #' model.  For example, with models such as "POPAN" or any of the "Pradel"
@@ -193,6 +196,7 @@
 #' because that structure has the same structure for each row (cohort) and
 #' adding cohort effects would be inappropriate.
 #' 
+#' 
 #' For models with "Square" PIMS or \code{pim.type="time"} for "Triangular"
 #' PIMS, it is possible to create a cohort variable by defining the cohort
 #' variable as a covariate in the capture history data and using it as a
@@ -205,10 +209,11 @@
 #' the use of cohort is to represent a birth cohort.  This is only problematic
 #' for these kinds of models when the structure accomodates age and the concept
 #' of a birth cohort.  The solution to the problem is to delete the design data
-#' for the superfluous parameters after is is created.  For example, let us
-#' presume that you used cohort with 3 levels as a grouping variable for a
-#' model with "Square" PIMS which has 3 occasions.  Then, the PIM structure
-#' would look as follows for Phi: \preformatted{ Phi 1 2 3 4 5 6 7 8 9 } If
+#' for the superfluous parameters after is is created (see warning below).
+#' For example, let us presume that you used cohort with 3 levels 
+#' as a grouping variable for a model with "Square" PIMS which has 3 occasions.  
+#' Then, the PIM structure would look as follows for Phi: 
+#' \preformatted{ Phi 1 2 3 4 5 6 7 8 9 }.  If
 #' each row represented a cohort that entered at occasions 1,2,3 then
 #' parameters 4,7,8 are superfluous or could be thought of as representing
 #' cells that are structural zeros in the model because no observations can be
@@ -289,6 +294,29 @@
 #' variables to create models for "Psi" are given in
 #' \code{\link{make.mark.model}}.
 #' 
+#' \preformatted{ 
+#' 
+#' ######WARNING######## 
+#' Deleting design data for mlogit parameters like Psi in the multistate
+#' model can fail if you do things like delete certain transitions.  It is better
+#' to add the field fix. It should be assigned the value NA for parameters that
+#' are estimated and a fixed real value for those that are fixed. Here is an example
+#' with the mstrata data example:
+#' 
+#' data(mstrata)
+#' # deleting design data approach to fix Psi A to B to 0 (DON'T use this approach) 
+#' dp=process.data(mstrata,model="Multistrata")
+#' ddl=make.design.data(dp)
+#' ddl$Psi=ddl$Psi[!(ddl$Psi$stratum=="A" & ddl$Psi$tostratum=="B"),]
+#' ddl$Psi
+#' summary(mark(dp,ddl,output=FALSE),show.fixed=TRUE)
+#' #new approach using fix to set Phi=1 for time 2 (USE this approach)
+#' ddl=make.design.data(dp)
+#' ddl$Psi$fix=NA
+#' ddl$Psi$fix[ddl$Psi$stratum=="A" & ddl$Psi$tostratum=="B"]=0
+#' ddl$Psi
+#' summary(mark(dp,ddl,output=FALSE),show.fixed=TRUE)
+#' }
 #' @param data Processed data list; resulting value from process.data
 #' @param parameters Optional list containing a list for each type of parameter
 #' (list of lists); each parameter list is named with the parameter name (eg

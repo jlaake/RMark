@@ -1,11 +1,11 @@
-RMark 2.1.10 (17 Dec 2014)
+RMark 2.1.10 (18 Dec 2014)
 --------------------------
 CHANGES 
 * code was added to popan.derived to provide cumulative summation of B_Gross over time for each occasion and its v-c matrix. The last occasion for each group is NGross for that group.
 * extract.mark.output, mark, run.mark.model, mark.wrapper, and mark.wrapper.parallel were modified so that all messages are suppressed when silent=TRUE and if there was an error with the MARK run it does not pop open editor with the output file.
 * strata.labels are checked to make sure that they are all single characters
 * added explicit test to make sure file exists in import.chdata and convert.inp
-* added checks to make.mark.model that make sure design data rows have not been deleted because this is no longer supported. Also check to make sure the rows are in their proper order.
+* added checks to make.mark.model. If design data rows have been deleted a warning is given with directions to read the message in make.design.data. Also, the code checks to make sure the rows are in their proper order. If they are, the code stops.
 
 BUG FIXES
 * popan.derived was not handling loss on captures correctly because it was summing frequencies without taking absolute values. This was fixed in this version.

@@ -952,6 +952,22 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 
 #
 #  *******************  END OF INTERNAL FUNCTIONS    *********************************
+# Test to make sure that all rows of design data are there (no more deletion) and make sure they
+# are ordered
+  for(i in 1:(length(ddl)-1))
+  {
+	  if(max(ddl[[i]]$par.index) != nrow(ddl[[i]])) 
+	  {
+		  cat(paste("\nMissing rows in design dataframe for parameter",names(ddl)[i]),"\n")
+		  stop("\n Deleting rows from design data is no longer supported\n")
+	  }
+	 if(any(ddl[[i]]$par.index != 1:nrow(ddl[[i]]))) 
+	 {
+		 cat(paste("\nRows of design dataframe for parameter",names(ddl)[i],
+				 "are out of order.\nThey should be in order of par.index.\n"))
+         stop()		 
+	 }
+  }
 #
 # Outfile is assigned a temporary name
 #

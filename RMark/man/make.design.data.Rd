@@ -330,7 +330,8 @@ variables to create models for "Psi" are given in
 
 \preformatted{
 
-WARNING: deleting design data for mlogit parameters like Psi in the multistate
+######WARNING########
+Deleting design data for mlogit parameters like Psi in the multistate
 model can fail if you do things like delete certain transitions.  It is better
 to add the field fix. It should be assigned the value NA for parameters that
 are estimated and a fixed real value for those that are fixed. Here is an example

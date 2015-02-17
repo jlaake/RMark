@@ -292,7 +292,7 @@ robust.occasions<-function(times)
          {
             if(any(!ch.values%in%c("0","1",".")))
             {
-               if(model!="RDBarker" & model!="Barker" & model!="MSOccupancy" &model!="PoissonMR")
+               if(substr(model,1,6)!="RDBark" & model!="RDBarkHug" & model!="Barker" & model!="MSOccupancy" &model!="PoissonMR")
                   stop(paste("\nIncorrect ch values in data:",paste(ch.values,collapse=""),"\n",sep=""))
                else
 				  if(model=="PoissonMR")

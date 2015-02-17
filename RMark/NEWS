@@ -1,4 +1,4 @@
-RMark 2.1.10 (18 Dec 2014)
+RMark 2.1.10 (17 Feb 2015)
 --------------------------
 CHANGES 
 * code was added to popan.derived to provide cumulative summation of B_Gross over time for each occasion and its v-c matrix. The last occasion for each group is NGross for that group.
@@ -9,6 +9,7 @@ CHANGES
 
 BUG FIXES
 * popan.derived was not handling loss on captures correctly because it was summing frequencies without taking absolute values. This was fixed in this version.
+* bug in process.data was fixed which was incorrectly not allowing "2" in the capture history for some of the RBBarker models. Thanks to Thomas Riecke for finding and reporting the bug.
 
 RMark 2.1.9 (6 Oct 2014)
 --------------------------

@@ -145,7 +145,7 @@ export.MARK(mallard.results$Age$data,"MallDSR",mallard.results,replace=TRUE,ind.
 mallard.results                        # print model-selection table to screen
 options(width=100)                     # set page width to 100 characters
 sink("results.table.txt")              # capture screen output to file
-print.marklist(mallard.results)        # send output to file
+print(mallard.results)                 # send output to file
 sink()                                 # return output to screen
 
 # remove "#" on next line to see output in notepad

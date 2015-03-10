@@ -9,8 +9,7 @@
 \arguments{
 \item{...}{an unspecified number of marklist and/or mark model objects}
 
-\item{table}{if TRUE, a table of model results is also included in the
-returned list}
+\item{table}{if TRUE, a table of model results is also included in the returned list}
 }
 \value{
 model.list: a list of \code{mark} models and optionally a table of

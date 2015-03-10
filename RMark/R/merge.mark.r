@@ -6,12 +6,12 @@
 #' 
 #' @usage \method{merge}{mark}(...,table=TRUE)
 #' @param ...  an unspecified number of marklist and/or mark model objects
-#' @param table if TRUE, a table of model results is also included in the
-#' returned list
+#' @param table if TRUE, a table of model results is also included in the returned list
 #' @return model.list: a list of \code{mark} models and optionally a table of
 #' model results.
 #' @author Jeff Laake
 #' @export merge.mark
+#' @export
 #' @seealso
 #' \code{\link{collect.models}},\code{\link{remove.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
 #' @keywords utility

@@ -29,6 +29,7 @@ models.
 \examples{
 # brownie=import.chdata("brownie.inp",field.types=c("n","f"))
 \donttest{
+# This example is excluded from testing to reduce package check time
  data(brownie)
 # default ordering of ReleaseAge is alphabetic so it is
 # Adult, Young which is why initial.ages=c(1,0)

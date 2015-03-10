@@ -44,6 +44,7 @@
 #' Statistics 29: 245-264.
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(dipper)
 #' md=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
 #' md$results$AICc

@@ -87,6 +87,7 @@
 #' and viability of a hunted population of polar bears. Arctic 58: 203-214.
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' # Example of computing N-hat for occasions 2 to 7 for the p=~time model
 #' data(dipper)
 #' md=mark(dipper,model.parameters=list(p=list(formula=~time),
@@ -325,13 +326,12 @@ search.output.files=function(x,string)
 #' Convert Multistate data for POPAN-style abundance estimation
 #' 
 #' Converts data and optionally creates and structures design data list
-#' such that population size can be derived with multistate data.
+#' such that population size can be derived with multistate data. Variance estimate is questionable.
 #' @param x an RMark dataframe
 #' @param augment_num the number to add with a capture history of all 0s; this is the expected number that were in the population and not ever seen
 #' @param augment_stratum the single character to represent outside of the population; use a value not used in the data capture history
 #' @param enter_stratum the single character to represent inside of the population but not yet entered; use a value not used in the data capture history
 #' @param strata vector of single characters for observed and unobserved states
-#' @param ps vector of capture probability estimates which match counts
 #' @param begin.time beginning time of observed occasions; two occasions are added to the fron of the capture history at times begin.time-1 and begin.time-2
 #' @param groups vector of character variable names of factor variables to use for grouping
 #' @param ddl if TRUE, will return processed data and a design data list with the appropriate fixed parameters.
@@ -340,9 +340,11 @@ search.output.files=function(x,string)
 #' @export 
 #' @examples
 #' data(dipper)
-#' popan_N=summary(mark(dipper,model="POPAN",model.parameters=list(pent=list(formula=~time))),se=T)$reals$N
+#' popan_N=summary(mark(dipper,model="POPAN",
+#'         model.parameters=list(pent=list(formula=~time))),se=TRUE)$reals$N
 #' data.list=MS_popan(dipper,ddl=TRUE,augment_num=30)
-#' modMS=mark(data.list$data,data.list$ddl,model.parameters=list(Psi=list(formula=~B:toB:time)),brief=TRUE)
+#' modMS=mark(data.list$data,data.list$ddl,
+#'         model.parameters=list(Psi=list(formula=~B:toB:time)),brief=TRUE)
 #' Psi_estimates=summary(modMS,se=TRUE)$reals$Psi
 #' Nhat_MS=Psi_estimates$estimate[1]*sum(abs(data.list$data$data$freq))
 #' se_Nhat_MS=Psi_estimates$se[1]*Nhat_MS
@@ -371,11 +373,11 @@ MS_popan=function(x,augment_num=100,augment_stratum="A",enter_stratum="B",strata
 	
 	if(!is.null(time.intervals)) time.intervals=c(0,0,time.intervals)
 	if(is.null(strata)) {
-		char=unique(unlist(strsplit(dipper$ch,"")))
+		char=unique(unlist(strsplit(x$ch,"")))
 		strata=char[char!="0"]
 	}
 	
-	dp=process.data(x,model="Multistrata",strata=c(augment_stratum,enter_stratum,strata),groups=groups,begin.time=begin.time-2,time.intervals=time.intervals)
+	dp=process.data(x,model="Multistrata",strata.labels=unique(c(augment_stratum,enter_stratum,strata)),groups=groups,begin.time=begin.time-2,time.intervals=time.intervals)
 	
 	ddl=make.design.data(dp,parameters=list(Psi=list(subtract.stratum=c(augment_stratum,strata[1],strata))))
 	

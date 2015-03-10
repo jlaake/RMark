@@ -18,6 +18,7 @@ salamander data collected with a robust design.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 fit.RDOccupancy=function()
 {
    data(RDSalamander)

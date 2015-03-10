@@ -35,6 +35,7 @@ pages 116-122 of MacKenzie et al. (2006).
 #0000.	0	1	3	2	3	.
 #
 \donttest{
+# This example is excluded from testing to reduce package check time
 # retrieve weta data
 data(weta)
 # Create function to fit the 18 models in the book

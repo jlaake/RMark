@@ -56,6 +56,7 @@ The process variance is returned as \code{sigma}.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(dipper)
 md=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
 md$results$AICc

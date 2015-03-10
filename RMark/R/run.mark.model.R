@@ -61,6 +61,7 @@
 #' @keywords model
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' test=function()
 #' {
 #'   data(dipper)
@@ -166,7 +167,11 @@ delete=FALSE,external=FALSE,threads=-1,ignore.stderr=FALSE)
   if(os=="mingw32")
   {
   	 markpath=create_markpath()
-	 if(is.null(markpath)) stop("mark.exe, mark32.exe or mark64.exe cannot be found. Add to system path or specify MarkPath object (e.g., MarkPath='C:/Programme/Mark'")
+	 if(is.null(markpath))
+	 {
+		 cat("mark.exe, mark32.exe or mark64.exe cannot be found. Add to system path or specify MarkPath object (e.g., MarkPath='C:/Programme/Mark'")
+		 return(NULL)
+	 }
 	 if(RunMark)
 		 if(.Platform$GUI[1]=="RTerm")
 		 {

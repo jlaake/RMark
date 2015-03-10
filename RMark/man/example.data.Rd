@@ -22,6 +22,7 @@ release) are 0,1,2 for the 3 levels respectively.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(example.data)
 run.example=function()
 {

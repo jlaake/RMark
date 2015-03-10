@@ -26,18 +26,18 @@ MS_popan(x, augment_num = 100, augment_stratum = "A", enter_stratum = "B",
 \item{ddl}{if TRUE, will return processed data and a design data list with the appropriate fixed parameters.}
 
 \item{time.intervals}{intervals of time between observed occasions}
-
-\item{ps}{vector of capture probability estimates which match counts}
 }
 \description{
 Converts data and optionally creates and structures design data list
-such that population size can be derived with multistate data.
+such that population size can be derived with multistate data. Variance estimate is questionable.
 }
 \examples{
 data(dipper)
-popan_N=summary(mark(dipper,model="POPAN",model.parameters=list(pent=list(formula=~time))),se=T)$reals$N
+popan_N=summary(mark(dipper,model="POPAN",
+        model.parameters=list(pent=list(formula=~time))),se=TRUE)$reals$N
 data.list=MS_popan(dipper,ddl=TRUE,augment_num=30)
-modMS=mark(data.list$data,data.list$ddl,model.parameters=list(Psi=list(formula=~B:toB:time)),brief=TRUE)
+modMS=mark(data.list$data,data.list$ddl,
+        model.parameters=list(Psi=list(formula=~B:toB:time)),brief=TRUE)
 Psi_estimates=summary(modMS,se=TRUE)$reals$Psi
 Nhat_MS=Psi_estimates$estimate[1]*sum(abs(data.list$data$data$freq))
 se_Nhat_MS=Psi_estimates$se[1]*Nhat_MS

@@ -20,6 +20,7 @@ history has 10 digits for 5 visits (occasions).
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 # Donovan.8 can be created with
 # Donovan.8=convert.inp("Donovan.8.inp")
 do.exercise.8=function()

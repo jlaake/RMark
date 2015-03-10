@@ -39,6 +39,7 @@ is easier to create a time-dependent covariate to do the same thing.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 # EXAMPLE CODE FOR CONVERSION OF .INP TO NECESSARY DATA STRUCTURE
 # read in killdeer.inp file
 #killdeer=scan("killdeer.inp",what="character",sep="\\n")

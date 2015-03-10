@@ -19,6 +19,7 @@
 #' @examples
 #' \donttest{
 #' 
+#' # This example is excluded from testing to reduce package check time
 #'# Create dataframe
 #'data(LASP)
 #' mscale=LASP
@@ -137,6 +138,7 @@ NULL
 #' @examples
 #' # brownie=import.chdata("brownie.inp",field.types=c("n","f"))
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #'  data(brownie)
 #' # default ordering of ReleaseAge is alphabetic so it is 
 #' # Adult, Young which is why initial.ages=c(1,0)
@@ -319,6 +321,7 @@ NULL
 #' @examples 
 #' 
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(deer)
 #' x=data.frame(ch=paste(deer$TI, deer$SL, sep=""), Survey=factor(deer$Group), 
 #'      Year=factor(deer$Year), Cluster=deer$Cluster, MgtUnit=factor(deer$MgmtUnit))
@@ -393,6 +396,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' #Script to simulate the MSCRD 
 #' #example of 15.7.1 from the MARK
 #' #book
@@ -527,6 +531,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(dipper)
 #' dipper.model=mark(dipper)
 #' run.dipper=function()
@@ -855,6 +860,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' # Donovan.8 can be created with
 #' # Donovan.8=convert.inp("Donovan.8.inp")
 #' do.exercise.8=function()
@@ -903,6 +909,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' #
 #' # get data
 #' #
@@ -1001,6 +1008,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(example.data)
 #' run.example=function()
 #' {
@@ -1050,6 +1058,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(IELogitNormalMR)
 #' IElogitNor.proc=process.data(IELogitNormalMR,model="IELogitNormalMR",
 #' 	counts=list("Marked Superpopulation"=c(28, 29, 30, 30, 30, 33, 33, 33, 33, 34, 34, 34),
@@ -1118,6 +1127,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' # EXAMPLE CODE FOR CONVERSION OF .INP TO NECESSARY DATA STRUCTURE
 #' # read in killdeer.inp file
 #' #killdeer=scan("killdeer.inp",what="character",sep="\n")
@@ -1249,6 +1259,7 @@ NULL
 #'#   Animal Biodiversity and Conservation 27:187-204.          #
 #'#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' require(RMark)
 #'
 #'# Retrieve data
@@ -1444,6 +1455,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #'  \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(mstrata)
 #' run.mstrata=function()
 #' {
@@ -1538,6 +1550,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' # To create the data file use:
 #' # NicholsMSOccupancy=convert.inp("NicholsMSOccupancy.inp")
 #' #
@@ -1608,6 +1621,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #'  \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(Poisson_twoMR)
 #' pois.proc=process.data(Poisson_twoMR,model="PoissonMR",groups="pg",
 #' 		counts=list("Unmarked Seen"=matrix(c(1237,588),nrow=2,ncol=1),
@@ -1639,6 +1653,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(PoissonMR)
 #' pois.proc=process.data(PoissonMR,model="PoissonMR",
 #' 		counts=list("Unmarked Seen"=c(1380, 1120, 1041, 948),
@@ -1790,6 +1805,7 @@ NULL
 #' @examples
 #'
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(RDOccupancy)
 #' #
 #' # Example of epsilon=1-gamma
@@ -1996,6 +2012,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' fit.RDOccupancy=function()
 #' {
 #'    data(RDSalamander)
@@ -2051,6 +2068,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(robust)
 #' run.robust=function()
 #' {
@@ -2203,6 +2221,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' do.salamander=function()
 #' {
 #'    data(salamander)
@@ -2257,6 +2276,7 @@ NULL
 #' #0000.	0	1	3	2	3	.
 #' #
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' # retrieve weta data
 #' data(weta)
 #' # Create function to fit the 18 models in the book
@@ -2368,6 +2388,7 @@ NULL
 #' @examples
 #' 
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(wwdo.09)
 #' wwdo=wwdo.09
 #' wwdo.popan=function(){

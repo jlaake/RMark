@@ -41,6 +41,7 @@ input v-c matrix of the estimates.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 #
 # The following are examples only to demonstrate selecting different
 # model sets for adjusting chat and showing model selection table.

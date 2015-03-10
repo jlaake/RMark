@@ -103,6 +103,7 @@
 #' @examples
 #' pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' #
 #' # indcov1.R
 #' #
@@ -387,6 +388,7 @@ for (j in 1:number.of.models)
 #  If there are no data values other than the index, the code below will extract only those
 #  rows in the DM.  
 #
+   nmlogit=0
    if(ncol(data)==1 && names(data)=="index")
    {
      for (i in 1:nrow(data))
@@ -396,7 +398,20 @@ for (j in 1:number.of.models)
         if(length(model$links)==1)
            links=c(links,model$links)
         else
-           links=c(links,model$links[model.index])
+		{
+			clinks=model$links[model.index]
+			mlinks=substr(clinks,1,6)=="mlogit"
+            if(any(mlinks))
+			{
+				mlogit.list=split(1:length(clinks[mlinks]),clinks[mlinks])
+				for(i in 1:length(mlogit.list))
+				{
+					nmlogit=nmlogit+1
+					clinks[mlinks][mlogit.list[[i]]]=paste("mlogit(",nmlogit,")",sep="")
+				}
+			}	
+			links=c(links,clinks)		
+		}
         if(!is.null(model$fixed))
         {
            if(is.null(model$simplify))
@@ -423,8 +438,24 @@ for (j in 1:number.of.models)
         if(length(model$links)==1)
            links=c(links,rep(model$links,dim(xdesign)[1]))
         else
-           links=c(links,model$links[model.indices])
-        design=rbind(design,xdesign)
+		if(length(model$links)==1)
+			links=c(links,model$links)
+		else
+		{
+			clinks=model$links[model.indices]
+			mlinks=substr(clinks,1,6)=="mlogit"
+			if(any(mlinks))
+			{
+				mlogit.list=split(1:length(clinks[mlinks]),clinks[mlinks])
+				for(i in 1:length(mlogit.list))
+				{
+					nmlogit=nmlogit+1
+					clinks[mlinks][mlogit.list[[i]]]=paste("mlogit(",nmlogit,")",sep="")
+				}
+			}	
+			links=c(links,clinks)		
+		}
+		design=rbind(design,xdesign)
         if(!is.null(model$fixed))
         {
            if(is.null(model$simplify))

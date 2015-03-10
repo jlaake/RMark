@@ -13,6 +13,7 @@ one occasion.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(Poisson_twoMR)
 pois.proc=process.data(Poisson_twoMR,model="PoissonMR",groups="pg",
 		counts=list("Unmarked Seen"=matrix(c(1237,588),nrow=2,ncol=1),

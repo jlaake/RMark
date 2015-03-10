@@ -122,6 +122,7 @@ argument \code{indices}.
 \examples{
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 \donttest{
+# This example is excluded from testing to reduce package check time
 #
 # indcov1.R
 #

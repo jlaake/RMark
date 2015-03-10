@@ -91,7 +91,8 @@ be assigned for the previous run except for any added parameters (eg.
 an_indiv_covariate) which will start with a 0 initial value.
 }
 \examples{
-\dontrun{
+\donttest{
+# example not run to reduce time required for checking
 do.MSOccupancy=function()
 {
 #  Get the data

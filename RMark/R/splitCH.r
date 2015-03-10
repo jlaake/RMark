@@ -19,6 +19,7 @@
 #' @author Devin Johnson; Jeff Laake
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(dipper)
 #' # following returns a matrix
 #' chmat=splitCH(dipper$ch)

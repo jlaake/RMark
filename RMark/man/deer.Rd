@@ -56,6 +56,7 @@ analyses where each parameter is specified independently and uniquely.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(deer)
 x=data.frame(ch=paste(deer$TI, deer$SL, sep=""), Survey=factor(deer$Group),
      Year=factor(deer$Year), Cluster=deer$Cluster, MgtUnit=factor(deer$MgmtUnit))

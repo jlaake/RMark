@@ -1,6 +1,6 @@
 Package: RMark
 Version: 2.1.10
-Date: 2015-02-18
+Date: 2015-03-10
 Title: R Code for Mark Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with code contributions from Eldar
     Rakhimberdiev, Ben Augustine and Daniel Turek, and example data and
@@ -12,10 +12,10 @@ Description: An interface to the software package MARK that constructs input
 SystemRequirements: notepad.exe, mark.exe (>= 8.0) (or mark32.exe and
     mark64.exe) and rel_32.exe (see README.txt)
 Depends:
-    R (>= 2.13.0)
+    R (>= 2.13.0),
+    snowfall
 Imports:
     parallel,
-    snowfall,
     matrixcalc,
     msm,
     coda

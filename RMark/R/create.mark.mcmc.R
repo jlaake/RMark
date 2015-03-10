@@ -83,9 +83,9 @@ if(max(xmcmc[,1])!=min(xmcmc[,1]))
        }
        else
        { colnames(xmat)=cnames[-(1:(nestimates+1))] }
-       mcmclist[[i]]=mcmc(xmat)
+       mcmclist[[i]]=coda::mcmc(xmat)
    }
-   mcmclist=mcmc.list(mcmclist)
+   mcmclist=coda::mcmc.list(mcmclist)
 }
 else
 #
@@ -103,7 +103,7 @@ else
    }
 
    colnames(xmat)=cnames
-   mcmclist=mcmc(xmat)
+   mcmclist=coda::mcmc(xmat)
 }
 #
 # return result as an mcmc object or list dataframe

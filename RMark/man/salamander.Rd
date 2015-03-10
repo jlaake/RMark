@@ -17,6 +17,7 @@ page 99 of MacKenzie et al. (2006).
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 do.salamander=function()
 {
    data(salamander)

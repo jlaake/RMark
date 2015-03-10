@@ -43,6 +43,7 @@
 #' @seealso \code{\link{collect.model.names}}, \code{\link{collect.models}}
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(dipper)
 #' run.dipper=function()
 #' {

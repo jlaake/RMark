@@ -37,6 +37,7 @@
 #' @keywords utility
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(mstrata)
 #' run.mstrata=function()
 #' {

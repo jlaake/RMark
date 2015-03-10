@@ -77,6 +77,7 @@ Anderson (2002) if if \code{revised=FALSE}; otherwise it uses eq 6.12.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 # Create a set of models from dipper data
 data(dipper)
 run.dipper=function()

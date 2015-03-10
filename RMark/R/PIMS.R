@@ -21,6 +21,7 @@
 #' @keywords utility
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(dipper)
 #' results=mark(dipper)
 #' PIMS(results,"Phi")

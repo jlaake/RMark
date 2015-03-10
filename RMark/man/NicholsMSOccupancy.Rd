@@ -17,6 +17,7 @@ This is a data set from Nichols et al (2007).
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 # To create the data file use:
 # NicholsMSOccupancy=convert.inp("NicholsMSOccupancy.inp")
 #

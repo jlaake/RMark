@@ -72,12 +72,12 @@
 #' results
 #' @author Eldar Rakhimberdiev
 #' @export 
-#' @import snowfall
 #' @seealso \code{\link{collect.models}}, \code{\link{mark}},
 #' \code{\link{create.model.list}}
 #' @keywords utility
 #' @examples 
-#' \dontrun{
+#' \donttest{
+#' # example not run to reduce time required for checking
 #' do.MSOccupancy=function()
 #' {
 #' #  Get the data

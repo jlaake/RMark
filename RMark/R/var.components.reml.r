@@ -33,6 +33,7 @@
 #' @export
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' # Use dipper data with an age (0,1+)/time model for Phi
 #' data(dipper)
 #' dipper.proc=process.data(dipper,model="CJS")

@@ -68,6 +68,7 @@
 #' @keywords utility
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' # Create a set of models from dipper data
 #' data(dipper)
 #' run.dipper=function()

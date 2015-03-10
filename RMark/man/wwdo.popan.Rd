@@ -51,6 +51,7 @@ in the lines where I have listed \code{data(wwdo.09)} and \code{wwdo=wwdo.09}.  
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(wwdo.09)
 wwdo=wwdo.09
 wwdo.popan=function(){

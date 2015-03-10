@@ -48,6 +48,7 @@ These are transition pairs so AB0C is A to B and B to C but not A to C.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(mstrata)
 # Show possible transitions in first 15 ch values
 find.possible.transitions(mstrata$ch[1:15])

@@ -82,6 +82,7 @@ model.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 # Example
 data(dipper)
 dipper.processed=process.data(dipper,model="POPAN",groups="sex")

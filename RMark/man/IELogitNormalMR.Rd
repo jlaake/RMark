@@ -12,6 +12,7 @@ Mark-Resight model
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(IELogitNormalMR)
 IElogitNor.proc=process.data(IELogitNormalMR,model="IELogitNormalMR",
 	counts=list("Marked Superpopulation"=c(28, 29, 30, 30, 30, 33, 33, 33, 33, 34, 34, 34),

@@ -29,6 +29,7 @@ that contains fields with a specified prefix.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(dipper)
 # following returns a matrix
 chmat=splitCH(dipper$ch)

@@ -45,6 +45,7 @@ confounded.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(dipper)
 ptime=list(formula=~time)
 Phitime=list(formula=~time)

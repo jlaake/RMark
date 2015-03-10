@@ -100,6 +100,7 @@ the string.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 # Example of computing N-hat for occasions 2 to 7 for the p=~time model
 data(dipper)
 md=mark(dipper,model.parameters=list(p=list(formula=~time),

@@ -40,6 +40,7 @@
 #' @keywords utility
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(mstrata)
 #' # Show possible transitions in first 15 ch values
 #' find.possible.transitions(mstrata$ch[1:15])

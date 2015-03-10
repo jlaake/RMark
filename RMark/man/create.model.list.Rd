@@ -49,6 +49,7 @@ that parameter.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 #
 # Compare this to the run.dipper shown under ?dipper
 # It is only necessary to create each parameter specification and

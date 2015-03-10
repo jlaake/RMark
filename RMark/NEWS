@@ -1,5 +1,8 @@
-RMark 2.1.10 (17 Feb 2015)
+RMark 2.1.10 (10 Mar 2015)
 --------------------------
+NEW FEATURES
+* added argument icvalues to mark and make.mark.model so individual covariate values can be specified in inp file for mark.exe to calculate real parameter values. Most useful in combination with setting of profile likelihood intervals.
+
 CHANGES 
 * code was added to popan.derived to provide cumulative summation of B_Gross over time for each occasion and its v-c matrix. The last occasion for each group is NGross for that group.
 * extract.mark.output, mark, run.mark.model, mark.wrapper, and mark.wrapper.parallel were modified so that all messages are suppressed when silent=TRUE and if there was an error with the MARK run it does not pop open editor with the output file.
@@ -10,6 +13,7 @@ CHANGES
 BUG FIXES
 * popan.derived was not handling loss on captures correctly because it was summing frequencies without taking absolute values. This was fixed in this version.
 * bug in process.data was fixed which was incorrectly not allowing "2" in the capture history for some of the RBBarker models. Thanks to Thomas Riecke for finding and reporting the bug.
+* bug in covariate.predictions was fixed in mlogit parameters were not handled correctly when multiple covariate values were provided. Thanks to Koen van Benthem for noticing that real parameter values for mlogits changed if more than one covariate value was given.
 
 RMark 2.1.9 (6 Oct 2014)
 --------------------------

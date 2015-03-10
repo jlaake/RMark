@@ -8,7 +8,7 @@ make.mark.model(data, ddl, parameters = list(), title = "",
   model.name = NULL, initial = NULL, call = NULL, default.fixed = TRUE,
   options = NULL, profile.int = FALSE, chat = NULL, simplify = TRUE,
   input.links = NULL, parm.specific = FALSE, mlogit0 = FALSE,
-  hessian = FALSE, accumulate = TRUE)
+  hessian = FALSE, accumulate = TRUE, icvalues = NULL)
 }
 \arguments{
 \item{data}{Data list resulting from function \code{\link{process.data}}}
@@ -50,6 +50,8 @@ have its link changed to logit so it can be simplified}
 \item{hessian}{if TRUE specifies to MARK to use hessian rather than second partial matrix}
 
 \item{accumulate}{if TRUE accumulate like data values into frequencies}
+
+\item{icvalues}{numeric vector of individual covariate values for computation of real values}
 }
 \value{
 model: a MARK object except for the elements \code{output} and
@@ -393,6 +395,7 @@ any existing or new options that can be set on the estimate proc.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(dipper)
 #
 # Process data

@@ -17,6 +17,7 @@ Cooch and White
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 #Script to simulate the MSCRD
 #example of 15.7.1 from the MARK
 #book

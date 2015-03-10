@@ -61,6 +61,7 @@ summary(ddl$p)
 ddl$p=merge_design.covariates(ddl$p,df)
 summary(ddl$p)
 \donttest{
+# This example is excluded from testing to reduce package check time
 #
 # Assign group-specific values
 #

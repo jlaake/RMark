@@ -86,6 +86,7 @@ v1.5.0 such that average covariate values are stored in each model object.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(dipper)
 run.dipper=function()
 {

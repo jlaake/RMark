@@ -78,6 +78,7 @@ re-running the models.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 test=function()
 {
   data(dipper)

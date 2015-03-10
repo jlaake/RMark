@@ -21,6 +21,7 @@ nine points were surveyed.
 \examples{
 \donttest{
 
+# This example is excluded from testing to reduce package check time
 # Create dataframe
 data(LASP)
 mscale=LASP

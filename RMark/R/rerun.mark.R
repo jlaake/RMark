@@ -52,7 +52,6 @@
 #' @keywords model
 #' @examples
 #' \dontrun{
-#' #
 #' # The following example will not run because the data are not included in the
 #' # examples.  It illustrates the use of rerun.mark with mark.wrapper.  With this
 #' # particular data set the POPAN models were having difficulty converging.  After

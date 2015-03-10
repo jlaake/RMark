@@ -30,6 +30,7 @@ secondary session is one plus the number of contiguous zeros.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(robust)
 run.robust=function()
 {

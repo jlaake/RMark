@@ -11,6 +11,7 @@ Data and example illustrating Poisson Mark-Resight model.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(PoissonMR)
 pois.proc=process.data(PoissonMR,model="PoissonMR",
 		counts=list("Unmarked Seen"=c(1380, 1120, 1041, 948),

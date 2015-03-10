@@ -23,6 +23,7 @@ using the remove.intercept argument.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(mstrata)
 run.mstrata=function()
 {

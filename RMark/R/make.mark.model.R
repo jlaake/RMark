@@ -356,6 +356,7 @@
 #' have its link changed to logit so it can be simplified
 #' @param hessian if TRUE specifies to MARK to use hessian rather than second partial matrix
 #' @param accumulate if TRUE accumulate like data values into frequencies
+#' @param icvalues numeric vector of individual covariate values for computation of real values
 #' @return model: a MARK object except for the elements \code{output} and
 #' \code{results}. See \code{\link{mark}} for a detailed description of the
 #' list contents.
@@ -367,6 +368,7 @@
 #' @examples
 #' 
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' data(dipper)
 #' #
 #' # Process data
@@ -405,7 +407,9 @@
 #'   parameters=list(Phi=PhiFlood, p=pdot))
 #' }
 make.mark.model <-
-function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,hessian=FALSE,accumulate=TRUE)
+function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,
+		default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,
+		input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,hessian=FALSE,accumulate=TRUE,icvalues=NULL)
 {
 
 #  *******************  INTERNAL FUNCTIONS    *********************************
@@ -818,6 +822,13 @@ else
 #   complete.design.matrix=as.matrix(complete.design.matrix)
 #   row.names(complete.design.matrix)=row.names(model$design.matrix)[1]
 #}
+# if icvalues not null, write out values to input file
+#
+if(!is.null(icvalues))
+{
+	string = paste("icvalues=", paste(icvalues,collapse=","), ";",sep="")
+	write(string, file = outfile, append = TRUE)		
+}
 #
 # Write out the design matrix into the MARK input file
 #
@@ -1201,6 +1212,13 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 	 covar10=covariates[duplicated((substr(covariates,1,10)))]
 	 if(length(covar10)>0) stop(paste("\nFollowing covariates are duplicates of another covariate within the first 10 characters\n",paste(covar10,collapse=", ")))
      string=paste(string," icovar = ",length(covariates))
+	 if(!is.null(icvalues))
+	 {
+		 if(length(covariates)!=length(icvalues))
+			 stop("\nMismatch between length of individual covariates and covariate values (icvalues)\n")
+	     if(!is.numeric(icvalues)) 
+			 stop("\nicvalues must be numeric\n")
+	 }
   }
   if(mixtures!=1)
       string=paste(string," mixtures =",mixtures)

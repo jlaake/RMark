@@ -27,6 +27,7 @@ allows sharing common values for \code{p} and \code{c}.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 #
 # get data
 #

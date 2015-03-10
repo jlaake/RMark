@@ -72,6 +72,7 @@
 #' @keywords utility
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' # MARK example input file
 #' pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 #' dipper=convert.inp(paste(pathtodata,"dipper",sep="/"),

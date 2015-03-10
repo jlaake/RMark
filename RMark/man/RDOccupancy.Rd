@@ -129,6 +129,7 @@ more information on the use of \code{time.intervals}.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(RDOccupancy)
 #
 # Example of epsilon=1-gamma

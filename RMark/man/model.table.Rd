@@ -62,6 +62,7 @@ be called directly to construct the table.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(dipper)
 run.dipper=function()
 {

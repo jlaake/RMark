@@ -113,6 +113,7 @@ a shared model, an error will result.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(example.data)
 example.data.proc=process.data(example.data)
 ddl=make.design.data(example.data.proc)

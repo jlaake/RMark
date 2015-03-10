@@ -59,6 +59,7 @@ MARK with sex being used to describe groups and a numeric sex covariate.
 }
 \examples{
 \donttest{
+# This example is excluded from testing to reduce package check time
 data(dipper)
 dipper.model=mark(dipper)
 run.dipper=function()

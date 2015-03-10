@@ -57,6 +57,7 @@
 #' @keywords utility
 #' @examples
 #' \donttest{
+#' # This example is excluded from testing to reduce package check time
 #' pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 #' example.data<-import.chdata(paste(pathtodata,"example.data.txt",sep="/"),
 #'       field.types=c("n","f","f","f"))

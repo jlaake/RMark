@@ -68,6 +68,7 @@ than dummy variables.
 #   Animal Biodiversity and Conservation 27:187-204.          #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 \donttest{
+# This example is excluded from testing to reduce package check time
 require(RMark)
 
 # Retrieve data

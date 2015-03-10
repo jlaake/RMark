@@ -1,18 +1,17 @@
+#' Prints summary of MARK model parameters and results
+#'  
+#' @usage   \method{print}{summary.mark}(x,...)
+#' @param x list resulting from call to \code{summary}
+#' @param ... additional non-specified argument for S3 generic function
+#' @export
+#' @return None
+#' @author Jeff Laake
+#' @export print.summary.mark
+#' @seealso summary.mark
+#' @keywords utility
 print.summary.mark <-
 function(x,...)
 {
-# -------------------------------------------------------------------------------------------------------------
-#
-# summary.mark  - creates a summary of either a MARK model input or model output
-#
-# Arguments:
-#   x         - a summary of a MARK model object
-#
-# Value:
-#   None
-#
-#
-# -------------------------------------------------------------------------------------------------------------
 #
 # Display baseline info about model (type, name, title etc)
 #

@@ -240,7 +240,7 @@ options(width=150)	# Sets page width to 100 characters
 sink("results.table.txt") # Captures screen output to file
 
 # Remove comment to see output
-#print.marklist(robustexample) # Sends output to file
+#print(robustexample) # Sends output to file
 sink() # Returns output to screen
 #
 # Allows you to view results in notepad;remove # to see output

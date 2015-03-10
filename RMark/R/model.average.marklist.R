@@ -24,7 +24,7 @@
 #' 
 #' @usage \method{model.average}{marklist}(x, parameter, data, vcv, drop=TRUE, indices=NULL, revised=TRUE, mata=FALSE,
 #'         normal.lm=FALSE, residual.dfs=0, alpha=0.025,...)
-#' @export model.average.marklist
+#' @export 
 #' @param x a list of mark model results and a model.table constructed by
 #' \code{\link{collect.models}}
 #' @param parameter name of model parameter (e.g., "Phi" for CJS models); if

@@ -40,10 +40,7 @@
 #' parameters over different models with differing numbers of unique real
 #' parameters.
 #' 
-#' @aliases summary.mark print.summary.mark coef.mark
 #' @usage \method{summary}{mark}(object,...,se=FALSE,vc=FALSE,showall=TRUE,show.fixed=FALSE,brief=FALSE)
-#'        \method{coef}{mark}(object,...)
-#'        \method{print}{summary.mark}(x,...)
 #' @param object a MARK model object
 #' @param se if FALSE the real parameter estimates are output in PIM format
 #' (eg. triangular format); if TRUE, they are displayed as a list with se and
@@ -55,10 +52,7 @@
 #' real value is used. If se=TRUE, default for show.fixed=TRUE
 #' @param brief if TRUE, does not show real parameter estimates
 #' @param ... additional non-specified argument for S3 generic function
-#' @param x list resulting from call to \code{summary}
-#' @export summary.mark
-#' @export print.summary.mark
-#' @export coef.mark
+#' @export 
 #' @return A list with each of the summarized objects that depends on the
 #' argument values. Only the first 4 are given if it is a summary of a model
 #' that has not been run. \item{model}{type of model (e.g., CJS)}
@@ -188,6 +182,17 @@ x$brief=brief
 class(x)="summary.mark"
 return(x)
 }
+#' MARK model beta parameters
+#' 
+#' @usage \method{coef}{mark}(object,...)
+#' @param object a MARK model object
+#' @param ... additional non-specified argument for S3 generic function
+#' @export coef.mark
+#' @export
+#' @return A vector or dataframe of beta estimates
+#' @author Jeff Laake
+#' @export
+#' @keywords utility
 coef.mark=function(object,...)
 {
    model=load.model(object)

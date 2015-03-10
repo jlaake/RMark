@@ -72,6 +72,7 @@
 #' results
 #' @author Eldar Rakhimberdiev
 #' @export 
+#' @import snowfall
 #' @seealso \code{\link{collect.models}}, \code{\link{mark}},
 #' \code{\link{create.model.list}}
 #' @keywords utility

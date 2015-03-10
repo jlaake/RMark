@@ -2,11 +2,9 @@
 % Please edit documentation in R/print.mark.R
 \name{print.mark}
 \alias{print.mark}
-\alias{print.marklist}
 \title{Print MARK objects}
 \usage{
 \method{print}{mark}(x,...,input=FALSE)
-       \method{print}{marklist}(x,...)
 }
 \arguments{
 \item{x}{mark model object; or list of mark model objects created with
@@ -20,13 +18,8 @@
 None
 }
 \description{
-If print is for a mark model, it displays MARK output file or input file
-with MarkViewer (notepad.exe by default) so it can be viewed. If print is
-for a marklist, it displays the model.table if it exists. To display the
-output for a mark model contained in a list, simply type the list value
-(e.g., typing mymarklist[[2]] will display output for the second model).
-The function \code{print.marklist} was created to avoid accidental typing of
-the model list which would call \code{print.mark} for each of the models.
+Displays MARK output file or input file
+with MarkViewer (notepad.exe by default) so it can be viewed.
 }
 \details{
 If the model has been run (\code{model$output} exists) the output file

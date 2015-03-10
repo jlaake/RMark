@@ -804,7 +804,7 @@ NULL
 #' developed by Donovan and Hines.
 #' 
 #' This is a data set from exercise 7 of Donovan and Hines occupancy web site
-#' (\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
+#' (\url{http://www.uvm.edu/rsenr/vtcfwru/spreadsheets/?Page=occupancy/occupancy.htm}).
 #' 
 #' @name Donovan.7
 #' @docType data
@@ -847,7 +847,7 @@ NULL
 #' developed by Donovan and Hines.
 #' 
 #' This is a data set from exercise 8 of Donovan and Hines occupancy web site
-#' (\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
+#' (\url{http://www.uvm.edu/rsenr/vtcfwru/spreadsheets/?Page=occupancy/occupancy.htm}).
 #' In MARK, it uses 2 digits to allow a count of 0 to 99 at each site, so the
 #' history has 10 digits for 5 visits (occasions).
 #' 
@@ -1336,7 +1336,7 @@ NULL
 #'mallard.results                        # print model-selection table to screen
 #'options(width=100)                     # set page width to 100 characters
 #'sink("results.table.txt")              # capture screen output to file
-#'print.marklist(mallard.results)        # send output to file
+#'print(mallard.results)                 # send output to file
 #'sink()                                 # return output to screen
 #'
 #'# remove "#" on next line to see output in notepad                                            
@@ -1916,7 +1916,7 @@ NULL
 #' sink("results.table.txt") # Captures screen output to file
 #'
 #' # Remove comment to see output
-#' #print.marklist(robustexample) # Sends output to file
+#' #print(robustexample) # Sends output to file
 #' sink() # Returns output to screen
 #' #
 #' # Allows you to view results in notepad;remove # to see output

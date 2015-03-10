@@ -14,7 +14,7 @@ developed by Donovan and Hines.
 }
 \details{
 This is a data set from exercise 7 of Donovan and Hines occupancy web site
-(\url{http://www.uvm.edu/envnr/vtcfwru/spreadsheets/occupancy/occupancy.htm}).
+(\url{http://www.uvm.edu/rsenr/vtcfwru/spreadsheets/?Page=occupancy/occupancy.htm}).
 }
 \examples{
 # Donovan.7 can be created with

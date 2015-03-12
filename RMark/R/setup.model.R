@@ -49,7 +49,7 @@ function(model,nocc,mixtures=1)
 	fdir=system.file(package="RMark")	
 	fdir=file.path(fdir,"models.txt")	
 	model_definitions=read.delim(fdir,header=TRUE,
-			colClasses=c("character","character",rep("logical",4),rep("numeric",3),"logical"))
+			colClasses=c("numeric","character","character",rep("logical",4),rep("numeric",3),"logical"))
     model_def=model_definitions[model_definitions$model==model,]	
     if(nrow(model_def)==0)
         stop("Invalid type of model = ",model," Valid types are\n", paste(model_definitions$model,collapse="\n"))
@@ -59,5 +59,12 @@ function(model,nocc,mixtures=1)
 		model_def$mixtures=mixtures
 	model_def$default.mixtures=NULL
 	model_def$nocc=nocc/model_def$divisor
+	if(model_def$derived)
+	{
+		fdir=system.file(package="RMark")	
+		fdir=file.path(fdir,"DerivedPar.txt")	
+		deriv_pars=read.delim(fdir,header=TRUE,	colClasses=c("numeric","character"))
+		model_def$derived_labels=list(deriv_pars$dpar_label[deriv_pars$MarkNumber==model_def$MarkNumber])
+	}
     return(as.list(model_def))
 }

@@ -248,7 +248,7 @@ NULL
 #' #
 #' model.list=create.model.list("Known")
 #' bduck.results=mark.wrapper(model.list,data=bduck.processed,ddl=bduck.ddl,
-#'                invisible=FALSE,threads=2)
+#'                invisible=FALSE,threads=1)
 #' 
 #' #
 #' # Return model table and list of models
@@ -402,12 +402,6 @@ NULL
 #' #book
 #' #created by AJP 21 Dec 2010
 #' 
-#' #cleanup the R environment
-#' graphics.off()
-#' rm(list=ls())
-#' 
-#' #cleanup files
-#' cleanup(ask=FALSE)
 #' 
 #' #convert .inp data - only needed to create crdms
 #' #ch.data<-convert.inp("rd_simple1.inp")
@@ -436,7 +430,8 @@ NULL
 #' #variable is called ctime for constrained time
 #' crdms.ddl$Psi$ctime=crdms.ddl$Psi$time
 #' crdms.ddl$Psi$ctime[crdms.ddl$Psi$time==3]=2
-#' 
+#' do_example=function()
+#' {
 #' #Initial assumptions
 #' S.dot=list(formula=~1)  #S equal for both states and constant over time
 #' p.session=list(formula=~session, share=TRUE,  #p=c varies with session 
@@ -468,9 +463,9 @@ NULL
 #' crdms.res<-collect.models()
 #' 
 #' print(crdms.res)
-#' 
-#' #final cleanup
-#' cleanup(ask=FALSE)
+#' invisible()
+#' }
+#' do_example()
 #' }
 NULL
 
@@ -824,9 +819,9 @@ NULL
 #' # Estimates from following agree with estimates on website but the
 #' # log-likelihood values do not agree.  Maybe a difference in whether the
 #' # constant binomial coefficients are included.
-#'   Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE,threads=2)
+#'   Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE,threads=1)
 #' # THe following model was not in exercise 7.
-#'   Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE,threads=2)
+#'   Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE,threads=1)
 #'   return(collect.models())
 #' }
 #' exercise.7=do.exercise.7()
@@ -1073,15 +1068,19 @@ NULL
 #' 							  Nstar=list(formula=~session),
 #' 							  Nbar=list(formula=~session)))
 #' summary(mod1)
-#' 
-#' mod2=mark(IElogitNor.proc,IElogitNor.ddl,
+#' # You can use the initial value to get a better estimate; For some reason this is
+#' #not converging on Linux version of MARK executable so it is not run on Linux machine
+#' 	if(R.Version()$os=="mingw32")
+#'  {
+#'    mod2=mark(IElogitNor.proc,IElogitNor.ddl,
 #' 		  model.parameters=list(p=list(formula=~-1+session:time),
 #' 							  sigma=list(formula=~session),
 #' 							  alpha=list(formula=~-1+session:time),
 #' 							  Nstar=list(formula=~session),
 #' 							  Nbar=list(formula=~session)),
 #' 							  initial=mod1)
-#' summary(mod2)			  
+#'    summary(mod2)
+#'   }			  
 #' }
 NULL
 
@@ -1183,7 +1182,7 @@ NULL
 #' 				    "Marked Unidentified"=c(0,0,0,0,1,1,1,0,0,3,0,1)),
 #' 			         time.intervals=c(0,0,0,1,0,0,0,1,0,0,0))
 #' logitNor.ddl=make.design.data(logitNor.proc)
-#' mod=mark(logitNor.proc,logitNor.ddl,threads=2)
+#' mod=mark(logitNor.proc,logitNor.ddl,threads=1)
 #' summary(mod)
 #' 
 NULL
@@ -1489,19 +1488,17 @@ NULL
 #' #  stratum.
 #' #
 #' Psi.s=list(formula=~-1+stratum:tostratum)
-#' Psi.sxtime=list(formula=~-1+stratum:tostratum:time)
 #' #
 #' # Create model list and run assortment of models
 #' #
 #' model.list=create.model.list("Multistrata")
 #' #
-#' # Add on specific models that are paired with fixed p's to remove confounding
+#' # Add on specific model that is paired with fixed p's to remove confounding
 #' #
 #' p.stratumxtime=list(formula=~stratum*time)
 #' p.stratumxtime.fixed=list(formula=~stratum*time,fixed=list(time=4,value=1))
 #' model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
-#'   Psi="Psi.sxtime"))
-#' model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
+#'   Psi="Psi.s"))
 #' #
 #' # Run the list of models
 #' #

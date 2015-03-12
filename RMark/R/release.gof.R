@@ -25,6 +25,11 @@
 release.gof <-
   function(data,invisible=TRUE,title="Release-gof",view=FALSE)
 {
+	if(R.Version()$os!="mingw32")
+	{
+		cat("\nWindows only function. Release.exe does not work on non-Windows machine\n")
+		return(NULL)
+	}
   if(is.null(data$nocc)) stop("\ndata argument must be a processed data list\n")
   nocc=data$nocc
   number.of.groups=dim(data$freq)[2]

@@ -1,0 +1,258 @@
+MarkNumber	dpar_label
+4	S Overall Survival
+5	N Population Size
+7	N Population Size
+12	N Population Size
+13	N Population Size
+15	Lambda Population Change
+15	log(Lambda) Population Change
+16	Lambda Population Change
+16	log(Lambda) Population Change
+17	Lambda Population Change
+17	log(Lambda) Population Change
+18	N Population Size
+19	B* Gross Births
+19	B Net Births
+19	N Population Size
+19	Gross N* Population Size
+22	N Population Size
+23	N Population Size
+24	S Overall Survival
+25	N Population Size
+26	N Population Size
+27	Occupancy
+28	gamma Probability Colonization
+28	lambda Rate of Change
+28	log odds lambda
+29	epsilon Probabiliy Extinction
+29	lambda Rate of Change
+29	log odds lambda
+30	psi Probability Occupied
+30	lambda Rate of Change
+30	log odds lambda
+31	Lambda Population Change
+31	log(Lambda) Population Change
+32	N Population Size
+32	Method 1 Residency Time
+32	Method 2 Residency Time
+33	N Population Size
+34	N Population Size
+35	N Population Size
+36	N Population Size
+37	N Population Size
+38	N Population Size
+39	N Population Size
+40	N Population Size
+41	N Population Size
+42	N Population Size
+43	N Population Size
+44	N Population Size
+45	N Population Size
+46	N Population Size
+47	N Population Size
+48	S Overall Survival
+49	N Population Size
+50	N Population Size
+51	N Population Size
+52	N Population Size
+53	N Population Size
+54	N Population Size
+55	N Population Size
+56	N Population Size
+57	N Population Size
+58	N Population Size
+59	N Population Size
+60	N Population Size
+61	N Population Size
+62	N Population Size
+63	N Population Size
+64	N Population Size
+65	N Population Size
+66	N Population Size
+67	N Population Size
+67	Lambda Population Change
+67	log(Lambda) Population Change
+68	N Population Size
+68	Lambda Population Change
+68	log(Lambda) Population Change
+69	N Population Size
+69	Lambda Population Change
+69	log(Lambda) Population Change
+70	N Population Size
+70	Lambda Population Change
+70	log(Lambda) Population Change
+71	N Population Size
+71	Lambda Population Change
+71	log(Lambda) Population Change
+72	N Population Size
+72	Lambda Population Change
+72	log(Lambda) Population Change
+73	N Population Size
+73	Lambda Population Change
+73	log(Lambda) Population Change
+74	N Population Size
+74	Lambda Population Change
+74	log(Lambda) Population Change
+75	N Population Size
+75	Lambda Population Change
+75	log(Lambda) Population Change
+76	N Population Size
+76	Lambda Population Change
+76	log(Lambda) Population Change
+77	N Population Size
+77	Lambda Population Change
+77	log(Lambda) Population Change
+78	N Population Size
+78	Lambda Population Change
+78	log(Lambda) Population Change
+79	N Population Size
+79	Lambda Population Change
+79	log(Lambda) Population Change
+80	N Population Size
+80	Lambda Population Change
+80	log(Lambda) Population Change
+81	N Population Size
+81	Lambda Population Change
+81	log(Lambda) Population Change
+82	N Population Size
+82	Lambda Population Change
+82	log(Lambda) Population Change
+83	N Population Size
+83	Lambda Population Change
+83	log(Lambda) Population Change
+84	N Population Size
+84	Lambda Population Change
+84	log(Lambda) Population Change
+85	N Population Size
+85	Lambda Population Change
+85	log(Lambda) Population Change
+86	N Population Size
+86	Lambda Population Change
+86	log(Lambda) Population Change
+87	N Population Size
+87	Lambda Population Change
+87	log(Lambda) Population Change
+88	N Population Size
+88	Lambda Population Change
+88	log(Lambda) Population Change
+89	N Population Size
+89	Lambda Population Change
+89	log(Lambda) Population Change
+90	N Population Size
+90	Lambda Population Change
+90	log(Lambda) Population Change
+91	N Population Size
+91	Lambda Population Change
+91	log(Lambda) Population Change
+92	N Population Size
+92	Lambda Population Change
+92	log(Lambda) Population Change
+93	N Population Size
+93	Lambda Population Change
+93	log(Lambda) Population Change
+94	N Population Size
+94	Lambda Population Change
+94	log(Lambda) Population Change
+95	N Population Size
+95	Lambda Population Change
+95	log(Lambda) Population Change
+96	N Population Size
+96	Lambda Population Change
+96	log(Lambda) Population Change
+97	N Population Size
+97	Lambda Population Change
+97	log(Lambda) Population Change
+98	N Population Size
+98	Lambda Population Change
+98	log(Lambda) Population Change
+99	N Population Size
+99	Lambda Population Change
+99	log(Lambda) Population Change
+100	N Population Size
+100	Lambda Population Change
+100	log(Lambda) Population Change
+101	N Population Size
+101	Lambda Population Change
+101	log(Lambda) Population Change
+102	N Population Size
+102	Lambda Population Change
+102	log(Lambda) Population Change
+107	Occupancy
+108	gamma Probability Colonization
+108	lambda Rate of Change
+108	log odds lambda
+109	epsilon Probability Extinction
+109	lambda Rate of Change
+109	log odds lambda
+110	psi Probability Occupied
+110	lambda Rate of Change
+110	log odds lambda
+111	Occupancy
+112	Occupancy
+113	Species Interaction Factor
+114	Mu Mean Resighting Rate
+115	N Population Size
+115	Lambda Mean Resightings
+116	psi1*psi2
+117	Occupancy
+117	Expected p
+118	Occupancy
+118	Expected p
+119	N Population Size
+119	Method 1 Residency Time
+119	Method 2 Residency Time
+120	Mu Mean Resighting Rate
+120	Population Estimate
+124	Phi_t transition matrix
+126	N Population Size
+126	Method 1 Residency Time
+126	Method 2 Residency Time
+127	Density
+128	Density
+129	Density
+131	Lambda Population Change
+131	log(Lambda) Population Change
+132	Lambda Population Change
+132	log(Lambda) Population Change
+133	Lambda Population Change
+133	log(Lambda) Population Change
+134	Lambda Population Change
+134	log(Lambda) Population Change
+136	Lambda Population Change
+136	log(Lambda) Population Change
+137	Species Interaction Factor
+137	Occupancy of Species B
+137	Occupancy of Both Species
+141	Species A Occupancy
+141	Species B given A Occupancy
+141	Species B given not A Occupancy
+141	Species B Occupancy
+141	Occupancy of Both Species
+141	Species Interaction Factor
+142	Method 1 Individual Residency Time
+142	Method 1 Attribute Duration Time
+142	Method 2 Attribute Duration Time
+144	Method 1 Residency Time of Occupancy
+145	N Population Size
+146	N Population Size
+147	N Population Size
+148	N Population Size
+148	Lambda Population Change
+148	log(Lambda) Population Change
+149	N Population Size
+149	Lambda Population Change
+149	log(Lambda) Population Change
+150	N Population Size
+150	Lambda Population Change
+150	log(Lambda) Population Change
+151	Occupancy
+152	gamma Probability Colonization
+152	lambda Rate of Change
+152	log odds lambda
+153	epsilon Probabiliy Extinction
+153	lambda Rate of Change
+153	log odds lambda
+154	psi Probability Occupied
+154	lambda Rate of Change
+154	log odds lambda
+155	S Overall Survival

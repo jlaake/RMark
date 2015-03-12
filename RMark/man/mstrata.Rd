@@ -57,19 +57,17 @@ p.stratum=list(formula=~stratum)
 #  stratum.
 #
 Psi.s=list(formula=~-1+stratum:tostratum)
-Psi.sxtime=list(formula=~-1+stratum:tostratum:time)
 #
 # Create model list and run assortment of models
 #
 model.list=create.model.list("Multistrata")
 #
-# Add on specific models that are paired with fixed p's to remove confounding
+# Add on specific model that is paired with fixed p's to remove confounding
 #
 p.stratumxtime=list(formula=~stratum*time)
 p.stratumxtime.fixed=list(formula=~stratum*time,fixed=list(time=4,value=1))
 model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
-  Psi="Psi.sxtime"))
-model.list=rbind(model.list,c(S="S.stratum",p="p.stratumxtime",Psi="Psi.s"))
+  Psi="Psi.s"))
 #
 # Run the list of models
 #

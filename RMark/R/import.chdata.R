@@ -61,7 +61,7 @@
 #' pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 #' example.data<-import.chdata(paste(pathtodata,"example.data.txt",sep="/"),
 #'       field.types=c("n","f","f","f"))
-#' edwards.eberhardt<-import.chdata(paste(pathtodata,"EdwardsandEberhardt.txt",
+#' edwards.eberhardt<-import.chdata(paste(pathtodata,"edwardsandeberhardt.txt",
 #'       sep="/"),field.names="ch",header=FALSE)
 #' dipper<-import.chdata(paste(pathtodata,"dipper.txt",sep="/"),
 #'       field.names=c("ch","sex"),header=FALSE)

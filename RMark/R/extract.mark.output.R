@@ -62,7 +62,11 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   }
   design.matrix=model$simplify$design.matrix
   links=model$links
-  derived=setup.model(model$model,model$nocc)$derived
+  model_def=setup.model(model$model,model$nocc)
+  if(model_def$derived)
+	  derived_labels=model_def$derived_labels[[1]]
+  else
+	  derived_labels=NULL
   outfile=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
   nreal=dim(design.matrix)[1]
   nbeta=dim(design.matrix)[2]
@@ -236,7 +240,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   if(!is.factor(real$note))real$note=""
   if(file.exists(vcvfile))
      if(os=="mingw32")
-        param=read.mark.binary(vcvfile)
+        param=read.mark.binary(vcvfile,derived_labels)
      else
         param=read.mark.binary.linux(vcvfile)
   else

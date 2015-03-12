@@ -121,6 +121,11 @@ mark.wrapper.parallel<-
 #  returns a list of mark models
 #
 # -----------------------------------------------------------------------------------------------------------------------
+	if(R.Version()$os!="mingw32")
+	{
+		cat("\nWindows only function. Unable to get this function to run on non-Windows machine\n")
+		return(NULL)
+	}
 	args<-match.call()
 	t.1<-which(as.character(args[-1]) %in% ls(envir=parent.frame()))
 	t.2<-mget(as.character(args[-1][t.1]), envir=parent.frame())

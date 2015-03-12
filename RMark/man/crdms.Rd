@@ -23,12 +23,6 @@ Cooch and White
 #book
 #created by AJP 21 Dec 2010
 
-#cleanup the R environment
-graphics.off()
-rm(list=ls())
-
-#cleanup files
-cleanup(ask=FALSE)
 
 #convert .inp data - only needed to create crdms
 #ch.data<-convert.inp("rd_simple1.inp")
@@ -57,7 +51,8 @@ Psiuu1=as.numeric(row.names(crdms.ddl$Psi[crdms.ddl$Psi$stratum=="U"&
 #variable is called ctime for constrained time
 crdms.ddl$Psi$ctime=crdms.ddl$Psi$time
 crdms.ddl$Psi$ctime[crdms.ddl$Psi$time==3]=2
-
+do_example=function()
+{
 #Initial assumptions
 S.dot=list(formula=~1)  #S equal for both states and constant over time
 p.session=list(formula=~session, share=TRUE,  #p=c varies with session
@@ -89,9 +84,9 @@ model.3=mark(crdms.data,ddl=crdms.ddl,
 crdms.res<-collect.models()
 
 print(crdms.res)
-
-#final cleanup
-cleanup(ask=FALSE)
+invisible()
+}
+do_example()
 }
 }
 \references{

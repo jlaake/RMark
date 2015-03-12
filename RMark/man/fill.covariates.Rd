@@ -31,6 +31,7 @@ values which is an edited version (if needed) of the dataframe returned by
 \code{\link{find.covariates}}.
 }
 \examples{
+\donttest{
 data(dipper)
 dipper$nsex=as.numeric(dipper$sex)-1
 dipper$weight=rnorm(294)
@@ -64,6 +65,7 @@ survival.by.sex$se.real[1:2] # std errors
 survival.by.sex$vcv.real[1:2,1:2] # v-c matrix
 survival.by.sex$vcv.real[1,2]/prod(survival.by.sex$se.real[1:2])
 # sampling correlation of the estimates
+}
 }
 \author{
 Jeff Laake

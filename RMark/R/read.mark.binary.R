@@ -6,6 +6,7 @@
 #' @aliases read.mark.binary read.mark.binary.linux
 #' @param filespec Filename specification for binary output file from
 #' MARK;named here as markxxx.vcv
+#' @param derived_labels vector of labels for derived parameters; NULL if no derived parameters for model
 #' @return List of estimates, se, lcl, ucl and var-cov matrices for beta, real
 #' and derived estimates \item{beta}{Dataframe for beta parameters containing
 #' estimates, se, lcl, ucl} \item{beta.vcv}{variance-covariance matrix for beta
@@ -18,14 +19,7 @@
 #' @seealso \code{\link{extract.mark.output}}
 #' @keywords utility
 read.mark.binary <-
-function(filespec)
-#
-# read.mark.binary 
-#
-# Arguments:
-# 
-# Value: list of estimates, se, lcl, ucl and var-cov matrices
-#        for beta, real and derived estimates
+function(filespec,derived_labels)
 {
 z=file(filespec,"rb")
 beta=list()
@@ -69,33 +63,40 @@ for (i in 1:nlogit)
 whatread=readChar(z,16)
 real.vcv[i,]=readBin(z,numeric(),nlogit)
 }
-whatread=readChar(z,16)
-nderiv=readBin(z,integer(),1)
-
-if(length(nderiv)>0)
+if(!is.null(derived_labels))
 {
-   derived=list()  
-   whatread=readChar(z,16)
-   derived$estimate=readBin(z,numeric(),nderiv)
-   whatread=readChar(z,16)
-   derived$se=readBin(z,numeric(),nderiv)
-   whatread=readChar(z,16)
-   derived$lcl=readBin(z,numeric(),nderiv)
-   whatread=readChar(z,16)
-   derived$ucl=readBin(z,numeric(),nderiv)
-   derived.vcv=matrix(0,nrow=nderiv,ncol=nderiv)
-   for (i in 1:nderiv)
-   {
-      whatread=readChar(z,16)
-      value=readBin(z,numeric(),nderiv)
-      if(length(value)!=0) derived.vcv[i,]=value
-   }
-}
-else
+	derived=vector("list",length(derived_labels))
+	names(derived)=derived_labels
+	derived.vcv=vector("list",length(derived_labels))
+	names(derived.vcv)=derived_labels
+	for(label in derived_labels)
+	{
+		whatread=readChar(z,16)
+		nderiv=readBin(z,integer(),1)
+		derived[[label]]=list()  
+		whatread=readChar(z,16)
+		derived[[label]]$estimate=readBin(z,numeric(),nderiv)
+		whatread=readChar(z,16)
+		derived[[label]]$se=readBin(z,numeric(),nderiv)
+		whatread=readChar(z,16)
+		derived[[label]]$lcl=readBin(z,numeric(),nderiv)
+		whatread=readChar(z,16)
+		derived[[label]]$ucl=readBin(z,numeric(),nderiv)
+		derived[[label]]=as.data.frame(derived[[label]])
+		derived.vcv[[label]]=matrix(0,nrow=nderiv,ncol=nderiv)
+		for (i in 1:nderiv)
+		{
+			whatread=readChar(z,16)
+			value=readBin(z,numeric(),nderiv)
+			if(length(value)!=0) derived.vcv[[label]][i,]=value
+		}
+		
+	}
+} else
 {
  derived=NULL
  derived.vcv=NULL
 }
 close(z)
-return(list(beta=as.data.frame(beta),beta.vcv=beta.vcv,real=as.data.frame(real),real.vcv=real.vcv,derived=as.data.frame(derived),derived.vcv=derived.vcv))
+return(list(beta=as.data.frame(beta),beta.vcv=beta.vcv,real=as.data.frame(real),real.vcv=real.vcv,derived=derived,derived.vcv=derived.vcv))
 }

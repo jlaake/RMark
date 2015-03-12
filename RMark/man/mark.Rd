@@ -261,7 +261,7 @@ MarkViewer can be assigned to a program other than notepad.exe (see
 }
 \examples{
 data(dipper)
-dipper.Phidot.pdot=mark(dipper)
+dipper.Phidot.pdot=mark(dipper,threads=1)
 }
 \author{
 Jeff Laake

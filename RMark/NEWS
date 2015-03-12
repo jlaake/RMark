@@ -1,3 +1,21 @@
+RMark 2.1.12 (12 Mar 2015)
+--------------------------
+BUG FIXES
+* Changed names of inp files to be all lower case to avoid problems on non-windows machines
+
+* Incomplete reading of derived parameters has been fixed.  Models that have parameter f0 now have a derived parameter for N. 
+
+CHANGES 
+* added code to release.gof and mark.wrapper.parallel to return NULL if run on a non-windows machine
+
+RMark 2.1.11 (10 Mar 2015)
+--------------------------
+BUG FIXES
+* Fixed bad url in description
+
+CHANGES 
+* set threads=1 for any example that is tested on CRAN.
+
 RMark 2.1.10 (10 Mar 2015)
 --------------------------
 NEW FEATURES

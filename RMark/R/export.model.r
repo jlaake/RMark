@@ -29,7 +29,7 @@
 #' @examples
 #' 
 #' data(dipper)
-#' mymodel=mark(dipper)
+#' mymodel=mark(dipper,threads=1)
 #' export.model(mymodel,replace=TRUE)
 #' 
 export.model <-

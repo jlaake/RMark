@@ -26,9 +26,9 @@ do.exercise.7=function()
 # Estimates from following agree with estimates on website but the
 # log-likelihood values do not agree.  Maybe a difference in whether the
 # constant binomial coefficients are included.
-  Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE,threads=2)
+  Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE,threads=1)
 # THe following model was not in exercise 7.
-  Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE,threads=2)
+  Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE,threads=1)
   return(collect.models())
 }
 exercise.7=do.exercise.7()

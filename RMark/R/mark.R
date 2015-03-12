@@ -199,7 +199,7 @@
 #' @examples
 #' 
 #' data(dipper)
-#' dipper.Phidot.pdot=mark(dipper)
+#' dipper.Phidot.pdot=mark(dipper,threads=1)
 #' 
 mark <-
 function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,

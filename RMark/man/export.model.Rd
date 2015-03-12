@@ -37,7 +37,7 @@ the exported models or you can get erroneous results.
 }
 \examples{
 data(dipper)
-mymodel=mark(dipper)
+mymodel=mark(dipper,threads=1)
 export.model(mymodel,replace=TRUE)
 }
 \author{

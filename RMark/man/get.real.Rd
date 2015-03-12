@@ -87,7 +87,7 @@ data(example.data)
 pregion=list(formula=~region)
 PhiAge=list(formula=~Age)
 mod=mark(example.data,model.parameters=list(p=pregion,Phi=PhiAge),
- groups=c("sex","age","region"),age.var=2,initial.ages=c(0,1,2))
+ groups=c("sex","age","region"),age.var=2,initial.ages=c(0,1,2),threads=1)
 # extract list of Phi parameter estimates for all groups in PIM format
 Phi.estimates=get.real(mod,"Phi")
 # print out parameter estimates in triangular PIM format

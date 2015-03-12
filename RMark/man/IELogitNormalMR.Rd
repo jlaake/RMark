@@ -27,15 +27,19 @@ mod1=mark(IElogitNor.proc,IElogitNor.ddl,
 							  Nstar=list(formula=~session),
 							  Nbar=list(formula=~session)))
 summary(mod1)
-
-mod2=mark(IElogitNor.proc,IElogitNor.ddl,
+# You can use the initial value to get a better estimate; For some reason this is
+#not converging on Linux version of MARK executable so it is not run on Linux machine
+	if(R.Version()$os=="mingw32")
+ {
+   mod2=mark(IElogitNor.proc,IElogitNor.ddl,
 		  model.parameters=list(p=list(formula=~-1+session:time),
 							  sigma=list(formula=~session),
 							  alpha=list(formula=~-1+session:time),
 							  Nstar=list(formula=~session),
 							  Nbar=list(formula=~session)),
 							  initial=mod1)
-summary(mod2)
+   summary(mod2)
+  }
 }
 }
 \keyword{datasets}

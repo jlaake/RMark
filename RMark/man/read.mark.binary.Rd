@@ -5,11 +5,13 @@
 \alias{read.mark.binary.linux}
 \title{Reads binary file output from MARK and returns a list of the results}
 \usage{
-read.mark.binary(filespec)
+read.mark.binary(filespec, derived_labels)
 }
 \arguments{
 \item{filespec}{Filename specification for binary output file from
 MARK;named here as markxxx.vcv}
+
+\item{derived_labels}{vector of labels for derived parameters; NULL if no derived parameters for model}
 }
 \value{
 List of estimates, se, lcl, ucl and var-cov matrices for beta, real

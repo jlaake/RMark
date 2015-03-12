@@ -242,7 +242,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
      if(os=="mingw32")
         param=read.mark.binary(vcvfile,derived_labels)
      else
-        param=read.mark.binary.linux(vcvfile)
+        param=read.mark.binary.linux(vcvfile,derived_labels)
   else
   {
      param=NULL

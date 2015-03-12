@@ -1,5 +1,5 @@
 read.mark.binary.linux <-
-function(filespec)
+function(filespec,derived_labels)
 #
 # read.mark.binary 
 #
@@ -15,15 +15,16 @@ ncovs=readBin(z,integer(),1,size=4)
 nlogit=readBin(z,integer(),1,size=4)
 ngrps=readBin(z,integer(),1,size=4)
 nests=readBin(z,integer(),1,size=4)
-#whatread=readBin(z,integer(),2*(max(ncovs,nlogit)-1),size=4)
-#whatread=readBin(z,raw(),24)
 whatread=""
-while(whatread!="B")
+while(whatread!="B" & whatread!="E")
 {
   whatread=try(readChar(z,1),silent=TRUE)
   if(class(whatread)=="try-error") whatread=""
 }
-whatread=readBin(z,raw(),7)
+if(whatread=="B")
+  whatread=readBin(z,raw(),7)
+else
+	whatread=readBin(z,raw(),6)
 beta$estimate=readBin(z,numeric(),ncovs,size=8)
 whatread=readBin(z,raw(),16)
 beta$se=readBin(z,numeric(),ncovs,size=8)
@@ -57,45 +58,47 @@ if(length(whatread)!=nlogit)
   warning("\n Incomplete read of the binary file\n")
   real.vcv=NULL
   cont=FALSE
+  close(z)
   break
 } else
 {
   real.vcv[i,]=whatread
 }
 }
-if(cont)
+if(!is.null(derived_labels)  & cont)
 {
-  whatread=readBin(z,raw(),16)
-  nderiv=readBin(z,integer(),1,size=4)
-  if(length(nderiv)>0)
-  {
-    derived=list()  
-    whatread=readBin(z,raw(),16)
-    derived$estimate=readBin(z,numeric(),nderiv,size=8)
-    whatread=readBin(z,raw(),16)
-    derived$se=readBin(z,numeric(),nderiv,size=8)
-    whatread=readBin(z,raw(),16)
-    derived$lcl=readBin(z,numeric(),nderiv,size=8)
-    whatread=readBin(z,raw(),16)
-    derived$ucl=readBin(z,numeric(),nderiv,size=8)
-    derived.vcv=matrix(0,nrow=nderiv,ncol=nderiv)
-    for (i in 1:nderiv)
-    {
-      whatread=readBin(z,raw(),16)
-      value=readBin(z,numeric(),nderiv,size=8)
-      if(length(value)!=0) derived.vcv[i,]=value
-    }
-  }  
-  else
-  {
-   derived=NULL
-   derived.vcv=NULL
-  }
+	derived=vector("list",length(derived_labels))
+	names(derived)=derived_labels
+	derived.vcv=vector("list",length(derived_labels))
+	names(derived.vcv)=derived_labels
+	for(label in derived_labels)
+	{
+		whatread=readBin(z,raw(),16)
+		nderiv=readBin(z,integer(),1,size=4)
+		derived[[label]]=list()  
+		whatread=readBin(z,raw(),16)
+		derived[[label]]$estimate=readBin(z,numeric(),nderiv,size=8)
+		whatread=readBin(z,raw(),16)
+		derived[[label]]$se==readBin(z,numeric(),nderiv,size=8)
+		whatread=readBin(z,raw(),16)
+		derived[[label]]$lcl=readBin(z,numeric(),nderiv,size=8)
+		whatread=readBin(z,raw(),16)
+		derived[[label]]$ucl=readBin(z,numeric(),nderiv,size=8)
+		derived[[label]]=as.data.frame(derived[[label]])
+		derived.vcv[[label]]=matrix(0,nrow=nderiv,ncol=nderiv)
+		for (i in 1:nderiv)
+		{
+			whatread=readBin(z,raw(),16)
+			value=readBin(z,numeric(),nderiv,size=8)
+			if(length(value)!=0) derived.vcv[[label]][i,]=value
+		}
+		
+	}
 } else
 {
-   derived=NULL
-   derived.vcv=NULL
+	derived=NULL
+	derived.vcv=NULL
 }
 close(z)
-return(list(beta=as.data.frame(beta),beta.vcv=beta.vcv,real=as.data.frame(real),real.vcv=real.vcv,derived=as.data.frame(derived),derived.vcv=derived.vcv))
+return(list(beta=as.data.frame(beta),beta.vcv=beta.vcv,real=as.data.frame(real),real.vcv=real.vcv,derived=derived,derived.vcv=derived.vcv))
 }

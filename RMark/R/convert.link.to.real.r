@@ -44,7 +44,7 @@ if(is.null(links))links=model$links
 #                                           ((
 # Compute real values: The first is the case in which all params use same link function
 #
-   if(length(links)==1)
+   if(length(links)==1 & length(grep("mlogit",links,ignore.case=TRUE))==0)
       real=inverse.link(x,links)
    else
 #

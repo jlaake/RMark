@@ -13,7 +13,7 @@
 #' @return A modified marklist to replace the previous marklist specified as
 #' the argument.
 #' @author Jeff Laake
-#' @export
+#' @export store restore
 #' @keywords utility
 store=function(x)
 {

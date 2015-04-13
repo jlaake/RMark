@@ -1,10 +1,10 @@
 #' Lark Sparrow
 #' 
-#' An example of Multiple Scale Occupancy model for some lark sparrow data that was contributed by Davi Pavalacky 
+#' An example of Multiple Scale Occupancy model for some lark sparrow data that was contributed by David Pavlacky 
 #' at Rocky Mountain bird observatory. The study design was a GRTS selection of paired "Deferred" and "Grazed" pastures.  
-#' The point count locations within each pasture were a random selection of systematic point count locations separated by 125 m.  
-#' A removal design was used to the set the data to missing after the first detection.  The point count data were set to missing when fewer than 
-#' nine points were surveyed.     
+#' The point count locations within each pasture were a random selection of systematic point count locations separated by 250 m. Each point count had
+#' a radius of 125m. A removal design was used to the set the data to missing after the first detection.  
+#' The point count data were set to missing when fewer than nine points were surveyed.     
 #' 
 #' @name larksparrow
 #' @aliases LASP

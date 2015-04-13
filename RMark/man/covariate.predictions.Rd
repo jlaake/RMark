@@ -117,7 +117,13 @@ values, you could create a dataframe with 5 rows each having an \code{index}
 with the value 1 along with the relevant covariate data and an additional 2
 rows with the \code{index} with the value 7.  If you include the field
 \code{index} in \code{data} then you do not need to give a value for the
-argument \code{indices}.
+argument \code{indices}. However, if you are making the computations for parameters
+that use an mlogit link you must use the separate indices argument. If you try to
+use the data.frame(index=...,cov) approach with mlogit parameters and you have
+covariate values, the function will stop with an error.  Also, if you only include
+a portion of the indices in an mlogit set, it will also stop and issue an error and
+tell you the set of indices that should be included for that mlogit set.  If you
+were allowed to exclude some indices the result would be incorrect.
 }
 \examples{
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")

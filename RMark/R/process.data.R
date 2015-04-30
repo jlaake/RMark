@@ -149,7 +149,7 @@ robust.occasions<-function(times)
 {
    if(times[1] !=0 | times[length(times)]!=0)
       stop("\nIncorrect structure for time intervals with robust design. Time intervals must begin and end with a zero.\n")
-   merge_int=unlist(strsplit(paste(times,collapse=""),"0"))
+   merge_int=unlist(strsplit(paste(as.numeric(times>0),collapse=""),"0"))
    if(length(merge_int[merge_int!=""])!=length(times[times>0]))
 	   stop("\nIncorrect structure for time intervals with robust design. Must have at least 2 secondary occasions per primary period.\n")
    times.vec=match(as.character(times),"0")

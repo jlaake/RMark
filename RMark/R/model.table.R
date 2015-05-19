@@ -171,6 +171,7 @@ result.table=list()
 model.numbers=NULL
 #chat.values=rep(1,length(model.list))
 chat.values=NULL
+first=TRUE
 for(i in 1:length(model.list))
 {
     if (!amodeltable)
@@ -196,10 +197,11 @@ for(i in 1:length(model.list))
 #
 #  If this is the first model, save the type and the effective sample size
 #
-   if(i==1)
+   if(first)
    {
       savetype=model$model
       saveESS=model$result$n
+	  first=FALSE
    }
 #                     
 #  If the models don't agree on type or ESS then stop

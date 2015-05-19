@@ -181,13 +181,14 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
      else
      {
         nlines=ceiling(nbeta/25)
-        ff=tempfile()
+        par.indices=NULL
         for (i in (x+1):(x+nlines))
-           write(out[i],file=ff,append=TRUE)
-        par.indices=as.vector(t(read.fwf(file = ff,widths = c(4, rep(3, 24)))))
+		{
+			ii=strsplit(out[i]," ")[[1]]
+			par.indices=c(par.indices,as.numeric(ii[ii!=""]))
+		}
         singular=par.indices[(npar+1):nbeta]
-     }
-     
+     }     
   }
   if(nbeta!=npar & adjust)
   {

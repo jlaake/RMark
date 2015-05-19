@@ -8,6 +8,12 @@ BUG FIXES
 
 * A bug in process.data was fixed that would incorrectly state that the robust structure was not correct in some cases with non-unit time intervals.  Thanks to Tomo Eguchi for finding and reporting this error.
 
+* A problem with reading singular parameters from the output file was fixed.  These are the parameter indices that MARK identified and are stored in results$singular.
+
+* A bug was fixed in model.table in which it would not complete if the first model failed to run.
+
+* Real labels had 2 values of c (cohort) based on time and occasion. This was fixed.
+
 RMark 2.1.12 (12 Mar 2015)
 --------------------------
 BUG FIXES

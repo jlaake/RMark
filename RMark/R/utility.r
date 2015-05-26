@@ -401,5 +401,93 @@ MS_popan=function(x,augment_num=100,augment_stratum="A",enter_stratum="B",strata
 	return(list(data=dp,ddl=ddl))
 }
 
+#' Truncate capture histories for multi-state models
+#' 
+#' Decompose full capture history to releases followed by k recapture occasions. If a recapture occasion occurs before k
+#' occasions, the capture history is finished at the first recapture and right padded with "." which effectively acts like a 
+#' loss on capture. The recapture is then a new release and new capture history. If there are no recaptures within k occasions, it has a release followed by k 0's. If the release is such that adding k occasions is
+#' greater than the length of the original capture history, then the new history is left padded with 0's. Capture histories that end
+#' with a capture on the last occasion do not generate a new capture history because there are no possible recaptures and thus contain no
+#' information in a CJS format MS model.  All freq and covariates are copied with newly generated truncated capture histories.
+#' 
+#' @param data dataframe containing at least one character field named ch; can also contain frequency in numeric field freq and any other covariates.
+#' @param k number of recapture occasions after release; new capture histories are of length k+1
+#' @return dataframe with field ch and freq (default to 1) and any covariates included in argument data; it also contains a factor variable
+#' initial which is the first occasion which should be used as a group variable so the begin.time can be set for each release cohort to 
+#' maintain the original times, as shown in the example.
+#' @export 
+#' @examples
+#' \donttest{
+#' data(mstrata)
+#' df=MStruncate(mstrata,k=2)
+#' dp=process.data(df,model="Multistrata",groups=c("initial"),begin.time=1:max(as.numeric(df$initial)))
+#' ddl=make.design.data(dp)
+#' table(ddl$S$initial,ddl$S$time)
+#' table(ddl$p$initial,ddl$p$time)
+#' }
+#' 
+MStruncate=function(data,k=5)
+{
+	# originally written with truncated history being of length k; changed to release followed by k occasions which
+	# is consistent with Simon's approach
+	k=k+1
+	f=function(first,last,flab,llab,k,nocc)
+	{
+		if(!is.na(last))
+		{
+			if(last>(first+k-1))
+				return(list(first=first,newch=paste(c(flab,rep("0",k-1)),collapse="")))
+			else
+			if(first+k-1>nocc)
+				return(list(first=nocc-k+1,newch=paste(c(rep(0,first+k-nocc-1),flab,rep("0",last-first-1),llab,rep(".",nocc-first-1)),collapse="")))
+			else
+				return(list(first=first,newch=paste(c(flab,rep("0",last-first-1),llab,rep(".",first+k-1-last)),collapse="")))
+		} else {
+			if(first+k-1>nocc)
+				return(list(first=nocc-k+1,newch=paste(c(rep("0",first+k-nocc-1),flab,rep("0",nocc-first)),collapse="")))
+			else
+				return(list(first=first,newch=paste(c(flab,rep("0",k-1)),collapse="")))
+		}
+	}
+	f1=function(x,eh,slabels,k,nocc)
+	{
+		if(all(x==0))return(NULL)
+		x=x[x>0]
+		df=NULL
+		for(i in 1:length(x))
+		{
+			if(i==length(x))
+				newch=f(x[i],NA,slabels[eh[x[i]]],"",k,nocc)
+			else	
+				newch=f(x[i],x[i+1],slabels[eh[x[i]]],slabels[eh[x[i+1]]],k,nocc)
+			df=rbind(df,data.frame(ch=newch$newch,initial=newch$first,stringsAsFactors=FALSE))
+		}
+		return(df)
+	}
+	#############################
+	if(k>=nchar(data$ch)[1]) stop("k must be smaller than number of occasions")
+	strata.labels=unique(do.call("c",strsplit(data$ch,"")))
+	strata.labels=strata.labels[strata.labels!="0"]
+	ehmat=t(sapply(strsplit(data$ch,""),function(x) as.numeric(factor(x,levels=c("0",strata.labels)))))-1
+	chmat=process.ch(collapseCH(ehmat))$chmat
+	nocc=ncol(chmat)
+	occ=t(t(chmat)*1:nocc)
+	df=NULL
+	if(is.null(data$freq))
+	{
+		for (i in 1:nrow(occ))
+			df=rbind(df,cbind(f1(occ[i,],ehmat[i,],strata.labels,k,nocc=nocc),freq=1,subset(data[i,],select=names(data)[!names(data)%in%c("ch","freq")])))
+	}else{
+		for (i in 1:nrow(occ))
+			df=rbind(df,cbind(f1(occ[i,],ehmat[i,],strata.labels,k,nocc=nocc),freq=data$freq[i],subset(data[i,],select=names(data)[!names(data)%in%c("ch","freq")])))
+	}
+	ehmat=t(sapply(strsplit(df$ch,""),function(x) as.numeric(factor(x,levels=c("0",strata.labels)))))-1
+	ehmat[is.na(ehmat)]=1
+	first=process.ch(collapseCH(ehmat))$first
+	df=df[first<k,]
+	df$initial=factor(df$initial)
+	return(df)
+	#############################
+}
 
 

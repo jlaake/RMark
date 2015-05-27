@@ -672,7 +672,8 @@ function(model)
 #  Beginning of simplify.pim.structure function; it recreates input for
 #  MARK and uses an outfile like make.mark.model
 #
-outfile=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
+tempfilename=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
+outfile=file(tempfilename,open="wt")
 #
 # Use realign.pims to simplify PIM structure
 #
@@ -882,8 +883,11 @@ write(string, file = outfile, append = TRUE)
 #  model object and return it.
 #
 write("proc stop;", file = outfile, append = TRUE)
+close(outfile)
+outfile=file(tempfilename,open="rt")
 text = readLines(outfile)
-unlink(outfile)
+close(outfile)
+unlink(tempfilename)
 model$input=text
 if(!is.null(newlinks))
    model$simplify=list(design.matrix=complete.design.matrix,pim.translation=new.indices,links=newlinks)
@@ -981,7 +985,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #
 # Outfile is assigned a temporary name
 #
-  outfile=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
+  tempfilename=tempfile("markxxx",tmpdir=getwd(),fileext=".tmp")
+  outfile=file(tempfilename,open="wt")
 #
 # Check validity of parameter types, if any given
 #
@@ -1891,8 +1896,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # Write out Proc stop statement
 #
   write("proc stop;",file=outfile,append=TRUE)
+  close(outfile)
+  outfile=file(tempfilename,open="rt")
   text=readLines(outfile)
-  unlink(outfile)
+  close(outfile)
+  unlink(tempfilename)
   if(mixtures==1)
      mixtures=NULL
   if(is.null(call))call=match.call()

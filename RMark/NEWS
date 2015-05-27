@@ -1,5 +1,9 @@
-RMark 2.1.13 (30 April 2015)
+RMark 2.1.13 (27 May 2015)
 --------------------------
+CHANGES
+
+* Thanks to Ben Cox who profiled the code which helped me make a change that significantly speeds up writing of input files with large data.
+
 BUG FIXES
 
 * The function restore is now explicitly exported.

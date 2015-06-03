@@ -8,7 +8,7 @@ make.mark.model(data, ddl, parameters = list(), title = "",
   model.name = NULL, initial = NULL, call = NULL, default.fixed = TRUE,
   options = NULL, profile.int = FALSE, chat = NULL, simplify = TRUE,
   input.links = NULL, parm.specific = FALSE, mlogit0 = FALSE,
-  hessian = FALSE, accumulate = TRUE, icvalues = NULL)
+  hessian = FALSE, accumulate = TRUE, icvalues = NULL, wrap = TRUE)
 }
 \arguments{
 \item{data}{Data list resulting from function \code{\link{process.data}}}
@@ -52,6 +52,9 @@ have its link changed to logit so it can be simplified}
 \item{accumulate}{if TRUE accumulate like data values into frequencies}
 
 \item{icvalues}{numeric vector of individual covariate values for computation of real values}
+
+\item{wrap}{if TRUE, data lines are wrapped to be length 80; if length of a row is not a
+problem set to FALSE and it will run faster}
 }
 \value{
 model: a MARK object except for the elements \code{output} and

@@ -1,8 +1,10 @@
-RMark 2.1.13 (27 May 2015)
+RMark 2.1.13 (3 June 2015)
 --------------------------
 CHANGES
 
-* Thanks to Ben Cox who profiled the code which helped me make a change that significantly speeds up writing of input files with large data.
+* Thanks to Ben Cox who profiled the code which helped me make a change that significantly speeds up writing of input files with large data. As part of that changed I added an argument wrap which defaults to TRUE. If you have large data sets where each record is less than 255 characters set wrap=FALSE.
+
+* covariate.predictions was changed so that the argument data is not required. If the model has covariates and values are not provided in the data argument, the mean covariate value is used for predictions.
 
 BUG FIXES
 

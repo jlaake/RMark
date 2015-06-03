@@ -73,24 +73,26 @@ if(!is.null(derived_labels))
 	{
 		whatread=readChar(z,16)
 		nderiv=readBin(z,integer(),1)
-		derived[[label]]=list()  
-		whatread=readChar(z,16)
-		derived[[label]]$estimate=readBin(z,numeric(),nderiv)
-		whatread=readChar(z,16)
-		derived[[label]]$se=readBin(z,numeric(),nderiv)
-		whatread=readChar(z,16)
-		derived[[label]]$lcl=readBin(z,numeric(),nderiv)
-		whatread=readChar(z,16)
-		derived[[label]]$ucl=readBin(z,numeric(),nderiv)
-		derived[[label]]=as.data.frame(derived[[label]])
-		derived.vcv[[label]]=matrix(0,nrow=nderiv,ncol=nderiv)
-		for (i in 1:nderiv)
+		if(length(nderiv)!=0)
 		{
+			derived[[label]]=list()  
 			whatread=readChar(z,16)
-			value=readBin(z,numeric(),nderiv)
-			if(length(value)!=0) derived.vcv[[label]][i,]=value
+			derived[[label]]$estimate=readBin(z,numeric(),nderiv)
+			whatread=readChar(z,16)
+			derived[[label]]$se=readBin(z,numeric(),nderiv)
+			whatread=readChar(z,16)
+			derived[[label]]$lcl=readBin(z,numeric(),nderiv)
+			whatread=readChar(z,16)
+			derived[[label]]$ucl=readBin(z,numeric(),nderiv)
+			derived[[label]]=as.data.frame(derived[[label]])
+			derived.vcv[[label]]=matrix(0,nrow=nderiv,ncol=nderiv)
+			for (i in 1:nderiv)
+			{
+				whatread=readChar(z,16)
+				value=readBin(z,numeric(),nderiv)
+				if(length(value)!=0) derived.vcv[[label]][i,]=value
+			}
 		}
-		
 	}
 } else
 {

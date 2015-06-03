@@ -76,7 +76,9 @@
 #' @param model MARK model object or marklist
 #' @param data dataframe with covariate values used for estimates; if it
 #' contains a field called index the covariates in each row are only applied to
-#' the parameter with that index and the argument indices is not needed
+#' the parameter with that index and the argument indices is not needed; if data is not specified or
+#' all individual covariate values are not specified, the mean individual covariate value is
+#' used for prediction.
 #' @param indices a vector of indices from the all-different PIM structure for
 #' parameters to be computed
 #' @param drop if TRUE, models with any non-positive variance for betas are
@@ -316,9 +318,9 @@ covariate.predictions <- function(model,data=NULL,indices=NULL,drop=TRUE, revise
      model.list=model
      model.table=model$model.table
    }
-   if(is.null(data))
-      stop("\n data argument must be specified\n")
-   if(!is.data.frame(data))
+#   if(is.null(data))
+#      stop("\n data argument must be specified\n")
+   if(!is.null(data)&!is.data.frame(data))
       stop("\n data argument must be a dataframe. Do not use processed data list.\n")
 #
 #   If there is an index field in data, then only use that row of data for that index
@@ -330,10 +332,20 @@ covariate.predictions <- function(model,data=NULL,indices=NULL,drop=TRUE, revise
       indices=index
       replicate.values=FALSE
    }
-   else
-      replicate.values=TRUE
-   if(is.null(indices))
-     stop("\nValue for indices argument must be given or index field must be included in data argument\n")
+   else {
+	   if(!is.null(data))
+		   replicate.values=TRUE
+	   else{
+		   replicate.values=FALSE
+		   if(is.null(indices))
+			   stop("\nValue for indices argument must be given or index field must be included in data argument\n")
+		   else
+		   {
+			   data=data.frame(index=indices)
+			   index=indices
+		   }
+	   }
+   }
 #
 # Determine if any of the models should be dropped because beta.var non-positive
 #
@@ -391,11 +403,12 @@ for (j in 1:number.of.models)
    fixedparms=NULL
    boundaryparms=NULL
 #   
-#  If there are no data values other than the index, the code below will extract only those
+#  If there are no individual covariates in the model, the code below will extract only those
 #  rows in the DM.  
 #
    nmlogit=0
-   if(ncol(data)==1 && names(data)=="index")
+   if(is.null(model$covariates)&ncol(data)==1 && names(data)=="index")
+#   if(ncol(data)==1 && names(data)=="index")
    {
      for (i in 1:nrow(data))
      {

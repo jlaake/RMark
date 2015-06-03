@@ -357,6 +357,8 @@
 #' @param hessian if TRUE specifies to MARK to use hessian rather than second partial matrix
 #' @param accumulate if TRUE accumulate like data values into frequencies
 #' @param icvalues numeric vector of individual covariate values for computation of real values
+#' @param wrap if TRUE, data lines are wrapped to be length 80; if length of a row is not a 
+#'   problem set to FALSE and it will run faster
 #' @return model: a MARK object except for the elements \code{output} and
 #' \code{results}. See \code{\link{mark}} for a detailed description of the
 #' list contents.
@@ -409,7 +411,8 @@
 make.mark.model <-
 function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,
 		default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,
-		input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,hessian=FALSE,accumulate=TRUE,icvalues=NULL)
+		input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,hessian=FALSE,accumulate=TRUE,
+		icvalues=NULL,wrap=TRUE)
 {
 
 #  *******************  INTERNAL FUNCTIONS    *********************************
@@ -1277,9 +1280,12 @@ create.agenest.var=function(data,init.agevar,time.intervals)
             write.table(zz,file=outfile,eol=";\n",sep=" ",col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
      }
   }
-  else
-#     write.table(zz,file=outfile,eol=";\n",sep=" ",col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
-      apply(zz,1,function(x) write(strwrap(paste(paste(x,collapse=" "),";",sep=""),80,prefix=" "),file=outfile,append=TRUE))	 
+  else{
+		if(!wrap)
+		     write.table(zz,file=outfile,eol=";\n",sep=" ",col.names=FALSE,row.names=FALSE,quote=FALSE,append=TRUE)
+        else 
+		   apply(zz,1,function(x) write(strwrap(paste(paste(x,collapse=" "),";",sep=""),80,prefix=" "),file=outfile,append=TRUE))
+   }
 #
 # Output counts section of Mark-resight models if appropriate
 #
@@ -1870,10 +1876,16 @@ create.agenest.var=function(data,init.agevar,time.intervals)
       if(!is.null(full.ddl[[parx]]$stratum)) stratum.strings=paste(" s",full.ddl[[parx]]$stratum,sep="")
       if(!is.null(full.ddl[[parx]]$tostratum)) stratum.strings=paste(stratum.strings," to",full.ddl[[parx]]$tostratum,sep="")
       strings=paste(param.names[i],stratum.strings," g",full.ddl[[parx]]$group,sep="")
-      if(!is.null(full.ddl[[parx]]$cohort))
-		  strings=paste(strings," c",full.ddl[[parx]]$cohort,sep="")
-	  else
-	      if(!is.null(full.ddl[[parx]]$occ.cohort))strings=paste(strings," c",full.ddl[[parx]]$occ.cohort,sep="")
+      if(data$reverse)
+	  {
+		  if(!is.null(full.ddl[[parx]]$cohort))strings=paste(strings," c",full.ddl[[parx]]$cohort,sep="")
+		  if(!is.null(full.ddl[[parx]]$occ.cohort))strings=paste(strings," c",full.ddl[[parx]]$occ.cohort,sep="")
+	  } else {
+		  if(!is.null(full.ddl[[parx]]$cohort))
+			  strings=paste(strings," c",full.ddl[[parx]]$cohort,sep="")
+		  else
+		  if(!is.null(full.ddl[[parx]]$occ.cohort))strings=paste(strings," c",full.ddl[[parx]]$occ.cohort,sep="")
+	  }  
 	  if(!is.null(full.ddl[[parx]]$age))strings=paste(strings," a",full.ddl[[parx]]$age,sep="")
 	  if("occ"%in%names(full.ddl[[parx]]))strings=paste(strings," o",full.ddl[[parx]]$occ,sep="")
 	  if(model.list$robust && parameters[[parx]]$secondary)

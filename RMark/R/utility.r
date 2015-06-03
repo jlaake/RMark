@@ -413,17 +413,17 @@ MS_popan=function(x,augment_num=100,augment_stratum="A",enter_stratum="B",strata
 #' @param data dataframe containing at least one character field named ch; can also contain frequency in numeric field freq and any other covariates.
 #' @param k number of recapture occasions after release; new capture histories are of length k+1
 #' @return dataframe with field ch and freq (default to 1) and any covariates included in argument data; it also contains a factor variable
-#' initial which is the first occasion which should be used as a group variable so the begin.time can be set for each release cohort to 
+#' release which is the first occasion which should be used as a group variable so the begin.time can be set for each release cohort to 
 #' maintain the original times, as shown in the example.
 #' @export 
 #' @examples
 #' \donttest{
 #' data(mstrata)
 #' df=MStruncate(mstrata,k=2)
-#' dp=process.data(df,model="Multistrata",groups=c("initial"),begin.time=1:max(as.numeric(df$initial)))
+#' dp=process.data(df,model="Multistrata",groups=c("release"),begin.time=1:max(as.numeric(df$release)))
 #' ddl=make.design.data(dp)
-#' table(ddl$S$initial,ddl$S$time)
-#' table(ddl$p$initial,ddl$p$time)
+#' table(ddl$S$release,ddl$S$time)
+#' table(ddl$p$release,ddl$p$time)
 #' }
 #' 
 MStruncate=function(data,k=5)
@@ -436,33 +436,35 @@ MStruncate=function(data,k=5)
 		if(!is.na(last))
 		{
 			if(last>(first+k-1))
-				return(list(first=first,newch=paste(c(flab,rep("0",k-1)),collapse="")))
+				return(c(first=first,newch=paste(c(flab,rep("0",k-1)),collapse="")))
 			else
-			if(first+k-1>nocc)
-				return(list(first=nocc-k+1,newch=paste(c(rep(0,first+k-nocc-1),flab,rep("0",last-first-1),llab,rep(".",nocc-first-1)),collapse="")))
-			else
-				return(list(first=first,newch=paste(c(flab,rep("0",last-first-1),llab,rep(".",first+k-1-last)),collapse="")))
+			if(last==nocc)
+				return(c(first=nocc-k+1,newch=paste(c(rep(0,k-(last-first+1)),flab,rep("0",last-first-1),llab),collapse="")))	
+			else {
+  				if(first+k-1>nocc)
+					return(c(first=nocc-k+1,newch=paste(c(rep(0,first+k-nocc-1),flab,rep("0",last-first-1),llab,rep(".",nocc-last)),collapse="")))
+				else
+					return(c(first=first,newch=paste(c(flab,rep("0",last-first-1),llab,rep(".",first+k-1-last)),collapse="")))
+			}
 		} else {
 			if(first+k-1>nocc)
-				return(list(first=nocc-k+1,newch=paste(c(rep("0",first+k-nocc-1),flab,rep("0",nocc-first)),collapse="")))
+				return(c(first=nocc-k+1,newch=paste(c(rep("0",first+k-nocc-1),flab,rep("0",nocc-first)),collapse="")))
 			else
-				return(list(first=first,newch=paste(c(flab,rep("0",k-1)),collapse="")))
+				return(c(first=first,newch=paste(c(flab,rep("0",k-1)),collapse="")))
 		}
 	}
-	f1=function(x,eh,slabels,k,nocc)
+	f1=function(j,x,eh,slabels,k,nocc)
 	{
 		if(all(x==0))return(NULL)
 		x=x[x>0]
-		df=NULL
-		for(i in 1:length(x))
-		{
+	    df=t(sapply(1:length(x),function(i) {
 			if(i==length(x))
 				newch=f(x[i],NA,slabels[eh[x[i]]],"",k,nocc)
 			else	
 				newch=f(x[i],x[i+1],slabels[eh[x[i]]],slabels[eh[x[i+1]]],k,nocc)
-			df=rbind(df,data.frame(ch=newch$newch,initial=newch$first,stringsAsFactors=FALSE))
-		}
-		return(df)
+			return(newch)
+		}))
+		return(cbind(df,rep(j,nrow(df))))
 	}
 	#############################
 	if(k>=nchar(data$ch)[1]) stop("k must be smaller than number of occasions")
@@ -473,21 +475,21 @@ MStruncate=function(data,k=5)
 	nocc=ncol(chmat)
 	occ=t(t(chmat)*1:nocc)
 	df=NULL
+	other=names(data)[!names(data)%in%c("ch","freq")]
+	df=lapply(1:nrow(occ),function(i) f1(i,occ[i,],ehmat[i,],strata.labels,k,nocc=nocc))
+	df=do.call("rbind",df)
 	if(is.null(data$freq))
-	{
-		for (i in 1:nrow(occ))
-			df=rbind(df,cbind(f1(occ[i,],ehmat[i,],strata.labels,k,nocc=nocc),freq=1,subset(data[i,],select=names(data)[!names(data)%in%c("ch","freq")])))
-	}else{
-		for (i in 1:nrow(occ))
-			df=rbind(df,cbind(f1(occ[i,],ehmat[i,],strata.labels,k,nocc=nocc),freq=data$freq[i],subset(data[i,],select=names(data)[!names(data)%in%c("ch","freq")])))
-	}
-	ehmat=t(sapply(strsplit(df$ch,""),function(x) as.numeric(factor(x,levels=c("0",strata.labels)))))-1
-	ehmat[is.na(ehmat)]=1
-	first=process.ch(collapseCH(ehmat))$first
-	df=df[first<k,]
-	df$initial=factor(df$initial)
-	return(df)
+		freq=rep(1,nrow(data$freq))
+	else
+		freq=data$freq
+	other=subset(data,select=other)	
+	data=data.frame(ch=df[,2],stringsAsFactors=FALSE)
+	id=as.numeric(df[,3])
+	data$freq=freq[id]
+	data$release=factor(df[,1])
+	data=cbind(data,other[id,,drop=FALSE])
+    data=data[!substr(data$ch,1,k-1)==paste(rep("0",k-1),collapse=""),]
+	return(data)
 	#############################
 }
-
 

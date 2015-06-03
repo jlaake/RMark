@@ -15,7 +15,7 @@ mark(data, ddl = NULL, begin.time = 1, model.name = NULL, model = "CJS",
   profile.int = FALSE, chat = NULL, reverse = FALSE, run = TRUE,
   input.links = NULL, parm.specific = FALSE, mlogit0 = FALSE,
   threads = -1, hessian = FALSE, accumulate = TRUE, allgroups = FALSE,
-  strata.labels = NULL, counts = NULL, icvalues = NULL)
+  strata.labels = NULL, counts = NULL, icvalues = NULL, wrap = TRUE)
 }
 \arguments{
 \item{data}{Either the raw data which is a dataframe with at least one
@@ -134,6 +134,9 @@ in ch for an unobservable state except for RDMSOccRepro which is used to specify
 group) containing counts for mark-resight models}
 
 \item{icvalues}{numeric vector of individual covariate values for computation of real values}
+
+\item{wrap}{if TRUE, data lines are wrapped to be length 80; if length of a row is not a
+problem set to FALSE and it will run faster}
 }
 \value{
 model: a MARK object containing output and extracted results. It is

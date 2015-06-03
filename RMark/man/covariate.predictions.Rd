@@ -13,7 +13,9 @@ covariate.predictions(model, data = NULL, indices = NULL, drop = TRUE,
 
 \item{data}{dataframe with covariate values used for estimates; if it
 contains a field called index the covariates in each row are only applied to
-the parameter with that index and the argument indices is not needed}
+the parameter with that index and the argument indices is not needed; if data is not specified or
+all individual covariate values are not specified, the mean individual covariate value is
+used for prediction.}
 
 \item{indices}{a vector of indices from the all-different PIM structure for
 parameters to be computed}

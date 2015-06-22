@@ -18,7 +18,7 @@ for bootstrapp analysis in MARK, not used in bfdeeR package}
 This data represents a set of independent double observer road-transect survey data of white-tailed deer
 on Brosnan Forest, South Carolina surveyed in August, 2005-2009.  The primary reason for
 this package is to provide a completely reproducible example of the analysis from Collier et al. (2012).  We used a
-Huggins closed capture model implemented in MARK \url{http://www.phidot.org/software/mark/} via RMark \url{http://cran.r-project.org/web/packages/RMark/index.html}
+Huggins closed capture model implemented in MARK \url{http://www.phidot.org/software/mark/} via RMark
 both of which will need to be installed on the system to use this package.  The data have 2 time periods (primary observer (t1) was a thermal imager, secondary observer (t2) was
 a spotlight observer in the same vehicle on the same side) with the primary objective of the study being to evaluate
 the detection (recapture) rates of white-tailed deer using spotlights as a survey method.

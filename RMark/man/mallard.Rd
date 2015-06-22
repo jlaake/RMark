@@ -70,6 +70,7 @@ than dummy variables.
 \donttest{
 # This example is excluded from testing to reduce package check time
 require(RMark)
+require(plotrix)
 
 # Retrieve data
 data(mallard)

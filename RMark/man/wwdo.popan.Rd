@@ -21,7 +21,7 @@ were used to estimate population level recruitment (number juveniles in populati
 \details{
 White-winged doves were captured (aged:  AHY=after-hatch year, HY=hatch year) continuously in baited walk-in dove traps beginning in Februrary and ending in September in each year (2009 and 2010).
 During 2009 5,101 white-winged doves were captured (2,894 AHY, 2,207 HY) while in 2010 3,502 white-winged doves were captured (3,106 AHY, 486 HY). We used approximately 2 week
-date windows to categorized our encounter histories for analysis in MARK \url{http://www.phidot.org/software/mark/} via RMark \url{http://cran.r-project.org/web/packages/RMark/index.html}
+date windows to categorized our encounter histories for analysis in MARK \url{http://www.phidot.org/software/mark/} via RMark
 using these dates:  27 Feb; 13 March; 27 March; 10 April; 24 April; 8 May; 22 May; 5 June; 19 June;	3 July;	17 July; 31 July; 14 August-End; giving us 13 encounter occasions.
 
 I wanted to force b0=0 for the first time frame, as none could be there when we started as they had not arrived yet in any real number.

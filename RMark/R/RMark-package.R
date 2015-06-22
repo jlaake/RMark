@@ -48,7 +48,7 @@
 #'	Psi.2=list(formula=~ceap)    
 #'	
 #'	cml=create.model.list("MultScalOcc")
-#'	return(mark.wrapper(cml,data=mscale.proc,ddl=ddl,adjust=F,realvcv=T))
+#'	return(mark.wrapper(cml,data=mscale.proc,ddl=ddl,adjust=FALSE,realvcv=TRUE))
 #'}
 #'
 #'# Run function to get results
@@ -62,7 +62,7 @@
 #'Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real
 #'Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$beta
 #'
-#'write.csv(Species.results$model.table,file="lasp_model_selection.csv",row.names=F)
+#'write.csv(Species.results$model.table,file="lasp_model_selection.csv",row.names=FALSE)
 #'
 #'write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real,
 #'  file="lasp_m1_real.csv")
@@ -77,11 +77,11 @@
 #'maxtd <- max(mscale[,12:20])
 #'td.values <- mintd+(0:100)*(maxtd-mintd)/100
 #'
-#'PIMS(Species.results[[1]],"p",simplified=F)
+#'PIMS(Species.results[[1]],"p",simplified=FALSE)
 #'
 #'td <- covariate.predictions(Species.results,data=data.frame(td1=td.values),indices=c(21))
 #'
-#'write.table(td$estimates,file="lasp_cov_pred_p_td.csv",sep=",",col.names=T,row.names=F)
+#'write.table(td$estimates,file="lasp_cov_pred_p_td.csv",sep=",",col.names=TRUE,row.names=FALSE)
 #'
 #'# Theta(crested wheatgrass cover)
 #'
@@ -89,22 +89,22 @@
 #'maxcw <- max(mscale[,3:11])
 #'cw.values <- mincw+(0:100)*(maxcw-mincw)/100
 #'
-#'PIMS(Species.results[[1]],"Theta",simplified=F)
+#'PIMS(Species.results[[1]],"Theta",simplified=FALSE)
 #'
 #'cw <- covariate.predictions(Species.results,data=data.frame(cw1=cw.values),indices=c(3))
 #'
-#'write.table(cw$estimates,file="lasp_cov_pred_theta_cw.csv",sep=",",col.names=T,row.names=F)
+#'write.table(cw$estimates,file="lasp_cov_pred_theta_cw.csv",sep=",",col.names=TRUE,row.names=FALSE)
 #'
 #'# Psi(ceap grazing for wildlife practice)
 #'
 #'ceap.values <- as.data.frame(matrix(c(1,2),ncol=1))
 #'names(ceap.values) <- c("index")
 #'
-#'PIMS(Species.results[[1]],"Psi",simplified=F)
+#'PIMS(Species.results[[1]],"Psi",simplified=FALSE)
 #'
 #'ceap <- covariate.predictions(Species.results,data=data.frame(ceap=ceap.values))
 #'
-#'write.table(ceap$estimates,file="lasp_cov_pred_psi_ceap.csv",sep=",",col.names=T,row.names=F)
+#'write.table(ceap$estimates,file="lasp_cov_pred_psi_ceap.csv",sep=",",col.names=TRUE,row.names=FALSE)
 #'
 #' }
 
@@ -267,7 +267,7 @@ NULL
 #' This data represents a set of independent double observer road-transect survey data of white-tailed deer
 #' on Brosnan Forest, South Carolina surveyed in August, 2005-2009.  The primary reason for
 #' this package is to provide a completely reproducible example of the analysis from Collier et al. (2012).  We used a
-#' Huggins closed capture model implemented in MARK \url{http://www.phidot.org/software/mark/} via RMark \url{http://cran.r-project.org/web/packages/RMark/index.html} 
+#' Huggins closed capture model implemented in MARK \url{http://www.phidot.org/software/mark/} via RMark 
 #' both of which will need to be installed on the system to use this package.  The data have 2 time periods (primary observer (t1) was a thermal imager, secondary observer (t2) was
 #' a spotlight observer in the same vehicle on the same side) with the primary objective of the study being to evaluate 
 #' the detection (recapture) rates of white-tailed deer using spotlights as a survey method. 
@@ -1241,6 +1241,7 @@ NULL
 #'
 #'# The mallard data set is also incuded with RMark and can be retrieved with
 #'# data(mallard)
+
 #'
 #'#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #'# Example of use of RMark for modeling nest survival data -   #
@@ -1256,7 +1257,8 @@ NULL
 #' \donttest{
 #' # This example is excluded from testing to reduce package check time
 #' require(RMark)
-#'
+#' require(plotrix)
+#' 
 #'# Retrieve data
 #'data(mallard)
 #'
@@ -2339,7 +2341,7 @@ NULL
 #' 
 #' @details White-winged doves were captured (aged:  AHY=after-hatch year, HY=hatch year) continuously in baited walk-in dove traps beginning in Februrary and ending in September in each year (2009 and 2010).  
 #' During 2009 5,101 white-winged doves were captured (2,894 AHY, 2,207 HY) while in 2010 3,502 white-winged doves were captured (3,106 AHY, 486 HY). We used approximately 2 week
-#' date windows to categorized our encounter histories for analysis in MARK \url{http://www.phidot.org/software/mark/} via RMark \url{http://cran.r-project.org/web/packages/RMark/index.html} 
+#' date windows to categorized our encounter histories for analysis in MARK \url{http://www.phidot.org/software/mark/} via RMark  
 #' using these dates:  27 Feb; 13 March; 27 March; 10 April; 24 April; 8 May; 22 May; 5 June; 19 June;	3 July;	17 July; 31 July; 14 August-End; giving us 13 encounter occasions.
 #' 
 #' I wanted to force b0=0 for the first time frame, as none could be there when we started as they had not arrived yet in any real number.  

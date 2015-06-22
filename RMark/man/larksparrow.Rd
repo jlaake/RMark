@@ -50,7 +50,7 @@ do.Species=function()
 	Psi.2=list(formula=~ceap)
 
 	cml=create.model.list("MultScalOcc")
-	return(mark.wrapper(cml,data=mscale.proc,ddl=ddl,adjust=F,realvcv=T))
+	return(mark.wrapper(cml,data=mscale.proc,ddl=ddl,adjust=FALSE,realvcv=TRUE))
 }
 
 # Run function to get results
@@ -64,7 +64,7 @@ Species.results$model.table
 Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real
 Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$beta
 
-write.csv(Species.results$model.table,file="lasp_model_selection.csv",row.names=F)
+write.csv(Species.results$model.table,file="lasp_model_selection.csv",row.names=FALSE)
 
 write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real,
  file="lasp_m1_real.csv")
@@ -79,11 +79,11 @@ mintd <- min(mscale[,12:20])
 maxtd <- max(mscale[,12:20])
 td.values <- mintd+(0:100)*(maxtd-mintd)/100
 
-PIMS(Species.results[[1]],"p",simplified=F)
+PIMS(Species.results[[1]],"p",simplified=FALSE)
 
 td <- covariate.predictions(Species.results,data=data.frame(td1=td.values),indices=c(21))
 
-write.table(td$estimates,file="lasp_cov_pred_p_td.csv",sep=",",col.names=T,row.names=F)
+write.table(td$estimates,file="lasp_cov_pred_p_td.csv",sep=",",col.names=TRUE,row.names=FALSE)
 
 # Theta(crested wheatgrass cover)
 
@@ -91,22 +91,22 @@ mincw <- min(mscale[,3:11])
 maxcw <- max(mscale[,3:11])
 cw.values <- mincw+(0:100)*(maxcw-mincw)/100
 
-PIMS(Species.results[[1]],"Theta",simplified=F)
+PIMS(Species.results[[1]],"Theta",simplified=FALSE)
 
 cw <- covariate.predictions(Species.results,data=data.frame(cw1=cw.values),indices=c(3))
 
-write.table(cw$estimates,file="lasp_cov_pred_theta_cw.csv",sep=",",col.names=T,row.names=F)
+write.table(cw$estimates,file="lasp_cov_pred_theta_cw.csv",sep=",",col.names=TRUE,row.names=FALSE)
 
 # Psi(ceap grazing for wildlife practice)
 
 ceap.values <- as.data.frame(matrix(c(1,2),ncol=1))
 names(ceap.values) <- c("index")
 
-PIMS(Species.results[[1]],"Psi",simplified=F)
+PIMS(Species.results[[1]],"Psi",simplified=FALSE)
 
 ceap <- covariate.predictions(Species.results,data=data.frame(ceap=ceap.values))
 
-write.table(ceap$estimates,file="lasp_cov_pred_psi_ceap.csv",sep=",",col.names=T,row.names=F)
+write.table(ceap$estimates,file="lasp_cov_pred_psi_ceap.csv",sep=",",col.names=TRUE,row.names=FALSE)
 
 }
 }

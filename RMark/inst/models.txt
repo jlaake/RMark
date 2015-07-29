@@ -96,3 +96,5 @@ MarkNumber	model	etype	robust	closed	occupancy	derived	default.mixtures	num	divi
 139	PMDead	PMDead	FALSE	FALSE	FALSE	FALSE	2	0	2	FALSE
 140	REDead	REDead	FALSE	FALSE	FALSE	FALSE	1	0	2	FALSE
 142	RDMSOpenMCSeas	RDMSOpenMCSeas	TRUE	FALSE	FALSE	TRUE	1	0	1	TRUE
+145	HugginsRE	HugginsRE	FALSE	TRUE	FALSE	TRUE	1	0	1	FALSE
+

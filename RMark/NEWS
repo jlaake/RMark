@@ -4,6 +4,12 @@ NEW FEATURES
 
 * Added Burnham live-dead model example provided by Luke Eberhart-Phillips
 
+* Added Huggins model with random effects (#145)
+
+BUG FIXES
+
+* patch to var.components.reml for test of intercept in random design (rdesign); thanks to Wolfgang Viechtbauer
+
 
 RMark 2.1.13 (3 June 2015)
 --------------------------

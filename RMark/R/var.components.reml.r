@@ -91,7 +91,8 @@ var.components.reml=function(theta,design,vcv=NULL,rdesign=NULL,initial=NULL,int
      if(ncol(vcv)!=length(theta)) stop("Number of columns of vcv matrix must match length of theta vector")
    }
    if(length(theta)<= ncol(design))stop("Length theta must exceed number of columns of design")
-   if(!is.null(rdesign) && any(rowSums(rdesign)>1))stop("Do not use intercept in formula for rdesign")
+   if (!is.null(rdesign) && any(apply(rdesign, 2, FUN = function(x) all(abs(x - 1) < 1e-8))))
+	   stop("Do not use intercept in formula for rdesign")
 #
 #  Reduce theta, design and vcv to the theta's that are used in the design
 #   

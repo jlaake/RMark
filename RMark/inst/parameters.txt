@@ -455,4 +455,9 @@ BurnhamLDRE	p	1	-1	0	Triang	all	logit	~1
 BurnhamLDRE	sigmar	0	1		Square	all	log	~1											
 BurnhamLDRE	r	0	0	0	Triang	all	logit	~1											
 BurnhamLDRE	sigmaF	0	1		Square	all	log	~1											
-BurnhamLDRE	F	0	-1	1	Triang	all	logit	~1											
+BurnhamLDRE	F	0	-1	1	Triang	all	logit	~1			
+HugginsRE	p	0	0	0	Square	all	logit	~1	FALSE	c									
+HugginsRE	c	1	-1	0	Square	all	logit			p									
+HugginsRE	sigmap	0	1		Square	all	log	~1	
+										
+								

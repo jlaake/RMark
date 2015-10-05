@@ -459,5 +459,9 @@ BurnhamLDRE	F	0	-1	1	Triang	all	logit	~1
 HugginsRE	p	0	0	0	Square	all	logit	~1	FALSE	c									
 HugginsRE	c	1	-1	0	Square	all	logit			p									
 HugginsRE	sigmap	0	1		Square	all	log	~1	
+OccRelClos	p	0	0	0	Square	all	logit	~1											
+OccRelClos	Psi	0	1		Square	all	logit	~1											
+OccRelClos	pent	1	-1	0	Square	all	mlogit	~1											
+OccRelClos	d	0	-1	0	Square	all	logit	~1											
 										
 								

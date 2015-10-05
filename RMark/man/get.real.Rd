@@ -53,7 +53,7 @@ manipulation or plotting etc.  It is closely related to
 extract/compute real estimates of a particular type (\code{parameter}).
 
 The real parameter estimates are computed when either 1) \code{model$chat} >
-1, 2) \code{design}, \code{data}, or \code{beta} are are specified with
+1, 2) \code{design}, \code{data}, or \code{beta} are specified with
 non-NULL values for those arguments, or 3) vcv=TRUE.  If none of the above
 hold, then the estimates are extracted.
 

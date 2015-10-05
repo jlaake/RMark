@@ -13,7 +13,7 @@
 #' extract/compute real estimates of a particular type (\code{parameter}).
 #' 
 #' The real parameter estimates are computed when either 1) \code{model$chat} >
-#' 1, 2) \code{design}, \code{data}, or \code{beta} are are specified with
+#' 1, 2) \code{design}, \code{data}, or \code{beta} are specified with
 #' non-NULL values for those arguments, or 3) vcv=TRUE.  If none of the above
 #' hold, then the estimates are extracted.
 #' 
@@ -56,6 +56,7 @@
 #' of fixed values
 #' @param expand if TRUE, returns vcv matrix for unique parameters and only 
 #' simplified unique parameters if FALSE
+#' @param pim if TRUE and se=FALSE, returns a list of estimates in PIM format
 #' @return estimates: if \code{se=FALSE and Beta=NULL}, a matrix of estimates
 #' or list of matrices for more than one group, and if \code{se=TRUE or beta=is
 #' not NULL and vcv=FALSE} a dataframe of estimates with attached design data.
@@ -93,7 +94,7 @@
 #' 
 #' 
 get.real <-
-function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show.fixed=TRUE,expand=FALSE)
+function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show.fixed=TRUE,expand=FALSE,pim=TRUE)
 {
 #
 # Functions used: valid.parameters, Put.in.PIM.format (defined internally below), compute.real,
@@ -156,6 +157,15 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
     if(any(diag(model$results$beta.vcv)<0))
        warning("\nImproper V-C matrix for beta estimates. Some variances non-positive.\n")
 #
+#  If beta vector specified, set se and vcv=F
+#
+   if(!is.null(beta))
+   {
+	   if(se | vcv )message("Note: with beta specified, having se or vcv set to TRUE is not allowed; setting to FALSE")
+	   se=FALSE
+	   vcv=FALSE
+   }
+#
 # If design is specified, then compute the real estimates with this design matrix
 #
   if(!is.null(design))
@@ -212,7 +222,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
                  real=compute.real(model,data=data,beta=beta,vcv=FALSE)
               else
               {
-                  real.list=compute.real(model,data=data,beta=beta,vcv=TRUE)
+                  real.list=compute.real(model,data=data,beta=beta,vcv=TRUE,se=se)
                   real=data.frame(estimate=real.list$real,se=real.list$se.real,
                           lcl=real.list$lcl,ucl=real.list$ucl)
               }
@@ -220,10 +230,10 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
            else
            {
               if(!vcv)
-                 real=compute.real(model,design=model$design.matrix,beta=beta,vcv=FALSE)
+                 real=compute.real(model,design=model$design.matrix,beta=beta,vcv=FALSE,se=se)
               else
               {
-                  real.list=compute.real(model,design=model$design.matrix,beta=beta,vcv=TRUE)
+                   real.list=compute.real(model,design=model$design.matrix,beta=beta,vcv=TRUE,se=se)
                    real=data.frame(estimate=real.list$real,se=real.list$se.real,
                           lcl=real.list$lcl,ucl=real.list$ucl)
               }
@@ -233,8 +243,16 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
            real=model$results$real
         if(!is.null(model$simplify))
         {
-           real=real[model$simplify$pim.translation,]
-           rownames(real)=model$simplify$real.labels
+		   if(!se & is.data.frame(real))real=real[,1]
+		   if(is.vector(real))
+		   {
+			   real=real[model$simplify$pim.translation]
+			   names(real)=model$simplify$real.labels
+		   } else
+		   {
+			   real=real[model$simplify$pim.translation,,drop=FALSE]
+			   rownames(real)=model$simplify$real.labels
+		   }
         }
      }
   }
@@ -272,8 +290,12 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
   type=parameters[[match(parameter,parameter.names)]]$type
   ng=length(model$pims[[parameter]])
   if( type%in%c("Triang","STriang") | !is.null(model$mixtures)| !is.null(model$nocc.secondary))
-      estimates=list()
-  else
+  {
+	  if(!se & pim &is.null(beta))
+		  estimates=list()
+	  else
+		  estimates=data.frame()
+  } else
       estimates=NULL
   parameter.labels=names(model$pims[[parameter]][[1]])
   parameter.labels=parameter.labels[!parameter.labels%in%"pim"]
@@ -305,7 +327,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
     }
     else
         output.labels[j]=""
-    if(!se & is.null(beta))
+    if(!se & is.null(beta) & pim)
     {
         if(type%in%c("Triang","STriang"))
         
@@ -345,12 +367,15 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
         else
            par.index=indices
         real.names=names(real)
-        estimate.df=cbind(all.index=indices,par.index,real[indices,])
+		if(is.vector(real))
+			estimate.df=cbind(all.index=indices,par.index,estimate=real[indices])
+		else
+           estimate.df=cbind(all.index=indices,par.index,real[indices,])
         names(estimate.df)=c("all.diff.index","par.index",real.names)
         estimates=rbind(estimates,estimate.df)
     }
   }
-  if(!se& is.null(beta))
+  if(!se& is.null(beta) & pim)
   {
      if(type %in%c("Triang","STriang") | is.list(estimates))
         names(estimates)=output.labels

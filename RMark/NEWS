@@ -1,14 +1,16 @@
-RMark 2.1.4 ()
+RMark 2.1.4 (30 Sept 2015)
 
 NEW FEATURES
 
 * Added Burnham live-dead model example provided by Luke Eberhart-Phillips
 
-* Added Huggins model with random effects (#145)
+* Added Huggins model with random effects (#145) and relaxed Occupancy model (#144)
 
 BUG FIXES
 
 * patch to var.components.reml for test of intercept in random design (rdesign); thanks to Wolfgang Viechtbauer
+
+* patched get.real to handle situations in which beta and design.matrix is specified; se or vcv set to TRUE is not allowed if beta is specified; thanks to Jeff Hostetler for reporting this issue.
 
 
 RMark 2.1.13 (3 June 2015)

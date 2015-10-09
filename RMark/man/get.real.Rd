@@ -5,7 +5,8 @@
 \title{Extract or compute sets of real parameters}
 \usage{
 get.real(model, parameter, beta = NULL, se = FALSE, design = NULL,
-  data = NULL, vcv = FALSE, show.fixed = TRUE, expand = FALSE)
+  data = NULL, vcv = FALSE, show.fixed = TRUE, expand = FALSE,
+  pim = TRUE)
 }
 \arguments{
 \item{model}{MARK model object}
@@ -30,6 +31,8 @@ of fixed values}
 
 \item{expand}{if TRUE, returns vcv matrix for unique parameters and only
 simplified unique parameters if FALSE}
+
+\item{pim}{if TRUE and se=FALSE, returns a list of estimates in PIM format}
 }
 \value{
 estimates: if \code{se=FALSE and Beta=NULL}, a matrix of estimates

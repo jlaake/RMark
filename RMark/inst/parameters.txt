@@ -463,5 +463,21 @@ OccRelClos	p	0	0	0	Square	all	logit	~1
 OccRelClos	Psi	0	1		Square	all	logit	~1											
 OccRelClos	pent	1	-1	0	Square	all	mlogit	~1											
 OccRelClos	d	0	-1	0	Square	all	logit	~1											
-										
+UnIdLogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE						
+UnIdLogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE						
+UnIdLogitNormalMR	N	0			Square	all	log	~session					TRUE						
+UnIdLogitNormalMR	r	0	0	0	Square	all	logit	~1					TRUE						
+UnIdPoissonMR	alpha	0	0	0	Square	all	log	~1											
+UnIdPoissonMR	sigma	0	0	0	Square	all	log	~1											
+UnIdPoissonMR	U	0	0	0	Square	all	log	~1											
+UnIdPoissonMR	Phi	0	-1	1	Triang	all	logit	~1											
+UnIdPoissonMR	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
+UnIdPoissonMR	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime									
+UnIdPoissonMR	r	0	0	0	Square	all	log	~1											
+UnIdIELogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE						
+UnIdIELogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE						
+UnIdIELogitNormalMR	Nbar	0			Square	all	log	~session					TRUE						
+UnIdIELogitNormalMR	alpha	0	-1	0	Square	all	identity	~1					TRUE						
+UnIdIELogitNormalMR	Nstar	0			Square	all	log	~session					TRUE						
+UnIdIELogitNormalMR	r	0	0	0	Square	all	logit	~1					TRUE						
 								

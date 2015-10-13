@@ -188,9 +188,22 @@ vcv.real=deriv.real%*%model$results$beta.vcv%*%t(deriv.real)
 	{
 		pseudo.real[fixedparms]=0
 		pseudo.real[ind][fixedparms[ind]]=exp(pseudo.real[ind][fixedparms[ind]])
-		sums=by(pseudo.real[ind],model$links[ind],sum)
+		# sums=by(pseudo.real[ind],model$links[ind],sum)
+		
+		# replacement keeps levels in original order, 
+		# otherwise by function creates factor out of character that rearranges
+		# the order, only noticeably if >10 levels because factor will order as 
+		# 1, 10, 11, 2, 3, 4...
+		sums = by(pseudo.real[ind], factor(model$links[ind], levels = unique(model$links[ind])), sum)
+		
 		sums=sums[match(model$links[ind],names(sums))]
-		real[ind]=pseudo.real[ind]/(1+sums[ind])
+		
+		# real[ind]=pseudo.real[ind]/(1+sums[ind])
+		# sums is already of correct length, [ind] gives error because it refers
+		# to indices outside the size of sums vector
+		# I could be wrong, though.
+		real[ind]=pseudo.real[ind]/(1+sums)
+		
 		real[fixedparms]=fixedvalues[fixedparms]
 	}
 #

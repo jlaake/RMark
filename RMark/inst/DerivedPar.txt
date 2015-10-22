@@ -193,6 +193,7 @@ MarkNumber	dpar_label
 114	Mu Mean Resighting Rate
 115	N Population Size
 115	Lambda Mean Resightings
+115	Pr(Captured 1 or more times)
 116	psi1*psi2
 117	Occupancy
 117	Expected p
@@ -232,7 +233,7 @@ MarkNumber	dpar_label
 142	Method 1 Individual Residency Time
 142	Method 1 Attribute Duration Time
 142	Method 2 Attribute Duration Time
-144	Method 1 Residency Time of Occupancy
+144	Method 1 Individual Residency Time
 145	N Population Size
 146	N Population Size
 147	N Population Size
@@ -256,3 +257,11 @@ MarkNumber	dpar_label
 154	lambda Rate of Change
 154	log odds lambda
 155	S Overall Survival
+158	Mu Mean Resighting Rate
+159	Mu Mean Resighting Rate
+159	Population Estimate
+160	N Population Size
+160	Lambda Mean Resightings
+160	Pr(Captured 1 or more times)
+161	Density
+

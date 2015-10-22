@@ -1,4 +1,4 @@
-RMark 2.1.4 (13 Oct 2015)
+RMark 2.1.4 (22 Oct 2015)
 
 NEW FEATURES
 
@@ -8,7 +8,7 @@ NEW FEATURES
 
 * Added Huggins model with random effects (#145) and relaxed Occupancy model (#144)
 
-* Added UnId versions of mark-resight models
+* Added UnId versions of mark-resight models (#158,#159,#160); added derived parameter for PoissonMR model
 
 BUG FIXES
 
@@ -16,6 +16,7 @@ BUG FIXES
 
 * patched get.real to handle situations in which beta and design.matrix is specified; se or vcv set to TRUE is not allowed if beta is specified; thanks to Jeff Hostetler for reporting this issue.
 
+* patched compute.real to properly handle fixed values in mlogit parameters.  This code was added in June 2014 version but apparently did not work with more than 9 strata and possibly other situations. Thanks to Tyson Wepprich who discovered error and patched code.
 
 RMark 2.1.13 (3 June 2015)
 --------------------------

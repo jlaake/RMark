@@ -473,7 +473,7 @@ UnIdPoissonMR	U	0	0	0	Square	all	log	~1
 UnIdPoissonMR	Phi	0	-1	1	Triang	all	logit	~1											
 UnIdPoissonMR	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
 UnIdPoissonMR	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime									
-UnIdPoissonMR	r	0	0	0	Square	all	log	~1											
+UnIdPoissonMR	r	0	0	0	Square	all	logit	~1											
 UnIdIELogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE						
 UnIdIELogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE						
 UnIdIELogitNormalMR	Nbar	0			Square	all	log	~session					TRUE						

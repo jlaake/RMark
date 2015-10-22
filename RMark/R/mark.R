@@ -194,6 +194,10 @@
 #' \code{\link{print.mark}}).
 #' @author Jeff Laake
 #' @export
+#' @importFrom stats as.formula coef formula median model.matrix optim 
+#'            optimize plogis pnorm pt qchisq qnorm terms uniroot
+#' @importFrom utils read.delim read.fwf read.table
+#'              type.convert write.table
 #' @seealso \code{\link{make.mark.model}}, \code{\link{run.mark.model}},
 #' \code{\link{make.design.data}}, \code{\link{process.data}},
 #' \code{\link{summary.mark}}

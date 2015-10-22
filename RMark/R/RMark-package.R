@@ -28,7 +28,7 @@
 #'# 5A does not exist so p=0; only survival from 4A to 6 can be 
 #'# estimated which is done by setting survival from 4A to 5A to 1 and
 #'# estimating survival from 5A to 6 which is then total survival from 4A to 6.
-#'
+#'\donttest{
 #'pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 #'skagit=import.chdata(paste(pathtodata,"skagit.txt",sep="/"),field.types=c("f"),header=TRUE)
 #'skagit.processed=process.data(skagit,model="Multistrata",groups=c("tag"))
@@ -37,24 +37,30 @@
 #'# p
 #'#
 #'# Can't be seen at 5A or 2B,6B (the latter 2 don't exist)
-#'skagit.ddl$p$fix=ifelse((skagit.ddl$p$stratum=="A"&skagit.ddl$p$time==5) | (skagit.ddl$p$stratum=="B"&skagit.ddl$p$time%in%c(2,6)),0,NA)
+#'skagit.ddl$p$fix=ifelse((skagit.ddl$p$stratum=="A"&skagit.ddl$p$time==5) | 
+#'  (skagit.ddl$p$stratum=="B"&skagit.ddl$p$time%in%c(2,6)),0,NA)
 #'# Estimated externally from current data to allow estimation of survival at last interval
 #'skagit.ddl$p$fix[skagit.ddl$p$tag=="v7"&skagit.ddl$p$time==6&skagit.ddl$p$stratum=="A"]=0.687
 #'skagit.ddl$p$fix[skagit.ddl$p$tag=="v9"&skagit.ddl$p$time==6&skagit.ddl$p$stratum=="A"]=0.975
 #'#
 #'# Psi
 #'#
-#'# only 3 possible transitions are A to B at time interval 2 to 3 and for time interval 3 to 4 from A to B and from B to A
+#'# only 3 possible transitions are A to B at time interval 2 to 3 and 
+#'# for time interval 3 to 4 from A to B and from B to A
 #'# rest are fixed values
 #'skagit.ddl$Psi$fix=NA
 #'# stay in A for intervals 1-2, 4-5 and 5-6
-#'skagit.ddl$Psi$fix[skagit.ddl$Psi$stratum=="A"&skagit.ddl$Psi$tostratum=="B"&skagit.ddl$Psi$time%in%c(1,4,5)]=0
+#'skagit.ddl$Psi$fix[skagit.ddl$Psi$stratum=="A"&
+#'   skagit.ddl$Psi$tostratum=="B"&skagit.ddl$Psi$time%in%c(1,4,5)]=0
 #'# stay in B for interval 4-5
-#'skagit.ddl$Psi$fix[skagit.ddl$Psi$stratum=="B"&skagit.ddl$Psi$tostratum=="A"&skagit.ddl$Psi$time==4]=0
+#'skagit.ddl$Psi$fix[skagit.ddl$Psi$stratum=="B"&skagit.ddl$Psi$tostratum=="A"
+#'   &skagit.ddl$Psi$time==4]=0
 #'# leave B to go to A for interval 5-6
-#'skagit.ddl$Psi$fix[skagit.ddl$Psi$stratum=="B"&skagit.ddl$Psi$tostratum=="A"&skagit.ddl$Psi$time==5]=1
+#'skagit.ddl$Psi$fix[skagit.ddl$Psi$stratum=="B"&skagit.ddl$Psi$tostratum=="A"&
+#'  skagit.ddl$Psi$time==5]=1
 #'# "stay" in B for interval 1-2 and 2-3 because none will be in B
-#'skagit.ddl$Psi$fix[skagit.ddl$Psi$stratum=="B"&skagit.ddl$Psi$tostratum=="A"&skagit.ddl$Psi$time%in%1:2]=0
+#'skagit.ddl$Psi$fix[skagit.ddl$Psi$stratum=="B"&skagit.ddl$Psi$tostratum=="A"&
+#'  skagit.ddl$Psi$time%in%1:2]=0
 #'# 
 #'# S
 #'#
@@ -66,7 +72,8 @@
 #'Psi.sxtime=list(formula=~-1+stratum:time)
 #'S.stratumxtime=list(formula=~-1+stratum:time)
 #'#
-#'S.timexstratum.p.timexstratum.Psi.sxtime=mark(skagit.processed,skagit.ddl,model.parameters=list(S=S.stratumxtime,p= p.timexstratum.tag,Psi=Psi.sxtime))
+#'S.timexstratum.p.timexstratum.Psi.sxtime=mark(skagit.processed,skagit.ddl,
+#'  model.parameters=list(S=S.stratumxtime,p= p.timexstratum.tag,Psi=Psi.sxtime))
 #'# calculation of cummulative survival for entire route
 #'Sest=plogis(coef(S.timexstratum.p.timexstratum.Psi.sxtime)$estimate)
 #'# A
@@ -75,6 +82,7 @@
 #'# B
 #'prod(Sest[c(1,2,4,5,7)])
 #'#[1] 0.1154
+#' }
 
 NULL
 

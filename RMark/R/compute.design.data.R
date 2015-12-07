@@ -154,6 +154,7 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
        else
        {
           ncol=data$nocc.secondary[l]+num
+#		  if(any(ncol<1))ncol=rep(1,length(data$nocc.secondary))
           if(type%in%c("Triang","STriang"))num.lines=ncol
        }
      }

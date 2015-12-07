@@ -1,4 +1,4 @@
-RMark 2.1.4 (22 Oct 2015)
+RMark 2.1.14 (7 Dec 2015)
 
 NEW FEATURES
 
@@ -6,7 +6,7 @@ NEW FEATURES
 
 * Added example of MS fish route data and code provided by Megan Moore.
 
-* Added Huggins model with random effects (#145) and relaxed Occupancy model (#144)
+* Added Huggins model with random effects (#145), RD version (#146) and relaxed Occupancy model (#144)
 
 * Added UnId versions of mark-resight models (#158,#159,#160); added derived parameter for PoissonMR model
 

@@ -480,4 +480,10 @@ UnIdIELogitNormalMR	Nbar	0			Square	all	log	~session					TRUE
 UnIdIELogitNormalMR	alpha	0	-1	0	Square	all	identity	~1					TRUE						
 UnIdIELogitNormalMR	Nstar	0			Square	all	log	~session					TRUE						
 UnIdIELogitNormalMR	r	0	0	0	Square	all	logit	~1					TRUE						
-								
+RDHugginsRE	S	0	-1	1	Triang	all	logit	~1					FALSE						
+RDHugginsRE	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
+RDHugginsRE	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE	
+RDHugginsRE	sigmap	0			Square	all	log	~1					TRUE											
+RDHugginsRE	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
+RDHugginsRE	c	1	-1	0	Square	all	logit			p			TRUE						
+							

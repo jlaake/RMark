@@ -80,7 +80,7 @@
 #' all individual covariate values are not specified, the mean individual covariate value is
 #' used for prediction.
 #' @param indices a vector of indices from the all-different PIM structure for
-#' parameters to be computed
+#' parameters to be computed (model.index value in the design data)
 #' @param drop if TRUE, models with any non-positive variance for betas are
 #' dropped
 #' @param revised if TRUE it uses eq 6.12 from Burnham and Anderson (2002) for

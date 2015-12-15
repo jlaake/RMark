@@ -18,7 +18,7 @@ all individual covariate values are not specified, the mean individual covariate
 used for prediction.}
 
 \item{indices}{a vector of indices from the all-different PIM structure for
-parameters to be computed}
+parameters to be computed (model.index value in the design data)}
 
 \item{drop}{if TRUE, models with any non-positive variance for betas are
 dropped}

@@ -486,4 +486,20 @@ RDHugginsRE	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE
 RDHugginsRE	sigmap	0			Square	all	log	~1					TRUE											
 RDHugginsRE	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
 RDHugginsRE	c	1	-1	0	Square	all	logit			p			TRUE						
+RD2SpGEConOcc	PsiA	0	1		Square	all	logit	~1					FALSE						
+RD2SpGEConOcc	PsiBA	0	1		Square	all	logit	~1	FALSE	PsiBa			FALSE						
+RD2SpGEConOcc	PsiBa	0	1		Square	all	logit	~1		PsiBA			FALSE						
+RD2SpGEConOcc	GammaA	0	-1		Square	all	logit	~1		EpsilonA			FALSE						
+RD2SpGEConOcc	GammaB	0	-1		Square	all	logit	~1		EpsilonB			FALSE						
+RD2SpGEConOcc	GammaAB	0	-1		Square	all	logit	~1		EpsilonAB			FALSE						
+RD2SpGEConOcc	GammaBA	0	-1		Square	all	logit	~1		EpsilonBA			FALSE						
+RD2SpGEConOcc	EpsilonA	0	-1		Square	all	logit	~1	FALSE	GammaA			FALSE						
+RD2SpGEConOcc	EpsilonB	0	-1		Square	all	logit	~1	FALSE	GammaB			FALSE						
+RD2SpGEConOcc	EpsilonAB	0	-1		Square	all	logit	~1	FALSE	GammaAB			FALSE						
+RD2SpGEConOcc	EpsilonBA	0	-1		Square	all	logit	~1	FALSE	GammaBA			FALSE						
+RD2SpGEConOcc	pA	0	0	0	Square	all	logit	~1	FALSE	pB			TRUE						
+RD2SpGEConOcc	pB	0	0	0	Square	all	logit	~1		pA			TRUE						
+RD2SpGEConOcc	rA	0	0	0	Square	all	logit	~1					TRUE						
+RD2SpGEConOcc	rBA	0	0	0	Square	all	logit	~1	FALSE	rBa			TRUE						
+RD2SpGEConOcc	rBa	0	0	0	Square	all	logit	~1		rBA			TRUE						
 							

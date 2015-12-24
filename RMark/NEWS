@@ -1,3 +1,11 @@
+RMark 2.2.0 (15 Dec 2015)
+
+NEW FEATURES
+
+* I added the long requested feature that enables modification of design data as well as individual
+covariate values for real parameter estimates.  See ?predict_real.  Any help testing this function would
+be much appreciated.  
+
 RMark 2.1.14 (14 Dec 2015)
 
 NEW FEATURES

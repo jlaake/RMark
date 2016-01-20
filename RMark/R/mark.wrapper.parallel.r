@@ -121,7 +121,6 @@ mark.wrapper.parallel<-
 #  returns a list of mark models
 #
 # -----------------------------------------------------------------------------------------------------------------------
-   library(parallel)
 	if(R.Version()$os!="mingw32")
 	{
 		cat("\nWindows only function. Unable to get this function to run on non-Windows machine\n")

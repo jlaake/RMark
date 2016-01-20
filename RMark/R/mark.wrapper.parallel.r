@@ -72,7 +72,7 @@
 #' results
 #' @author Eldar Rakhimberdiev
 #' @export 
-#' @import snowfall
+#' @import parallel
 #' @seealso \code{\link{collect.models}}, \code{\link{mark}},
 #' \code{\link{create.model.list}}
 #' @keywords utility
@@ -213,7 +213,6 @@ mark.wrapper.parallel<-
         tmp<-parallel::clusterEvalQ(Cl, library("RMark")) 
 		list.of.models<-parallel::clusterApplyLB(Cl, list.of.model.par,  make.run.mark.model.apply.int)
 		tmp<-parallel::stopCluster(Cl)
-		
 	}
 	else list.of.models<-lapply(list.of.model.par,  make.run.mark.model.apply.int)
 	rm(initial)

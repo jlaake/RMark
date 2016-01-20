@@ -114,13 +114,14 @@ mark.wrapper.parallel<-
 {
 	
 # -----------------------------------------------------------------------------------------------------------------------
-# mark.wrapper  -  a wrapper for the mark function; it takes all the arguments and passes them onto mark
+# mark.wrapper  -  a wrapper for the mark function; it takes all the arguments and passes them into mark
 #
 #  Value:
 #
 #  returns a list of mark models
 #
 # -----------------------------------------------------------------------------------------------------------------------
+   library(parallel)
 	if(R.Version()$os!="mingw32")
 	{
 		cat("\nWindows only function. Unable to get this function to run on non-Windows machine\n")
@@ -204,10 +205,16 @@ mark.wrapper.parallel<-
 		list.of.model.par[[i]]<-c(list(model.parameters=model.parameters, initial=initial, model.name=NULL, filename=paste(list.args$prefix, formatC((Max.number+i), width=3,digits=0,format="f", flag="0"), sep="")), list.args) # here I add all of the args from wrapper
 	}
 	if (parallel) {
-		sfInit(parallel=TRUE, cpus=cpus)
-		suppressWarnings(sfLibrary("RMark",character.only=TRUE))
-		list.of.models<-sfClusterApplyLB(list.of.model.par,  make.run.mark.model.apply.int)
-		sfStop()
+		#sfInit(parallel=TRUE, cpus=cpus)
+		#suppressWarnings(sfLibrary("RMark",character.only=TRUE))
+		#list.of.models<-sfClusterApplyLB(list.of.model.par,  make.run.mark.model.apply.int)
+		#sfStop()
+		Cl<-parallel::makeCluster(cpus)
+	    tmp<-parallel::clusterSetRNGStream(Cl)
+        tmp<-parallel::clusterEvalQ(Cl, library("RMark")) 
+		list.of.models<-parallel::clusterApplyLB(Cl, list.of.model.par,  make.run.mark.model.apply.int)
+		tmp<-parallel::stopCluster(Cl)
+		
 	}
 	else list.of.models<-lapply(list.of.model.par,  make.run.mark.model.apply.int)
 	rm(initial)

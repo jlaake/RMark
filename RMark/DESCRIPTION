@@ -13,7 +13,6 @@ SystemRequirements: notepad.exe, mark.exe (>= 8.0) (or mark32.exe and
     mark64.exe) and rel_32.exe (see README.txt)
 Depends:
     R (>= 2.13.0),
-    snowfall
 Imports:
     parallel,
     matrixcalc,

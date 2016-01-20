@@ -114,13 +114,14 @@ mark.wrapper.parallel<-
 {
 	
 # -----------------------------------------------------------------------------------------------------------------------
-# mark.wrapper  -  a wrapper for the mark function; it takes all the arguments and passes them onto mark
+# mark.wrapper  -  a wrapper for the mark function; it takes all the arguments and passes them into mark
 #
 #  Value:
 #
 #  returns a list of mark models
 #
 # -----------------------------------------------------------------------------------------------------------------------
+   library(parallel)
 	if(R.Version()$os!="mingw32")
 	{
 		cat("\nWindows only function. Unable to get this function to run on non-Windows machine\n")
@@ -152,9 +153,9 @@ mark.wrapper.parallel<-
 	if (!any(names(list.args)=="threads")) list.args$threads<-1
 #	if (any(names(list.args)=="threads")) list.args<-list.args[-which(names(list.args)=="threads")]
 #	require("parallel")
-	if (threads*cpus>detectCores() | (threads<0 & cpus!=1)) 
+	if (threads*cpus>parallel::detectCores() | (threads<0 & cpus!=1)) 
 		stop("you've tried to use more cores than you have, try to combine threads and cpus to make ", 
-				 detectCores(), " or less as a product\n")
+				 parallel::detectCores(), " or less as a product\n")
 	initiallist=NULL
 	if(class(initial)[1]=="marklist")
 		if(nrow(initial$model.table)!=nrow(model.list))
@@ -208,11 +209,11 @@ mark.wrapper.parallel<-
 		#suppressWarnings(sfLibrary("RMark",character.only=TRUE))
 		#list.of.models<-sfClusterApplyLB(list.of.model.par,  make.run.mark.model.apply.int)
 		#sfStop()
-		Cl<-makeCluster(cpus)
-	    tmp<-clusterSetRNGStream(Cl)
-        tmp<-clusterEvalQ(Cl, library("RMark")) 
-		list.of.models<-clusterApplyLB(Cl, list.of.model.par,  make.run.mark.model.apply.int)
-		tmp<-stopCluster(Cl)
+		Cl<-parallel::makeCluster(cpus)
+	    tmp<-parallel::clusterSetRNGStream(Cl)
+        tmp<-parallel::clusterEvalQ(Cl, library("RMark")) 
+		list.of.models<-parallel::clusterApplyLB(Cl, list.of.model.par,  make.run.mark.model.apply.int)
+		tmp<-parallel::stopCluster(Cl)
 		
 	}
 	else list.of.models<-lapply(list.of.model.par,  make.run.mark.model.apply.int)

@@ -152,9 +152,9 @@ mark.wrapper.parallel<-
 	if (!any(names(list.args)=="threads")) list.args$threads<-1
 #	if (any(names(list.args)=="threads")) list.args<-list.args[-which(names(list.args)=="threads")]
 #	require("parallel")
-	if (threads*cpus>parallel::detectCores() | (threads<0 & cpus!=1)) 
+	if (threads*cpus>detectCores() | (threads<0 & cpus!=1)) 
 		stop("you've tried to use more cores than you have, try to combine threads and cpus to make ", 
-				 parallel::detectCores(), " or less as a product\n")
+				 detectCores(), " or less as a product\n")
 	initiallist=NULL
 	if(class(initial)[1]=="marklist")
 		if(nrow(initial$model.table)!=nrow(model.list))
@@ -204,10 +204,16 @@ mark.wrapper.parallel<-
 		list.of.model.par[[i]]<-c(list(model.parameters=model.parameters, initial=initial, model.name=NULL, filename=paste(list.args$prefix, formatC((Max.number+i), width=3,digits=0,format="f", flag="0"), sep="")), list.args) # here I add all of the args from wrapper
 	}
 	if (parallel) {
-		sfInit(parallel=TRUE, cpus=cpus)
-		suppressWarnings(sfLibrary("RMark",character.only=TRUE))
-		list.of.models<-sfClusterApplyLB(list.of.model.par,  make.run.mark.model.apply.int)
-		sfStop()
+		#sfInit(parallel=TRUE, cpus=cpus)
+		#suppressWarnings(sfLibrary("RMark",character.only=TRUE))
+		#list.of.models<-sfClusterApplyLB(list.of.model.par,  make.run.mark.model.apply.int)
+		#sfStop()
+		Cl<-makeCluster(cpus)
+	    tmp<-clusterSetRNGStream(Cl)
+        tmp<-clusterEvalQ(Cl, library("RMark")) 
+		list.of.models<-clusterApplyLB(Cl, list.of.model.par,  make.run.mark.model.apply.int)
+		tmp<-stopCluster(Cl)
+		
 	}
 	else list.of.models<-lapply(list.of.model.par,  make.run.mark.model.apply.int)
 	rm(initial)

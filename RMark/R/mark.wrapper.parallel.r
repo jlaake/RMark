@@ -209,8 +209,8 @@ mark.wrapper.parallel<-
 		#list.of.models<-sfClusterApplyLB(list.of.model.par,  make.run.mark.model.apply.int)
 		#sfStop()
 		Cl<-parallel::makeCluster(cpus)
-		tmp<-parallel::clusterSetRNGStream(Cl)
-		tmp<-parallel::clusterEvalQ(Cl, library("RMark")) 
+	    tmp<-parallel::clusterSetRNGStream(Cl)
+        tmp<-parallel::clusterEvalQ(Cl, library("RMark")) 
 		list.of.models<-parallel::clusterApplyLB(Cl, list.of.model.par,  make.run.mark.model.apply.int)
 		tmp<-parallel::stopCluster(Cl)
 		

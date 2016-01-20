@@ -114,7 +114,7 @@ mark.wrapper.parallel<-
 {
 	
 # -----------------------------------------------------------------------------------------------------------------------
-# mark.wrapper  -  a wrapper for the mark function; it takes all the arguments and passes them onto mark
+# mark.wrapper  -  a wrapper for the mark function; it takes all the arguments and passes them into mark
 #
 #  Value:
 #
@@ -154,7 +154,7 @@ mark.wrapper.parallel<-
 #	require("parallel")
 	if (threads*cpus>parallel::detectCores() | (threads<0 & cpus!=1)) 
 		stop("you've tried to use more cores than you have, try to combine threads and cpus to make ", 
-				 parallel::detectCores(), " or less as a product\n")
+				parallel::detectCores(), " or less as a product\n")
 	initiallist=NULL
 	if(class(initial)[1]=="marklist")
 		if(nrow(initial$model.table)!=nrow(model.list))
@@ -204,10 +204,16 @@ mark.wrapper.parallel<-
 		list.of.model.par[[i]]<-c(list(model.parameters=model.parameters, initial=initial, model.name=NULL, filename=paste(list.args$prefix, formatC((Max.number+i), width=3,digits=0,format="f", flag="0"), sep="")), list.args) # here I add all of the args from wrapper
 	}
 	if (parallel) {
-		sfInit(parallel=TRUE, cpus=cpus)
-		suppressWarnings(sfLibrary("RMark",character.only=TRUE))
-		list.of.models<-sfClusterApplyLB(list.of.model.par,  make.run.mark.model.apply.int)
-		sfStop()
+		#sfInit(parallel=TRUE, cpus=cpus)
+		#suppressWarnings(sfLibrary("RMark",character.only=TRUE))
+		#list.of.models<-sfClusterApplyLB(list.of.model.par,  make.run.mark.model.apply.int)
+		#sfStop()
+		Cl<-parallel::makeCluster(cpus)
+		tmp<-parallel::clusterSetRNGStream(Cl)
+		tmp<-parallel::clusterEvalQ(Cl, library("RMark")) 
+		list.of.models<-parallel::clusterApplyLB(Cl, list.of.model.par,  make.run.mark.model.apply.int)
+		tmp<-parallel::stopCluster(Cl)
+		
 	}
 	else list.of.models<-lapply(list.of.model.par,  make.run.mark.model.apply.int)
 	rm(initial)
@@ -242,11 +248,11 @@ make.run.mark.model.apply.int<-function(x) {
 	x<-x[-which(names(x)=="parallel")]	
 # removed code for !run which doesn't work and not needed.
 #	if(run) {
-		mymodel<-try(do.call(mark, x), silent=silent)
-		if(class(mymodel)[1]=="try-error") mymodel<-"error"
-		if (length(mymodel)>1)
-			if(is.null(mymodel$results))
-				mymodel<-"error"
+	mymodel<-try(do.call(mark, x), silent=silent)
+	if(class(mymodel)[1]=="try-error") mymodel<-"error"
+	if (length(mymodel)>1)
+		if(is.null(mymodel$results))
+			mymodel<-"error"
 #	}
 #	else {
 #		x<-x[-which(names(x)=="threads")]	

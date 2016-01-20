@@ -618,10 +618,10 @@ else
 		 if(data$model=="RDMSOccRepro")
 		 {
 			 if(names(parameters)[i]=="R")
-				 design.data=design.data[order(design.data$tostratum,design.data$stratum),]
+				 design.data=design.data[order(design.data$group,design.data$stratum),]
 			 else
 				 if(names(parameters)[i]=="Delta")
-				     design.data=design.data[order(design.data$stratum,design.data$tostratum,design.data$session),]
+				     design.data=design.data[order(design.data$group,design.data$stratum,design.data$session),]
 		 }
          full.design.data[[i]]=cbind(par.index=1:nrow(design.data),model.index=1:nrow(design.data),design.data)
 		 row.names(full.design.data[[i]])=1:nrow(full.design.data[[i]])

@@ -1370,7 +1370,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                   pim[[i]][[k]]=list()
 				  if(data$model=="RDMSOccRepro" & names(parameters)[i]=="Phi0")
 				  {
-					  pim[[i]][[k]]$pim=matrix(1:length(data$strata.labels),nrow=1)   
+					  pim[[i]][[k]]$pim=matrix(ddl[[i]]$model.index,ncol=2,byrow=TRUE)   
 				  } else	 
 				  if(!multi.session)
 					 pim[[i]][[k]]$pim=create.pim(nocc,parameters[[i]],npar,mixtures)

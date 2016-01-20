@@ -1,10 +1,14 @@
-RMark 2.2.0 (15 Dec 2015)
+RMark 2.2.0 (13 Jan 2016)
 
 NEW FEATURES
 
 * I added the long requested feature that enables modification of design data as well as individual
 covariate values for real parameter estimates.  See ?predict_real.  Any help testing this function would
 be much appreciated.  
+
+BUG FIXES
+
+* PIM structure for RDMSOccRepro was not correctly constructed in the MARK inp file when there was more than one group. Thanks to Jim Hines for noticing and reporting this problem.
 
 RMark 2.1.14 (14 Dec 2015)
 

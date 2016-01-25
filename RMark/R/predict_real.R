@@ -161,7 +161,8 @@ predict_real <-
 #   create design matrix with formula and design data
 #
     design=model.matrix(model$model.parameters[[parameter]]$formula,df)
-#
+	design = design[,paste(parameter,":",colnames(design),sep="")%in%colnames(model$design.matrix)]
+	
 #  Compute real parameters; if neither se or vcv then return vector of real parameters
 #
 	real=convert.link.to.real(design%*%beta,links=links)
@@ -170,7 +171,11 @@ predict_real <-
 #
 	real[fixedparms]=fixedvalues
 #  If no se or vcv requested, return result
-	if(!vcv & !se)return(cbind(df,data.frame(estimate=real)))
+	if(!vcv & !se)
+	{
+		if(!is.null(df$time.intervals))real=real^df$time.intervals
+		return(cbind(df,data.frame(estimate=real)))
+	}
 #
 # Compute vc matrix for real parameters which needs to be modified for
 # any mlogit parameters
@@ -184,7 +189,12 @@ predict_real <-
 	   vcv.real=deriv.real%*%model$results$beta.vcv[which.beta,which.beta]%*%t(deriv.real)
 	else
 	   vcv.real=t(deriv.real)%*%model$results$beta.vcv[which.beta,which.beta,drop=FALSE]%*%(deriv.real)
-	
+    if(!is.null(df$time.intervals))
+	{
+		deriv=df$time.intervals*real^(df$time.intervals-1)
+		vcv.real=deriv%*%t(deriv)*vcv.real
+		real=real^df$time.intervals
+	}
 #
 # If vcv=TRUE, compute v-c matrix and std errors of real estimates
 # To handle any mlogit parameters compute pseudo-real estimates using log in place of mlogit
@@ -269,6 +279,11 @@ predict_real <-
 	links[ind]="logit"
 	real.lcl=convert.link.to.real(link.values-1.96*link.se,links=links)
 	real.ucl=convert.link.to.real(link.values+1.96*link.se,links=links)
+	if(!is.null(df$time.intervals))
+	{
+		real.ucl=real.ucl^df$time.intervals
+		real.lcl=real.lcl^df$time.intervals
+	}
 	real.lcl[fixedparms]=fixedvalues
 	real.ucl[fixedparms]=fixedvalues
 #

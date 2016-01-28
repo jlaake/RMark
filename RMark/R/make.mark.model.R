@@ -1030,6 +1030,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   }
   for(i in 1:length(parameters))
   {
+#     check to make sure that design data row names are in the correct order
+	  if(any((1:nrow(ddl[[names(parameters)[i]]]))!=rownames(ddl[[names(parameters)[i]]])))
+	  {
+		  message("Row names in design data for parameter ",names(parameters)[i]," are out of order or you deleted design data.\n")
+	  }	  
 #
 #     For parameters that can be possibly shared, see if they are not shared and if not then create
 #     default formula if one not specified; also use link from dominant parameter

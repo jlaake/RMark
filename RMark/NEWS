@@ -10,6 +10,8 @@ be much appreciated.
 CHANGES 
 * Modified mark.wrapper.parallel to use parallel instead of snow/snowfall to avoid dependency
 
+* Added a check in make.mark.model to make sure rownames in design data (ddl) are in order.  If not it re-numbers them.
+
 BUG FIXES
 
 * PIM structure for RDMSOccRepro was not correctly constructed in the MARK inp file when there was more than one group. Thanks to Jim Hines for noticing and reporting this problem.

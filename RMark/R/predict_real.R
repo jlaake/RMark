@@ -174,7 +174,7 @@ predict_real <-
 	if(!vcv & !se)
 	{
 		if(!is.null(df$time.intervals))real=real^df$time.intervals
-		return(cbind(df,data.frame(estimate=real)))
+		return(cbind(df,data.frame(real=real)))
 	}
 #
 # Compute vc matrix for real parameters which needs to be modified for
@@ -299,6 +299,6 @@ predict_real <-
 	if(vcv)
 		return(list(real=cbind(df,real),se.real=se.real,lcl=real.lcl,ucl=real.ucl,fixed=fixed,vcv.real=vcv.real))
 	else
-		return(cbind(df,data.frame(estimate=real,se=se.real,lcl=real.lcl,ucl=real.ucl,fixed=fixed)))
+		return(cbind(df,data.frame(real=real,se=se.real,lcl=real.lcl,ucl=real.ucl,fixed=fixed)))
 }
 

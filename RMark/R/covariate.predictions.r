@@ -347,16 +347,23 @@ covariate.predictions <- function(model,data=NULL,indices=NULL,drop=TRUE, revise
 	   }
    }
 #
-# Determine if any of the models should be dropped because beta.var non-positive
+# Determine if any of the models should be dropped because beta.var non-positive or failed to run
 #
+dropped.models=NULL
 if(number.of.models>1)
 {
-dropped.models=NULL
+# check if any models failed to run
+for (i in 1:(length(model.list)-1))
+{
+	model=load.model(model.list[[i]])
+	if(length(coef(model)$se)==0)  dropped.models=c(dropped.models,i)
+}
 if(drop)
 {
    for (i in 1:dim(model.table)[1])
    {
       model=load.model(model.list[[i]])
+	 
       model.indices=unique(model$simplify$pim.translation[indices])
       used.beta=which(apply(model$design.matrix[model.indices,,drop=FALSE],2,function(x)!all(x=="0")))
       if(any(diag(model$results$beta.vcv[used.beta,used.beta])<0))
@@ -382,7 +389,6 @@ else
 	if(any(diag(model$results$beta.vcv[used.beta,used.beta])<0))
 		message("\nModel has one or more beta variances that are not positive\n")
 }
-dropped.models=NULL
 reals=vector("list",length=number.of.models)
 firstmodel=TRUE
 for (j in 1:number.of.models)
@@ -691,10 +697,26 @@ for (j in 1:number.of.models)
 #   diag(cor)=1
 #   cor.average=cor.average+cor*model.table$weight[as.numeric(row.names(model.table))==j]
 }
+if(!is.null(dropped.models))
+{
+	weight=weight[-dropped.models]
+	mavg.vcv=mavg.vcv[-dropped.models]
+}
 if(nreals==1){
 	estimate.mat=as.vector(estimate.mat)
 	se.mat=as.vector(se.mat)
+	if(!is.null(dropped.models))
+	{
+		estimate.mat=estimate.mat[-dropped.models]
+		se.mat=se.mat[-dropped.models]
+	}
+} else
+	if(!is.null(dropped.models))
+{
+		estimate.mat=estimate.mat[-dropped.models,]
+		se.mat=se.mat[-dropped.models,]
 }
+	
 if(!mata)
 	mavg.res=model.average.list(x=list(estimate=estimate.mat,weight=weight,vcv=mavg.vcv),revised=revised, mata=mata, normal.lm=normal.lm, residual.dfs=residual.dfs, alpha=alpha,...)
 else

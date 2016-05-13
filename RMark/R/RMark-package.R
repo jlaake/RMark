@@ -2639,7 +2639,8 @@ NULL
 #'   model.parameters=list(Phi=Phi.timeage.fix, p=p.time, pent=pent.time.fix, N=list(formula=~group)), 
 #'    invisible=FALSE)
 #' 	Model.6=mark(wwdo.proc, wwdo.ddl, 
-#'    model.parameters=list(Phi=Phi.timeage.fix,p=p.g.time, pent=pent.time.fix,N=list(formula=~group)), 
+#'    model.parameters=list(Phi=Phi.timeage.fix,p=p.g.time, pent=pent.time.fix,
+#'               N=list(formula=~group)), 
 #'    invisible=FALSE)
 #' 	collect.models()
 #' }

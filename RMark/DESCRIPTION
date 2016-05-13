@@ -1,10 +1,11 @@
 Package: RMark
 Version: 2.2.0
-Date: 2016-1-25
+Date: 2016-5-12
 Title: R Code for Mark Analysis
 Author: Jeff Laake <jeff.laake@noaa.gov> with code contributions from Eldar
-    Rakhimberdiev, Ben Augustine and Daniel Turek, and example data and
-    analysis from Bret Collier, Jay Rotella, David Pavlacky,Andrew Paul and Luke Eberhart-Phillips.
+    Rakhimberdiev, Ben Augustine and Daniel Turek, and example data and analysis
+    from Bret Collier, Jay Rotella, David Pavlacky,Andrew Paul and Luke Eberhart-
+    Phillips.
 Description: An interface to the software package MARK that constructs input
     files for MARK and extracts the output. MARK was developed by Gary White
     and is freely available at (http://www.phidot.org/software/mark/downloads/)
@@ -26,3 +27,4 @@ Suggests:
 LazyLoad: yes
 License: GPL (>=2)
 Maintainer: Jeff Laake <Jeff.Laake@noaa.gov>
+RoxygenNote: 5.0.1

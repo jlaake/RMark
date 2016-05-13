@@ -1,4 +1,4 @@
-RMark 2.2.0 (25 Jan 2016)
+RMark 2.2.0 (12 May 2016)
 
 NEW FEATURES
 
@@ -6,11 +6,12 @@ NEW FEATURES
 covariate values for real parameter estimates.  See ?predict_real.  Any help testing this function would
 be much appreciated.  
 
-
 CHANGES 
 * Modified mark.wrapper.parallel to use parallel instead of snow/snowfall to avoid dependency
 
 * Added a check in make.mark.model to make sure rownames in design data (ddl) are in order.  If not it re-numbers them.
+
+* Modified covariate.predictions to remove any failed models from the model list so model.average.list would work correctly. Also even though models were being dropped if drop=TRUE, unnecessary calculation was still being performed so this was stopped.
 
 BUG FIXES
 

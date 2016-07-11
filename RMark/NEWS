@@ -1,3 +1,9 @@
+RMark 2.2.1 (11 July 2016)
+
+BUG FIXES
+
+* export.MARK was not correctly handling models with 2 character encounter histories.
+
 RMark 2.2.0 (23 June 2016)
 
 NEW FEATURES

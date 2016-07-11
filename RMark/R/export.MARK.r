@@ -95,7 +95,13 @@ export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",i
   if(x$model=="Nest") 
 	  nocc=1
   else
-	  nocc=nchar(x$data$ch[1])
+  {
+	  if(is.null(x$nocc.secondary)) 
+		  nocc=x$nocc
+	  else
+		  nocc=sum(x$nocc.secondary)
+  }
+#	  nocc=nchar(x$data$ch[1])
   write(setup.model(x$model, nocc, x$mixtures)$etype,file=filename)
   write(x$mixtures,file=filename,append=TRUE)
   if(setup.model(x$model, nocc, x$mixtures)$robust)

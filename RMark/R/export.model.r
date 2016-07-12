@@ -55,9 +55,18 @@ function(model,replace=FALSE)
         export.model(model[[i]],replace=replace)
   else
   {
-     file.copy(paste(model$output,".vcv",sep=""),paste(model$output,"V.tmp",sep=""), overwrite = replace)
-     file.copy(paste(model$output,".out",sep=""),paste(model$output,"Y.tmp",sep=""), overwrite = replace)
-     file.copy(paste(model$output,".res",sep=""),paste(model$output,"X.tmp",sep=""), overwrite = replace)
-  }
+	 if(file.exists(paste(model$output, ".vcv", sep = "")))
+        file.copy(paste(model$output,".vcv",sep=""),paste(model$output,"V.tmp",sep=""), overwrite = replace)
+	 else 
+		message("\n vcv file not found. files must be in working directory. model not fully exported")
+	if(file.exists(paste(model$output, ".out", sep = "")))
+		file.copy(paste(model$output,".out",sep=""),paste(model$output,"Y.tmp",sep=""), overwrite = replace)
+	else 
+		message("\n out file not found. files must be in working directory. model not fully exported")
+	if(file.exists(paste(model$output, ".res", sep = "")))
+		file.copy(paste(model$output,".res",sep=""),paste(model$output,"X.tmp",sep=""), overwrite = replace)
+	else 
+		message("\n res file not found. files must be in working directory. model not fully exported")
+}
   invisible()
 }

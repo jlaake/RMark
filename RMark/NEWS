@@ -1,8 +1,11 @@
-RMark 2.2.1 (11 July 2016)
+RMark 2.2.1 (12 July 2016)
 
 BUG FIXES
 
 * export.MARK was not correctly handling models with 2 character encounter histories.
+
+CHANGES 
+* added error messages to export.model so if files are missing the user is warned. export.model is used in export.MARK
 
 RMark 2.2.0 (23 June 2016)
 

@@ -1,8 +1,10 @@
-RMark 2.2.1 (12 July 2016)
+RMark 2.2.1 (9 Aug 2016)
 
 BUG FIXES
 
 * export.MARK was not correctly handling models with 2 character encounter histories.
+
+* shared submissive parameters in model RD2SpGEConOcc incorrectly had a default formula which should have been NULL. This may have prevented correctly building models with shared parameters.
 
 CHANGES 
 * added error messages to export.model so if files are missing the user is warned. export.model is used in export.MARK

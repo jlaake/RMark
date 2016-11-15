@@ -836,11 +836,19 @@ if(!is.null(icvalues))
 #
 # Write out the design matrix into the MARK input file
 #
-string = paste("design matrix constraints=", dim(complete.design.matrix)[1],
-        " covariates=", dim(complete.design.matrix)[2], ";",sep="")
-write(string, file = outfile, append = TRUE)
-write.table(complete.design.matrix, file = outfile, eol = ";\n",
-       sep = " ", col.names = FALSE, row.names = FALSE, quote = FALSE, append = TRUE)
+if(all(complete.design.matrix==diag(nrow(complete.design.matrix))))
+{
+	string=paste("design matrix constraints=",nrow(complete.design.matrix), " covariates=",nrow(complete.design.matrix)," identity;",sep="")
+	write(string, file = outfile, append = TRUE)
+}
+else
+{
+	string = paste("design matrix constraints=", dim(complete.design.matrix)[1],
+			" covariates=", dim(complete.design.matrix)[2], ";",sep="")
+	write(string, file = outfile, append = TRUE)
+	write.table(complete.design.matrix, file = outfile, eol = ";\n",
+			sep = " ", col.names = FALSE, row.names = FALSE, quote = FALSE, append = TRUE)
+}
 #
 # If there is a link specification for models that use different links for
 # each real parameter, write those out now shifting them for translation of
@@ -1079,6 +1087,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   else
   {
      zz=as.data.frame(ch)
+	 if(substr(etype,1,7)=="Density")
+	 {
+		 accumulate=FALSE
+		 zz=cbind(zz,data$data$TotalLocations,data$data$TotalIn)
+	 }
      zz=cbind(zz,data$freq)
   }
 #
@@ -1222,8 +1235,10 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(model.list$strata)string=paste(string," strata=",data$nstrata,sep="")
   if(!is.null(covariates))
   {
-	 covar10=covariates[duplicated((substr(covariates,1,10)))]
-	 if(length(covar10)>0) stop(paste("\nFollowing covariates are duplicates of another covariate within the first 10 characters\n",paste(covar10,collapse=", ")))
+	 if(any(nchar(covariates)>10))
+	    stop(paste("\nThe following covariates are longer than 10 characters which is the max length for MARK\n",paste(covariates[nchar(covariates)>10]),collapse=","))	 
+#	 covar10=covariates[duplicated((substr(covariates,1,10)))]
+#	 if(length(covar10)>0) stop(paste("\nFollowing covariates are duplicates of another covariate within the first 10 characters\n",paste(covar10,collapse=", ")))
      string=paste(string," icovar = ",length(covariates))
 	 if(!is.null(icvalues))
 	 {
@@ -1258,6 +1273,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
      }
   }
   write(strwrap(string,100,prefix=" "),file=outfile,append=TRUE)
+  if(!is.null(data$areas))
+  {
+	  string=paste(string,"Areas ",paste(data$areas,collapse=" "),";")
+      write(strwrap(string,100,prefix=" "),file=outfile,append=TRUE)
+  }
 #
 #  Output group labels
 #

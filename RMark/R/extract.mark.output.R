@@ -73,14 +73,14 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   x=grep("Effective sample size ",out,ignore.case=TRUE)
   if(length(x)==0)
   {
-	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
   n=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))
   x=grep("-2logL {",out,fixed=TRUE)
   if(length(x)==0)
   {
-	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
   #  x=grep("-2logL {",out,ignore.case=TRUE, extended=FALSE)
@@ -88,28 +88,28 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   x=grep("Number of Estimated",out,ignore.case=TRUE)
   if(length(x)==0)
   {
-	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
   npar=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))
   x=grep("DEVIANCE ",out,ignore.case=TRUE)
   if(length(x)==0)
   {
-	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
   deviance=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))[1]
   x = grep("DEVIANCE Degrees of Freedom ", out, ignore.case = TRUE)
   if(length(x)==0)
   {
-	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
   deviance.df = type.convert(substr(out[x], locate(x)+4, nchar(out[x])))[1]
   x=grep("AICc",out,ignore.case=TRUE)
   if(length(x)==0)
   {
-	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
   AICc=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))
@@ -119,13 +119,13 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
      x1=grep("parm-specific link",out,ignore.case=TRUE)
  if(length(x1)==0)
  {
-	 message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	 message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	 return(NULL)
  }
  x2=grep("Real Function Parameters",out,ignore.case=TRUE)
   if(length(x2)==0)
   {
-	  message("MARK did not run properly.  If error message was not shown, re-run MARK with invisible=FALSE")
+	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
   x3=length(out)

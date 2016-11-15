@@ -7,7 +7,7 @@
 process.data(data, begin.time = 1, model = "CJS", mixtures = 1,
   groups = NULL, allgroups = FALSE, age.var = NULL, initial.ages = c(0),
   age.unit = 1, time.intervals = NULL, nocc = NULL,
-  strata.labels = NULL, counts = NULL, reverse = FALSE)
+  strata.labels = NULL, counts = NULL, reverse = FALSE, areas = NULL)
 }
 \arguments{
 \item{data}{A data frame with at least one field named \code{ch} which is
@@ -58,6 +58,8 @@ group) containing counts for mark-resight models}
 
 \item{reverse}{if set to TRUE, will reverse timing of transition (Psi) and
 survival (S) in Multistratum models}
+
+\item{areas}{values of areas (1 per group) for Densitypc set of models}
 }
 \value{
 processed.data (a list with the following elements)

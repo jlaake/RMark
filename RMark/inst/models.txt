@@ -84,6 +84,7 @@ MarkNumber	model	etype	robust	closed	occupancy	derived	default.mixtures	num	divi
 123	MultScalOcc	MultScalOcc	TRUE	FALSE	TRUE	FALSE	1	0	1	FALSE
 124	RDMSOccRepro	RDMSOccRepro	TRUE	FALSE	TRUE	TRUE	1	0	1	TRUE
 126	RDMSOpenMisClass	RDMSOpenMisClass	TRUE	FALSE	FALSE	TRUE	2	0	1	TRUE
+127	Densitypc	Densitypc	FALSE	TRUE	FALSE	TRUE	1	-1	1	FALSE
 130	CJSMixture	CJSMixture	FALSE	FALSE	FALSE	FALSE	2	-1	1	FALSE
 131	PradSenMix	PradSenMix	FALSE	FALSE	FALSE	TRUE	2	-1	1	FALSE
 132	PradLambdaMix	PradLambdaMix	FALSE	FALSE	FALSE	TRUE	2	-1	1	FALSE
@@ -103,4 +104,5 @@ MarkNumber	model	etype	robust	closed	occupancy	derived	default.mixtures	num	divi
 158	UnIdLogitNormalMR	UnIdLogitNormalMR	TRUE	TRUE	FALSE	TRUE	1	-1	1	FALSE
 159	UnIdIELogitNormalMR	UnIdIELogitNormalMR	TRUE	TRUE	FALSE	TRUE	1	-1	1	FALSE
 160	UnIdPoissonMR	UnIdPoissonMR	FALSE	TRUE	FALSE	TRUE	1	-1	2	FALSE
+161	DensityRanpc	DensityRanpc	FALSE	TRUE	FALSE	TRUE	1	-1	1	FALSE
 

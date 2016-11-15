@@ -53,7 +53,7 @@ function(model,parameter,beta=NULL,design=NULL,data=NULL,vcv=FALSE)
   model=load.model(model)
   if(is.null(model$results)) 
   {
-     message("Model output is not available\n")
+     message(paste("Model output is not available in R. Check contents of ",model$output, ".out\n",sep=""))
      invisible()
   }
 #

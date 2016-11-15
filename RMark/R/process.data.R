@@ -109,6 +109,7 @@
 #' group) containing counts for mark-resight models
 #' @param reverse if set to TRUE, will reverse timing of transition (Psi) and
 #' survival (S) in Multistratum models
+#' @param areas values of areas (1 per group) for Densitypc set of models
 #' @return processed.data (a list with the following elements)
 #' \item{data}{original raw dataframe with group factor variable added if
 #' groups were defined} \item{model}{type of analysis model (eg, "CJS",
@@ -143,7 +144,7 @@
 #' 
 process.data <-
 function(data,begin.time=1,model="CJS",mixtures=1,groups=NULL,allgroups=FALSE,age.var=NULL,
-initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,counts=NULL,reverse=FALSE)
+initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,counts=NULL,reverse=FALSE,areas=NULL)
 {
 robust.occasions<-function(times)
 {
@@ -216,7 +217,12 @@ robust.occasions<-function(times)
            stop(paste("\nCapture history length is not constant. ch must be a character string",
                "\n row numbers with incorrect ch length",paste(row.names(data[ch.lengths!=nocc,]),collapse=","),"\n"))
       }
-  }
+   }
+   if(substr(model,1,7)=="Density")
+   {
+	   if(!all(c("TotalLocations","TotalIn") %in% names(data)))
+		   stop("data should contain fields: TotalLocations,TotalIn. One or more are missing.")
+   }	   
 #
 #  Setup model
 #
@@ -383,6 +389,12 @@ has.freq=!is.null(data$freq)
 #
 if(number.of.factors==0)
 {
+    #  if areas set for density models, make sure it equals length of groups
+	if(!is.null(areas))
+	{
+		if(length(areas)!=1)
+			stop("length of areas must match number of groups")
+	}	
    if(has.freq)
    {
 #       if(model=="js")
@@ -394,7 +406,7 @@ if(number.of.factors==0)
                    freq=matrix(data$freq,ncol=1,dimnames=list(1:number.of.ch,"group1")),
                    nocc=nocc, nocc.secondary=nocc.secondary,time.intervals=time.intervals,begin.time=begin.time,
                    age.unit=age.unit,initial.ages=initial.ages[1],group.covariates=NULL,nstrata=nstrata,
-                   strata.labels=strata.labels,counts=counts,reverse=reverse))
+                   strata.labels=strata.labels,counts=counts,reverse=reverse,areas=areas))
    }
    else
    {
@@ -408,7 +420,7 @@ if(number.of.factors==0)
                    freq=matrix(rep(1,number.of.ch),ncol=1,dimnames=list(1:number.of.ch,"group1")),
                    nocc=nocc,  nocc.secondary=nocc.secondary, time.intervals=time.intervals,begin.time=begin.time,
                    age.unit=age.unit,initial.ages=initial.ages[1],group.covariates=NULL,nstrata=nstrata,
-                   strata.labels=strata.labels,counts=counts,reverse=reverse))
+                   strata.labels=strata.labels,counts=counts,reverse=reverse,areas=areas))
    }
 }
 #
@@ -443,7 +455,12 @@ else
   }
   cumlevels=cumprod(n.levels)
   number.of.groups=cumlevels[length(cumlevels)]
-
+  #  if areas set for density models, make sure it equals length of groups
+  if(!is.null(areas))
+  {
+	  if(length(areas)!=number.of.groups)
+		  stop("length of areas must match number of groups")
+  }
 #  If age.var is specified, make sure it is valid and that the number of 
 #  initial.ages matches number of levels of identified variable
 #
@@ -546,6 +563,6 @@ else
                    nocc=nocc, nocc.secondary=nocc.secondary, time.intervals=time.intervals,begin.time=begin.time,
                    age.unit=age.unit,initial.ages=init.ages,
                    group.covariates=group.covariates,nstrata=nstrata,
-                   strata.labels=strata.labels,counts=counts,reverse=reverse))
+                   strata.labels=strata.labels,counts=counts,reverse=reverse,areas=areas))
 }
 }

@@ -501,5 +501,14 @@ RD2SpGEConOcc	pA	0	0	0	Square	all	logit	~1	FALSE	pB			TRUE
 RD2SpGEConOcc	pB	0	0	0	Square	all	logit			pA			TRUE						
 RD2SpGEConOcc	rA	0	0	0	Square	all	logit	~1					TRUE						
 RD2SpGEConOcc	rBA	0	0	0	Square	all	logit	~1	FALSE	rBa			TRUE						
-RD2SpGEConOcc	rBa	0	0	0	Square	all	logit	~1		rBA			TRUE						
+RD2SpGEConOcc	rBa	0	0	0	Square	all	logit	~1		rBA			TRUE				
+Densitypc	p	0	0	0	Square	all	logit	~1	FALSE	c									
+Densitypc	c	1	-1	0	Square	all	logit			p									
+Densitypc	ptilde	0	1		Square	all	log	~1											
+DensityRanpc	sigmap	0	1		Square	all	log	~1	
+
+DensityRanpc	p	0	0	0	Square	all	logit	~1	FALSE	c									
+DensityRanpc	c	1	-1	0	Square	all	logit			p									
+DensityRanpc	ptilde	0	1		Square	all	log	~1											
+		
 							

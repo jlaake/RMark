@@ -1,4 +1,8 @@
-RMark 2.2.1 (9 Aug 2016)
+RMark 2.2.1 (15 Nov 2016)
+
+NEW FEATURES
+
+* models Densitypc and DensityRanpc were added.
 
 BUG FIXES
 
@@ -8,6 +12,11 @@ BUG FIXES
 
 CHANGES 
 * added error messages to export.model so if files are missing the user is warned. export.model is used in export.MARK
+
+* MARK 8.1 no longer accepts variable names greater than 10 characters in the design matrix.  Thus RMark will fail if you use a model with an individual covariate name with more than 10 characters.
+
+* If the design matrix is diagonal, then RMark will use MARK's shorthand notation for the DM.  This was necessary to achieve good starting values from the 
+LogitNormalMR with the sin link.  See ?LogitNormalMR.
 
 RMark 2.2.0 (23 June 2016)
 

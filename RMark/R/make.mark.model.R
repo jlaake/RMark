@@ -836,7 +836,7 @@ if(!is.null(icvalues))
 #
 # Write out the design matrix into the MARK input file
 #
-if(all(complete.design.matrix==diag(nrow(complete.design.matrix))))
+if(nrow(complete.design.matrix)==ncol(complete.design.matrix)&all(complete.design.matrix==diag(nrow(complete.design.matrix))))
 {
 	string=paste("design matrix constraints=",nrow(complete.design.matrix), " covariates=",nrow(complete.design.matrix)," identity;",sep="")
 	write(string, file = outfile, append = TRUE)

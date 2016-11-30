@@ -90,7 +90,7 @@ pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 dipper=convert.inp(paste(pathtodata,"dipper",sep="/"),
                     group.df=data.frame(sex=c("M","F")))
 # Example input files that accompany the MARK electronic book 
-#  (http://www.phidot.org/software/mark/docs/book/)
+#  \\url{http://www.phidot.org/software/mark/docs/book/}
 bd=convert.inp(paste(pathtodata,"blckduck",sep="/"),
          covariates=c("age","weight","winglen","ci"),use.comments=TRUE)
 aa=convert.inp(paste(pathtodata,"aa",sep="/"),

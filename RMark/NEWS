@@ -1,3 +1,9 @@
+RMark 2.2.2 (30 Nov 2016)
+
+CHANGES 
+
+* patch to url's for documentation to pass CRAN check
+
 RMark 2.2.1 (28 Nov 2016)
 
 NEW FEATURES

@@ -95,7 +95,7 @@ checkForMark<-function()
 	   markpath=create_markpath()
 	   if(is.null(markpath))
 	   {
-		   cat("Warning: Software mark.exe,mark32.exe or mark64.exe not found in path or in c:/Program Files/mark or c:/Program Files (x86)/mark\n. It is available at http://www.cnr.colostate.edu/~gwhite/mark/mark.htm\n")
+		   cat("Warning: Software mark.exe,mark32.exe or mark64.exe not found in path or in c:/Program Files/mark or c:/Program Files (x86)/mark\n. It is available at http://warnercnr.colostate.edu/~gwhite/mark/mark.htm\n")
 	       cat('         If you have mark.exe, you will need to set MarkPath object to its location (e.g. MarkPath="C:/Users/Jeff Laake/Desktop"')
        }
    }else

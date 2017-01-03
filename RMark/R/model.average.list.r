@@ -160,7 +160,11 @@ model.average.list=function(x,revised=TRUE, mata=FALSE, normal.lm=FALSE, residua
   {
 	 if(mata)stop("\nuse of vcv currently not supported with mata=TRUE\n")
      if(!is.list(x$vcv))stop("vcv must be a list")
-     if(!is.matrix(x$vcv[[1]]))stop("each element of vcv must be a matrix")
+     if(!is.matrix(x$vcv[[1]]))
+		 if(all(sapply(x$vcv,length)==1))
+	        x$vcv=lapply(x$vcv,function(x) matrix(x,nrow=1,ncol=1))
+	     else
+			 stop("each element of vcv must be a matrix")
      if(length(x$vcv)!=nrow(x$estimate))stop("number of vcv matrices does not match dimension (rows) of estimate")
      for(i in 1:length(x$vcv))
         if(all(dim(x$vcv[[i]])!=ncol(x$estimate)))stop("dimension of one or more vcv matrices does not match dimenstion (columns) of estimate")

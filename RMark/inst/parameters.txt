@@ -96,17 +96,17 @@ RDOccupPG	Gamma	0	-1		Square	all	logit	~1					FALSE
 RDOccupPG	p	0	0	0	Square	all	logit	~1					TRUE						
 RDOccupHetPG	Psi	0	0		Square	all	logit	~1					FALSE						
 RDOccupHetPG	Gamma	0	-1		Square	all	logit	~1					FALSE						
-RDOccupHetPG	pi	0	1	0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDOccupHetPG	p	0	0	0	Square	all	logit	~1					TRUE						
+RDOccupHetPG	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
+RDOccupHetPG	p	0	0	0	Square	all	logit	~1			TRUE	0	TRUE						
 RDOccupHetEG	Psi	0	1		Square	all	logit	~1					FALSE						
 RDOccupHetEG	Epsilon	0	-1		Square	all	logit	~1	FALSE	Gamma			FALSE						
 RDOccupHetEG	Gamma	0	-1		Square	all	logit			Epsilon			FALSE						
-RDOccupHetEG	pi	0	1	0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDOccupHetEG	p	0	0	0	Square	all	logit	~1					TRUE						
+RDOccupHetEG	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
+RDOccupHetEG	p	0	0	0	Square	all	logit	~1			TRUE	0	TRUE						
 RDOccupHetPE	Psi	0	0		Square	all	logit	~1					FALSE						
 RDOccupHetPE	Epsilon	0	-1		Square	all	logit	~1					FALSE						
-RDOccupHetPE	pi	0	1	0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDOccupHetPE	p	0	0	0	Square	all	logit	~1					TRUE						
+RDOccupHetPE	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
+RDOccupHetPE	p	0	0	0	Square	all	logit	~1			TRUE	0	TRUE						
 Robust	S	0	-1	1	Triang	all	logit	~1					FALSE						
 Robust	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
 Robust	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						

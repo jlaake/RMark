@@ -1,3 +1,13 @@
+RMark 2.2.3 (3 January 2017)
+
+BUG FIXES
+
+* patched parameters.txt file for models RDOccupPE,RDOccupPG and RDOccupPG. Some values for pi and p were incorrect. 
+
+CHANGES 
+
+* in model.average.list if the list of v-c matrices are all vectors of length 1 then convert to matrices of 1 row and 1 column; this copes with Ngross being a single value in popan.derived
+
 RMark 2.2.2 (30 Nov 2016)
 
 CHANGES 

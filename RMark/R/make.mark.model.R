@@ -1692,7 +1692,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
           }
 
         row.names(design.matrix[[i]])=NULL
-     design.matrix[[i]]=as.data.frame(design.matrix[[i]])
+     design.matrix[[i]]=as.data.frame(design.matrix[[i]],stringsAsFactors=FALSE)
      if(parameters[[i]]$formula=="~1")
         names(design.matrix[[i]])[1]="(Intercept)"
      names(design.matrix[[i]])=paste(names(parameters)[i],names(design.matrix[[i]]),sep=":")
@@ -1737,7 +1737,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
      }
   }
   row.names(complete.design.matrix)=1:dim(complete.design.matrix)[1]
-  complete.design.matrix=as.data.frame(complete.design.matrix)
+  complete.design.matrix=as.data.frame(complete.design.matrix,stringsAsFactors=FALSE)
 
 #
 #  If there are any initial values, output them to the MARK input file

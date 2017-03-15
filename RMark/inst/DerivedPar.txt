@@ -35,6 +35,9 @@ MarkNumber	dpar_label
 32	N Population Size
 32	Method 1 Residency Time
 32	Method 2 Residency Time
+32	Probability of Presence
+32	Mean Arrival Time
+32	Mean Departure Time
 33	N Population Size
 34	N Population Size
 35	N Population Size

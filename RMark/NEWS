@@ -1,4 +1,4 @@
-RMark 2.2.3 (15 March 2017)
+RMark 2.2.3 (4 April 2017)
 
 BUG FIXES
 
@@ -13,6 +13,8 @@ CHANGES
 * in model.average.list if the list of v-c matrices are all vectors of length 1 then convert to matrices of 1 row and 1 column; this copes with Ngross being a single value in popan.derived
 
 * added new derived parameters to ORDMS model
+
+* added check to process.data to make sure strata.labels are characters. If set as numeric values (e.g. strata.labels=1:4) bad things can happen. You can use numeric values but specified as characters strata.labels=as.character(1:4).
 
 RMark 2.2.2 (30 Nov 2016)
 

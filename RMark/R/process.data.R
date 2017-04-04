@@ -270,7 +270,8 @@ robust.occasions<-function(times)
         }
         else
         {
-		   if(any(!nchar(strata.labels)==1))stop("strata.labels must be a single character")
+		   if(!is.character(strata.labels))	stop("strata.labels values must be character type")
+		   if(any(!nchar(strata.labels)==1))stop("each value of strata.labels must be a single character")
            nstrata=length(strata.labels)
            if(!all(inp.strata.labels %in% strata.labels))
               stop(paste("Some strata labels in data",paste(inp.strata.labels,collapse=","),"are not in strata.labels"))

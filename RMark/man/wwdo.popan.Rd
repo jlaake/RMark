@@ -2,9 +2,9 @@
 % Please edit documentation in R/RMark-package.R
 \docType{data}
 \name{wwdo.popan}
+\alias{wwdo.popan}
 \alias{wwdo.09}
 \alias{wwdo.10}
-\alias{wwdo.popan}
 \title{White-winged dove Jolly-Seber POPAN Analysis Details}
 \format{The format is 2 data frames, one for 2009 and one for 2010. 2009 has 5101 unique captures, 2010 has 3502 unique captures.
 \describe{ \item{Prefix}{Unique band prefix identifier (usually 0914 or 0984)}
@@ -140,4 +140,3 @@ Collier, B. A., S. R. Kremer, C. D. Mason, J. Stone, K. W. Calhoun, and M. J. Pe
 recruitment in an urban white-winged dove breeding colony.  Journal of Fish and Wildlife Management, In review.
 }
 \keyword{datasets}
-

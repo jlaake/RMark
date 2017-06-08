@@ -101,4 +101,3 @@ Bailey, L.L., and Hines, J.E.  2006. Occupancy Estimation and Modeling:
 Inferring Patterns and Dynamics of Species Occurence. Elsevier, Inc. 324p.
 }
 \keyword{datasets}
-

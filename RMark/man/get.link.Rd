@@ -39,11 +39,10 @@ estimates using the inverse-link.  Also, the value is always a dataframe for
 the estimates and design data and optionally a variance-covariance matrix.
 See \code{\link{get.real}} for further details about the arguments.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{compute.link}},\code{\link{get.real}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

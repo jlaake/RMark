@@ -50,11 +50,10 @@ from this function.
 # see examples in fill.covariates
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{fill.covariates}}, \code{\link{compute.real}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

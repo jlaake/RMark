@@ -17,11 +17,10 @@ None
 \description{
 Prints summary of MARK model parameters and results
 }
-\author{
-Jeff Laake
-}
 \seealso{
 summary.mark
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

@@ -19,11 +19,10 @@ Logical; TRUE if all parameters are acceptable and FALSE otherwise
 Checks to make sure specified parameters are valid for a particular type of
 model.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{setup.parameters}}, \code{\link{setup.model}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

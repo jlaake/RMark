@@ -40,11 +40,10 @@ dataframe for the estimates and design data and optionally a
 variance-covariance matrix.  See \code{\link{get.real}} for further details
 about the arguments.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{get.link}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

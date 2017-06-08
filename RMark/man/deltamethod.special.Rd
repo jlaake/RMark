@@ -60,4 +60,3 @@ input v-c matrix of the estimates.
 Jeff Laake
 }
 \keyword{utility}
-

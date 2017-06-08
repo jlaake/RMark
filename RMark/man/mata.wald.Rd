@@ -2,8 +2,8 @@
 % Please edit documentation in R/mata.wald.r
 \name{mata.wald}
 \alias{mata.wald}
-\alias{tailarea.t}
 \alias{tailarea.z}
+\alias{tailarea.t}
 \title{Model-Averaged Tail Area Wald (MATA-Wald) confidence intervals}
 \usage{
 mata.wald(theta.hats, se.theta.hats, model.weights, normal.lm=FALSE, 
@@ -113,10 +113,9 @@ theta.hats[2] + c(-1,1)*qt(0.975, residual.dfs[2])*se.theta.hats[2]
 mata.wald(theta.hats=theta.hats, se.theta.hats=se.theta.hats, 
         model.weights=model.weights, normal.lm=TRUE, residual.dfs=residual.dfs)
 }
-\author{
-Daniel Turek<danielturek@gmail.com>
-}
 \references{
 Turek, D. and Fletcher, D. (2012). Model-Averaged Wald Confidence Intervals. Computational Statistics and Data Analysis, 56(9), p.2809-2815.
 }
-
+\author{
+Daniel Turek<danielturek@gmail.com>
+}

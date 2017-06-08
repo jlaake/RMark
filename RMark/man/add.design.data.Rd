@@ -125,11 +125,10 @@ ddl=add.design.data(example.data.proc,ddl,parameter="Phi",type="age",
 bins=c(0,1,10),name="2ages",replace=TRUE)
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{make.design.data}}, \code{\link{process.data}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

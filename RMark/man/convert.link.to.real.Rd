@@ -33,11 +33,10 @@ real for any set of parameters.  The appropriate links are obtained from
 \code{model$links} unless the argument \code{links} is specified and they
 will over-ride those in \code{model}.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{inverse.link}},\code{\link{compute.real}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

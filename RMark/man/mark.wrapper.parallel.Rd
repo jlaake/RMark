@@ -124,12 +124,11 @@ do.MSOccupancy=function()
 xx=do.MSOccupancy()
 }
 }
-\author{
-Eldar Rakhimberdiev
-}
 \seealso{
 \code{\link{collect.models}}, \code{\link{mark}},
 \code{\link{create.model.list}}
 }
+\author{
+Eldar Rakhimberdiev
+}
 \keyword{utility}
-

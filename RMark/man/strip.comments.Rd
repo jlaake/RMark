@@ -26,4 +26,3 @@ Read in file and strip out comments and blank lines.
 Jeff Laake
 }
 \keyword{utility}
-

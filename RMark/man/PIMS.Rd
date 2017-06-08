@@ -34,11 +34,10 @@ PIMS(results,"Phi")
 PIMS(results,"Phi",simplified=FALSE)
 } 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{make.design.data}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

@@ -46,11 +46,10 @@ models with the same real parameter structure but differing design
 structures.  This function allows for link values and their var-cov matrix
 to be created from the model averaged real estimates.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{model.average}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

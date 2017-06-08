@@ -93,4 +93,3 @@ TransitionMatrix(Psivalues.rev[Psivalues.rev$occ==1,])
 }
 }
 \keyword{datasets}
-

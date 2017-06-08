@@ -2,8 +2,8 @@
 % Please edit documentation in R/RMark-package.R
 \docType{data}
 \name{larksparrow}
-\alias{LASP}
 \alias{larksparrow}
+\alias{LASP}
 \title{Lark Sparrow}
 \format{A data frame with 52 observations on the following 20 variables.
 \describe{\item{ch}{a character vector containing the encounter history}
@@ -111,4 +111,3 @@ write.table(ceap$estimates,file="lasp_cov_pred_psi_ceap.csv",sep=",",col.names=T
 }
 }
 \keyword{datasets}
-

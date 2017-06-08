@@ -87,12 +87,11 @@ p.1=list(formula=~time+an_indiv_covariate)).  All of the initial values will
 be assigned for the previous run except for any added parameters (eg.
 an_indiv_covariate) which will start with a 0 initial value.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{collect.models}}, \code{\link{mark}},
 \code{\link{create.model.list}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

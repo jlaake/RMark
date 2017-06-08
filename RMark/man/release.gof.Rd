@@ -37,4 +37,3 @@ release.gof(dipper.processed)
 Jeff Laake
 }
 \keyword{utility}
-

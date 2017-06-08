@@ -96,11 +96,10 @@ estimates \code{model$results$beta$estimate}.
 # see examples in fill.covariates
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{get.real}},\code{\link{fill.covariates}},\code{\link{find.covariates}},\code{\link{inverse.link}},\code{\link{deriv_inverse.link}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

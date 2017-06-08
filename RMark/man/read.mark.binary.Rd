@@ -26,11 +26,10 @@ derived estimates (if any)}
 \description{
 Window and linux versions to read binary files created by MARK
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{extract.mark.output}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

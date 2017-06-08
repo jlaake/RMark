@@ -49,11 +49,10 @@ export.chdata(dipper.processed, filename="dipper",
 # because it is not a numeric field
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{import.chdata}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

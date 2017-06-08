@@ -22,11 +22,10 @@ called.
 A generic function to compute model averaged estimates and their standard
 errors or variance-covariance matrix.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{model.average.marklist}},\code{\link{model.average.list}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

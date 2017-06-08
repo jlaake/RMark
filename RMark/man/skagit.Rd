@@ -91,4 +91,3 @@ prod(Sest[c(1,2,4,5,7)])
 \author{
 Megan Moore <megan.moore at noaa.gov>
 }
-

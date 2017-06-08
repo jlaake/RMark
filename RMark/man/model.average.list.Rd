@@ -133,9 +133,6 @@ print(mavg$vcv.real[Phi.indices,Phi.indices])
 }
 
 }
-\author{
-Jeff Laake
-}
 \references{
 BURNHAM, K. P., AND D. R. ANDERSON. 2002. Model selection and
 multimodel inference. A practical information-theoretic approach. Springer,
@@ -145,5 +142,7 @@ Turek, D. and Fletcher, D. (2012). Model-Averaged Wald Confidence Intervals. Com
 \seealso{
 \code{\link{model.average.marklist}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

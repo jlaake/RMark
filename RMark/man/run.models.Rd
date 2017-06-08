@@ -36,11 +36,10 @@ are collected from the frame of the calling function (the parent). If
 \code{type} is specified only the models of that type (e.g., "CJS") are run.
 In each case the models are run and saved in the parent frame.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{collect.model.names}}, \code{\link{run.mark.model}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

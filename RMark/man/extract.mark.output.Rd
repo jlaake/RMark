@@ -45,11 +45,10 @@ This function was written for internal use and is called by
 \code{\link{run.mark.model}}. It is documented here for more advanced users
 that might want to modify the code or adapt for their own use.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{run.mark.model}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

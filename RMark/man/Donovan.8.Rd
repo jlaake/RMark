@@ -41,4 +41,3 @@ exercise.8=do.exercise.8()
 
 }
 \keyword{datasets}
-

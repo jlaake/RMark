@@ -40,12 +40,11 @@ objects.  The latter can be used to easily create a list of models created
 in a function to be used as a return value without listing all the names of
 the functions.  It uses \code{collect.model.names} to perform that function.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{collect.models}}, \code{\link{run.models}},
 \code{\link{model.table}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

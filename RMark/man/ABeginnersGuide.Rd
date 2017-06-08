@@ -125,13 +125,12 @@ known fate. The latter two are examples of the use of
 models. Other examples have been added for the various other models. In MarkModels.pdf it also
 lists the name of examples that are provided for each model.
 }
-\author{
-Jeff Laake
-}
 \references{
 MARK: Dr. Gary White, Department of Fishery and Wildlife
 Biology, Colorado State University, Fort Collins, Colorado, USA
 \url{http://warnercnr.colostate.edu/~gwhite/mark/mark.htm}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

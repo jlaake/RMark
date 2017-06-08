@@ -124,11 +124,10 @@ TransitionMatrix(Psivalues[Psivalues$time==1,])
 TransitionMatrix(Psivalues[Psivalues$time==1,],vcv.real=Psilist$vcv.real)
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{get.real}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

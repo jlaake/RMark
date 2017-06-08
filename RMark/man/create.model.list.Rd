@@ -105,11 +105,10 @@ run.dipper=function()
 dipper.results=run.dipper()
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{mark.wrapper}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

@@ -39,4 +39,3 @@ summary(mod1)
 }
 }
 \keyword{datasets}
-

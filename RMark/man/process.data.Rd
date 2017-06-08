@@ -167,12 +167,11 @@ data(dipper)
 dipper.process=process.data(dipper)
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{import.chdata}}, \code{\link{dipper}},
 \code{\link{edwards.eberhardt}}, \code{\link{example.data}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

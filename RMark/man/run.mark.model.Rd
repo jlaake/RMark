@@ -102,13 +102,12 @@ cleanup(ask=FALSE,prefix="Male")
 cleanup(ask=FALSE,prefix="Female")
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{make.mark.model}}, \code{\link{run.models}},
 \code{\link{extract.mark.output}}, \code{\link{adjust.parameter.count}},
 \code{\link{mark}}, \code{\link{cleanup}}
 }
+\author{
+Jeff Laake
+}
 \keyword{model}
-

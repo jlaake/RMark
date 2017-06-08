@@ -438,12 +438,11 @@ dipper.phiFlood.pdot=make.mark.model(dipper.processed,dipper.ddl,
   parameters=list(Phi=PhiFlood, p=pdot))
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{process.data}},\code{\link{make.design.data}},
 \code{\link{run.mark.model}} \code{\link{mark}}
 }
+\author{
+Jeff Laake
+}
 \keyword{model}
-

@@ -79,11 +79,10 @@ list element is the parameter name (e.g., "p", "Phi","S", etc).  For each
 parameter there are a list of values (e.g., formula, link, num etc as
 defined below).  Thus \code{parameters} is a list of lists.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{setup.model}},\code{\link{valid.parameters}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

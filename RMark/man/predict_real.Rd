@@ -83,11 +83,10 @@ model=mark(dp,ddl,model.parameters=list(Phi=list(formula=~Time)))
 predict_real(model,ddl$Phi[1,,drop=FALSE],"Phi",replicate=TRUE,data=data.frame(Time=-12:12))
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{inverse.link}},\code{\link{deriv_inverse.link}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

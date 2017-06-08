@@ -36,4 +36,3 @@ Creates needed constructs from the release-recapture history.
 \author{
 Jeff Laake
 }
-

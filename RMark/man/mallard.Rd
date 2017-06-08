@@ -245,4 +245,3 @@ cleanup(ask=FALSE)
 Jay Rotella
 }
 \keyword{datasets}
-

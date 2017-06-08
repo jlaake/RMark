@@ -113,11 +113,10 @@ plotCI(c(1:4),estimates,ucl-estimates,estimates-lcl,xlab="Region",
 
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{summary.mark}},\code{\link{compute.real}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

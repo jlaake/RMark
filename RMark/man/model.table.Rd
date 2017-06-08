@@ -126,10 +126,9 @@ model.DeltaAICc.matrix=tapply(dipper.results$model.table$DeltaAICc,
 write.table(model.DeltaAICc.matrix,"DipperDeltaAICc.txt",sep="\\t")
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{collect.model.names}}, \code{\link{collect.models}}
 }
-
+\author{
+Jeff Laake
+}

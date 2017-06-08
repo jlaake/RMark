@@ -131,11 +131,10 @@ effect_size3=convert.inp(paste(pathtodata,"effect_size3",sep="/"),
              group.df=data.frame(colony=c("1","2","3")))
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{process.data}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

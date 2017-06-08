@@ -75,4 +75,3 @@ R. J. Gutierrez.  2007. Occupancy estimation and modeling with multiple
 states and state uncertainty.  Ecology 88:1395-1400.
 }
 \keyword{datasets}
-

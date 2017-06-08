@@ -176,9 +176,6 @@ model.average(dipper.results,vcv=TRUE,indices=c(1,43))
 }
 
 }
-\author{
-Jeff Laake
-}
 \references{
 Burnham, K. P. and D. R. Anderson. 2002. Model Selection and
 Multimodel Inference: A Practical Information-Theoretic Approach, Second
@@ -189,5 +186,7 @@ edition. Springer, New York.
 \code{\link{model.table}}, \code{\link{compute.links.from.reals}},
 \code{\link{model.average.list}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

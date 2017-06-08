@@ -25,11 +25,10 @@ Remove one or more mark models from a marklist
 # see example in dipper
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{collect.models}},\code{\link{merge.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

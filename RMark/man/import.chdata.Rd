@@ -80,11 +80,10 @@ dipper<-import.chdata(paste(pathtodata,"dipper.txt",sep="/"),
       field.names=c("ch","sex"),header=FALSE)
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{export.chdata}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

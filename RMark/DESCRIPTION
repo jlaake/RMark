@@ -2,7 +2,7 @@ Package: RMark
 Version: 2.2.3
 Date: 2017-01-03
 Title: R Code for Mark Analysis
-Author: Jeff Laake <jeff.laake@noaa.gov> with code contributions from Eldar
+Author: Jeff Laake <jefflaake@gmail.com> with code contributions from Eldar
     Rakhimberdiev, Ben Augustine and Daniel Turek, and example data and analysis
     from Bret Collier, Jay Rotella, David Pavlacky,Andrew Paul and Luke Eberhart-
     Phillips.
@@ -27,4 +27,4 @@ Suggests:
 LazyLoad: yes
 License: GPL (>=2)
 Maintainer: Jeff Laake <jefflaake@gmail.com>
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

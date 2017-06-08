@@ -73,12 +73,11 @@ npar=md$results$npar+varc$GTrace
 md$results$lnl+2*(npar + (npar*(npar+1))/(md$results$n-npar-1))
 }
 }
-\author{
-Jeff Laake; Ben Augustine
-}
 \references{
 BURNHAM, K. P. and G. C. WHITE. 2002. Evaluation of some random
 effects methodology applicable to bird ringing data.  Journal of Applied
 Statistics 29: 245-264.
 }
-
+\author{
+Jeff Laake; Ben Augustine
+}

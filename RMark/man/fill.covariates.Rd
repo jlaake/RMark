@@ -67,11 +67,10 @@ survival.by.sex$vcv.real[1,2]/prod(survival.by.sex$se.real[1:2])
 # sampling correlation of the estimates
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{find.covariates}}, \code{\link{compute.real}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

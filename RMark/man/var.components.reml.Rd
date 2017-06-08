@@ -82,4 +82,3 @@ lme(estimate~-1+age,data=z,random=~1|time)
 \author{
 Jeff Laake
 }
-

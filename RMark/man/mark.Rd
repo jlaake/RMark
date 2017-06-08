@@ -268,13 +268,12 @@ data(dipper)
 dipper.Phidot.pdot=mark(dipper,threads=1)
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{make.mark.model}}, \code{\link{run.mark.model}},
 \code{\link{make.design.data}}, \code{\link{process.data}},
 \code{\link{summary.mark}}
 }
+\author{
+Jeff Laake
+}
 \keyword{models}
-

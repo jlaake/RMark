@@ -76,11 +76,10 @@ closed capture heterogeneity models (\code{model}="HetClosed", "FullHet",
 design data. The arguments for this function are defined for each model by
 the function \code{\link{setup.model}}.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{make.design.data}}, \code{\link{add.design.data}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

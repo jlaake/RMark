@@ -38,11 +38,10 @@ of a \code{mark} object at the R prompt and it will call \code{print.mark}.
 For example, if \code{mod} is a \code{mark} object then typing \code{mod} is
 the same as \code{print.mark(mod)}
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{summary.mark}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

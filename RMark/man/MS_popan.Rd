@@ -49,4 +49,3 @@ cat("MS N = ",Nhat_MS," (se = ",se_Nhat_MS,")\\n")
 \author{
 Jeff Laake
 }
-

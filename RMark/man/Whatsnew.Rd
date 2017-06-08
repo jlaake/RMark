@@ -1304,4 +1304,3 @@ and \code{\link{adjust.chat}} can now also be a list of models created by
 \author{
 Jeff Laake
 }
-

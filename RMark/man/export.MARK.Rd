@@ -72,11 +72,10 @@ robust.proc=process.data(data = robust, model = "Robust",
 export.MARK(robust.proc,"robust",	model.1,replace=TRUE)
 }
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{export.chdata}}, \code{\link{export.model}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

@@ -68,4 +68,3 @@ mod=mark(br,br.ddl,model.parameters=list(pi=list(formula=~age),
 }
 }
 \keyword{datasets}
-

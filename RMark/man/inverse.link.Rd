@@ -42,11 +42,10 @@ type "log" (i.e., inverse=exp(x)) and then summed over sets with a common
 value for "mlogit(j)" to construct the inverse for "mlogit" as
 \code{exp(x)/(1+sum(exp(x))}.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{compute.real}},\code{\link{deriv_inverse.link}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

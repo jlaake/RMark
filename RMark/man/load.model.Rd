@@ -20,4 +20,3 @@ Loads external model into workspace with name model
 Jeff Laake
 }
 \keyword{utility}
-

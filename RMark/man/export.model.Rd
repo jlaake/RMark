@@ -42,11 +42,10 @@ mymodel=mark(dipper,threads=1)
 export.model(mymodel,replace=TRUE)
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{export.chdata}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

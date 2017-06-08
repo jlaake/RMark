@@ -41,11 +41,10 @@ is 1 less than the number of occasions.  This function validates that the
 model is valid and sets up some parameters specific to the model that are
 used in the code.
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{setup.parameters}}, \code{\link{valid.parameters}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

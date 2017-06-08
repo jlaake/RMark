@@ -300,11 +300,10 @@ for (i in 1:7)
 }
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{compute.real}},\code{\link{model.average}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

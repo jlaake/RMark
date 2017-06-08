@@ -24,11 +24,10 @@ marklist with an optional table of model results if \code{table=TRUE}.
 # see example in dipper
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{collect.models}},\code{\link{remove.mark}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

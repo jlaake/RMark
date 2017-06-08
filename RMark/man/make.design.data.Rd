@@ -367,13 +367,12 @@ ddl=add.design.data(proc.example.data,ddl,parameter="p",type="time",
 
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{process.data}},\code{\link{merge_design.covariates}},
 \code{\link{add.design.data}}, \code{\link{make.mark.model}},
 \code{\link{run.mark.model}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

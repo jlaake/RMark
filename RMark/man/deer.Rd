@@ -110,12 +110,11 @@ bf.out
 #export.MARK(x.proc, "BFdeer", mod.3, replace=TRUE, ind.covariates="all")
 }
 }
-\author{
-Bret Collier
-}
 \references{
 Collier, B. A., S. S. Ditchkoff, J. B. Raglin, and C. R. Ruth.  2012. Spotlight surveys 
 for white-tailed deer: monitoring panacea or exercise in futility? Journal of Wildlife Management, In Press.
 }
+\author{
+Bret Collier
+}
 \keyword{datasets}
-

@@ -71,12 +71,11 @@ adjust.
 # see examples in dipper, edwards.eberhardt and example.data
 
 }
-\author{
-Jeff Laake
-}
 \seealso{
 \code{\link{merge.mark}},\code{\link{remove.mark}},
 \code{\link{collect.model.names}},\code{\link{run.models}},\code{\link{model.table}},\code{\link{dipper}}
 }
+\author{
+Jeff Laake
+}
 \keyword{utility}
-

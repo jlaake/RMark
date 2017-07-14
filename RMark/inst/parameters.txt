@@ -527,14 +527,16 @@ ZiUnIdPoissonMRwithin	sigma	0	0	0	Square	all	log	~1
 ZiUnIdPoissonMRwithin	U	0	0	0	Square	all	log	~1											
 ZiUnIdPoissonMRwithin	Phi	0	-1	1	Triang	all	logit	~1											
 ZiUnIdPoissonMRwithin	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
-ZiUnIdPoissonMRwithin	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime									
+ZiUnIdPoissonMRwithin	GammaPrime	0	-1	0	Triang	all	logit			GammaDoublePrime									
 ZiUnIdPoissonMRwithin	r	0	0	0	Square	all	logit	~1											
 ZiUnIdPoissonMRwithin	w	0	0	0	Square	all	log	~1											
+ZiUnIdPoissonMRwithin	g	0	0	0	Square	all	log	~1											
 ZiUnIdPoissonMRacross	alpha	0	0	0	Square	all	log	~1											
 ZiUnIdPoissonMRacross	sigma	0	0	0	Square	all	log	~1											
 ZiUnIdPoissonMRacross	U	0	0	0	Square	all	log	~1											
 ZiUnIdPoissonMRacross	Phi	0	-1	1	Triang	all	logit	~1											
 ZiUnIdPoissonMRacross	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
-ZiUnIdPoissonMRacross	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime									
+ZiUnIdPoissonMRacross	GammaPrime	0	-1	0	Triang	all	logit			GammaDoublePrime									
 ZiUnIdPoissonMRacross	r	0	0	0	Square	all	logit	~1											
 ZiUnIdPoissonMRacross	w	0	0	0	Square	all	logit	~1											
+ZiUnIdPoissonMRacross	g	0	0	0	Square	all	logit	~1											

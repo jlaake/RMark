@@ -106,7 +106,8 @@ predict_real <-
 				mc=model$covariates[!model$covariates%in%names(data)]
 				df=cbind(df,matrix(NA,nrow=nrow(df),ncol=length(mc)))
 				names(df)[(nc+1):ncol(df)]=mc
-			}
+			} else
+				mc=model$covariates
 		}
 #       fill in mean values if none provided
 		meanval=apply(model$data$data[,mc,drop=FALSE],2,mean)

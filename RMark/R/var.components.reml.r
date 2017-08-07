@@ -59,7 +59,7 @@
 #' xx
 #' sqrt(xx$sigmasq)
 #' library(nlme)
-#' lme(estimate~-1+age,data=z,random=~1|time)
+#' nlme::lme(estimate~-1+age,data=z,random=~1|time)
 #' }
 var.components.reml=function(theta,design,vcv=NULL,rdesign=NULL,initial=NULL,interval=c(-25,10),REML=TRUE)
 {

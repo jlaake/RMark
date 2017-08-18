@@ -131,6 +131,7 @@
 #' @param icvalues numeric vector of individual covariate values for computation of real values
 #' @param wrap if TRUE, data lines are wrapped to be length 80; if length of a row is not a 
 #'   problem set to FALSE and it will run faster
+#' @param nodes number of integration nodes for individual random effects (min 15, max 505, default 101)
 #' @return model: a MARK object containing output and extracted results. It is
 #' a list with the following elements \item{data}{name of the processed data
 #' frame} \item{model}{type of analysis model (see list above)}
@@ -208,139 +209,139 @@
 #' dipper.Phidot.pdot=mark(dipper,threads=1)
 #' 
 mark <-
-function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,
-design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
-invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
-realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE,accumulate=TRUE,
-allgroups=FALSE,strata.labels=NULL,counts=NULL,icvalues=NULL,wrap=TRUE)
-{
-#
-#  If the data haven't been processed (data$data is NULL) do it now with specified or default arguments
-# 
-simplify=TRUE
-if(is.null(data$data))
-{
-   if(!is.null(ddl))
-   {
-      message("Warning: specification of ddl ignored, as data have not been processed\n")
-      ddl=NULL
-   }
-   data.proc=process.data(data,begin.time=begin.time, model=model,mixtures=mixtures, 
-                          groups = groups, age.var = age.var, initial.ages = initial.ages, 
-                          age.unit = age.unit, time.intervals = time.intervals,nocc=nocc,reverse=reverse,
-				          allgroups=allgroups, strata.labels=strata.labels,counts=counts)
-}   
-else
-   data.proc=data
-#
-# If the design data have not been constructed, do so now
-#
-if(is.null(ddl)) ddl=make.design.data(data.proc,design.parameters,right=right)
-#
-#  check to make sure all entered as lists
-#
-tryCatch(length(model.parameters), error = function(e) message("Make sure you have a tilde at the beginning of each formula\n"))
-if(length(model.parameters)!=0)
-	for(i in 1:length(model.parameters))
-	{
-		if(!is.list(model.parameters[[i]]))
-			stop("\nEach parameter distribution must be specified as a list\n")
-		if(is.language(model.parameters[[i]][[1]])&(is.null(names(model.parameters[[i]])) || names(model.parameters[[i]])[1]==""))
-			message("Make sure you have an = between formula and tilde for formula\n")
-	}
-#
-# Run model as many as times requested if needed
-#
-i=0
-converge=FALSE
-while(i<=retry & !converge)
-{
-#
-# Make the model with specified or default parameters
-#
-   if(is.list(model.parameters))
-   {
-      model<-try(make.mark.model(data.proc,title=title,parameters=model.parameters,
-             ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
-             model.name=model.name,options=options,profile.int=profile.int,chat=chat,
-			 input.links=input.links,parm.specific=parm.specific,mlogit0=mlogit0,hessian=hessian,
-			 accumulate=accumulate,icvalues=icvalues,wrap=wrap))
-      if(class(model)[1]=="try-error")
-	  {
-		  stop("Misspecification of model or internal error in code")
-	  }
-	  else
-         model$model.parameters=model.parameters
-	  if(!run)return(model)
-   }
-   else
-      stop("Model parameters must be specified as a list")
-#
-# Summarize model input if output=TRUE
-#
-   if(output & i==1)
-   {
-     cat("\n")
-     print(summary(model))
-   }
-#
-# Run model
-#
-   if(silent)
-	   runmodel<-suppressMessages(run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads,ignore.stderr=silent))
-   else
-       runmodel<-run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads,ignore.stderr=silent)
-   if(is.null(runmodel))
-   {
-     if(!silent)message("\n\n********Following model failed to run :",model$model.name,"**********\n\n")
-     return(invisible())
-   }
-   else
-   {
-#
-#  Check if any parameters are singular and if retry=TRUE, the refit model with
-#  new initial values
-#
-      if(retry>0 && !is.null(runmodel$results$singular))
+  function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,
+           design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
+           invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
+           realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE,accumulate=TRUE,
+           allgroups=FALSE,strata.labels=NULL,counts=NULL,icvalues=NULL,wrap=TRUE,nodes=101)
+  {
+    #
+    #  If the data haven't been processed (data$data is NULL) do it now with specified or default arguments
+    # 
+    simplify=TRUE
+    if(is.null(data$data))
+    {
+      if(!is.null(ddl))
       {
-		 if(!silent)message("\nRe-running analysis with new starting values\n")
-         i=i+1
-         converge=FALSE
-         initial=runmodel$results$beta$estimate
-		 names(initial)=rownames(runmodel$results$beta)
-         initial[runmodel$results$singular]=0
-         next
+        message("Warning: specification of ddl ignored, as data have not been processed\n")
+        ddl=NULL
+      }
+      data.proc=process.data(data,begin.time=begin.time, model=model,mixtures=mixtures, 
+                             groups = groups, age.var = age.var, initial.ages = initial.ages, 
+                             age.unit = age.unit, time.intervals = time.intervals,nocc=nocc,reverse=reverse,
+                             allgroups=allgroups, strata.labels=strata.labels,counts=counts)
+    }   
+    else
+      data.proc=data
+    #
+    # If the design data have not been constructed, do so now
+    #
+    if(is.null(ddl)) ddl=make.design.data(data.proc,design.parameters,right=right)
+    #
+    #  check to make sure all entered as lists
+    #
+    tryCatch(length(model.parameters), error = function(e) message("Make sure you have a tilde at the beginning of each formula\n"))
+    if(length(model.parameters)!=0)
+      for(i in 1:length(model.parameters))
+      {
+        if(!is.list(model.parameters[[i]]))
+          stop("\nEach parameter distribution must be specified as a list\n")
+        if(is.language(model.parameters[[i]][[1]])&(is.null(names(model.parameters[[i]])) || names(model.parameters[[i]])[1]==""))
+          message("Make sure you have an = between formula and tilde for formula\n")
+      }
+    #
+    # Run model as many as times requested if needed
+    #
+    i=0
+    converge=FALSE
+    while(i<=retry & !converge)
+    {
+      #
+      # Make the model with specified or default parameters
+      #
+      if(is.list(model.parameters))
+      {
+        model<-try(make.mark.model(data.proc,title=title,parameters=model.parameters,
+                                   ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
+                                   model.name=model.name,options=options,profile.int=profile.int,chat=chat,
+                                   input.links=input.links,parm.specific=parm.specific,mlogit0=mlogit0,hessian=hessian,
+                                   accumulate=accumulate,icvalues=icvalues,wrap=wrap,nodes=nodes))
+        if(class(model)[1]=="try-error")
+        {
+          stop("Misspecification of model or internal error in code")
+        }
+        else
+          model$model.parameters=model.parameters
+        if(!run)return(model)
       }
       else
-         converge=TRUE
+        stop("Model parameters must be specified as a list")
+      #
+      # Summarize model input if output=TRUE
+      #
+      if(output & i==1)
+      {
+        cat("\n")
+        print(summary(model))
+      }
+      #
+      # Run model
+      #
+      if(silent)
+        runmodel<-suppressMessages(run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads,ignore.stderr=silent))
+      else
+        runmodel<-run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,delete=delete,threads=threads,ignore.stderr=silent)
+      if(is.null(runmodel))
+      {
+        if(!silent)message("\n\n********Following model failed to run :",model$model.name,"**********\n\n")
+        return(invisible())
+      }
+      else
+      {
+        #
+        #  Check if any parameters are singular and if retry=TRUE, the refit model with
+        #  new initial values
+        #
+        if(retry>0 && !is.null(runmodel$results$singular))
+        {
+          if(!silent)message("\nRe-running analysis with new starting values\n")
+          i=i+1
+          converge=FALSE
+          initial=runmodel$results$beta$estimate
+          names(initial)=rownames(runmodel$results$beta)
+          initial[runmodel$results$singular]=0
+          next
+        }
+        else
+          converge=TRUE
+      }
     }
-}
-#
-# Summarize model results if output=TRUE
-#
-   if(output)
-   {
+    #
+    # Summarize model results if output=TRUE
+    #
+    if(output)
+    {
       if(!brief)
       {
-         cat("\n")
-         print(summary(runmodel,se=se))
+        cat("\n")
+        print(summary(runmodel,se=se))
       }
       else
       {
-         sum.res=summary(runmodel)
-         cat(paste("\n Model:",sum.res$model.name," npar=",sum.res$npar," lnl = ",sum.res$lnl,"AICc =",sum.res$AICc))
+        sum.res=summary(runmodel)
+        cat(paste("\n Model:",sum.res$model.name," npar=",sum.res$npar," lnl = ",sum.res$lnl,"AICc =",sum.res$AICc))
       }
-   }
-#
-# Return fitted MARK model object or if external, return character string with same class and save file
-#
-   if(external)
-   {
-     marksave=paste(runmodel$output,".rda",sep="")
-     model=runmodel
-     save(model,file=marksave)
-     class(marksave)=class(runmodel)
-     return(marksave)
-   } else
-     return(runmodel)
-}
+    }
+    #
+    # Return fitted MARK model object or if external, return character string with same class and save file
+    #
+    if(external)
+    {
+      marksave=paste(runmodel$output,".rda",sep="")
+      model=runmodel
+      save(model,file=marksave)
+      class(marksave)=class(runmodel)
+      return(marksave)
+    } else
+      return(runmodel)
+  }

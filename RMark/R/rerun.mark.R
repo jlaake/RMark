@@ -40,6 +40,7 @@
 #' @param external if TRUE the mark object is saved externally rather than in
 #' the workspace; the filename is kept in its place
 #' @param threads number of cpus to use with mark.exe if positive or number of cpus to remain idle if negative
+#' @param nodes number of integration nodes for individual random effects (min 15, max 505, default 101)
 #' @return model: MARK model object with the base filename stored in
 #' \code{output} and the extracted \code{results} from the output file appended
 #' onto list; see \code{\link{mark}} for a detailed description of a
@@ -120,7 +121,7 @@
 #' }
 rerun.mark <-
 function(model,data,ddl,initial,output=TRUE,title="",invisible=TRUE,adjust=TRUE,se=FALSE,
- filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,realvcv=FALSE,external=FALSE,threads=-1)
+ filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,realvcv=FALSE,external=FALSE,threads=-1,nodes=101)
 {
 # -----------------------------------------------------------------------------------------------------------------------
 # rerun.mark -  reruns previous mark model with different initial values
@@ -179,7 +180,7 @@ while(i<=retry & !converge)
 
    model<-make.mark.model(data,title=title,parameters=model.parameters,
           ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
-          model.name=model$model.name)
+          model.name=model$model.name,nodes=nodes)
    model$model.parameters=model.parameters
 #
 # Summarize model input if output=TRUE

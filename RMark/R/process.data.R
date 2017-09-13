@@ -239,7 +239,7 @@ robust.occasions<-function(times)
 		   else
 			   stop("\nch field must be a character string\n")
 	   } else
-	   if(!model.list$occupancy & !model.list$model %in% c("LogitNormalMR","IELogitNormalMR"))
+	   if(!model.list$occupancy & !model.list$model %in% c("LogitNormalMR","UnIdLogitNormalMR","IELogitNormalMR","UnIdIELogitNormalMR","ZiUnIdPoissonMRwithin","ZiUnIdPoissonMRacross"))
 		   if(any(sapply(strsplit(data$ch,""),function(x) all(x=="0"))))
 			   stop("\nall 0 ch encountered. MARK will not accept them\n")
 	   if(!is.null(data$freq))

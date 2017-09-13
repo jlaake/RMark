@@ -267,4 +267,15 @@ MarkNumber	dpar_label
 160	Lambda Mean Resightings
 160	Pr(Captured 1 or more times)
 161	Density
-
+171	N Population Size
+171	Lambda Mean Resightings
+171	Pr(Captured 1 or more times)
+172	N Population Size
+172	Lambda Mean Resightings
+172	Pr(Captured 1 or more times)
+173	N Population Size
+173	Lambda Mean Resightings
+173	Pr(Captured 1 or more times)
+174	N Population Size
+174	Lambda Mean Resightings
+174	Pr(Captured 1 or more times)

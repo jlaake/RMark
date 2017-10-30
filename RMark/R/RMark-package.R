@@ -3998,7 +3998,7 @@ NULL
 #' for the parameter.
 #' 
 #' Before you begin, you must have installed MARK
-#' (\url{http://warnercnr.colostate.edu/~gwhite/mark/mark.htm}) on your computer
+#' (http://www.phidot.org/software/mark/) on your computer
 #' or at least have a current copy of MARK.EXE. As long as you selected the
 #' default location for the MARK install (c:/Program Files/Mark), the
 #' \code{RMark} library will be able to find it.  If for some reason, you choose
@@ -4083,7 +4083,7 @@ NULL
 #' @author Jeff Laake
 #' @references MARK: Dr. Gary White, Department of Fishery and Wildlife
 #' Biology, Colorado State University, Fort Collins, Colorado, USA
-#' \url{http://warnercnr.colostate.edu/~gwhite/mark/mark.htm}
+#' http://www.phidot.org/software/mark/
 #' @keywords utility
 NULL
 

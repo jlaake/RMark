@@ -1,3 +1,10 @@
+RMark 2.2.5 (1 Nov 2011)
+
+BUG FIXES
+
+* If a marklist was passed to popan.derived, the returned value of N.vcv was incorrect. This did not affect any other quantities.  Thanks to Sima Usvyatsov for discovering the problem. 
+
+
 RMark 2.2.4 (7 Aug 2017)
 
 

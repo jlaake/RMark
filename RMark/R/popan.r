@@ -289,9 +289,9 @@ popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=
 		   BiGross.df$UCL=conf.int(BiGross.df$estimate,BiGross.df$se,normal,FALSE)
 		   BiGross.vcv=N.list$vcv
 	   }
-        if(N&NGross)return(list(N=N.df,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv, NGross=NGross.df, NGross.vcv=NGross.vcv,BiGross=BiGross.df, BiGross.vcv=BiGross.vcv) )
+        if(N&NGross)return(list(N=N.df,N.vcv=N.vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv, NGross=NGross.df, NGross.vcv=NGross.vcv,BiGross=BiGross.df, BiGross.vcv=BiGross.vcv) )
         if(!N&NGross)return(list(NGross=NGross.df, NGross.vcv=NGross.vcv,BiGross=BiGross.df, BiGross.vcv=BiGross.vcv) )
-        if(N&!NGross)return(list(N=N.df,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv) )
+        if(N&!NGross)return(list(N=N.df,N.vcv=N.vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv) )
      }
 }
 popan.Nt<-function(Phi,pent,Ns,vc,time.intervals)

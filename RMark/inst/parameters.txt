@@ -540,3 +540,8 @@ ZiUnIdPoissonMRacross	GammaPrime	0	-1	0	Triang	all	logit			GammaDoublePrime
 ZiUnIdPoissonMRacross	r	0	0	0	Square	all	logit	~1											
 ZiUnIdPoissonMRacross	w	0	0	0	Square	all	logit	~1											
 ZiUnIdPoissonMRacross	g	0	0	0	Square	all	logit	~1											
+HidMarkov	S	0	-1	1	Triang	all	logit	~stratum						TRUE		
+HidMarkov	p	1	-1	0	Triang	all	logit	~stratum						TRUE		
+HidMarkov	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE	
+HidMarkov	pi	0	0		Square	all	mlogit	~1						TRUE		1
+HidMarkov	Delta	1	-1	0	Triang	all	mlogit	~1						TRUE		

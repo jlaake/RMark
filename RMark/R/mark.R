@@ -131,6 +131,7 @@
 #' @param icvalues numeric vector of individual covariate values for computation of real values
 #' @param wrap if TRUE, data lines are wrapped to be length 80; if length of a row is not a 
 #'   problem set to FALSE and it will run faster
+#' @param events vector of character events for Hidden Markov models
 #' @return model: a MARK object containing output and extracted results. It is
 #' a list with the following elements \item{data}{name of the processed data
 #' frame} \item{model}{type of analysis model (see list above)}
@@ -212,7 +213,7 @@ function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.p
 design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
 invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
 realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE,accumulate=TRUE,
-allgroups=FALSE,strata.labels=NULL,counts=NULL,icvalues=NULL,wrap=TRUE)
+allgroups=FALSE,strata.labels=NULL,counts=NULL,icvalues=NULL,wrap=TRUE,events=NULL)
 {
 #
 #  If the data haven't been processed (data$data is NULL) do it now with specified or default arguments
@@ -228,7 +229,7 @@ if(is.null(data$data))
    data.proc=process.data(data,begin.time=begin.time, model=model,mixtures=mixtures, 
                           groups = groups, age.var = age.var, initial.ages = initial.ages, 
                           age.unit = age.unit, time.intervals = time.intervals,nocc=nocc,reverse=reverse,
-				          allgroups=allgroups, strata.labels=strata.labels,counts=counts)
+				          allgroups=allgroups, strata.labels=strata.labels,counts=counts,events=events)
 }   
 else
    data.proc=data

@@ -109,3 +109,5 @@ MarkNumber	model	etype	robust	closed	occupancy	derived	default.mixtures	num	divi
 172	PoissonMRacross	PoissonMRacross	FALSE	TRUE	FALSE	TRUE	1	-1	2	FALSE
 173	UnIdPoissonMRacross	UnIdPoissonMRacross	FALSE	TRUE	FALSE	TRUE	1	-1	2	FALSE
 174	ZiUnIdPoissonMRacross	ZiUnIdPoissonMRacross	FALSE	TRUE	FALSE	TRUE	1	-1	2	FALSE
+178	HidMarkov	HidMarkov	FALSE	FALSE	FALSE	FALSE	1	-1	1	TRUE
+

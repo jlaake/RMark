@@ -1,547 +1,547 @@
-model	parname	begin	num	default	type	pim.type	link	formula	share	pair	mix	rows	secondary	bystratum	tostrata	sub.stratum	leave.unused	socc	subset
-CJS	Phi	0	-1	1	Triang	all	logit	~1											
-CJS	p	1	-1	0	Triang	all	logit	~1											
-Recovery	S	0	0	1	Triang	all	logit	~1											
-Recovery	r	0	0	0	Triang	all	logit	~1											
-Brownie	S	0	-1	1	Triang	all	logit	~1											
-Brownie	f	0	0	0	Triang	all	logit	~1											
-Burnham	S	0	0	1	Triang	all	logit	~1											
-Burnham	p	1	-1	0	Triang	all	logit	~1											
-Burnham	r	0	0	0	Triang	all	logit	~1											
-Burnham	F	0	-1	1	Triang	all	logit	~1											
-MSLiveDead	S	0	0	1	Triang	all	logit	~1						TRUE					
-MSLiveDead	p	1	-1	0	Triang	all	logit	~1						TRUE					
-MSLiveDead	Psi	-1	0	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE				
-MSLiveDead	r	0	0	0	Triang	all	logit	~1						TRUE					
-Barker	S	0	0	1	Triang	all	logit	~1											
-Barker	p	1	-1	0	Triang	all	logit	~1											
-Barker	r	0	0	0	Triang	all	logit	~1											
-Barker	R	0	0	0	Triang	all	logit	~1											
-Barker	RPrime	0	0	0	Triang	all	logit	~1											
-Barker	F	0	-1	1	Triang	all	logit	~1	FALSE	FPrime									
-Barker	FPrime	0	-1	0	Triang	all	logit			F									
-POPAN	Phi	0	-1	1	Square	all	logit	~1											
-POPAN	p	0	0	0	Square	all	logit	~1											
-POPAN	pent	1	-1	0	Square	all	mlogit	~1											
-POPAN	N	0	1		Square	all	log	~1									TRUE		
-Jolly	Phi	0	-1	1	Square	all	logit	~1											
-Jolly	p	0	0	0	Square	all	logit	~1											
-Jolly	Lambda	0	-1	1	Square	all	log	~1											
-Jolly	N	0	1		Square	all	log	~1											
-Pradel	Gamma	0	-1	1	Square	all	logit	~1											
-Pradel	p	0	-1	0	Square	all	logit	~1											
-Pradrec	Phi	0	-1	1	Square	all	logit	~1											
-Pradrec	p	0	0	0	Square	all	logit	~1											
-Pradrec	f	0	-1		Square	all	log	~1											
-LinkBarker	Phi	0	-1	1	Square	all	logit	~1											
-LinkBarker	p	0	0	0	Square	all	logit	~1											
-LinkBarker	f	0	-1		Square	all	log	~1											
-Pradsen	Phi	0	-1	1	Square	all	logit	~1											
-Pradsen	p	0	0	0	Square	all	logit	~1											
-Pradsen	Gamma	0	-1	1	Square	all	logit	~1											
-Pradlambda	Phi	0	-1	1	Square	all	logit	~1											
-Pradlambda	p	0	0	0	Square	all	logit	~1											
-Pradlambda	Lambda	0	-1	1	Square	all	log	~1											
-Closed	p	0	0	0	Square	all	logit	~1	FALSE	c									
-Closed	c	1	-1	0	Square	all	logit			p									
-Closed	f0	0	1		Square	all	log	~1											
-FullHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-FullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0							
-FullHet	c	1	-1	0	Square	all	logit			p	TRUE	0							
-FullHet	f0	0	1		Square	all	log	~1			FALSE								
-HetClosed	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-HetClosed	p	0	1	0	Square	all	logit	~1			TRUE	0							
-HetClosed	f0	0	1		Square	all	log	~1			FALSE								
-Huggins	p	0	0	0	Square	all	logit	~1	FALSE	c									
-Huggins	c	1	-1	0	Square	all	logit			p									
-HugHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-HugHet	p	0	1	0	Square	all	logit	~1			TRUE	0							
-HugFullHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-HugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0							
-HugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0							
-Known	S	1	0	1	Square	all	logit	~1											
-Nest	S	0	-1	1	Square	all	logit	~1											
-Multistrata	S	0	-1	1	Triang	all	logit	~stratum						TRUE					
-Multistrata	p	1	-1	0	Triang	all	logit	~stratum						TRUE					
-Multistrata	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE				
-Occupancy	p	0	0	0	Square	all	logit	~1											
-Occupancy	Psi	0	1		Square	all	logit	~1											
-OccupHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-OccupHet	p	0	0	0	Square	all	logit	~1			TRUE	0							
-OccupHet	Psi	0	1		Square	all	logit	~1											
-MSOccupancy	Psi1	0	1		Square	all	logit	~1											
-MSOccupancy	Psi2	0	1		Square	all	logit	~1											
-MSOccupancy	p1	0	0	0	Square	all	logit	~1	FALSE	p2									
-MSOccupancy	p2	0	0	0	Square	all	logit			p1									
-MSOccupancy	Delta	0	0	1	Square	all	logit	~1											
-OccupRNPoisson	r	0	1		Square	all	logit	~1											
-OccupRNPoisson	Lambda	0	1		Square	all	log	~1											
-OccupRPoisson	r	0	1		Square	all	logit	~1											
-OccupRPoisson	Lambda	0	1		Square	all	log	~1											
-OccupRNNegBin	r	0	1		Square	all	logit	~1											
-OccupRNNegBin	Lambda	0	1		Square	all	log	~1											
-OccupRNNegBin	VarAdd	0	1		Square	all	log	~1											
-OccupRNegBin	r	0	1		Square	all	logit	~1											
-OccupRNegBin	Lambda	0	1		Square	all	log	~1											
-OccupRNegBin	VarAdd	0	1		Square	all	log	~1											
-RDOccupEG	Psi	0	1		Square	all	logit	~1					FALSE						
-RDOccupEG	Epsilon	0	-1		Square	all	logit	~1	FALSE	Gamma			FALSE						
-RDOccupEG	Gamma	0	-1		Square	all	logit			Epsilon			FALSE						
-RDOccupEG	p	0	0	0	Square	all	logit	~1					TRUE						
-RDOccupPE	Psi	0	0		Square	all	logit	~1					FALSE						
-RDOccupPE	Epsilon	0	-1		Square	all	logit	~1					FALSE						
-RDOccupPE	p	0	0	0	Square	all	logit	~1					TRUE						
-RDOccupPG	Psi	0	0		Square	all	logit	~1					FALSE						
-RDOccupPG	Gamma	0	-1		Square	all	logit	~1					FALSE						
-RDOccupPG	p	0	0	0	Square	all	logit	~1					TRUE						
-RDOccupHetPG	Psi	0	0		Square	all	logit	~1					FALSE						
-RDOccupHetPG	Gamma	0	-1		Square	all	logit	~1					FALSE						
-RDOccupHetPG	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDOccupHetPG	p	0	0	0	Square	all	logit	~1			TRUE	0	TRUE						
-RDOccupHetEG	Psi	0	1		Square	all	logit	~1					FALSE						
-RDOccupHetEG	Epsilon	0	-1		Square	all	logit	~1	FALSE	Gamma			FALSE						
-RDOccupHetEG	Gamma	0	-1		Square	all	logit			Epsilon			FALSE						
-RDOccupHetEG	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDOccupHetEG	p	0	0	0	Square	all	logit	~1			TRUE	0	TRUE						
-RDOccupHetPE	Psi	0	0		Square	all	logit	~1					FALSE						
-RDOccupHetPE	Epsilon	0	-1		Square	all	logit	~1					FALSE						
-RDOccupHetPE	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDOccupHetPE	p	0	0	0	Square	all	logit	~1			TRUE	0	TRUE						
-Robust	S	0	-1	1	Triang	all	logit	~1					FALSE						
-Robust	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
-Robust	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
-Robust	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-Robust	c	1	-1	0	Square	all	logit			p			TRUE						
-Robust	f0	0			Square	all	log	~session					TRUE						
-RDHet	S	0	-1	1	Triang	all	logit	~1					FALSE						
-RDHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
-RDHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
-RDHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDHet	f0	0			Square	all	log	~session			FALSE		TRUE						
-RDHFHet	S	0	-1	1	Triang	all	logit	~1					FALSE						
-RDHFHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
-RDHFHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
-RDHFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDHFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDHFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDFullHet	S	0	-1	1	Triang	all	logit	~1					FALSE						
-RDFullHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
-RDFullHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
-RDFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDFullHet	f0	0			Square	all	log	~session			FALSE		TRUE						
-RDHuggins	S	0	-1	1	Triang	all	logit	~1					FALSE						
-RDHuggins	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
-RDHuggins	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
-RDHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDHuggins	c	1	-1	0	Square	all	logit			p			TRUE						
-RDHHet	S	0	-1	1	Triang	all	logit	~1					FALSE						
-RDHHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
-RDHHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE						
-RDHHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDHHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-ORDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-ORDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-ORDMS	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
-ORDMS	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE					
-ORDMS	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
-CRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-CRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-CRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE	TRUE					
-CRDMS	c	1	-1	0	Square	all	logit			p			TRUE	TRUE					
-CRDMS	f0	0			Square	all	log	~session					TRUE	TRUE					
-LogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE						
-LogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE						
-LogitNormalMR	N	0			Square	all	log	~session					TRUE						
-PoissonMR	alpha	0	0	0	Square	all	log	~1											
-PoissonMR	sigma	0	0	0	Square	all	log	~1											
-PoissonMR	U	0	0	0	Square	all	log	~1											
-PoissonMR	Phi	0	-1	1	Triang	all	logit	~1											
-PoissonMR	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
-PoissonMR	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime									
-IELogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE						
-IELogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE						
-IELogitNormalMR	Nbar	0			Square	all	log	~session					TRUE						
-IELogitNormalMR	alpha	0	-1	0	Square	all	identity	~1					TRUE						
-IELogitNormalMR	Nstar	0			Square	all	log	~session					TRUE						
-RDMSOpenMisClass	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-RDMSOpenMisClass	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE				
-RDMSOpenMisClass	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1			
-RDMSOpenMisClass	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
-RDMSOpenMisClass	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
-RDMSOpenMisClass	Delta	0	0	0	Square	all	logit	~1					TRUE	TRUE					
-RDMSOpenMisClass	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
-RDMSOpenMisClass	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE					
-RDMSMisClass	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-RDMSMisClass	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE				
-RDMSMisClass	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1			
-RDMSMisClass	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
-RDMSMisClass	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
-RDMSMisClass	Delta	0	0	0	Square	all	logit	~1					TRUE	TRUE					
-CJSRandom	sigmaphi	0	1		Square	all	log	~1											
-CJSRandom	Phi	0	-1	1	Triang	all	logit	~1											
-CJSRandom	sigmap	0	1		Square	all	log	~1											
-CJSRandom	p	1	-1	0	Triang	all	logit	~1											
-PradelRecMix	Phi	0	-1	1	Square	all	logit	~1											
-PradelRecMix	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-PradelRecMix	p	0	0	0	Square	all	logit	~mixture			TRUE	0							
-PradelRecMix	f	0	-1		Square	all	log	~1											
-LinkBarkMix	Phi	0	-1	1	Square	all	logit	~1											
-LinkBarkMix	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-LinkBarkMix	p	0	0	0	Square	all	logit	~mixture			TRUE	0							
-LinkBarkMix	f	0	-1		Square	all	log	~1											
-PradSenMix	Phi	0	-1	1	Square	all	logit	~1											
-PradSenMix	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-PradSenMix	p	0	0	0	Square	all	logit	~mixture			TRUE	0							
-PradSenMix	Gamma	0	-1	1	Square	all	logit	~1											
-PradLambdaMix	Phi	0	-1	1	Square	all	logit	~1											
-PradLambdaMix	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-PradLambdaMix	p	0	0	0	Square	all	logit	~mixture			TRUE	0							
-PradLambdaMix	Lambda	0	-1	1	Square	all	log	~1											
-LinkBarkRan	sigmaphi	0	1	0	Square	all	log	~1											
-LinkBarkRan	Phi	0	-1	1	Square	all	logit	~1											
-LinkBarkRan	sigmap	0	1	0	Square	all	log	~1											
-LinkBarkRan	p	0	0	0	Square	all	logit	~1											
-LinkBarkRan	sigmaf	0	1	0	Square	all	log	~1											
-LinkBarkRan	f	0	-1		Square	all	log	~1											
-HCRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-HCRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-HCRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE	TRUE					
-HCRDMS	c	1	-1	0	Square	all	logit			p			TRUE	TRUE					
-HetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-HetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-HetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE					
-HetRDMS	p	0		0	Square	all	logit	~1			TRUE	0	TRUE	TRUE					
-HetRDMS	f0	0			Square	all	log	~-1+stratum:session			FALSE		TRUE	TRUE					
-FHetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-FHetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-FHetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE					
-FHetRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE	TRUE					
-FHetRDMS	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE	TRUE					
-FHetRDMS	f0	0			Square	all	log	~-1+stratum:session			FALSE		TRUE	TRUE					
-HHetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-HHetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-HHetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE					
-HHetRDMS	p	0		0	Square	all	logit	~1			TRUE	0	TRUE	TRUE					
-HFHetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-HFHetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-HFHetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE					
-HFHetRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE	TRUE					
-HFHetRDMS	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE	TRUE					
-CRDMSOHug	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-CRDMSOHug	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-CRDMSOHug	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
-CRDMSOHug	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE	TRUE					
-CRDMSOHug	c	1	-1	0	Square	all	logit			p			TRUE	TRUE					
-CRDMSOHet	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-CRDMSOHet	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-CRDMSOHet	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
-CRDMSOHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE					
-CRDMSOHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE	TRUE					
-CRDMSOFHet	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-CRDMSOFHet	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-CRDMSOFHet	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
-CRDMSOFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE					
-CRDMSOFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE	TRUE					
-CRDMSOFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE	TRUE					
-ORDPdMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-ORDPdMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-ORDPdMS	Gamma	0	-1	1	Square	all	logit	~1					FALSE	TRUE	TRUE	-1			
-ORDPdMS	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
-ORDPdMS	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE					
-ORDPdMS	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
-ORDMSState	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-ORDMSState	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE				
-ORDMSState	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
-ORDMSState	pent	1	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
-ORDMSState	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE					
-ORDMSState	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
-2SpecOccup	PsiAB	0	1		Square	all	logit	~1											
-2SpecOccup	PsiA	0	1		Square	all	logit	~1	FALSE	PsiB									
-2SpecOccup	PsiB	0	1		Square	all	logit			PsiA									
-2SpecOccup	pA	0	0	0	Square	all	logit	~1	FALSE	pB									
-2SpecOccup	pB	0	0	0	Square	all	logit			pA									
-2SpecOccup	rAB	0	0	0	Square	all	logit	~1											
-2SpecOccup	rAb	0	0	0	Square	all	logit	~1	FALSE	raB									
-2SpecOccup	raB	0	0	0	Square	all	logit			rAb									
-2SpecConOccup	PsiA	0	1		Square	all	logit	~1											
-2SpecConOccup	PsiBA	0	1		Square	all	logit	~1	FALSE	PsiBa									
-2SpecConOccup	PsiBa	0	1		Square	all	logit			PsiBA									
-2SpecConOccup	pA	0	0	0	Square	all	logit	~1	FALSE	pB									
-2SpecConOccup	pB	0	0	0	Square	all	logit			pA									
-2SpecConOccup	rA	0	0	0	Square	all	logit	~1											
-2SpecConOccup	rBA	0	0	0	Square	all	logit	~1	FALSE	rBa									
-2SpecConOccup	rBa	0	0	0	Square	all	logit			rBA									
-MultScalOcc	Psi	0	1		Square	all	logit	~1					FALSE						
-MultScalOcc	Theta	0	0		Square	all	logit	~1					FALSE						
-MultScalOcc	p	0	0	0	Square	all	logit	~1					TRUE					FALSE	
-RDPdGClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGClosed	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDPdGClosed	c	1	-1	0	Square	all	logit			p			TRUE						
-RDPdGClosed	f0	0			Square	all	log	~session					TRUE						
-RDPdGHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGHuggins	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDPdGHuggins	c	1	-1	0	Square	all	logit			p			TRUE						
-RDPdGHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdGHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDPdGHet	f0	0			Square	all	log	~session					TRUE						
-RDPdGFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGFullHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdGFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDPdGFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDPdGFullHet	f0	0			Square	all	log	~session			FALSE		TRUE						
-RDPdGHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGHugFullHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdGHugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDPdGHugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDPdLClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLClosed	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDPdLClosed	c	1	-1	0	Square	all	logit			p			TRUE						
-RDPdLClosed	f0	0			Square	all	log	~session					TRUE						
-RDPdLHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLHuggins	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDPdLHuggins	c	1	-1	0	Square	all	logit			p			TRUE						
-RDPdLHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdLHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDPdLHet	f0	0			Square	all	log	~session					TRUE						
-RDPdLFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLFullHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdLFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDPdLFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDPdLFullHet	f0	0			Square	all	log	~session			FALSE		TRUE						
-RDPdLHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLHugFullHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdLHugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDPdLHugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDPdfClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfClosed	f	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDPdfClosed	c	1	-1	0	Square	all	logit			p			TRUE						
-RDPdfClosed	f0	0			Square	all	log	~session					TRUE						
-RDPdfHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfHuggins	f	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDPdfHuggins	c	1	-1	0	Square	all	logit			p			TRUE						
-RDPdfHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfHet	f	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdfHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDPdfHet	f0	0			Square	all	log	~session					TRUE						
-RDPdfFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfFullHet	f	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdfFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDPdfFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDPdfFullHet	f0	0			Square	all	log	~session			FALSE		TRUE						
-RDPdfHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfHugFullHet	f	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdfHugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDPdfHugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDPdGHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGHugHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdGHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdGHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDPdLHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLHugHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdLHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdLHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDPdfHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfHugHet	f	0	-1	1	Square	all	logit	~1					FALSE						
-RDPdfHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDPdfHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-CJSMixture	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-CJSMixture	Phi	0	-1	1	STriang	all	logit	~mixture			TRUE	0							
-CJSMixture	p	1	-1	0	STriang	all	logit	~mixture			TRUE	0							
-RDBarker	S	0	0	1	Triang	all	logit	~1					FALSE						
-RDBarker	r	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarker	R	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarker	RPrime	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarker	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE						
-RDBarker	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE						
-RDBarker	F	0	-1	1	Triang	all	logit	~1					FALSE						
-RDBarker	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDBarker	c	1	-1	0	Square	all	logit			p			TRUE						
-RDBarker	f0	0			Square	all	log	~session					TRUE						
-RDBarkHet	S	0	0	1	Triang	all	logit	~1					FALSE						
-RDBarkHet	r	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHet	R	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHet	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE						
-RDBarkHet	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE						
-RDBarkHet	F	0	-1	1	Triang	all	logit	~1					FALSE						
-RDBarkHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDBarkHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDBarkHet	f0	0			Square	all	log	~session					TRUE						
-RDBarkFHet	S	0	0	1	Triang	all	logit	~1					FALSE						
-RDBarkFHet	r	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkFHet	R	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkFHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkFHet	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE						
-RDBarkFHet	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE						
-RDBarkFHet	F	0	-1	1	Triang	all	logit	~1					FALSE						
-RDBarkFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDBarkFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDBarkFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDBarkFHet	f0	0			Square	all	log	~session					TRUE						
-RDBarkHug	S	0	0	1	Triang	all	logit	~1					FALSE						
-RDBarkHug	r	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHug	R	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHug	RPrime	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHug	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE						
-RDBarkHug	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE						
-RDBarkHug	F	0	-1	1	Triang	all	logit	~1					FALSE						
-RDBarkHug	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDBarkHug	c	1	-1	0	Square	all	logit			p			TRUE						
-RDBarkHHet	S	0	0	1	Triang	all	logit	~1					FALSE						
-RDBarkHHet	r	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHHet	R	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHHet	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE						
-RDBarkHHet	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE						
-RDBarkHHet	F	0	-1	1	Triang	all	logit	~1					FALSE						
-RDBarkHHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDBarkHHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE						
-RDBarkHFHet	S	0	0	1	Triang	all	logit	~1					FALSE						
-RDBarkHFHet	r	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHFHet	R	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHFHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE						
-RDBarkHFHet	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE						
-RDBarkHFHet	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE						
-RDBarkHFHet	F	0	-1	1	Triang	all	logit	~1					FALSE						
-RDBarkHFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE						
-RDBarkHFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE						
-RDBarkHFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE						
-RDMSOccRepro	Phi0	1	0	0	Square	all	logit	~1			FALSE		FALSE	FALSE		0			
-RDMSOccRepro	Psi	1	-1	0	Square	all	logit	~1			FALSE		FALSE	TRUE					0
-RDMSOccRepro	R	1	-1	0	Square	all	logit	~1			FALSE		FALSE	TRUE	TRUE				02
-RDMSOccRepro	p	0	0	0	Square	all	logit	~1			FALSE		TRUE	TRUE					1
-RDMSOccRepro	Delta	1	0	0	Square	all	logit	~1			FALSE		TRUE	TRUE	TRUE				22
-RDMSOpenMCSeas	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE					
-RDMSOpenMCSeas	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE				
-RDMSOpenMCSeas	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1			
-RDMSOpenMCSeas	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1			
-RDMSOpenMCSeas	p	0	0	0	Square	all	logit	~1					TRUE	TRUE					
-RDMSOpenMCSeas	Delta	0	0	0	Triang	all	logit	~1					TRUE	TRUE					
-RDMSOpenMCSeas	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
-RDMSOpenMCSeas	d	1	-1	0	Square	all	logit	~1					TRUE	TRUE					
-RDMSOpenMCSeas	alpha	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE					
-RDMSOpenMCSeas	c	0	-1	1	Triang	all	logit	~1					TRUE	TRUE					
-PMDead	pi	0	1	0	Square	all	logit	~1			TRUE	-1							
-PMDead	S	0	0	1	STriang	all	logit	~mixture			TRUE	0											
-PMDead	r	0	0	0	Triang	all	logit	~1											
-REDead	sigmaS	0	1		Square	all	log	~1											
-REDead	S	0	0	1	Triang	all	logit	~1											
-REDead	sigmar	0	1		Square	all	log	~1											
-REDead	r	0	0	0	Triang	all	logit	~1											
-BurnhamLDRE	sigmaS	0	1		Square	all	log	~1											
-BurnhamLDRE	S	0	0	1	Triang	all	logit	~1											
-BurnhamLDRE	sigmap	0	1		Square	all	log	~1											
-BurnhamLDRE	p	1	-1	0	Triang	all	logit	~1											
-BurnhamLDRE	sigmar	0	1		Square	all	log	~1											
-BurnhamLDRE	r	0	0	0	Triang	all	logit	~1											
-BurnhamLDRE	sigmaF	0	1		Square	all	log	~1											
-BurnhamLDRE	F	0	-1	1	Triang	all	logit	~1			
-HugginsRE	p	0	0	0	Square	all	logit	~1	FALSE	c									
-HugginsRE	c	1	-1	0	Square	all	logit			p									
-HugginsRE	sigmap	0	1		Square	all	log	~1	
-OccRelClos	p	0	0	0	Square	all	logit	~1											
-OccRelClos	Psi	0	1		Square	all	logit	~1											
-OccRelClos	pent	1	-1	0	Square	all	mlogit	~1											
-OccRelClos	d	0	-1	0	Square	all	logit	~1											
-UnIdLogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE						
-UnIdLogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE						
-UnIdLogitNormalMR	N	0			Square	all	log	~session					TRUE						
-UnIdLogitNormalMR	r	0	0	0	Square	all	logit	~1					TRUE						
-UnIdPoissonMR	alpha	0	0	0	Square	all	log	~1											
-UnIdPoissonMR	sigma	0	0	0	Square	all	log	~1											
-UnIdPoissonMR	U	0	0	0	Square	all	log	~1											
-UnIdPoissonMR	Phi	0	-1	1	Triang	all	logit	~1											
-UnIdPoissonMR	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
-UnIdPoissonMR	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime									
-UnIdPoissonMR	r	0	0	0	Square	all	logit	~1											
-UnIdIELogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE						
-UnIdIELogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE						
-UnIdIELogitNormalMR	Nbar	0			Square	all	log	~session					TRUE						
-UnIdIELogitNormalMR	alpha	0	-1	0	Square	all	identity	~1					TRUE						
-UnIdIELogitNormalMR	Nstar	0			Square	all	log	~session					TRUE						
-UnIdIELogitNormalMR	r	0	0	0	Square	all	logit	~1					TRUE						
-RDHugginsRE	S	0	-1	1	Triang	all	logit	~1					FALSE						
-RDHugginsRE	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE						
-RDHugginsRE	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE	
-RDHugginsRE	sigmap	0			Square	all	log	~1					TRUE											
-RDHugginsRE	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE						
-RDHugginsRE	c	1	-1	0	Square	all	logit			p			TRUE						
-RD2SpGEConOcc	PsiA	0	1		Square	all	logit	~1					FALSE						
-RD2SpGEConOcc	PsiBA	0	1		Square	all	logit	~1	FALSE	PsiBa			FALSE						
-RD2SpGEConOcc	PsiBa	0	1		Square	all	logit			PsiBA			FALSE						
-RD2SpGEConOcc	GammaA	0	-1		Square	all	logit			EpsilonA			FALSE						
-RD2SpGEConOcc	GammaB	0	-1		Square	all	logit			EpsilonB			FALSE						
-RD2SpGEConOcc	GammaAB	0	-1		Square	all	logit			EpsilonAB			FALSE						
-RD2SpGEConOcc	GammaBA	0	-1		Square	all	logit			EpsilonBA			FALSE						
-RD2SpGEConOcc	EpsilonA	0	-1		Square	all	logit	~1	FALSE	GammaA			FALSE						
-RD2SpGEConOcc	EpsilonB	0	-1		Square	all	logit	~1	FALSE	GammaB			FALSE						
-RD2SpGEConOcc	EpsilonAB	0	-1		Square	all	logit	~1	FALSE	GammaAB			FALSE						
-RD2SpGEConOcc	EpsilonBA	0	-1		Square	all	logit	~1	FALSE	GammaBA			FALSE						
-RD2SpGEConOcc	pA	0	0	0	Square	all	logit	~1	FALSE	pB			TRUE						
-RD2SpGEConOcc	pB	0	0	0	Square	all	logit			pA			TRUE						
-RD2SpGEConOcc	rA	0	0	0	Square	all	logit	~1					TRUE						
-RD2SpGEConOcc	rBA	0	0	0	Square	all	logit	~1	FALSE	rBa			TRUE						
-RD2SpGEConOcc	rBa	0	0	0	Square	all	logit	~1		rBA			TRUE				
-Densitypc	p	0	0	0	Square	all	logit	~1	FALSE	c									
-Densitypc	c	1	-1	0	Square	all	logit			p									
-Densitypc	ptilde	0	1		Square	all	log	~1											
-DensityRanpc	sigmap	0	1		Square	all	log	~1	
-DensityRanpc	p	0	0	0	Square	all	logit	~1	FALSE	c									
-DensityRanpc	c	1	-1	0	Square	all	logit			p									
-DensityRanpc	ptilde	0	1		Square	all	log	~1											
-PoissonMRacross	alpha	0	0	0	Square	all	log	~1											
-PoissonMRacross	sigma	0	0	0	Square	all	log	~1											
-PoissonMRacross	U	0	0	0	Square	all	log	~1											
-PoissonMRacross	Phi	0	-1	1	Triang	all	logit	~1											
-PoissonMRacross	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
-PoissonMRacross	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime									
-UnIdPoissonMRacross	alpha	0	0	0	Square	all	log	~1											
-UnIdPoissonMRacross	sigma	0	0	0	Square	all	log	~1											
-UnIdPoissonMRacross	U	0	0	0	Square	all	log	~1											
-UnIdPoissonMRacross	Phi	0	-1	1	Triang	all	logit	~1											
-UnIdPoissonMRacross	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
-UnIdPoissonMRacross	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime									
-UnIdPoissonMRacross	r	0	0	0	Square	all	logit	~1											
-ZiUnIdPoissonMRwithin	alpha	0	0	0	Square	all	log	~1											
-ZiUnIdPoissonMRwithin	sigma	0	0	0	Square	all	log	~1											
-ZiUnIdPoissonMRwithin	U	0	0	0	Square	all	log	~1											
-ZiUnIdPoissonMRwithin	Phi	0	-1	1	Triang	all	logit	~1											
-ZiUnIdPoissonMRwithin	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
-ZiUnIdPoissonMRwithin	GammaPrime	0	-1	0	Triang	all	logit			GammaDoublePrime									
-ZiUnIdPoissonMRwithin	r	0	0	0	Square	all	logit	~1											
-ZiUnIdPoissonMRwithin	w	0	0	0	Square	all	log	~1											
-ZiUnIdPoissonMRwithin	g	0	0	0	Square	all	log	~1											
-ZiUnIdPoissonMRacross	alpha	0	0	0	Square	all	log	~1											
-ZiUnIdPoissonMRacross	sigma	0	0	0	Square	all	log	~1											
-ZiUnIdPoissonMRacross	U	0	0	0	Square	all	log	~1											
-ZiUnIdPoissonMRacross	Phi	0	-1	1	Triang	all	logit	~1											
-ZiUnIdPoissonMRacross	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime									
-ZiUnIdPoissonMRacross	GammaPrime	0	-1	0	Triang	all	logit			GammaDoublePrime									
-ZiUnIdPoissonMRacross	r	0	0	0	Square	all	logit	~1											
-ZiUnIdPoissonMRacross	w	0	0	0	Square	all	logit	~1											
-ZiUnIdPoissonMRacross	g	0	0	0	Square	all	logit	~1											
-HidMarkov	S	0	-1	1	Triang	all	logit	~stratum						TRUE		
-HidMarkov	p	1	-1	0	Triang	all	logit	~stratum						TRUE		
-HidMarkov	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE	
-HidMarkov	pi	0	0		Square	all	mlogit	~1						TRUE		1
-HidMarkov	Delta	1	-1	0	Triang	all	mlogit	~1						TRUE		
+model	parname	begin	num	default	type	pim.type	link	formula	share	pair	mix	rows	secondary	bystratum	tostrata	sub.stratum	leave.unused	socc	subset	events
+CJS	Phi	0	-1	1	Triang	all	logit	~1												
+CJS	p	1	-1	0	Triang	all	logit	~1												
+Recovery	S	0	0	1	Triang	all	logit	~1												
+Recovery	r	0	0	0	Triang	all	logit	~1												
+Brownie	S	0	-1	1	Triang	all	logit	~1												
+Brownie	f	0	0	0	Triang	all	logit	~1												
+Burnham	S	0	0	1	Triang	all	logit	~1												
+Burnham	p	1	-1	0	Triang	all	logit	~1												
+Burnham	r	0	0	0	Triang	all	logit	~1												
+Burnham	F	0	-1	1	Triang	all	logit	~1												
+MSLiveDead	S	0	0	1	Triang	all	logit	~1						TRUE						
+MSLiveDead	p	1	-1	0	Triang	all	logit	~1						TRUE						
+MSLiveDead	Psi	-1	0	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE					
+MSLiveDead	r	0	0	0	Triang	all	logit	~1						TRUE						
+Barker	S	0	0	1	Triang	all	logit	~1												
+Barker	p	1	-1	0	Triang	all	logit	~1												
+Barker	r	0	0	0	Triang	all	logit	~1												
+Barker	R	0	0	0	Triang	all	logit	~1												
+Barker	RPrime	0	0	0	Triang	all	logit	~1												
+Barker	F	0	-1	1	Triang	all	logit	~1	FALSE	FPrime										
+Barker	FPrime	0	-1	0	Triang	all	logit			F										
+POPAN	Phi	0	-1	1	Square	all	logit	~1												
+POPAN	p	0	0	0	Square	all	logit	~1												
+POPAN	pent	1	-1	0	Square	all	mlogit	~1												
+POPAN	N	0	1		Square	all	log	~1									TRUE			
+Jolly	Phi	0	-1	1	Square	all	logit	~1												
+Jolly	p	0	0	0	Square	all	logit	~1												
+Jolly	Lambda	0	-1	1	Square	all	log	~1												
+Jolly	N	0	1		Square	all	log	~1												
+Pradel	Gamma	0	-1	1	Square	all	logit	~1												
+Pradel	p	0	-1	0	Square	all	logit	~1												
+Pradrec	Phi	0	-1	1	Square	all	logit	~1												
+Pradrec	p	0	0	0	Square	all	logit	~1												
+Pradrec	f	0	-1		Square	all	log	~1												
+LinkBarker	Phi	0	-1	1	Square	all	logit	~1												
+LinkBarker	p	0	0	0	Square	all	logit	~1												
+LinkBarker	f	0	-1		Square	all	log	~1												
+Pradsen	Phi	0	-1	1	Square	all	logit	~1												
+Pradsen	p	0	0	0	Square	all	logit	~1												
+Pradsen	Gamma	0	-1	1	Square	all	logit	~1												
+Pradlambda	Phi	0	-1	1	Square	all	logit	~1												
+Pradlambda	p	0	0	0	Square	all	logit	~1												
+Pradlambda	Lambda	0	-1	1	Square	all	log	~1												
+Closed	p	0	0	0	Square	all	logit	~1	FALSE	c										
+Closed	c	1	-1	0	Square	all	logit			p										
+Closed	f0	0	1		Square	all	log	~1												
+FullHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+FullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0								
+FullHet	c	1	-1	0	Square	all	logit			p	TRUE	0								
+FullHet	f0	0	1		Square	all	log	~1			FALSE									
+HetClosed	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+HetClosed	p	0	1	0	Square	all	logit	~1			TRUE	0								
+HetClosed	f0	0	1		Square	all	log	~1			FALSE									
+Huggins	p	0	0	0	Square	all	logit	~1	FALSE	c										
+Huggins	c	1	-1	0	Square	all	logit			p										
+HugHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+HugHet	p	0	1	0	Square	all	logit	~1			TRUE	0								
+HugFullHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+HugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0								
+HugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0								
+Known	S	1	0	1	Square	all	logit	~1												
+Nest	S	0	-1	1	Square	all	logit	~1												
+Multistrata	S	0	-1	1	Triang	all	logit	~stratum						TRUE						
+Multistrata	p	1	-1	0	Triang	all	logit	~stratum						TRUE						
+Multistrata	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE					
+Occupancy	p	0	0	0	Square	all	logit	~1												
+Occupancy	Psi	0	1		Square	all	logit	~1												
+OccupHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+OccupHet	p	0	0	0	Square	all	logit	~1			TRUE	0								
+OccupHet	Psi	0	1		Square	all	logit	~1												
+MSOccupancy	Psi1	0	1		Square	all	logit	~1												
+MSOccupancy	Psi2	0	1		Square	all	logit	~1												
+MSOccupancy	p1	0	0	0	Square	all	logit	~1	FALSE	p2										
+MSOccupancy	p2	0	0	0	Square	all	logit			p1										
+MSOccupancy	Delta	0	0	1	Square	all	logit	~1												
+OccupRNPoisson	r	0	1		Square	all	logit	~1												
+OccupRNPoisson	Lambda	0	1		Square	all	log	~1												
+OccupRPoisson	r	0	1		Square	all	logit	~1												
+OccupRPoisson	Lambda	0	1		Square	all	log	~1												
+OccupRNNegBin	r	0	1		Square	all	logit	~1												
+OccupRNNegBin	Lambda	0	1		Square	all	log	~1												
+OccupRNNegBin	VarAdd	0	1		Square	all	log	~1												
+OccupRNegBin	r	0	1		Square	all	logit	~1												
+OccupRNegBin	Lambda	0	1		Square	all	log	~1												
+OccupRNegBin	VarAdd	0	1		Square	all	log	~1												
+RDOccupEG	Psi	0	1		Square	all	logit	~1					FALSE							
+RDOccupEG	Epsilon	0	-1		Square	all	logit	~1	FALSE	Gamma			FALSE							
+RDOccupEG	Gamma	0	-1		Square	all	logit			Epsilon			FALSE							
+RDOccupEG	p	0	0	0	Square	all	logit	~1					TRUE							
+RDOccupPE	Psi	0	0		Square	all	logit	~1					FALSE							
+RDOccupPE	Epsilon	0	-1		Square	all	logit	~1					FALSE							
+RDOccupPE	p	0	0	0	Square	all	logit	~1					TRUE							
+RDOccupPG	Psi	0	0		Square	all	logit	~1					FALSE							
+RDOccupPG	Gamma	0	-1		Square	all	logit	~1					FALSE							
+RDOccupPG	p	0	0	0	Square	all	logit	~1					TRUE							
+RDOccupHetPG	Psi	0	0		Square	all	logit	~1					FALSE							
+RDOccupHetPG	Gamma	0	-1		Square	all	logit	~1					FALSE							
+RDOccupHetPG	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDOccupHetPG	p	0	0	0	Square	all	logit	~1			TRUE	0	TRUE							
+RDOccupHetEG	Psi	0	1		Square	all	logit	~1					FALSE							
+RDOccupHetEG	Epsilon	0	-1		Square	all	logit	~1	FALSE	Gamma			FALSE							
+RDOccupHetEG	Gamma	0	-1		Square	all	logit			Epsilon			FALSE							
+RDOccupHetEG	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDOccupHetEG	p	0	0	0	Square	all	logit	~1			TRUE	0	TRUE							
+RDOccupHetPE	Psi	0	0		Square	all	logit	~1					FALSE							
+RDOccupHetPE	Epsilon	0	-1		Square	all	logit	~1					FALSE							
+RDOccupHetPE	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDOccupHetPE	p	0	0	0	Square	all	logit	~1			TRUE	0	TRUE							
+Robust	S	0	-1	1	Triang	all	logit	~1					FALSE							
+Robust	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE							
+Robust	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE							
+Robust	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+Robust	c	1	-1	0	Square	all	logit			p			TRUE							
+Robust	f0	0			Square	all	log	~session					TRUE							
+RDHet	S	0	-1	1	Triang	all	logit	~1					FALSE							
+RDHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE							
+RDHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE							
+RDHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+RDHet	f0	0			Square	all	log	~session			FALSE		TRUE							
+RDHFHet	S	0	-1	1	Triang	all	logit	~1					FALSE							
+RDHFHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE							
+RDHFHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE							
+RDHFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDHFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDHFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDFullHet	S	0	-1	1	Triang	all	logit	~1					FALSE							
+RDFullHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE							
+RDFullHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE							
+RDFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDFullHet	f0	0			Square	all	log	~session			FALSE		TRUE							
+RDHuggins	S	0	-1	1	Triang	all	logit	~1					FALSE							
+RDHuggins	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE							
+RDHuggins	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE							
+RDHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDHuggins	c	1	-1	0	Square	all	logit			p			TRUE							
+RDHHet	S	0	-1	1	Triang	all	logit	~1					FALSE							
+RDHHet	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE							
+RDHHet	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE							
+RDHHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDHHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+ORDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+ORDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+ORDMS	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE						
+ORDMS	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE						
+ORDMS	p	0	0	0	Square	all	logit	~1					TRUE	TRUE						
+CRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+CRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+CRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE	TRUE						
+CRDMS	c	1	-1	0	Square	all	logit			p			TRUE	TRUE						
+CRDMS	f0	0			Square	all	log	~session					TRUE	TRUE						
+LogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE							
+LogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE							
+LogitNormalMR	N	0			Square	all	log	~session					TRUE							
+PoissonMR	alpha	0	0	0	Square	all	log	~1												
+PoissonMR	sigma	0	0	0	Square	all	log	~1												
+PoissonMR	U	0	0	0	Square	all	log	~1												
+PoissonMR	Phi	0	-1	1	Triang	all	logit	~1												
+PoissonMR	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime										
+PoissonMR	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime										
+IELogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE							
+IELogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE							
+IELogitNormalMR	Nbar	0			Square	all	log	~session					TRUE							
+IELogitNormalMR	alpha	0	-1	0	Square	all	identity	~1					TRUE							
+IELogitNormalMR	Nstar	0			Square	all	log	~session					TRUE							
+RDMSOpenMisClass	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+RDMSOpenMisClass	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE					
+RDMSOpenMisClass	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1				
+RDMSOpenMisClass	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1				
+RDMSOpenMisClass	p	0	0	0	Square	all	logit	~1					TRUE	TRUE						
+RDMSOpenMisClass	Delta	0	0	0	Square	all	logit	~1					TRUE	TRUE						
+RDMSOpenMisClass	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE						
+RDMSOpenMisClass	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE						
+RDMSMisClass	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+RDMSMisClass	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE					
+RDMSMisClass	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1				
+RDMSMisClass	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1				
+RDMSMisClass	p	0	0	0	Square	all	logit	~1					TRUE	TRUE						
+RDMSMisClass	Delta	0	0	0	Square	all	logit	~1					TRUE	TRUE						
+CJSRandom	sigmaphi	0	1		Square	all	log	~1												
+CJSRandom	Phi	0	-1	1	Triang	all	logit	~1												
+CJSRandom	sigmap	0	1		Square	all	log	~1												
+CJSRandom	p	1	-1	0	Triang	all	logit	~1												
+PradelRecMix	Phi	0	-1	1	Square	all	logit	~1												
+PradelRecMix	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+PradelRecMix	p	0	0	0	Square	all	logit	~mixture			TRUE	0								
+PradelRecMix	f	0	-1		Square	all	log	~1												
+LinkBarkMix	Phi	0	-1	1	Square	all	logit	~1												
+LinkBarkMix	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+LinkBarkMix	p	0	0	0	Square	all	logit	~mixture			TRUE	0								
+LinkBarkMix	f	0	-1		Square	all	log	~1												
+PradSenMix	Phi	0	-1	1	Square	all	logit	~1												
+PradSenMix	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+PradSenMix	p	0	0	0	Square	all	logit	~mixture			TRUE	0								
+PradSenMix	Gamma	0	-1	1	Square	all	logit	~1												
+PradLambdaMix	Phi	0	-1	1	Square	all	logit	~1												
+PradLambdaMix	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+PradLambdaMix	p	0	0	0	Square	all	logit	~mixture			TRUE	0								
+PradLambdaMix	Lambda	0	-1	1	Square	all	log	~1												
+LinkBarkRan	sigmaphi	0	1	0	Square	all	log	~1												
+LinkBarkRan	Phi	0	-1	1	Square	all	logit	~1												
+LinkBarkRan	sigmap	0	1	0	Square	all	log	~1												
+LinkBarkRan	p	0	0	0	Square	all	logit	~1												
+LinkBarkRan	sigmaf	0	1	0	Square	all	log	~1												
+LinkBarkRan	f	0	-1		Square	all	log	~1												
+HCRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+HCRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+HCRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE	TRUE						
+HCRDMS	c	1	-1	0	Square	all	logit			p			TRUE	TRUE						
+HetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+HetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+HetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE						
+HetRDMS	p	0		0	Square	all	logit	~1			TRUE	0	TRUE	TRUE						
+HetRDMS	f0	0			Square	all	log	~-1+stratum:session			FALSE		TRUE	TRUE						
+FHetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+FHetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+FHetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE						
+FHetRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE	TRUE						
+FHetRDMS	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE	TRUE						
+FHetRDMS	f0	0			Square	all	log	~-1+stratum:session			FALSE		TRUE	TRUE						
+HHetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+HHetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+HHetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE						
+HHetRDMS	p	0		0	Square	all	logit	~1			TRUE	0	TRUE	TRUE						
+HFHetRDMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+HFHetRDMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+HFHetRDMS	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE						
+HFHetRDMS	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE	TRUE						
+HFHetRDMS	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE	TRUE						
+CRDMSOHug	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+CRDMSOHug	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+CRDMSOHug	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1				
+CRDMSOHug	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE	TRUE						
+CRDMSOHug	c	1	-1	0	Square	all	logit			p			TRUE	TRUE						
+CRDMSOHet	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+CRDMSOHet	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+CRDMSOHet	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1				
+CRDMSOHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE						
+CRDMSOHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE	TRUE						
+CRDMSOFHet	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+CRDMSOFHet	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+CRDMSOFHet	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1				
+CRDMSOFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE	TRUE						
+CRDMSOFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE	TRUE						
+CRDMSOFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE	TRUE						
+ORDPdMS	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+ORDPdMS	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+ORDPdMS	Gamma	0	-1	1	Square	all	logit	~1					FALSE	TRUE	TRUE	-1				
+ORDPdMS	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE						
+ORDPdMS	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE						
+ORDPdMS	p	0	0	0	Square	all	logit	~1					TRUE	TRUE						
+ORDMSState	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+ORDMSState	Psi	0	-1	0	Triang	all	mlogit	~stratum:tostratum					FALSE	TRUE	TRUE					
+ORDMSState	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1				
+ORDMSState	pent	1	-1	0	Square	all	mlogit	~1					TRUE	TRUE						
+ORDMSState	Phi	0	-1	1	Triang	all	logit	~1					TRUE	TRUE						
+ORDMSState	p	0	0	0	Square	all	logit	~1					TRUE	TRUE						
+2SpecOccup	PsiAB	0	1		Square	all	logit	~1												
+2SpecOccup	PsiA	0	1		Square	all	logit	~1	FALSE	PsiB										
+2SpecOccup	PsiB	0	1		Square	all	logit			PsiA										
+2SpecOccup	pA	0	0	0	Square	all	logit	~1	FALSE	pB										
+2SpecOccup	pB	0	0	0	Square	all	logit			pA										
+2SpecOccup	rAB	0	0	0	Square	all	logit	~1												
+2SpecOccup	rAb	0	0	0	Square	all	logit	~1	FALSE	raB										
+2SpecOccup	raB	0	0	0	Square	all	logit			rAb										
+2SpecConOccup	PsiA	0	1		Square	all	logit	~1												
+2SpecConOccup	PsiBA	0	1		Square	all	logit	~1	FALSE	PsiBa										
+2SpecConOccup	PsiBa	0	1		Square	all	logit			PsiBA										
+2SpecConOccup	pA	0	0	0	Square	all	logit	~1	FALSE	pB										
+2SpecConOccup	pB	0	0	0	Square	all	logit			pA										
+2SpecConOccup	rA	0	0	0	Square	all	logit	~1												
+2SpecConOccup	rBA	0	0	0	Square	all	logit	~1	FALSE	rBa										
+2SpecConOccup	rBa	0	0	0	Square	all	logit			rBA										
+MultScalOcc	Psi	0	1		Square	all	logit	~1					FALSE							
+MultScalOcc	Theta	0	0		Square	all	logit	~1					FALSE							
+MultScalOcc	p	0	0	0	Square	all	logit	~1					TRUE					FALSE		
+RDPdGClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGClosed	Gamma	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDPdGClosed	c	1	-1	0	Square	all	logit			p			TRUE							
+RDPdGClosed	f0	0			Square	all	log	~session					TRUE							
+RDPdGHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGHuggins	Gamma	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDPdGHuggins	c	1	-1	0	Square	all	logit			p			TRUE							
+RDPdGHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdGHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+RDPdGHet	f0	0			Square	all	log	~session					TRUE							
+RDPdGFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGFullHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdGFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDPdGFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDPdGFullHet	f0	0			Square	all	log	~session			FALSE		TRUE							
+RDPdGHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGHugFullHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdGHugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDPdGHugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDPdLClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLClosed	Lambda	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDPdLClosed	c	1	-1	0	Square	all	logit			p			TRUE							
+RDPdLClosed	f0	0			Square	all	log	~session					TRUE							
+RDPdLHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLHuggins	Lambda	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDPdLHuggins	c	1	-1	0	Square	all	logit			p			TRUE							
+RDPdLHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdLHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+RDPdLHet	f0	0			Square	all	log	~session					TRUE							
+RDPdLFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLFullHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdLFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDPdLFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDPdLFullHet	f0	0			Square	all	log	~session			FALSE		TRUE							
+RDPdLHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLHugFullHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdLHugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDPdLHugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDPdfClosed	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfClosed	f	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfClosed	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDPdfClosed	c	1	-1	0	Square	all	logit			p			TRUE							
+RDPdfClosed	f0	0			Square	all	log	~session					TRUE							
+RDPdfHuggins	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfHuggins	f	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfHuggins	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDPdfHuggins	c	1	-1	0	Square	all	logit			p			TRUE							
+RDPdfHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfHet	f	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdfHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+RDPdfHet	f0	0			Square	all	log	~session					TRUE							
+RDPdfFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfFullHet	f	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdfFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDPdfFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDPdfFullHet	f0	0			Square	all	log	~session			FALSE		TRUE							
+RDPdfHugFullHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfHugFullHet	f	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfHugFullHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdfHugFullHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDPdfHugFullHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDPdGHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGHugHet	Gamma	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdGHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdGHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+RDPdLHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLHugHet	Lambda	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdLHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdLHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+RDPdfHugHet	Phi	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfHugHet	f	0	-1	1	Square	all	logit	~1					FALSE							
+RDPdfHugHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDPdfHugHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+CJSMixture	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+CJSMixture	Phi	0	-1	1	STriang	all	logit	~mixture			TRUE	0								
+CJSMixture	p	1	-1	0	STriang	all	logit	~mixture			TRUE	0								
+RDBarker	S	0	0	1	Triang	all	logit	~1					FALSE							
+RDBarker	r	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarker	R	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarker	RPrime	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarker	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE							
+RDBarker	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE							
+RDBarker	F	0	-1	1	Triang	all	logit	~1					FALSE							
+RDBarker	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDBarker	c	1	-1	0	Square	all	logit			p			TRUE							
+RDBarker	f0	0			Square	all	log	~session					TRUE							
+RDBarkHet	S	0	0	1	Triang	all	logit	~1					FALSE							
+RDBarkHet	r	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHet	R	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHet	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE							
+RDBarkHet	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE							
+RDBarkHet	F	0	-1	1	Triang	all	logit	~1					FALSE							
+RDBarkHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDBarkHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+RDBarkHet	f0	0			Square	all	log	~session					TRUE							
+RDBarkFHet	S	0	0	1	Triang	all	logit	~1					FALSE							
+RDBarkFHet	r	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkFHet	R	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkFHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkFHet	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE							
+RDBarkFHet	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE							
+RDBarkFHet	F	0	-1	1	Triang	all	logit	~1					FALSE							
+RDBarkFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDBarkFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDBarkFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDBarkFHet	f0	0			Square	all	log	~session					TRUE							
+RDBarkHug	S	0	0	1	Triang	all	logit	~1					FALSE							
+RDBarkHug	r	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHug	R	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHug	RPrime	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHug	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE							
+RDBarkHug	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE							
+RDBarkHug	F	0	-1	1	Triang	all	logit	~1					FALSE							
+RDBarkHug	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDBarkHug	c	1	-1	0	Square	all	logit			p			TRUE							
+RDBarkHHet	S	0	0	1	Triang	all	logit	~1					FALSE							
+RDBarkHHet	r	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHHet	R	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHHet	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE							
+RDBarkHHet	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE							
+RDBarkHHet	F	0	-1	1	Triang	all	logit	~1					FALSE							
+RDBarkHHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDBarkHHet	p	0		0	Square	all	logit	~1			TRUE	0	TRUE							
+RDBarkHFHet	S	0	0	1	Triang	all	logit	~1					FALSE							
+RDBarkHFHet	r	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHFHet	R	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHFHet	RPrime	0	0	0	Triang	all	logit	~1					FALSE							
+RDBarkHFHet	aDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	aPrime			FALSE							
+RDBarkHFHet	aPrime	2	-2	0	Triang	all	logit			aDoublePrime			FALSE							
+RDBarkHFHet	F	0	-1	1	Triang	all	logit	~1					FALSE							
+RDBarkHFHet	pi	0		0	Square	all	logit	~1			TRUE	-1	TRUE							
+RDBarkHFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0	TRUE							
+RDBarkHFHet	c	1	-1	0	Square	all	logit			p	TRUE	0	TRUE							
+RDMSOccRepro	Phi0	1	0	0	Square	all	logit	~1			FALSE		FALSE	FALSE		0				
+RDMSOccRepro	Psi	1	-1	0	Square	all	logit	~1			FALSE		FALSE	TRUE					0	
+RDMSOccRepro	R	1	-1	0	Square	all	logit	~1			FALSE		FALSE	TRUE	TRUE				2	
+RDMSOccRepro	p	0	0	0	Square	all	logit	~1			FALSE		TRUE	TRUE					1	
+RDMSOccRepro	Delta	1	0	0	Square	all	logit	~1			FALSE		TRUE	TRUE	TRUE				2	
+RDMSOpenMCSeas	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE						
+RDMSOpenMCSeas	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE					
+RDMSOpenMCSeas	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1				
+RDMSOpenMCSeas	Omega	0	0		Square	all	mlogit	~1					FALSE	TRUE		1				
+RDMSOpenMCSeas	p	0	0	0	Square	all	logit	~1					TRUE	TRUE						
+RDMSOpenMCSeas	Delta	0	0	0	Triang	all	logit	~1					TRUE	TRUE						
+RDMSOpenMCSeas	pent	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE						
+RDMSOpenMCSeas	d	1	-1	0	Square	all	logit	~1					TRUE	TRUE						
+RDMSOpenMCSeas	alpha	0	-1	0	Square	all	mlogit	~1					TRUE	TRUE						
+RDMSOpenMCSeas	c	0	-1	1	Triang	all	logit	~1					TRUE	TRUE						
+PMDead	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+PMDead	S	0	0	1	STriang	all	logit	~mixture			TRUE	0								
+PMDead	r	0	0	0	Triang	all	logit	~1												
+REDead	sigmaS	0	1		Square	all	log	~1												
+REDead	S	0	0	1	Triang	all	logit	~1												
+REDead	sigmar	0	1		Square	all	log	~1												
+REDead	r	0	0	0	Triang	all	logit	~1												
+BurnhamLDRE	sigmaS	0	1		Square	all	log	~1												
+BurnhamLDRE	S	0	0	1	Triang	all	logit	~1												
+BurnhamLDRE	sigmap	0	1		Square	all	log	~1												
+BurnhamLDRE	p	1	-1	0	Triang	all	logit	~1												
+BurnhamLDRE	sigmar	0	1		Square	all	log	~1												
+BurnhamLDRE	r	0	0	0	Triang	all	logit	~1												
+BurnhamLDRE	sigmaF	0	1		Square	all	log	~1												
+BurnhamLDRE	F	0	-1	1	Triang	all	logit	~1												
+HugginsRE	p	0	0	0	Square	all	logit	~1	FALSE	c										
+HugginsRE	c	1	-1	0	Square	all	logit			p										
+HugginsRE	sigmap	0	1		Square	all	log	~1												
+OccRelClos	p	0	0	0	Square	all	logit	~1												
+OccRelClos	Psi	0	1		Square	all	logit	~1												
+OccRelClos	pent	1	-1	0	Square	all	mlogit	~1												
+OccRelClos	d	0	-1	0	Square	all	logit	~1												
+UnIdLogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE							
+UnIdLogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE							
+UnIdLogitNormalMR	N	0			Square	all	log	~session					TRUE							
+UnIdLogitNormalMR	r	0	0	0	Square	all	logit	~1					TRUE							
+UnIdPoissonMR	alpha	0	0	0	Square	all	log	~1												
+UnIdPoissonMR	sigma	0	0	0	Square	all	log	~1												
+UnIdPoissonMR	U	0	0	0	Square	all	log	~1												
+UnIdPoissonMR	Phi	0	-1	1	Triang	all	logit	~1												
+UnIdPoissonMR	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime										
+UnIdPoissonMR	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime										
+UnIdPoissonMR	r	0	0	0	Square	all	logit	~1												
+UnIdIELogitNormalMR	p	0	0	0	Square	all	logit	~1					TRUE							
+UnIdIELogitNormalMR	sigma	0		0	Square	all	log	~session					TRUE							
+UnIdIELogitNormalMR	Nbar	0			Square	all	log	~session					TRUE							
+UnIdIELogitNormalMR	alpha	0	-1	0	Square	all	identity	~1					TRUE							
+UnIdIELogitNormalMR	Nstar	0			Square	all	log	~session					TRUE							
+UnIdIELogitNormalMR	r	0	0	0	Square	all	logit	~1					TRUE							
+RDHugginsRE	S	0	-1	1	Triang	all	logit	~1					FALSE							
+RDHugginsRE	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime			FALSE							
+RDHugginsRE	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime			FALSE							
+RDHugginsRE	sigmap	0			Square	all	log	~1					TRUE							
+RDHugginsRE	p	0	0	0	Square	all	logit	~1	FALSE	c			TRUE							
+RDHugginsRE	c	1	-1	0	Square	all	logit			p			TRUE							
+RD2SpGEConOcc	PsiA	0	1		Square	all	logit	~1					FALSE							
+RD2SpGEConOcc	PsiBA	0	1		Square	all	logit	~1	FALSE	PsiBa			FALSE							
+RD2SpGEConOcc	PsiBa	0	1		Square	all	logit			PsiBA			FALSE							
+RD2SpGEConOcc	GammaA	0	-1		Square	all	logit			EpsilonA			FALSE							
+RD2SpGEConOcc	GammaB	0	-1		Square	all	logit			EpsilonB			FALSE							
+RD2SpGEConOcc	GammaAB	0	-1		Square	all	logit			EpsilonAB			FALSE							
+RD2SpGEConOcc	GammaBA	0	-1		Square	all	logit			EpsilonBA			FALSE							
+RD2SpGEConOcc	EpsilonA	0	-1		Square	all	logit	~1	FALSE	GammaA			FALSE							
+RD2SpGEConOcc	EpsilonB	0	-1		Square	all	logit	~1	FALSE	GammaB			FALSE							
+RD2SpGEConOcc	EpsilonAB	0	-1		Square	all	logit	~1	FALSE	GammaAB			FALSE							
+RD2SpGEConOcc	EpsilonBA	0	-1		Square	all	logit	~1	FALSE	GammaBA			FALSE							
+RD2SpGEConOcc	pA	0	0	0	Square	all	logit	~1	FALSE	pB			TRUE							
+RD2SpGEConOcc	pB	0	0	0	Square	all	logit			pA			TRUE							
+RD2SpGEConOcc	rA	0	0	0	Square	all	logit	~1					TRUE							
+RD2SpGEConOcc	rBA	0	0	0	Square	all	logit	~1	FALSE	rBa			TRUE							
+RD2SpGEConOcc	rBa	0	0	0	Square	all	logit	~1		rBA			TRUE							
+Densitypc	p	0	0	0	Square	all	logit	~1	FALSE	c										
+Densitypc	c	1	-1	0	Square	all	logit			p										
+Densitypc	ptilde	0	1		Square	all	log	~1												
+DensityRanpc	sigmap	0	1		Square	all	log	~1												
+DensityRanpc	p	0	0	0	Square	all	logit	~1	FALSE	c										
+DensityRanpc	c	1	-1	0	Square	all	logit			p										
+DensityRanpc	ptilde	0	1		Square	all	log	~1												
+PoissonMRacross	alpha	0	0	0	Square	all	log	~1												
+PoissonMRacross	sigma	0	0	0	Square	all	log	~1												
+PoissonMRacross	U	0	0	0	Square	all	log	~1												
+PoissonMRacross	Phi	0	-1	1	Triang	all	logit	~1												
+PoissonMRacross	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime										
+PoissonMRacross	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime										
+UnIdPoissonMRacross	alpha	0	0	0	Square	all	log	~1												
+UnIdPoissonMRacross	sigma	0	0	0	Square	all	log	~1												
+UnIdPoissonMRacross	U	0	0	0	Square	all	log	~1												
+UnIdPoissonMRacross	Phi	0	-1	1	Triang	all	logit	~1												
+UnIdPoissonMRacross	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime										
+UnIdPoissonMRacross	GammaPrime	2	-2	0	Triang	all	logit			GammaDoublePrime										
+UnIdPoissonMRacross	r	0	0	0	Square	all	logit	~1												
+ZiUnIdPoissonMRwithin	alpha	0	0	0	Square	all	log	~1												
+ZiUnIdPoissonMRwithin	sigma	0	0	0	Square	all	log	~1												
+ZiUnIdPoissonMRwithin	U	0	0	0	Square	all	log	~1												
+ZiUnIdPoissonMRwithin	Phi	0	-1	1	Triang	all	logit	~1												
+ZiUnIdPoissonMRwithin	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime										
+ZiUnIdPoissonMRwithin	GammaPrime	0	-1	0	Triang	all	logit			GammaDoublePrime										
+ZiUnIdPoissonMRwithin	r	0	0	0	Square	all	logit	~1												
+ZiUnIdPoissonMRwithin	w	0	0	0	Square	all	log	~1												
+ZiUnIdPoissonMRwithin	g	0	0	0	Square	all	log	~1												
+ZiUnIdPoissonMRacross	alpha	0	0	0	Square	all	log	~1												
+ZiUnIdPoissonMRacross	sigma	0	0	0	Square	all	log	~1												
+ZiUnIdPoissonMRacross	U	0	0	0	Square	all	log	~1												
+ZiUnIdPoissonMRacross	Phi	0	-1	1	Triang	all	logit	~1												
+ZiUnIdPoissonMRacross	GammaDoublePrime	0	-1	0	Triang	all	logit	~1	FALSE	GammaPrime										
+ZiUnIdPoissonMRacross	GammaPrime	0	-1	0	Triang	all	logit			GammaDoublePrime										
+ZiUnIdPoissonMRacross	r	0	0	0	Square	all	logit	~1												
+ZiUnIdPoissonMRacross	w	0	0	0	Square	all	logit	~1												
+ZiUnIdPoissonMRacross	g	0	0	0	Square	all	logit	~1												
+HidMarkov	S	0	-1	1	Triang	all	logit	~stratum						TRUE						
+HidMarkov	p	1	-1	0	Triang	all	logit	~stratum						TRUE						
+HidMarkov	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE					
+HidMarkov	pi	0	0		Square	all	mlogit	~1						TRUE		1				TRUE
+HidMarkov	Delta	1	-1	0	Triang	all	mlogit	~1						TRUE						TRUE

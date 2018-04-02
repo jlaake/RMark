@@ -40,6 +40,8 @@
 #' @param sub.stratum the number of strata to subtract for parameters that use 
 #' mlogit across strata like pi and Omega for RDMSOpenMisClass
 #' @param limits For RDMSOccRepro values that set row and col (if any) start on states
+#' @param events vector of events if needed for parameter
+#' @param use.events if TRUE, adds events to design data
 #' @return design.data: a data frame containing all of the design data fields
 #' for a particular type of parameter \item{group}{group factor level}
 #' \item{age}{age factor level} \item{time}{time factor level}
@@ -53,7 +55,8 @@
 compute.design.data <-
 function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
            secondary,nstrata=1,tostrata=FALSE,strata.labels=NULL,
-           subtract.stratum=strata.labels,common.zero=FALSE,sub.stratum=0,limits=NULL)
+           subtract.stratum=strata.labels,common.zero=FALSE,sub.stratum=0,limits=NULL,
+           events=NULL,use.events=NULL)
 {
 # -------------------------------------------------------------------------------------------------------------
 #
@@ -122,6 +125,9 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
 	  start.stratum=1
   else
 	  start.stratum=as.numeric(limits[1])
+  num.events=1
+  if(!is.null(events)) num.events=length(events)
+  for(jjj in 1:num.events)
   for(j in 1:number.of.groups)
   for (jj in start.stratum:(nstrata-sub.stratum))
   for(l in 1:num.sessions)
@@ -268,6 +274,11 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
           add.design.data=cbind(add.design.data,rep(l,ncol))
           dd.names=c(dd.names,"session")
         }
+#       For Hidden Markov model pi and Delta parameters add event to data
+        if(!is.null(use.events)){
+          add.design.data=cbind(add.design.data,rep(jjj,ncol))
+          dd.names=c(dd.names,"event")
+        }
 #
 #     Add rows to existing design data
 #
@@ -300,6 +311,8 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
       design.data$stratum=as.factor(strata.labels[design.data$stratum])
       if(!is.null(design.data$tostratum))
         design.data$tostratum=as.factor(strata.labels[design.data$tostratum])
+   if(!is.null(use.events))
+      design.data$event=as.factor(data$events[design.data$event])
 #
 #  Next add grouping variables
 #

@@ -567,7 +567,7 @@ else
                          parameters[[i]]$type,parameters[[i]]$mix,parameters[[i]]$rows,
                          parameters[[i]]$pim.type,parameters[[i]]$secondary, nstrata,
                          tostrata,strata.labels,subtract.stratum,common.zero=common.zero,
-						 sub.stratum=sub.stratum,limits=limits)
+						             sub.stratum=sub.stratum,limits=limits,events=data$events,use.events=parameters[[i]]$events)
          if(!is.null(parameters[[i]]$mix) && parameters[[i]]$mix)design.data$mixture=as.factor(design.data$mixture)
          if(parameters[[i]]$secondary)
 		 {

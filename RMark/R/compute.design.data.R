@@ -126,7 +126,7 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
   else
 	  start.stratum=as.numeric(limits[1])
   num.events=1
-  if(!is.null(events)) num.events=length(events)
+  if(!is.null(use.events)) num.events=length(events)
   for(jjj in 1:num.events)
   for(j in 1:number.of.groups)
   for (jj in start.stratum:(nstrata-sub.stratum))

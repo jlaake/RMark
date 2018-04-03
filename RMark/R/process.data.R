@@ -103,8 +103,8 @@
 #' @param nocc number of occasions for Nest type; either nocc or time.intervals
 #' must be specified
 #' @param strata.labels vector of single character values used in capture
-#' history(ch) for ORDMS, CRDMS, RDMSOccRepro models; it can contain one more value beyond what is
-#' in ch for an unobservable state except for RDMSOccRepro which is used to specify strata ordering (eg 0 not-occupied, 1 occupied no repro, 2 occupied with repro.
+#' history(ch) for ORDMS, CRDMS, RDMSOccRepro models; it can contain more values beyond what is
+#' in ch for unobservable states except for RDMSOccRepro which is used to specify strata ordering (eg 0 not-occupied, 1 occupied no repro, 2 occupied with repro.
 #' @param counts named list of numeric vectors (one group) or matrices (>1
 #' group) containing counts for mark-resight models
 #' @param reverse if set to TRUE, will reverse timing of transition (Psi) and
@@ -262,7 +262,12 @@ robust.occasions<-function(times)
       # Exclude "0" and "." from strata vector and other values depending on MS model
       exclude=c("0",".")
       if(model=="MSLiveDead") exclude=c(exclude,"1")
-      if(model=="HidMarkov") exclude=c(exclude,events)
+      if(model=="HidMarkov") 
+      {
+        if(is.null(strata.labels))stop("strata.labels must be specified for Hidden Markov model")
+        if(is.null(events))stop("events must be specified for Hidden Markov model")
+        exclude=c(exclude,events)
+      }
       if(model%in%c("RDMSOpenMisClass","RDMSMisClass","RDMS2MisClass","RDMSOpenMCSeas"))exclude=c(exclude,"u")
       inp.strata.labels=sort(ch.values[!(ch.values %in% exclude)])
       nstrata = length(inp.strata.labels) 

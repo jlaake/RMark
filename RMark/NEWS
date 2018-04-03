@@ -1,4 +1,8 @@
-RMark 2.2.5 (1 Nov 2011)
+RMark 2.2.5 (3 April 2018)
+
+NEW FEATURES
+
+* Added model HidMarkov that is now in MARK; this requires user to specify the strata.labels and events arguments in process.data.
 
 BUG FIXES
 

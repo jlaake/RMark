@@ -962,7 +962,10 @@ create.pim=function(nocc,parameters,npar,mixtures)
                 nmix=mixtures+parameters$rows
         for(k in 1:nmix)
         {
-            mat=rbind(mat,npar:(npar+ncol-1))
+            if(parameters$pim.type!="constant")
+               mat=rbind(mat,npar:(npar+ncol-1))
+            else
+              mat=rbind(mat,rep(npar,ncol))
             npar=npar+ncol
         }
    }
@@ -1036,6 +1039,10 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   temp.rev=data$reverse
   data$reverse=FALSE
   full.ddl=make.design.data(data,parameters=ddl$pimtypes)
+  complete=TRUE
+  for(i in 1:length(parameters))
+    if(nrow(full.ddl[[i]])!=nrow(ddl[[i]])) complete=FALSE
+  if(complete)full.ddl=ddl
   data$reverse=temp.rev
   parameters=parameters[names(parameters)%in%names(full.ddl)]
   for(j in names(parameters))

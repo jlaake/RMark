@@ -8,7 +8,8 @@ make.mark.model(data, ddl, parameters = list(), title = "",
   model.name = NULL, initial = NULL, call = NULL, default.fixed = TRUE,
   options = NULL, profile.int = FALSE, chat = NULL, simplify = TRUE,
   input.links = NULL, parm.specific = FALSE, mlogit0 = FALSE,
-  hessian = FALSE, accumulate = TRUE, icvalues = NULL, wrap = TRUE)
+  hessian = FALSE, accumulate = TRUE, icvalues = NULL, wrap = TRUE,
+  nodes = 101, useddl = FALSE)
 }
 \arguments{
 \item{data}{Data list resulting from function \code{\link{process.data}}}
@@ -55,6 +56,10 @@ have its link changed to logit so it can be simplified}
 
 \item{wrap}{if TRUE, data lines are wrapped to be length 80; if length of a row is not a 
 problem set to FALSE and it will run faster}
+
+\item{nodes}{number of integration nodes for individual random effects (min 15, max 505, default 101)}
+
+\item{useddl}{if TRUE and no rows of ddl are missing (deleted) then it will use ddl in place of full.ddl that is created internally.}
 }
 \value{
 model: a MARK object except for the elements \code{output} and
@@ -263,7 +268,7 @@ of the design data. See \code{\link{make.design.data}} and material below.
 The default value for fixing parameters for deleted design data can be
 changed with the \code{default=value} in the parameter list.
 
-The final useful element of the parameter list is the
+Another useful element of the parameter list is the
 \code{remove.intercept} argument.  It is set to TRUE to forcefully remove
 the intercept.  In R notation this can be done by specifiying the formula
 notation ~-1+... but in formula with nested interactions of factor variables
@@ -287,6 +292,10 @@ factor variable because
 will not work because while the stratum:tostratum effectively includes an
 intercept it is equivalent to using an identity matrix and is not specified
 as treatment contrast with one of the columns as all 1's.
+
+The final argument of the parameter list is contrast which can be used to change
+the contrast used for model.matrix.  It uses the default if none specified. The form is
+shown in ?model.matrix.
 
 The argument simplify determines whether the pims are simplified such that
 only indices for unique and fixed real parameters are used.  For example,

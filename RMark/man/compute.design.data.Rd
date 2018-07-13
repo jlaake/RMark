@@ -8,7 +8,8 @@ use)}
 compute.design.data(data, begin, num, type = "Triang", mix = FALSE,
   rows = 0, pim.type = "all", secondary, nstrata = 1, tostrata = FALSE,
   strata.labels = NULL, subtract.stratum = strata.labels,
-  common.zero = FALSE, sub.stratum = 0, limits = NULL)
+  common.zero = FALSE, sub.stratum = 0, limits = NULL, events = NULL,
+  use.events = NULL)
 }
 \arguments{
 \item{data}{data list created by \code{\link{process.data}}}
@@ -45,6 +46,10 @@ for models that share formula like p and c with the Time model}
 mlogit across strata like pi and Omega for RDMSOpenMisClass}
 
 \item{limits}{For RDMSOccRepro values that set row and col (if any) start on states}
+
+\item{events}{vector of events if needed for parameter}
+
+\item{use.events}{if TRUE, adds events to design data}
 }
 \value{
 design.data: a data frame containing all of the design data fields

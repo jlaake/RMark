@@ -103,7 +103,7 @@
 #' @param nocc number of occasions for Nest type; either nocc or time.intervals
 #' must be specified
 #' @param strata.labels vector of single character values used in capture
-#' history(ch) for ORDMS, CRDMS, RDMSOccRepro models; it can contain more values beyond what is
+#' history(ch) for ORDMS, CRDMS, RDMSOccRepro, HidMarkov models; it can contain more values beyond what is
 #' in ch for unobservable states except for RDMSOccRepro which is used to specify strata ordering (eg 0 not-occupied, 1 occupied no repro, 2 occupied with repro.
 #' @param counts named list of numeric vectors (one group) or matrices (>1
 #' group) containing counts for mark-resight models
@@ -241,7 +241,7 @@ robust.occasions<-function(times)
 		   else
 			   stop("\nch field must be a character string\n")
 	   } else
-	   if(!model.list$occupancy & !model.list$model %in% c("LogitNormalMR","IELogitNormalMR"))
+	   if(!model.list$occupancy & !model.list$model %in% c("LogitNormalMR","UnIdLogitNormalMR","IELogitNormalMR","UnIdIELogitNormalMR","ZiUnIdPoissonMRwithin","ZiUnIdPoissonMRacross"))
 		   if(any(sapply(strsplit(data$ch,""),function(x) all(x=="0"))))
 			   stop("\nall 0 ch encountered. MARK will not accept them\n")
 	   if(!is.null(data$freq))

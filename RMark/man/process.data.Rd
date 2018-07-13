@@ -7,7 +7,8 @@
 process.data(data, begin.time = 1, model = "CJS", mixtures = 1,
   groups = NULL, allgroups = FALSE, age.var = NULL, initial.ages = c(0),
   age.unit = 1, time.intervals = NULL, nocc = NULL,
-  strata.labels = NULL, counts = NULL, reverse = FALSE, areas = NULL)
+  strata.labels = NULL, counts = NULL, reverse = FALSE, areas = NULL,
+  events = NULL)
 }
 \arguments{
 \item{data}{A data frame with at least one field named \code{ch} which is
@@ -50,8 +51,8 @@ level of the age variable \code{groups[age.var]}}
 must be specified}
 
 \item{strata.labels}{vector of single character values used in capture
-history(ch) for ORDMS, CRDMS, RDMSOccRepro models; it can contain one more value beyond what is
-in ch for an unobservable state except for RDMSOccRepro which is used to specify strata ordering (eg 0 not-occupied, 1 occupied no repro, 2 occupied with repro.}
+history(ch) for ORDMS, CRDMS, RDMSOccRepro, HidMarkov models; it can contain more values beyond what is
+in ch for unobservable states except for RDMSOccRepro which is used to specify strata ordering (eg 0 not-occupied, 1 occupied no repro, 2 occupied with repro.}
 
 \item{counts}{named list of numeric vectors (one group) or matrices (>1
 group) containing counts for mark-resight models}
@@ -60,6 +61,8 @@ group) containing counts for mark-resight models}
 survival (S) in Multistratum models}
 
 \item{areas}{values of areas (1 per group) for Densitypc set of models}
+
+\item{events}{vector of character events for Hidden Markov models}
 }
 \value{
 processed.data (a list with the following elements)

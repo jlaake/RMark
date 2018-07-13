@@ -7,7 +7,7 @@
 rerun.mark(model, data, ddl, initial, output = TRUE, title = "",
   invisible = TRUE, adjust = TRUE, se = FALSE, filename = NULL,
   prefix = "mark", default.fixed = TRUE, silent = FALSE, retry = 0,
-  realvcv = FALSE, external = FALSE, threads = -1)
+  realvcv = FALSE, external = FALSE, threads = -1, ...)
 }
 \arguments{
 \item{model}{previously run MARK model}
@@ -52,6 +52,8 @@ and stored in the model results}
 the workspace; the filename is kept in its place}
 
 \item{threads}{number of cpus to use with mark.exe if positive or number of cpus to remain idle if negative}
+
+\item{...}{argument values like nodes etc for call to make.mark.model}
 }
 \value{
 model: MARK model object with the base filename stored in

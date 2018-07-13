@@ -1,15 +1,29 @@
-RMark 2.2.5 (19 May 2018)
+RMark 2.2.5 (10 July 2018)
 
 NEW FEATURES
 
 * Added model HidMarkov that is now in MARK; this requires user to specify the strata.labels and events arguments in process.data.
 
+* nodes argument added to mark to control integration for random effects; default of 101 nodes used which is default in MARK; code from Brett McClintock
+
+* added contrasts argument to model parameter specification so contrasts can be adjusted for various factor variables in a formula. Thanks to Evan Cooch for suggesting this need.
+
 CHANGES 
-* In make.mark.model, if ddl is complete (no records deleted) then the ddl is used rather than the full.ddl which was created to handle purposefully deleted records to assign the default value.  Deleting ddl records was added but I reccomend against it because it can cause problems with mlogit link.  By using ddl instead of full.ddl, you can change the labels used for the time factor variable in ddl. In full.ddl they are always the default values using begin.time and time.intervals.  However, when you use decimal times this becomes problematic if you want to use a time-vaying individual covariate which has names limited to 10 characters.  Now you can change the labels to something that can be used as long as you don't delete records in ddl. 
+* In make.mark.model, if ddl is complete (no records deleted) then the ddl is used if argument useddl=TRUE, rather than the full.ddl which was created to handle purposefully deleted records to assign the default value.  Deleting ddl records was added but I recommend against it because it can cause problems with mlogit link.  By using ddl instead of full.ddl, you can change the labels used for the time factor variable in ddl. In full.ddl they are always the default values using begin.time and time.intervals.  However, when you use decimal times this becomes problematic if you want to use a time-vaying individual covariate which has names limited to 10 characters.  Now you can change the labels to something that can be used as long as you don't delete records in ddl. However, you can't assign the same time, session, cohort, age, group values to rows in the design data because these are used to label rows of the design matrix.
+
+* in process.data changes made for mark-resight models to allow all 0 encounter history; code from Brett McClintock
+
+* derived parameters added to derivedpar.txt for mark-resight models; from Brett McClintock
+
+* argument ... passed from rerun.mark to make.mark.model so any argument for that function can be passed to it from rerun.mark.
+
+* Updated list of derived parameters to match changes in MARK for supported models. Thanks to Carl Schwarz for discovering this problem.
 
 BUG FIXES
 
 * If a marklist was passed to popan.derived, the returned value of N.vcv was incorrect. This did not affect any other quantities.  Thanks to Sima Usvyatsov for discovering the problem. 
+
+* If there were all 0 rows in the design matrix and there were fixed parameters, the rows that were all 0 were improperly listed.
 
 
 RMark 2.2.4 (7 Aug 2017)

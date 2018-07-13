@@ -200,7 +200,7 @@
 #' The default value for fixing parameters for deleted design data can be
 #' changed with the \code{default=value} in the parameter list.
 #' 
-#' The final useful element of the parameter list is the
+#' Another useful element of the parameter list is the
 #' \code{remove.intercept} argument.  It is set to TRUE to forcefully remove
 #' the intercept.  In R notation this can be done by specifiying the formula
 #' notation ~-1+... but in formula with nested interactions of factor variables
@@ -224,6 +224,10 @@
 #' will not work because while the stratum:tostratum effectively includes an
 #' intercept it is equivalent to using an identity matrix and is not specified
 #' as treatment contrast with one of the columns as all 1's.
+#' 
+#' The final argument of the parameter list is contrast which can be used to change
+#' the contrast used for model.matrix.  It uses the default if none specified. The form is
+#' shown in ?model.matrix.
 #' 
 #' The argument simplify determines whether the pims are simplified such that
 #' only indices for unique and fixed real parameters are used.  For example,
@@ -359,6 +363,8 @@
 #' @param icvalues numeric vector of individual covariate values for computation of real values
 #' @param wrap if TRUE, data lines are wrapped to be length 80; if length of a row is not a 
 #'   problem set to FALSE and it will run faster
+#' @param nodes number of integration nodes for individual random effects (min 15, max 505, default 101)
+#' @param useddl if TRUE and no rows of ddl are missing (deleted) then it will use ddl in place of full.ddl that is created internally.
 #' @return model: a MARK object except for the elements \code{output} and
 #' \code{results}. See \code{\link{mark}} for a detailed description of the
 #' list contents.
@@ -412,7 +418,7 @@ make.mark.model <-
 function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,
 		default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,
 		input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,hessian=FALSE,accumulate=TRUE,
-		icvalues=NULL,wrap=TRUE)
+           icvalues=NULL,wrap=TRUE,nodes=101,useddl=FALSE)
 {
 
 #  *******************  INTERNAL FUNCTIONS    *********************************
@@ -1019,7 +1025,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(length(parameters)>0)
   for(i in 1:length(parameters))
      for(j in 1:length(names(parameters[[i]])))
-        if(!(names(parameters[[i]])[j]%in%c("fixed","formula","link","share","remove.intercept","default")))
+        if(!(names(parameters[[i]])[j]%in%c("fixed","formula","link","share","remove.intercept","default","contrasts")))
         {
            message("\nInvalid model specification for parameter ",names(parameters)[i],".\nUnrecognized element ",names(parameters[[i]])[j])
            stop()
@@ -1040,9 +1046,9 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   data$reverse=FALSE
   full.ddl=make.design.data(data,parameters=ddl$pimtypes)
   complete=TRUE
-  for(i in 1:length(parameters))
-    if(nrow(full.ddl[[i]])!=nrow(ddl[[i]])) complete=FALSE
-  if(complete)full.ddl=ddl
+  for(iname in names(parameters)[names(parameters)%in%names(full.ddl)])
+    if(nrow(full.ddl[[iname]])!=nrow(ddl[[iname]])) complete=FALSE
+  if(complete&useddl)full.ddl=ddl
   data$reverse=temp.rev
   parameters=parameters[names(parameters)%in%names(full.ddl)]
   for(j in names(parameters))
@@ -1245,11 +1251,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 
   if(is.null(nocc.secondary))
      if(is.null(data$events))
-        string=paste("proc title ",title,";\nproc chmatrix occasions=",nocc," groups=",number.of.groups," etype=",etype)
+      string=paste("proc title ",title,";\nproc chmatrix occasions=",nocc," groups=",number.of.groups," etype=",etype," Nodes=",nodes)
      else
        string=paste("proc title ",title,";\nproc chmatrix occasions=",nocc," groups=",number.of.groups," etype=",etype, " events=",length(data$events),sep="")
   else
-     string=paste("proc title ",title,";\nproc chmatrix occasions=",sum(nocc.secondary)," groups=",number.of.groups," etype=",etype)
+     string=paste("proc title ",title,";\nproc chmatrix occasions=",sum(nocc.secondary)," groups=",number.of.groups," etype=",etype," Nodes=",nodes)
   if(model.list$strata)string=paste(string," strata=",data$nstrata,sep="")
   if(!is.null(covariates))
   {
@@ -1625,7 +1631,10 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #       Compute design matrix with model.matrix
 #         31 Jan 06; made change to allow for NA or missing design data
 #
-        dm=model.matrix(parameters[[parx]]$formula,ddl[[parx]])
+        if(!is.null(parameters[[parx]]$contrasts))
+           dm=model.matrix(parameters[[parx]]$formula,ddl[[parx]],contrasts.arg=parameters[[parx]]$contrasts)
+        else
+          dm=model.matrix(parameters[[parx]]$formula,ddl[[parx]])
 #
 #       In cases with nested interactions it is necessary to remove the intercept
 #       to avoid over-parameterizing the model; this is user-specified
@@ -2015,7 +2024,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 # ones that correspond to fixed parameters.
 #
   if(simplify)
-  {                               
+  {                      
       dm=model$simplify$design.matrix
       fixed.rows=unique(model$simplify$pim.translation[model$fixed$index])
       zero.rows=(1:dim(dm)[1])[apply(dm,1,function(x) return(all(x=="0")))]
@@ -2029,7 +2038,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
       {
          if(any(! (zero.rows%in%fixed.rows)))
             stop("One or more formulae are invalid because the design matrix has all zero rows for the following non-fixed parameters\n",
-               paste(row.names(dm)[! (zero.rows%in%fixed.rows)],collapse=","))
+               paste(row.names(dm)[zero.rows][!(zero.rows %in% fixed.rows)],collapse=","))
       }
   }
 #

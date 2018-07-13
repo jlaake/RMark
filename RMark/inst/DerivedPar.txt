@@ -191,7 +191,9 @@ MarkNumber	dpar_label
 110	lambda Rate of Change
 110	log odds lambda
 111	Occupancy
+111	Expected p
 112	Occupancy
+112	Expected p
 113	Species Interaction Factor
 114	Mu Mean Resighting Rate
 115	N Population Size
@@ -205,12 +207,22 @@ MarkNumber	dpar_label
 119	N Population Size
 119	Method 1 Residency Time
 119	Method 2 Residency Time
+119	Alpha
+119	Arrival
+119	Departure
 120	Mu Mean Resighting Rate
 120	Population Estimate
 124	Phi_t transition matrix
+124	1 - psi
+124	psi
+124	psi_1
+124	psi_2
 126	N Population Size
 126	Method 1 Residency Time
 126	Method 2 Residency Time
+126	Alpha
+126	Arrival
+126	Departure
 127	Density
 128	Density
 129	Density
@@ -237,6 +249,9 @@ MarkNumber	dpar_label
 142	Method 1 Attribute Duration Time
 142	Method 2 Attribute Duration Time
 144	Method 1 Individual Residency Time
+144	Alpha
+144	Arrival
+144	Departure
 145	N Population Size
 146	N Population Size
 147	N Population Size
@@ -267,4 +282,15 @@ MarkNumber	dpar_label
 160	Lambda Mean Resightings
 160	Pr(Captured 1 or more times)
 161	Density
-
+171	N Population Size
+171	Lambda Mean Resightings
+171	Pr(Captured 1 or more times)
+172	N Population Size
+172	Lambda Mean Resightings
+172	Pr(Captured 1 or more times)
+173	N Population Size
+173	Lambda Mean Resightings
+173	Pr(Captured 1 or more times)
+174	N Population Size
+174	Lambda Mean Resightings
+174	Pr(Captured 1 or more times)

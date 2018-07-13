@@ -40,6 +40,7 @@
 #' @param external if TRUE the mark object is saved externally rather than in
 #' the workspace; the filename is kept in its place
 #' @param threads number of cpus to use with mark.exe if positive or number of cpus to remain idle if negative
+#' @param ... argument values like nodes etc for call to make.mark.model
 #' @return model: MARK model object with the base filename stored in
 #' \code{output} and the extracted \code{results} from the output file appended
 #' onto list; see \code{\link{mark}} for a detailed description of a
@@ -120,32 +121,10 @@
 #' }
 rerun.mark <-
 function(model,data,ddl,initial,output=TRUE,title="",invisible=TRUE,adjust=TRUE,se=FALSE,
- filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,realvcv=FALSE,external=FALSE,threads=-1)
+ filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,realvcv=FALSE,external=FALSE,threads=-1,...)
 {
 # -----------------------------------------------------------------------------------------------------------------------
 # rerun.mark -  reruns previous mark model with different initial values
-#
-# Arguments:
-#
-#  model                - previously run mark model
-#  data                 - processed dataframe
-#  ddl                  - design data list which contains an element for each parameter type
-#  initial              - vector of initial values for beta parameters
-#  output               - if TRUE produces summary of model input and model output
-#  invisible            - if TRUE, window for running MARK is hidden
-#  adjust               - if TRUE, adjusts npar to # of cols in design matrix, modifies AIC and records both
-#  se                   - if TRUE, se and confidence intervals are shown in summary sent to screen
-#  filename             - base filename for MARK input and output files
-#  prefix               - base filename prefix; default is "mark" for files named marknnn.*
-#  default.fixed        - if TRUE, default fixed values are assigned to any parameters missing from the full design data
-#  silent               - if TRUE, errors that are encountered are suppressed
-#  retry                - number of reanalyses to perform with new starting values when one or more parameters are singular
-#  realvcv              - if TRUE the vcv matrix of the real parameters is extracted and stored in the model results
-#  external             - if TRUE the mark object is saved externally rather than in the workspace; the filename is kept in its place
-#
-#  Value: 
-#
-#  model - a MARK object model containing output and extracted results
 #
 #  Functions used: make.mark.model, run.mark.model, summary.mark
 # 
@@ -179,7 +158,7 @@ while(i<=retry & !converge)
 
    model<-make.mark.model(data,title=title,parameters=model.parameters,
           ddl=ddl,initial=initial,call=match.call(),default.fixed=default.fixed,
-          model.name=model$model.name)
+          model.name=model$model.name,...)
    model$model.parameters=model.parameters
 #
 # Summarize model input if output=TRUE
@@ -192,7 +171,7 @@ while(i<=retry & !converge)
 #
 # Run model
 #
-   runmodel<-try(run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,threads=threads,),silent=silent)
+   runmodel<-try(run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,threads=threads),silent=silent)
    if(class(runmodel)[1]=="try-error")
      stop("\n\n********Following model failed to run :",model$model.name,"**********\n\n")
    else

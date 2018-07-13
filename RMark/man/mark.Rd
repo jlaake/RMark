@@ -15,7 +15,8 @@ mark(data, ddl = NULL, begin.time = 1, model.name = NULL, model = "CJS",
   profile.int = FALSE, chat = NULL, reverse = FALSE, run = TRUE,
   input.links = NULL, parm.specific = FALSE, mlogit0 = FALSE,
   threads = -1, hessian = FALSE, accumulate = TRUE, allgroups = FALSE,
-  strata.labels = NULL, counts = NULL, icvalues = NULL, wrap = TRUE)
+  strata.labels = NULL, counts = NULL, icvalues = NULL, wrap = TRUE,
+  events = NULL, nodes = 101, useddl = FALSE)
 }
 \arguments{
 \item{data}{Either the raw data which is a dataframe with at least one
@@ -137,6 +138,12 @@ group) containing counts for mark-resight models}
 
 \item{wrap}{if TRUE, data lines are wrapped to be length 80; if length of a row is not a 
 problem set to FALSE and it will run faster}
+
+\item{events}{vector of character events for Hidden Markov models}
+
+\item{nodes}{number of integration nodes for individual random effects (min 15, max 505, default 101)}
+
+\item{useddl}{if TRUE and no rows of ddl are missing (deleted) then it will use ddl in place of full.ddl that is created internally.}
 }
 \value{
 model: a MARK object containing output and extracted results. It is

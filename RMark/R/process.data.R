@@ -312,10 +312,15 @@ robust.occasions<-function(times)
                if(substr(model,1,6)!="RDBark" & !(model%in%c("RDBarkHug","Barker","MSOccupancy","PoissonMR","UnIdPoissonMR","PoissonMRacross","UnIdPoissonMRacross","ZiUnIdPoissonMRwithin","ZiUnIdPoissonMRacross")))
                   stop(paste("\nIncorrect ch values in data:",paste(ch.values,collapse=""),"\n",sep=""))
                else
-				  if(model%in%c("PoissonMR","UnIdPoissonMR","PoissonMRacross","UnIdPoissonMRacross","ZiUnIdPoissonMRwithin","ZiUnIdPoissonMRacross"))
-				  {			  
-					  if(any(!ch.values%in%c(".",as.character(0:9),"+","-")))
-						  stop(paste("\nIncorrect ch values in data:",paste(ch.values,collapse=""),"\n",sep=""))
+                 if(model%in%c("PoissonMR","UnIdPoissonMR","PoissonMRacross","UnIdPoissonMRacross"))
+                 {			  
+                   if(any(!ch.values%in%c(".",as.character(0:9),"+","-")))
+                     stop(paste("\nIncorrect ch values in data:",paste(ch.values,collapse=""),"\n",sep=""))
+                 } else
+                   if(model%in%c("ZiUnIdPoissonMRwithin","ZiUnIdPoissonMRacross"))
+                   {			  
+                     if(any(!ch.values%in%c(".",as.character(0:9),"+","-","*")))
+                       stop(paste("\nIncorrect ch values in data:",paste(ch.values,collapse=""),"\n",sep=""))
 				  } else
 				  {
 				      if(any(!ch.values%in%c(".","0","1","2")))

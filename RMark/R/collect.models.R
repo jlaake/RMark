@@ -20,7 +20,7 @@
 #' 
 #' @param lx if NULL, constructs vector of object names (\code{ls()}) from
 #' frame of calling function otherwise it uses specifed names in \code{lx}
-#' @param type either NULL (for all types) or a character model type (e.g.
+#' @param type either NULL (for all types) or a character vector model type (e.g.
 #' \code{type="CJS"})
 #' @param table if TRUE, a table of model results is also included in the
 #' returned list

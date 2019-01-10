@@ -1111,7 +1111,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 	 if(substr(etype,1,7)=="Density")
 	 {
 		 accumulate=FALSE
-		 zz=cbind(zz,data$data$TotalLocations,data$data$TotalIn)
+		 zz=cbind(zz,data$data$TotalIn,data$data$TotalLocations)
 	 }
      zz=cbind(zz,data$freq)
   }
@@ -1300,12 +1300,10 @@ create.agenest.var=function(data,init.agevar,time.intervals)
             zz=zzd
      }
   }
-  write(strwrap(string,100,prefix=" "),file=outfile,append=TRUE)
   if(!is.null(data$areas))
-  {
 	  string=paste(string,"Areas ",paste(data$areas,collapse=" "),";")
-      write(strwrap(string,100,prefix=" "),file=outfile,append=TRUE)
-  }
+  write(strwrap(string,100,prefix=" "),file=outfile,append=TRUE)
+
 #
 #  Output group labels
 #

@@ -1,3 +1,16 @@
+RMark 2.2.6 (21 December 2018)
+
+NEW FEATURES
+
+* In collect.model.names code was changed to accept a vector of models to be included rather than a single value or all models in the workspace.  Great suggestion by Carl Schwarz.
+
+BUG FIXES
+
+* shared submissive parameters in model RD2SpGEConOcc were patched in v2.2.1 but one was missed which was astutely found by Carl Schwarz. It is patched here.
+
+* For DensityPC models, the TotalLocations and TotalIn fields were swapped and an extra proc chmatrix was added which prevented models from running. Thanks to Jake Ivan and Eric Newkirk for identifying the problems. 
+
+
 RMark 2.2.5 (10 July 2018)
 
 NEW FEATURES
@@ -24,6 +37,8 @@ BUG FIXES
 * If a marklist was passed to popan.derived, the returned value of N.vcv was incorrect. This did not affect any other quantities.  Thanks to Sima Usvyatsov for discovering the problem. 
 
 * If there were all 0 rows in the design matrix and there were fixed parameters, the rows that were all 0 were improperly listed.
+
+* shared submissive parameters in model RD2SpGEConOcc were patched in v2.2.1 but one was missed which was astutely found by Carl Schwarz. It is patched here.
 
 
 RMark 2.2.4 (7 Aug 2017)

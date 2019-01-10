@@ -85,7 +85,7 @@
 #' @param model Type of analysis model. See \code{\link{mark}} for a list of
 #' possible values for \code{model}
 #' @param mixtures Number of mixtures in closed capture models with
-#' heterogeneity or number of secondary samples for MultScaleOcc model
+#' heterogeneity or number of secondary samples for MultScalOcc/RDMultScalOcc model
 #' @param groups Vector of factor variable names (in double quotes) in
 #' \code{data} that will be used to create groups in the data. A group is
 #' created for each unique combination of the levels of the factor variables in
@@ -328,7 +328,7 @@ robust.occasions<-function(times)
 #
 #  If this is a robust design, compute number of primary and secondary occasions
 #
-   if(model.list$robust &model!="MultScalOcc")
+   if(model.list$robust &!model%in%c("MultScalOcc","RDMultScalOcc"))
    {
       if(is.null(time.intervals))
          stop("\nTime intervals must be specified for a robust design\n")
@@ -351,7 +351,7 @@ robust.occasions<-function(times)
 	   nocc=model.list$nocc
 	   nocc.secondary=NULL
 	   num=model.list$num
-	   if(model=="MultScalOcc"){
+	   if(model%in%c("MultScalOcc","RDMultScalOcc")){
 		   nocc.secondary=mixtures
 		   if(nocc==nocc.secondary*(nocc %/% nocc.secondary))
 		   {
@@ -368,9 +368,9 @@ robust.occasions<-function(times)
 #
       if(is.null(time.intervals))
           if(model=="MultScalOcc")
-			  time.intervals=rep(1,nocc.secondary[1]*nocc-1)
-	      else
-		      time.intervals=rep(1,nocc+model.list$num)
+			      time.intervals=rep(1,nocc.secondary[1]*nocc-1)
+	        else
+		        time.intervals=rep(1,nocc+model.list$num)
       else
          if(length(time.intervals)!=(nocc+num))
              stop("Incorrect number of time intervals")

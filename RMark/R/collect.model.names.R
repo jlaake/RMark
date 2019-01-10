@@ -43,7 +43,7 @@ function(lx, type=NULL, warning=TRUE)
 # Arguments:        
 #
 #  lx             - listing of R objects
-#  type           - either NULL(all models) or a specific model type (eg "CJS")
+#  type           - either NULL(all models) or a character vector of model types (eg "CJS")
 #  warning        - if TRUE, gives message that models not found
 #
 # Value:
@@ -57,7 +57,9 @@ function(lx, type=NULL, warning=TRUE)
 #
 # Make sure type is correct if not NULL and assign to model
 #
-if(!is.null(type)) setup.model(type,0)
+if(!is.null(type))
+  for(tt in type)
+    setup.model(tt,0)
 #
 # Collect models from parent.frame of a particular "type" if any.
 #
@@ -71,7 +73,7 @@ for (i in 1:length(lx))
      if(is.null(type))
         model.list=c(model.list,lx[i])
      else
-        if(classval[2]==type)
+        if(classval[2]%in%type)
            model.list=c(model.list,lx[i])
 }
 #

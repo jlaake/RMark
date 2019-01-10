@@ -4,9 +4,9 @@
 \alias{covariate.predictions}
 \title{Compute estimates of real parameters for multiple covariate values}
 \usage{
-covariate.predictions(model, data = NULL, indices = NULL, drop = TRUE,
-  revised = TRUE, mata = FALSE, normal.lm = FALSE, residual.dfs = 0,
-  alpha = 0.025, ...)
+covariate.predictions(model, data = NULL, indices = NULL,
+  drop = TRUE, revised = TRUE, mata = FALSE, normal.lm = FALSE,
+  residual.dfs = 0, alpha = 0.025, ...)
 }
 \arguments{
 \item{model}{MARK model object or marklist}

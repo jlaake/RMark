@@ -101,6 +101,7 @@ MarkNumber	model	etype	robust	closed	occupancy	derived	default.mixtures	num	divi
 144	OccRelClos	OccRelClos	FALSE	FALSE	TRUE	TRUE	1	0	1	FALSE
 145	HugginsRE	HugginsRE	FALSE	TRUE	FALSE	TRUE	1	0	1	FALSE
 146	RDHugginsRE	RDHugginsRE	TRUE	FALSE	FALSE	TRUE	1	0	1	FALSE
+151	OccupancyRE	OccupancyRE	FALSE	FALSE	TRUE	TRUE	1	0	1	FALSE
 158	UnIdLogitNormalMR	UnIdLogitNormalMR	TRUE	TRUE	FALSE	TRUE	1	-1	1	FALSE
 159	UnIdIELogitNormalMR	UnIdIELogitNormalMR	TRUE	TRUE	FALSE	TRUE	1	-1	1	FALSE
 160	UnIdPoissonMR	UnIdPoissonMR	FALSE	TRUE	FALSE	TRUE	1	-1	2	FALSE
@@ -109,5 +110,6 @@ MarkNumber	model	etype	robust	closed	occupancy	derived	default.mixtures	num	divi
 172	PoissonMRacross	PoissonMRacross	FALSE	TRUE	FALSE	TRUE	1	-1	2	FALSE
 173	UnIdPoissonMRacross	UnIdPoissonMRacross	FALSE	TRUE	FALSE	TRUE	1	-1	2	FALSE
 174	ZiUnIdPoissonMRacross	ZiUnIdPoissonMRacross	FALSE	TRUE	FALSE	TRUE	1	-1	2	FALSE
+175	RDMultScalOcc	RDMultScalOcc	TRUE	FALSE	TRUE	FALSE	1	0	1	FALSE
 178	HidMarkov	HidMarkov	FALSE	FALSE	FALSE	FALSE	1	-1	1	TRUE
 

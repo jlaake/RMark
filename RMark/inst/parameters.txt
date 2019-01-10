@@ -501,14 +501,14 @@ RD2SpGEConOcc	pA	0	0	0	Square	all	logit	~1	FALSE	pB			TRUE
 RD2SpGEConOcc	pB	0	0	0	Square	all	logit			pA			TRUE										
 RD2SpGEConOcc	rA	0	0	0	Square	all	logit	~1					TRUE										
 RD2SpGEConOcc	rBA	0	0	0	Square	all	logit	~1	FALSE	rBa			TRUE										
-RD2SpGEConOcc	rBa	0	0	0	Square	all	logit	~1		rBA			TRUE										
+RD2SpGEConOcc	rBa	0	0	0	Square	all	logit			rBA			TRUE										
 Densitypc	p	0	0	0	Square	all	logit	~1	FALSE	c													
 Densitypc	c	1	-1	0	Square	all	logit			p													
-Densitypc	ptilde	0	1		Square	all	log	~1															
+Densitypc	ptilde	0	1		Square	all	logit	~1															
 DensityRanpc	sigmap	0	1		Square	all	log	~1															
 DensityRanpc	p	0	0	0	Square	all	logit	~1	FALSE	c													
 DensityRanpc	c	1	-1	0	Square	all	logit			p													
-DensityRanpc	ptilde	0	1		Square	all	log	~1															
+DensityRanpc	ptilde	0	1		Square	all	logit	~1															
 PoissonMRacross	alpha	0	0	0	Square	all	log	~1															
 PoissonMRacross	sigma	0	0	0	Square	all	log	~1															
 PoissonMRacross	U	0	0	0	Square	all	log	~1															
@@ -545,3 +545,11 @@ HidMarkov	p	1	-1	0	Triang	all	logit	~stratum						TRUE
 HidMarkov	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE								
 HidMarkov	pi	0	0		Square	all	mlogit	~1						TRUE		1				TRUE			
 HidMarkov	Delta	1	-1	0	Triang	all	mlogit	~1						TRUE						TRUE			
+OccupancyRE	sigmap	0	1		Square	all	log	~1															
+OccupancyRE	p	0	0	0	Square	all	logit	~1															
+OccupancyRE	Psi	0	1		Square	all	logit	~1															
+RDMultScalOcc	Psi	0	1		Square	all	logit	~1					FALSE	
+RDMultScalOcc	Epsilon	0	-1		Square	all	logit	~1	FALSE	Gamma			FALSE										
+RDMultScalOcc	Gamma	0	-1		Square	all	logit			Epsilon			FALSE										
+RDMultScalOcc	Theta	0	0		Square	all	logit	~1					TRUE										
+RDMultScalOcc	p	0	0	0	Square	all	logit	~1					TRUE					FALSE					

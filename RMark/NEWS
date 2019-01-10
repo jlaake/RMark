@@ -1,8 +1,13 @@
-RMark 2.2.6 (21 December 2018)
+RMark 2.2.6 (10 January 2019)
 
 NEW FEATURES
 
 * In collect.model.names code was changed to accept a vector of models to be included rather than a single value or all models in the workspace.  Great suggestion by Carl Schwarz.
+
+* Added example for DensityPC model developed by Jake Ivan.
+
+CHANGES
+* Brett McClintock made changes to process.data to allow '*0' entries in zero-inflated Poisson mark-resight models to indicate marked individuals known to be alive but unobservable (e.g. due to temporary emigration) when the number of marks is known
 
 BUG FIXES
 

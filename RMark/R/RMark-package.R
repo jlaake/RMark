@@ -2653,6 +2653,91 @@ NULL
 #' }
 NULL
 
+#'  Density Estimation with Telemetry
+#'  
+#'  The annotated code below is a companion to A Gentle Introduction to Program MARK, Chapter 20:     
+#'  Density Estimation (http://www.phidot.org/software/mark/docs/book/pdf/chap20.pdf).  It requires   
+#'  the file "Density.txt", which is the RMark analog to the  
+#'  example Density Estimation input file distributed with MARK.  These are simulated data intended   
+#'  to mimic a study of small mammals, such as deer mice, sampled at 2 sites (habitat types), A and   
+#'  B. Each habitat type was sampled with a (10 x 10) live-trapping grid (10m trap spacing). There    
+#'  are 5 occasions. In addition to marking each mouse with an individually identifiable ear tag,     
+#'  50% of the individuals captured were fitted with a small VHF transmitter. These radio-tagged      
+#'  individuals were located once during the day and once at night for 5 days immediately after       
+#'  mark-recapture sampling (n = 10 locations total per animal) and each location was recorded as     
+#'  in or out of the study site.  The single covariate we recorded is the distance to the             
+#'  edge (DTE) of the of the site from the mean trap location of each individual (i.e., compute the   
+#'  mean trap location for each individual captured >1 time, then compute the minimum distance from   
+#'  this mean location to the edge of the site).     
+#' @name Density
+#' @docType data
+#' @format  A data frame with 32 observations of 5 variables
+#'  \describe{ 
+#'  \item{ch}{a character vector containing the capture history for 5 occasions}
+#'  \item{TotalLocations}{The total number of telemetry locations if telemetered; otherwise a .} 
+#'  \item{TotalIn}{total number of locations in the original site if telemetered; otherwise a .}
+#'  \item{Site}{the original site A or B}
+#'  \item{DTE}{distance to the edge of the site when originally caught} 
+#'  }
+#' @keywords datasets
+#' @author Jake Ivan
+#' @examples
+#' \donttest{
+#'#Read in Density Estimation input file specific to RMark
+#'
+#'#Add 2 covariates that will be used for threshhold models - see below & p. 20-14, 20-15
+#'#Specify data type - use "Densitypc" for this example, which is "Density Estimation with Huggins p and c
+#'#Could also use "DensityRanpc" (Huggins p and c with random effects). "DensityHet" (Huggins heterogeniety with pi and p), "DensityFHet" (Huggins full
+#'#heterogeneity with pi, p, and c) is not currently in RMark.
+#'#Be sure to specify areas argument in process.data for this model. It will not run if you don't give it the 
+#'#area of each study site
+#'
+#' data(Density)
+#' Density$Thresh15 <- ifelse(Density$DTE<15, Density$DTE, 15)  #Create variables for threshhold model - see below & p. 20-14, 20-15
+#' Density$Thresh25 <- ifelse(Density$DTE<25, Density$DTE, 25)  #Create variables for threshhold model - see below & p. 20-14, 20-15
+#' data_proc <- process.data(Density, model="Densitypc", groups = c("Site"), areas=rep(0.81,2))
+#' data_ddl <- make.design.data(data_proc)
+#'
+#'
+#' #Run model p(.)p~(.) from p. 20-9, 20-10. View results.
+#' p_dot <- list(formula = ~1, share=TRUE)
+#' ptilde_dot <- list(formula = ~1)
+#' model1 <- mark(data_proc,data_ddl,model.parameters=list(p=p_dot,ptilde=ptilde_dot))
+#' model1
+#'
+#' #Run models p(site)p~(.) and p(.)p~(site) as indicated on p. 20-11. View results.
+#' p_site <- list(formula = ~1 + Site, share=TRUE)
+#' ptilde_site <- list(formula = ~1 + Site)
+#' model2 <- mark(data_proc, data_ddl, model.parameters=list(p=p_dot, ptilde=ptilde_site))
+#' model3 <- mark(data_proc, data_ddl, model.parameters=list(p=p_site, ptilde=ptilde_dot))
+#' model2
+#'
+#'
+#' #Run model p(DTE)p~(DTE) as indicated on p. 20-12. View results.
+#' p_DTE <- list(formula = ~1 + DTE, share=TRUE)
+#' ptilde_DTE <- list(formula= ~1 + DTE)
+#' model4 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE, ptilde=ptilde_DTE))
+#' model4
+#'
+#'
+#' #Compute Model Selection Table that appears on p. 20-12. View results.
+#' ModSelTable <- collect.models()
+#' ModSelTable
+#'
+#'
+#' #Run Threshhold models from p. 20-15.
+#' p_DTE_Thresh15 <- list(formula = ~1 + Thresh15, share=TRUE)
+#' p_DTE_Thresh25 <- list(formula = ~1 + Thresh25, share=TRUE)
+#' model5 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE_Thresh15, ptilde=ptilde_DTE))
+#' model6 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE_Thresh25, ptilde=ptilde_DTE))
+#'
+#'
+#' #Re-compute Model Selection Table that appears on p. 20-16    
+#' ModSelTable <- collect.models()
+#' ModSelTable
+#'}
+NULL
+
 #' Summary of changes by version
 #' 
 #' A good place to look for changes.  Often I'll add changes here but don't

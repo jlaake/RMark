@@ -11,7 +11,7 @@ Burnham	r	0	0	0	Triang	all	logit	~1
 Burnham	F	0	-1	1	Triang	all	logit	~1															
 MSLiveDead	S	0	0	1	Triang	all	logit	~1						TRUE									
 MSLiveDead	p	1	-1	0	Triang	all	logit	~1						TRUE									
-MSLiveDead	Psi	-1	0	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE								
+MSLiveDead	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE								
 MSLiveDead	r	0	0	0	Triang	all	logit	~1						TRUE									
 Barker	S	0	0	1	Triang	all	logit	~1															
 Barker	p	1	-1	0	Triang	all	logit	~1															

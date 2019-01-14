@@ -1,4 +1,4 @@
-RMark 2.2.6 (10 January 2019)
+RMark 2.2.6 (14 January 2019)
 
 NEW FEATURES
 
@@ -14,6 +14,8 @@ BUG FIXES
 * shared submissive parameters in model RD2SpGEConOcc were patched in v2.2.1 but one was missed which was astutely found by Carl Schwarz. It is patched here.
 
 * For DensityPC models, the TotalLocations and TotalIn fields were swapped and an extra proc chmatrix was added which prevented models from running. Thanks to Jake Ivan and Eric Newkirk for identifying the problems. 
+
+* Made change to Psi parameter definition in parameters.txt for MSLiveDead. This error was brought to my attention by Andrew Allen.
 
 
 RMark 2.2.5 (10 July 2018)

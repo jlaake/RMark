@@ -2,7 +2,7 @@
 % Please edit documentation in R/RMark-package.R
 \name{Burnham}
 \alias{Burnham}
-\title{#' Burnham Live-Dead Model}
+\title{Burnham Live-Dead Model}
 \description{
 An example of the Burnham live-dead model using simulated data LD1.inp from Chapter 9 of Cooch and White
 }

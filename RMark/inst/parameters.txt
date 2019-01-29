@@ -509,6 +509,13 @@ DensityRanpc	sigmap	0	1		Square	all	log	~1
 DensityRanpc	p	0	0	0	Square	all	logit	~1	FALSE	c													
 DensityRanpc	c	1	-1	0	Square	all	logit			p													
 DensityRanpc	ptilde	0	1		Square	all	logit	~1															
+DensityHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+DensityHet	p	0	1	0	Square	all	logit	~1			TRUE	0								
+DensityHet	ptilde	0	1		Square	all	logit	~1												
+DensityFHet	pi	0	1	0	Square	all	logit	~1			TRUE	-1								
+DensityFHet	p	0	0	0	Square	all	logit	~1	FALSE	c	TRUE	0								
+DensityFHet	c	1	-1	0	Square	all	logit			p	TRUE	0								
+DensityFHet	ptilde	0	1		Square	all	logit	~1												
 PoissonMRacross	alpha	0	0	0	Square	all	log	~1															
 PoissonMRacross	sigma	0	0	0	Square	all	log	~1															
 PoissonMRacross	U	0	0	0	Square	all	log	~1															
@@ -553,3 +560,5 @@ RDMultScalOcc	Epsilon	0	-1		Square	all	logit	~1	FALSE	Gamma			FALSE
 RDMultScalOcc	Gamma	0	-1		Square	all	logit			Epsilon			FALSE										
 RDMultScalOcc	Theta	0	0		Square	all	logit	~1					TRUE										
 RDMultScalOcc	p	0	0	0	Square	all	logit	~1					TRUE					FALSE					
+NSpeciesOcc	f	0	1		Square	all	logit	~1			TRUE	0 	
+NSpeciesOcc	p	0	0	0	Square	all	logit	~1			TRUE	0 										

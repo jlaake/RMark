@@ -78,6 +78,7 @@ function(data, filename, covariates=NULL, replace=FALSE)
   {
      ch=data$data$ch
      zz=as.data.frame(ch)
+     if(substr(data$model,1,7)=="Density") zz=cbind(zz,data$data[,c("TotalIn","TotalLocations")])
      zz=cbind(zz,data$freq)
      if(!is.null(covariates))
      {

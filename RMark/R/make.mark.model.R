@@ -599,7 +599,7 @@ if(type%in%c("Triang","STriang"))
 #   invisible()
 #}
 
-"pim.header"<- function(group,param.name,parameters,ncol,stratum,tostratum,strata.labels,mixtures,session=NULL,socc=NULL,bracket=FALSE,event=NULL)
+"pim.header"<- function(group,param.name,parameters,ncol,stratum,tostratum,strata.labels,mixtures,session=NULL,socc=NULL,bracket=FALSE,event=NULL,primary=NULL)
 {
   stratum.designation=""	 
   if(!is.null(stratum)&length(strata.labels)>0)
@@ -638,7 +638,12 @@ if(type%in%c("Triang","STriang"))
 	    session.designation=paste("Session",session)
 	 else
 		 if(!socc)
-			 session.designation=paste("Primary",session)
+		 {
+		   if(!is.null(primary))
+		     session.designation=paste("Session",session,"Primary",primary)
+		   else
+		     session.designation=paste("Primary",session)
+		 }
 		 else
 		     session.designation=paste("Sampling Occasion",session)
  if (parameters$type == "Triang")
@@ -746,13 +751,15 @@ if(model$data$model=="RDMSOccRepro")
 	bracket=TRUE
 else
 	bracket=FALSE
+
 for (i in 1:length(parameters)) {
-     for (j in 1:length(model$pims[[i]]))
-     {
+  for (j in 1:length(model$pims[[i]]))
+  {
          ncol = dim(model$pims[[i]][[j]]$pim)[2]
          string=pim.header(pim[[i]][[j]]$group,param.names[i],parameters[[i]],
                    ncol,model$pims[[i]][[j]]$stratum,model$pims[[i]][[j]]$tostratum,model$strata.labels,
-				           mixtures,model$pims[[i]][[j]]$session,parameters[[i]]$socc,bracket=bracket,event=model$pims[[i]][[j]]$event)
+				           mixtures,model$pims[[i]][[j]]$session,parameters[[i]]$socc,bracket=bracket,event=model$pims[[i]][[j]]$event,
+				           primary=model$pims[[i]][[j]]$primary)
          write(string, file = outfile, append = TRUE)
          if(parameters[[i]]$type %in% c("Triang","STriang"))
          {
@@ -924,21 +931,21 @@ return(model)
 #
 # Create internal function to create a pim
 #
-create.pim=function(nocc,parameters,npar,mixtures)
+create.pim=function(nocc,parameters,npar,mixtures,mscale=1)
 {
-    ncol=nocc+parameters$num
+    ncol=(nocc+parameters$num)/mscale
     mat=NULL
     if(parameters$type%in%c("Triang","STriang"))
     {
-		nmix=1
-		if(mixtures>1)
-			if(!is.null(parameters$mix)&&parameters$mix)
-				nmix=mixtures+parameters$rows
-		for (j in 1:nmix)
-		{
-		   ncol=nocc+parameters$num
-		   for(k in 1:(nocc+parameters$num))
-           {
+		   nmix=1
+		   if(mixtures>1)
+			    if(!is.null(parameters$mix)&&parameters$mix)
+				     nmix=mixtures+parameters$rows
+		   for (j in 1:nmix)
+		   {
+		      ncol=nocc+parameters$num
+		      for(k in 1:(nocc+parameters$num))
+          {
                if(parameters$pim.type=="all")
                {
                    mat=rbind(mat,c(rep(0,k-1),npar:(npar+ncol-1)))
@@ -955,10 +962,8 @@ create.pim=function(nocc,parameters,npar,mixtures)
 						  mat=rbind(mat,c(rep(0,k-1),rep(npar,ncol)))
                }
                ncol=ncol-1
-		   }
-        }
-#        if(parameters$pim.type!="all")
-#            npar=max(mat)+1
+		      }
+       }
    }
    else
    {
@@ -1053,6 +1058,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   parameters=parameters[names(parameters)%in%names(full.ddl)]
   for(j in names(parameters))
   {
+    if(data$model=="NSpeciesOcc" & j=="f")parameters[[j]]$rows=2^data$mixtures-1 -data$mixtures
      parameters[[j]]$pim.type=ddl$pimtypes[[j]]$pim.type
      if(!is.null(ddl$pimtypes[[j]]$subtract.stratum))
         parameters[[j]]$subtract.stratum=ddl$pimtypes[[j]]$subtract.stratum
@@ -1273,9 +1279,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 	 }
   }
   if(mixtures!=1)
-      string=paste(string," mixtures =",mixtures)
-  if(data$model=="MultScalOcc")
-	  string=paste(string," mixtures =",length(levels(ddl$p$time)))
+     string=paste(string," mixtures =",mixtures)
   time.int=data$time.intervals
   if(!is.null(data$reverse) &&(data$reverse | data$model=="MultScalOcc")) time.int[time.int==0]=1
   string=paste(string," ICMeans NoHist hist=",nrow(zz),
@@ -1420,34 +1424,54 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 				          num.sessions=1
 				          multi.session=FALSE
 			         }
+               nprimary=1
+               if(data$model=="RDMultScalOcc" & names(parameters)[i]=="p")
+                 nprimary=nocc.secondary[l]/data$mixtures
                for (l in 1:num.sessions)
                {
-                  k=k+1
-                  pim[[i]][[k]]=list()
-				          if(data$model=="RDMSOccRepro" & names(parameters)[i]=="Phi0")
-				          {
-					            pim[[i]][[k]]$pim=matrix(ddl[[i]]$model.index,ncol=2,byrow=TRUE)   
-				          } else	 
-				          if(!multi.session)
-					            pim[[i]][[k]]$pim=create.pim(nocc,parameters[[i]],npar,mixtures)
-				          else
+                  for(m in 1:nprimary)
                   {
-                     if(is.na(parameters[[i]]$num))
-                     {
-                         parameterx=parameters[[i]]
-                         parameterx$num=0
-                         pim[[i]][[k]]$pim=create.pim(1,parameterx,npar,mixtures)
-                     }
-                     else
-                         pim[[i]][[k]]$pim=create.pim(nocc.secondary[l],parameters[[i]],npar,mixtures)
-                     pim[[i]][[k]]$session=l
-					           pim[[i]][[k]]$session.label=levels(ddl[[i]]$session)[l]
+                    k=k+1
+                    pim[[i]][[k]]=list()
+                    if(data$model=="RDMSOccRepro" & names(parameters)[i]=="Phi0")
+                    {
+                      pim[[i]][[k]]$pim=matrix(ddl[[i]]$model.index,ncol=2,byrow=TRUE)   
+                    } else	 
+                      if(!multi.session)
+                        pim[[i]][[k]]$pim=create.pim(nocc,parameters[[i]],npar,mixtures)
+                    else
+                    {
+                      if(is.na(parameters[[i]]$num))
+                      {
+                        parameterx=parameters[[i]]
+                        parameterx$num=0
+                        pim[[i]][[k]]$pim=create.pim(1,parameterx,npar,mixtures)
+                      }
+                      else
+                        if(data$model=="RDMultScalOcc")
+                        {
+                          if(names(parameters)[i]=="Theta") 
+                            pim[[i]][[k]]$pim=create.pim(nocc.secondary[l],parameters[[i]],npar,mixtures,mscale=data$mixtures)
+                          else
+                            if(names(parameters)[i]=="p")
+                            {
+                                pim[[i]][[k]]$pim=create.pim(nocc.secondary[l],parameters[[i]],npar,mixtures,mscale=nocc.secondary[l]/data$mixtures)
+                                pim[[i]][[k]]$primary=m
+                            }
+                            else
+                               pim[[i]][[k]]$pim=create.pim(nocc.secondary[l],parameters[[i]],npar,mixtures)
+                        }
+                        else
+                            pim[[i]][[k]]$pim=create.pim(nocc.secondary[l],parameters[[i]],npar,mixtures)
+                      pim[[i]][[k]]$session=l
+                      pim[[i]][[k]]$session.label=levels(ddl[[i]]$session)[l]
+                    }
+                    pim[[i]][[k]]$group=j
+                    if(length(data$strata.labels)>0 && !is.null(parameters[[i]]$bystratum) && parameters[[i]]$bystratum) pim[[i]][[k]]$stratum=jj
+                    if(!is.null(parameters[[i]]$tostrata)) pim[[i]][[k]]$tostratum=to.stratum
+                    if(!is.null(parameters[[i]]$events))pim[[i]][[k]]$event=jjj
+                    npar=max(pim[[i]][[k]]$pim)+1
                   }
-                  pim[[i]][[k]]$group=j
-                  if(length(data$strata.labels)>0 && !is.null(parameters[[i]]$bystratum) && parameters[[i]]$bystratum) pim[[i]][[k]]$stratum=jj
-                  if(!is.null(parameters[[i]]$tostrata)) pim[[i]][[k]]$tostratum=to.stratum
-                  if(!is.null(parameters[[i]]$events))pim[[i]][[k]]$event=jjj
-                  npar=max(pim[[i]][[k]]$pim)+1
                }
            }
        }

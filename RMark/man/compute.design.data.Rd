@@ -9,7 +9,8 @@ compute.design.data(data, begin, num, type = "Triang", mix = FALSE,
   rows = 0, pim.type = "all", secondary, nstrata = 1,
   tostrata = FALSE, strata.labels = NULL,
   subtract.stratum = strata.labels, common.zero = FALSE,
-  sub.stratum = 0, limits = NULL, events = NULL, use.events = NULL)
+  sub.stratum = 0, limits = NULL, events = NULL, use.events = NULL,
+  mscale = 1)
 }
 \arguments{
 \item{data}{data list created by \code{\link{process.data}}}
@@ -50,6 +51,8 @@ mlogit across strata like pi and Omega for RDMSOpenMisClass}
 \item{events}{vector of events if needed for parameter}
 
 \item{use.events}{if TRUE, adds events to design data}
+
+\item{mscale}{scalar for multi-scale occupancy model (number of mixtures)}
 }
 \value{
 design.data: a data frame containing all of the design data fields

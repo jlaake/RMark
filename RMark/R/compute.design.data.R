@@ -42,6 +42,7 @@
 #' @param limits For RDMSOccRepro values that set row and col (if any) start on states
 #' @param events vector of events if needed for parameter
 #' @param use.events if TRUE, adds events to design data
+#' @param mscale scalar for multi-scale occupancy model (number of mixtures)
 #' @return design.data: a data frame containing all of the design data fields
 #' for a particular type of parameter \item{group}{group factor level}
 #' \item{age}{age factor level} \item{time}{time factor level}
@@ -56,7 +57,7 @@ compute.design.data <-
 function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
            secondary,nstrata=1,tostrata=FALSE,strata.labels=NULL,
            subtract.stratum=strata.labels,common.zero=FALSE,sub.stratum=0,limits=NULL,
-           events=NULL,use.events=NULL)
+           events=NULL,use.events=NULL,mscale=1)
 {
 # -------------------------------------------------------------------------------------------------------------
 #
@@ -133,167 +134,163 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
   for(l in 1:num.sessions)
   {
       if(tostrata)
-	  {
-		 if(!all.tostrata)
-		 {
-			 if(is.null(limits))
-				 other.strata= sequence(nstrata)[sequence(nstrata)!=nsubtract.stratum[jj]]
-			 else
-			 {
-				 if(limits[1]=="0")
-					 other.strata=(as.numeric(limits[2])+1):nstrata
-				 else
-					 other.strata=jj:nstrata
-			 }		 
-		 }
-	     else
-			 other.strata= 1:nstrata
-	  }		 
+	    {
+		     if(!all.tostrata)
+		     {
+			     if(is.null(limits))
+				     other.strata= sequence(nstrata)[sequence(nstrata)!=nsubtract.stratum[jj]]
+			     else
+			     {
+				     if(limits[1]=="0")
+					     other.strata=(as.numeric(limits[2])+1):nstrata
+				     else
+					     other.strata=jj:nstrata
+			     }		 
+		     }
+	       else
+			    other.strata= 1:nstrata
+	    }		 
       else
          other.strata=1
-  for(to.strata in other.strata)
-  {
-     if(secondary)
-     {
-       if(is.na(num))
-          ncol=1
-       else
-       {
-          ncol=data$nocc.secondary[l]+num
-#		  if(any(ncol<1))ncol=rep(1,length(data$nocc.secondary))
-          if(type%in%c("Triang","STriang"))num.lines=ncol
-       }
-     }
-     else
-        ncol=num
-	 ncol.save=ncol
-	 for(k in 1:num.rows)
-	 {
-	    ncol=ncol.save
-  	    for(i in 1:num.lines)
-        {    
+      for(to.strata in other.strata)
+      {
+         if(secondary)
+         {
+           if(is.na(num))
+              ncol=1
+           else
+           {
+              ncol=(data$nocc.secondary[l]+num)/mscale
+              if(type%in%c("Triang","STriang"))num.lines=ncol
+           }
+        }
+        else
+           ncol=num
+	     ncol.save=ncol
+	     for(k in 1:num.rows)
+	     {
+	        ncol=ncol.save
+  	      for(i in 1:num.lines)
+          {    
 #
 #        Define age variable
 #
-        if(secondary)
-           ages=0
-        else
-           if(begin==0)
-              ages=data$initial.ages[j]+data$age.unit*(cumsum(c(0,time.intervals[i:num]))[1:ncol])
-           else
-              ages=data$initial.ages[j]+data$age.unit*(cumsum(time.intervals[i:num]))
+            if(secondary)
+               ages=0
+            else
+               if(begin==0)
+                  ages=data$initial.ages[j]+data$age.unit*(cumsum(c(0,time.intervals[i:num]))[1:ncol])
+               else
+                  ages=data$initial.ages[j]+data$age.unit*(cumsum(time.intervals[i:num]))
 #
 #     Define cohort variable
 #
-        if(secondary)
-           if(!type%in%c("Triang","STriang"))
-              cohort=0
-           else
-              cohort=i
-        else
-          if(i==1)
-            if(length(data$begin.time)==1)
-               cohort=data$begin.time
+            if(secondary)
+               if(!type%in%c("Triang","STriang"))
+                  cohort=0
+               else
+                  cohort=i
             else
-               cohort=data$begin.time[j]
-         else
-            if(length(data$begin.time)==1)
-               cohort=data$begin.time+sum(time.intervals[1:(i-1)])
-            else
-               cohort=data$begin.time[j]+sum(time.intervals[1:(i-1)])
+              if(i==1)
+                if(length(data$begin.time)==1)
+                   cohort=data$begin.time
+                else
+                   cohort=data$begin.time[j]
+              else
+                if(length(data$begin.time)==1)
+                   cohort=data$begin.time+sum(time.intervals[1:(i-1)])
+                else
+                   cohort=data$begin.time[j]+sum(time.intervals[1:(i-1)])
 #
 #     Define time variable
 #
-        if(secondary)
-          if(is.na(num))
-             times=0
-          else
-             if(type%in%c("Triang","STriang"))
-                times=(begin+i):(data$nocc.secondary[l]+num)
-             else
-                times=(begin+1):(begin+ncol)
-        else
-          if(begin==0)
-             if(i==num)
-                times=cohort
-             else
-                times=c(cohort,cohort+cumsum(time.intervals[i:(num-1)]))
-          else
-             times=cohort+cumsum(time.intervals[i:num])
+            if(secondary)
+              if(is.na(num))
+                 times=0
+              else
+                 if(type%in%c("Triang","STriang"))
+                    times=(begin+i):(data$nocc.secondary[l]+num)
+                 else
+                    times=(begin+1):(begin+ncol)
+            else
+              if(begin==0)
+                 if(i==num)
+                    times=cohort
+                 else
+                    times=c(cohort,cohort+cumsum(time.intervals[i:(num-1)]))
+              else
+                 times=cohort+cumsum(time.intervals[i:num])
 #
 #      Create design data as needed for the parameter
 #
-        if(type%in%c("Triang","STriang"))
-        {
-          if(pim.type=="all")
-          {
-             add.design.data=cbind(rep(j,ncol),rep(cohort,ncol),ages,times,(i-1)+1:ncol,rep(i,ncol))
-             dd.names=c("group","cohort","age","time","occ","occ.cohort")
-          }
-          else
-            if(pim.type=="time")
+            if(type%in%c("Triang","STriang"))
             {
-                add.design.data=cbind(rep(j,ncol),times)
-                dd.names=c("group","time")
+              if(pim.type=="all")
+              {
+                 add.design.data=cbind(rep(j,ncol),rep(cohort,ncol),ages,times,(i-1)+1:ncol,rep(i,ncol))
+                 dd.names=c("group","cohort","age","time","occ","occ.cohort")
+              }
+              else
+                if(pim.type=="time")
+                {
+                    add.design.data=cbind(rep(j,ncol),times)
+                    dd.names=c("group","time")
+                }
+                else
+				      if(pim.type=="age")
+				      {
+					      add.design.data=cbind(rep(j,ncol),rep(cohort,ncol),ages,times)
+					      dd.names=c("group","cohort","age","time")
+				      }
+				      else	
+				      {
+                 add.design.data=matrix(rep(j,ncol),nrow=1)
+                 dd.names=c("group")
+              }
             }
             else
-				if(pim.type=="age")
-				{
-					add.design.data=cbind(rep(j,ncol),rep(cohort,ncol),ages,times)
-					dd.names=c("group","cohort","age","time")
-				}
-				else	
-				{
-                add.design.data=matrix(rep(j,ncol),nrow=1)
-                dd.names=c("group")
-                }
-        }
-        else
-        {
-          add.design.data=cbind(rep(j,ncol),ages,times)
-          dd.names=c("group","age","time")
-        }
-        if(!is.null(mix) && mix)
-        {
-          add.design.data=cbind(add.design.data,rep(k,ncol))
-          dd.names=c(dd.names,"mixture")
-        }
-        if(nstrata>1|tostrata)
-           if(tostrata)
-           {
-              add.design.data=cbind(add.design.data,rep(jj,ncol),rep(to.strata,ncol))
-              dd.names=c(dd.names,"stratum","tostratum")
-           }
-           else
-           {
-              add.design.data=cbind(add.design.data,rep(jj,ncol))
-              dd.names=c(dd.names,"stratum")
-           }
-        if(secondary)
-        {
-          add.design.data=cbind(add.design.data,rep(l,ncol))
-          dd.names=c(dd.names,"session")
-        }
+            {
+               add.design.data=cbind(rep(j,ncol),ages,times)
+               dd.names=c("group","age","time")
+            }
+            if(!is.null(mix) && mix)
+            {
+               add.design.data=cbind(add.design.data,rep(k,ncol))
+               dd.names=c(dd.names,"mixture")
+            }
+            if(nstrata>1|tostrata)
+               if(tostrata)
+               {
+                  add.design.data=cbind(add.design.data,rep(jj,ncol),rep(to.strata,ncol))
+                  dd.names=c(dd.names,"stratum","tostratum")
+               }
+               else
+               {
+                  add.design.data=cbind(add.design.data,rep(jj,ncol))
+                  dd.names=c(dd.names,"stratum")
+               }
+            if(secondary)
+            {
+              add.design.data=cbind(add.design.data,rep(l,ncol))
+              dd.names=c(dd.names,"session")
+            }
 #       For Hidden Markov model pi and Delta parameters add event to data
-        if(!is.null(use.events)){
-          add.design.data=cbind(add.design.data,rep(jjj,ncol))
-          dd.names=c(dd.names,"event")
-        }
+           if(!is.null(use.events)){
+              add.design.data=cbind(add.design.data,rep(jjj,ncol))
+              dd.names=c(dd.names,"event")
+           }
 #
 #     Add rows to existing design data
 #
-#        if(is.null(design.data) || ncol(add.design.data)==ncol(design.data))
-          design.data=rbind(design.data,add.design.data)
-#		else
-#		  browser()
+           design.data=rbind(design.data,add.design.data)
 #
 #      If trianular pim type, decrement number of cols
 #
-       if(type%in%c("Triang","STriang"))
-          ncol=ncol-1
-       }
-	 }
-  }
+           if(type%in%c("Triang","STriang"))
+              ncol=ncol-1
+         }
+	     }
+    }
   }
    design.data=as.data.frame(design.data,row.names=NULL)
    names(design.data)=dd.names

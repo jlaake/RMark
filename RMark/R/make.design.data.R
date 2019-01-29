@@ -559,11 +559,17 @@ else
 				      design.data=cbind(design.data,gc)	  
 			     }
 		     } else
-             design.data=compute.design.data(data,parameters[[i]]$begin,parameters[[i]]$num,
-                         parameters[[i]]$type,parameters[[i]]$mix,parameters[[i]]$rows,
-                         parameters[[i]]$pim.type,parameters[[i]]$secondary, nstrata,
-                         tostrata,strata.labels,subtract.stratum,common.zero=common.zero,
-						             sub.stratum=sub.stratum,limits=limits,events=data$events,use.events=parameters[[i]]$events)
+		     {
+		       mscale=1
+		       if(data$model=="RDMultScalOcc" &names(parameters)[i]=="Theta")mscale=data$mixtures
+		       if(data$model=="NSpeciesOcc" &names(parameters)[i]=="f")parameters[[i]]$rows=2^data$mixtures-1 -data$mixtures
+		       design.data=compute.design.data(data,parameters[[i]]$begin,parameters[[i]]$num,
+		                                       parameters[[i]]$type,parameters[[i]]$mix,parameters[[i]]$rows,
+		                                       parameters[[i]]$pim.type,parameters[[i]]$secondary, nstrata,
+		                                       tostrata,strata.labels,subtract.stratum,common.zero=common.zero,
+		                                       sub.stratum=sub.stratum,limits=limits,events=data$events,use.events=parameters[[i]]$events,
+		                                       mscale=mscale)
+		     }
         if(!is.null(parameters[[i]]$mix) && parameters[[i]]$mix)design.data$mixture=as.factor(design.data$mixture)
         if(parameters[[i]]$secondary)
 		    {
@@ -631,6 +637,9 @@ else
    null.design.data=sapply(full.design.data,is.null)
    parameters=parameters[!null.design.data]
    full.design.data=full.design.data[!null.design.data]
+#  For MultiScaleOcc models add primary field for p parameter
+   if(data$model%in%c("MultScalOcc","RDMultScalOcc"))
+     full.design.data[["p"]]=cbind(full.design.data[["p"]],primary=rep(rep(1:(nrow(full.design.data[["p"]])/(data$mixtures*data$nocc)),each=data$mixtures),times=data$nocc))
 #  add model indices
    prev=0
    for(i in 1:length(full.design.data))

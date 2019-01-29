@@ -294,3 +294,7 @@ MarkNumber	dpar_label
 174	N Population Size
 174	Lambda Mean Resightings
 174	Pr(Captured 1 or more times)
+175	psi
+175	lambda
+175	lambdaprime
+177	Psi

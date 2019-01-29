@@ -86,9 +86,10 @@ export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",i
        if(file.exists(xfilename)) stop("Use a different project name because the .inp file already exists")
     }
   }
-  if(x$model=="MultScalOcc")
+  if(x$model%in%c("MultScalOcc","RDMultScalOcc"))
   {
-	 x$mixtures= match("1",x$time.intervals)
+   x$mixtures= x$nocc.secondary[1]
+	 #x$mixtures= match("1",x$time.intervals)
 	 x$time.intervals=rep(1,length(x$time.intervals))
 	 x$nocc=nchar(x$data$ch[1])
   }
@@ -119,7 +120,10 @@ export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",i
 		if(x$model=="Nest")
 			ind.covariates=ind.covariates[!ind.covariates%in%c("FirstFound","LastPresent","LastChecked","Fate","freq")]
 		else
-			ind.covariates=ind.covariates[!ind.covariates%in%c("ch","freq")]	
+		  if(substr(x$model,1,7)=="Density")
+		    ind.covariates=ind.covariates[!ind.covariates%in%c("ch","freq","TotalIn","TotalLocations")]	
+		  else
+			  ind.covariates=ind.covariates[!ind.covariates%in%c("ch","freq")]	
 	}
 	if(length(ind.covariates)==0)
 	{
@@ -144,7 +148,12 @@ export.MARK=function(x,project.name,model=NULL,replace=FALSE,chat=1.0,title="",i
     write("1",file=filename,append=TRUE)  
   else    
     write(nrow(x$group.covariates),file=filename,append=TRUE)
-  write(matrix(colnames(x$freq),ncol=1),file=filename,append=TRUE)
+  for(i in 1:ncol(x$freq))
+  {
+    write(colnames(x$freq)[i],file=filename,append=TRUE)
+    if(substr(x$model,1,7)=="Density")
+      write(x$areas[i],file=filename,append=TRUE)
+  }
   write(nrow(x$freq),file=filename,append=TRUE)
   write(chat,file=filename,append=TRUE)
   if(title=="")

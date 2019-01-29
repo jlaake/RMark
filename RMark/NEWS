@@ -1,10 +1,12 @@
-RMark 2.2.6 (14 January 2019)
+RMark 2.2.6 (28 January 2019)
 
 NEW FEATURES
 
-* In collect.model.names code was changed to accept a vector of models to be included rather than a single value or all models in the workspace.  Great suggestion by Carl Schwarz.
+* In collect.model.names code was changed to accept a vector of models (type) to be included rather than a single value or all models in the workspace.  Great suggestion by Carl Schwarz.
 
-* Added example for DensityPC model developed by Jake Ivan.
+* Added example for Densitypc model developed by Jake Ivan.
+
+* Added NSpeciesOcc model (data type 177) and an example with same name.
 
 CHANGES
 * Brett McClintock made changes to process.data to allow '*0' entries in zero-inflated Poisson mark-resight models to indicate marked individuals known to be alive but unobservable (e.g. due to temporary emigration) when the number of marks is known
@@ -13,9 +15,13 @@ BUG FIXES
 
 * shared submissive parameters in model RD2SpGEConOcc were patched in v2.2.1 but one was missed which was astutely found by Carl Schwarz. It is patched here.
 
-* For DensityPC models, the TotalLocations and TotalIn fields were swapped and an extra proc chmatrix was added which prevented models from running. Thanks to Jake Ivan and Eric Newkirk for identifying the problems. 
+* For Density models (Densitypc,DensityHet,...), the TotalLocations and TotalIn fields were swapped and an extra proc chmatrix was added which prevented models from running. Thanks to Jake Ivan and Eric Newkirk for identifying the problems. 
 
 * Made change to Psi parameter definition in parameters.txt for MSLiveDead. This error was brought to my attention by Andrew Allen.
+
+* Made change to export.MARK to correctly export MultScaleOcc models.
+
+* Made change to export.MARK and export.chdata to correctly export Density models.
 
 
 RMark 2.2.5 (10 July 2018)

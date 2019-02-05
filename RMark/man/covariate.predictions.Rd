@@ -4,9 +4,9 @@
 \alias{covariate.predictions}
 \title{Compute estimates of real parameters for multiple covariate values}
 \usage{
-covariate.predictions(model, data = NULL, indices = NULL,
-  drop = TRUE, revised = TRUE, mata = FALSE, normal.lm = FALSE,
-  residual.dfs = 0, alpha = 0.025, ...)
+covariate.predictions(model, data = NULL, indices = NULL, drop = TRUE,
+  revised = TRUE, mata = FALSE, normal.lm = FALSE, residual.dfs = 0,
+  alpha = 0.025, ...)
 }
 \arguments{
 \item{model}{MARK model object or marklist}
@@ -140,10 +140,10 @@ pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 # Import data (indcov1.inp) and convert it from the MARK inp file 
 # format to the RMark format using the function convert.inp  
 # It is defined with 1 group but 2 individual covariates of mass and 
-# squared.mass
+# sqmass
 #
 indcov1=convert.inp(paste(pathtodata,"indcov1",sep="/"),
-               covariates=c("mass","squared.mass"))
+               covariates=c("mass","sqmass"))
 #
 # Next create the processed dataframe and the design data.
 #
@@ -168,7 +168,7 @@ ind1.models=function()
 {
   Phi.dot=list(formula=~1)
   Phi.mass=list(formula=~mass)
-  Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
+  Phi.mass.plus.mass.squared=list(formula=~mass + sqmass)
   p.dot=list(formula=~1)
   cml=create.model.list("CJS")
   results=mark.wrapper(cml,data=ind1.process,ddl=ind1.ddl,adjust=FALSE)
@@ -189,7 +189,7 @@ minmass=min(indcov1$mass)
 maxmass=max(indcov1$mass)
 mass.values=minmass+(0:30)*(maxmass-minmass)/30
 Phibymass=covariate.predictions(ind1.results,
-   data=data.frame(mass=mass.values,squared.mass=mass.values^2),
+   data=data.frame(mass=mass.values,sqmass=mass.values^2),
     indices=c(1))
 #
 # Plot predicted model averaged estimates by weight with pointwise 
@@ -208,10 +208,10 @@ lines(Phibymass$estimates$mass, Phibymass$estimates$ucl,lty=2)
 # Import data (indcov2.inp) and convert it from the MARK inp file 
 # format to the RMark format using the function convert.inp  It is
 # defined with 1 group but 2 individual covariates of mass and 
-# squared.mass
+# sqmass
 #
 indcov2=convert.inp(paste(pathtodata,"indcov2",sep="/"),
-        covariates=c("mass","squared.mass"))
+        covariates=c("mass","sqmass"))
 #
 # Standardize covariates
 #
@@ -227,7 +227,7 @@ standardize=function(x,z=NULL)
    }
 }
 indcov2$mass=standardize(indcov2$mass)
-indcov2$squared.mass=standardize(indcov2$squared.mass)
+indcov2$sqmass=standardize(indcov2$sqmass)
 #
 # Next create the processed dataframe and the design data.
 #
@@ -252,11 +252,11 @@ ind2.models=function()
   Phi.dot=list(formula=~1)
   Phi.time=list(formula=~time)
   Phi.mass=list(formula=~mass)
-  Phi.mass.plus.mass.squared=list(formula=~mass + squared.mass)
+  Phi.mass.plus.mass.squared=list(formula=~mass + sqmass)
   Phi.time.x.mass.plus.mass.squared=
-        list(formula=~time:mass + time:squared.mass)
+        list(formula=~time:mass + time:sqmass)
   Phi.time.mass.plus.mass.squared=
-     list(formula=~time*mass + squared.mass+ time:squared.mass)
+     list(formula=~time*mass + sqmass+ time:sqmass)
   p.dot=list(formula=~1)
   cml=create.model.list("CJS")
   results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE,threads=2)
@@ -277,11 +277,11 @@ ind2.results=ind2.models()
 minmass=min(actual.mass)
 maxmass=max(actual.mass)
 mass.values=minmass+(0:30)*(maxmass-minmass)/30
-squared.mass.values=mass.values^2
+sqmass.values=mass.values^2
 mass.values=standardize(mass.values,actual.mass)
-squared.mass.values=standardize(squared.mass.values,actual.mass^2)
+sqmass.values=standardize(sqmass.values,actual.mass^2)
 Phibymass=covariate.predictions(ind2.results,
- data=data.frame(mass=mass.values,squared.mass=squared.mass.values),
+ data=data.frame(mass=mass.values,sqmass=sqmass.values),
   indices=c(1:7))
 #
 # Plot predicted model averaged estimates by weight with pointwise 

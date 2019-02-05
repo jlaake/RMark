@@ -374,7 +374,6 @@ robust.occasions<-function(times)
 		   }
 		   else
 			  stop("# of mixtures (secondary samples) not an even multiple of ch length")
-		   model.list$mixtures=1
 	   }
 #
 #     If time intervals specified make sure there are nocc-1 of them

@@ -4,9 +4,9 @@
 \alias{MS_popan}
 \title{Convert Multistate data for POPAN-style abundance estimation}
 \usage{
-MS_popan(x, augment_num = 100, augment_stratum = "A",
-  enter_stratum = "B", strata = NULL, begin.time = 1,
-  groups = NULL, ddl = FALSE, time.intervals = NULL)
+MS_popan(x, augment_num = 100, augment_stratum = "A", enter_stratum = "B",
+  strata = NULL, begin.time = 1, groups = NULL, ddl = FALSE,
+  time.intervals = NULL)
 }
 \arguments{
 \item{x}{an RMark dataframe}

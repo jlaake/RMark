@@ -4,8 +4,7 @@
 \alias{release.gof}
 \title{Runs RELEASE for goodness of fit test}
 \usage{
-release.gof(data, invisible = TRUE, title = "Release-gof",
-  view = FALSE)
+release.gof(data, invisible = TRUE, title = "Release-gof", view = FALSE)
 }
 \arguments{
 \item{data}{processed RMark data}

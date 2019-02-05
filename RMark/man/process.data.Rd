@@ -5,10 +5,10 @@
 \title{Process encounter history dataframe for MARK analysis}
 \usage{
 process.data(data, begin.time = 1, model = "CJS", mixtures = 1,
-  groups = NULL, allgroups = FALSE, age.var = NULL,
-  initial.ages = c(0), age.unit = 1, time.intervals = NULL,
-  nocc = NULL, strata.labels = NULL, counts = NULL,
-  reverse = FALSE, areas = NULL, events = NULL)
+  groups = NULL, allgroups = FALSE, age.var = NULL, initial.ages = c(0),
+  age.unit = 1, time.intervals = NULL, nocc = NULL,
+  strata.labels = NULL, counts = NULL, reverse = FALSE, areas = NULL,
+  events = NULL)
 }
 \arguments{
 \item{data}{A data frame with at least one field named \code{ch} which is

@@ -33,11 +33,12 @@ The annotated code below is a companion to A Gentle Introduction to Program MARK
 #Read in Density Estimation input file specific to RMark
 
 #Add 2 covariates that will be used for threshhold models - see below & p. 20-14, 20-15
-#Specify data type - use "Densitypc" for this example, which is "Density Estimation with Huggins p and c
-#Could also use "DensityRanpc" (Huggins p and c with random effects), "DensityHet" (Huggins heterogeniety with pi and p), "DensityFHet" (Huggins full
+#Specify data type - use "Densitypc" for this example, which is "Density Estimation with 
+# Huggins p and c". Could also use "DensityRanpc" (Huggins p and c with random effects), 
+#"DensityHet" (Huggins heterogeniety with pi and p), "DensityFHet" (Huggins full
 #heterogeneity with pi and p) and DensityFHet (Huggins Full heterogeniety with pi, p, and c).
-#Be sure to specify areas argument in process.data for this model. It will not run if you don't give it the 
-#area of each study site
+#Be sure to specify areas argument in process.data for this model. It will not run if you don't 
+# give it the area of each study site
 
 data(Density)
 #Create variables for threshhold model - see below & p. 20-14, 20-15

@@ -4,21 +4,19 @@
 \alias{mark}
 \title{Interface to MARK for fitting capture-recapture models}
 \usage{
-mark(data, ddl = NULL, begin.time = 1, model.name = NULL,
-  model = "CJS", title = "", model.parameters = list(),
-  initial = NULL, design.parameters = list(), right = TRUE,
-  groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1,
-  time.intervals = NULL, nocc = NULL, output = TRUE,
-  invisible = TRUE, adjust = TRUE, mixtures = 1, se = FALSE,
-  filename = NULL, prefix = "mark", default.fixed = TRUE,
-  silent = FALSE, retry = 0, options = NULL, brief = FALSE,
-  realvcv = FALSE, delete = FALSE, external = FALSE,
+mark(data, ddl = NULL, begin.time = 1, model.name = NULL, model = "CJS",
+  title = "", model.parameters = list(), initial = NULL,
+  design.parameters = list(), right = TRUE, groups = NULL,
+  age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,
+  nocc = NULL, output = TRUE, invisible = TRUE, adjust = TRUE,
+  mixtures = 1, se = FALSE, filename = NULL, prefix = "mark",
+  default.fixed = TRUE, silent = FALSE, retry = 0, options = NULL,
+  brief = FALSE, realvcv = FALSE, delete = FALSE, external = FALSE,
   profile.int = FALSE, chat = NULL, reverse = FALSE, run = TRUE,
   input.links = NULL, parm.specific = FALSE, mlogit0 = FALSE,
-  threads = -1, hessian = FALSE, accumulate = TRUE,
-  allgroups = FALSE, strata.labels = NULL, counts = NULL,
-  icvalues = NULL, wrap = TRUE, events = NULL, nodes = 101,
-  useddl = FALSE)
+  threads = -1, hessian = FALSE, accumulate = TRUE, allgroups = FALSE,
+  strata.labels = NULL, counts = NULL, icvalues = NULL, wrap = TRUE,
+  events = NULL, nodes = 101, useddl = FALSE)
 }
 \arguments{
 \item{data}{Either the raw data which is a dataframe with at least one

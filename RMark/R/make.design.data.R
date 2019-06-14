@@ -375,8 +375,6 @@ function(data,parameters=list(),remove.unused=FALSE,right=TRUE,common.zero=FALSE
 #                          cohort.bins      - bins for grouping cohorts
 #                          pim.type         - type of pim structure "all","time","constant"
 #                          subtract.stratum - for each stratum, the one to compute by subtraction (for Psi only)
-#                          time.varying     - vector of field names that are time varying for this parameter
-#                          fields           - vector of field names to be included in design data that are not time varying
 #    remove.unused    - if TRUE, unused design data are removed; for triangular
 #                       pims, unused design data are determined based on lack of
 #                       ch for a particular row (cohort) of a group;  for square

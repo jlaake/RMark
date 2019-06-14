@@ -4,9 +4,9 @@
 \alias{model.table}
 \title{Create table of MARK model selection results}
 \usage{
-model.table(model.list = NULL, type = NULL, sort = TRUE, adjust = TRUE,
-  ignore = TRUE, pf = 1, use.lnl = FALSE, use.AIC = FALSE,
-  model.name = TRUE)
+model.table(model.list = NULL, type = NULL, sort = TRUE,
+  adjust = TRUE, ignore = TRUE, pf = 1, use.lnl = FALSE,
+  use.AIC = FALSE, model.name = TRUE)
 }
 \arguments{
 \item{model.list}{a vector of model names or a list created by the function

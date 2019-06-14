@@ -5,8 +5,8 @@
 \title{Constructs and runs a set of MARK models from a dataframe of parameter
 specifications}
 \usage{
-mark.wrapper(model.list, silent = FALSE, run = TRUE, use.initial = FALSE,
-  initial = NULL, ...)
+mark.wrapper(model.list, silent = FALSE, run = TRUE,
+  use.initial = FALSE, initial = NULL, ...)
 }
 \arguments{
 \item{model.list}{a dataframe of parameter specification names in the

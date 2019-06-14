@@ -143,7 +143,7 @@ var.components=function (theta, design, vcv, alpha=0.05, upper=10*max(vcv), LAPA
 	eig=eigen(Dinv)
 	Dinvsqrt=eig$vectors %*% diag(sqrt(eig$values)) %*% qr.solve(eig$vectors)
 	H=sqrt(sigma)*Dinvsqrt
-	X=rep(1,length(theta))
+	X=design
 	A=X%*%qr.solve(t(X)%*%Dinv%*%X)%*%t(X)
 	I=diag(1,length(theta))
 	G=H+(I-H)%*%A%*%Dinv

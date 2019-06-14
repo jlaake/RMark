@@ -1,3 +1,15 @@
+RMark 2.2.7 (14 June 2019)
+
+NEW
+
+* added Paradise_shelduck example of multistate live-dead model courtesy of Richard Barker.
+
+BUG FIXES
+
+* in var.components a bug was fixed in cases where a non-intercept design was specified.  Thanks to Joshua Goldberg for finding error and providing fix.
+
+* if data is in tbl format, an error occurred for nest data. Now anytime a tdl_df is passed to process.data it is changed into a standard dataframe for processing.  Thanks to Carl Schwarz for bringing the problem and solution to my attention.
+
 RMark 2.2.6 (4 February 2019)
 
 NEW FEATURES

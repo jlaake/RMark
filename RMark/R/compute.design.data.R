@@ -33,7 +33,7 @@
 #' @param tostrata set to TRUE for transition parameters
 #' @param strata.labels labels for strata as identified in capture history
 #' @param subtract.stratum for each stratum, the to.strata that is computed by
-#' subtraction
+#' subtraction or for HidMarkov it is the strata computed by subtraction for pi parameter
 #' @param common.zero if TRUE, uses a common begin.time to set origin (0) for
 #' Time variable defaults to FALSE for legacy reasons but should be set to TRUE
 #' for models that share formula like p and c with the Time model
@@ -43,6 +43,7 @@
 #' @param events vector of events if needed for parameter
 #' @param use.events if TRUE, adds events to design data
 #' @param mscale scalar for multi-scale occupancy model (number of mixtures)
+#' @param subtract.events for each stratum either the stratum or event to compute by subtraction for mlogit parameter
 #' @return design.data: a data frame containing all of the design data fields
 #' for a particular type of parameter \item{group}{group factor level}
 #' \item{age}{age factor level} \item{time}{time factor level}
@@ -57,7 +58,7 @@ compute.design.data <-
 function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
            secondary,nstrata=1,tostrata=FALSE,strata.labels=NULL,
            subtract.stratum=strata.labels,common.zero=FALSE,sub.stratum=0,limits=NULL,
-           events=NULL,use.events=NULL,mscale=1)
+           events=NULL,use.events=NULL,mscale=1,subtract.events=NULL)
 {
 # -------------------------------------------------------------------------------------------------------------
 #
@@ -128,10 +129,28 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
 	  start.stratum=as.numeric(limits[1])
   num.events=1
   if(!is.null(use.events)) num.events=length(events)
+  if(!is.null(subtract.events))
+  {
+    eventslist=vector("list",length=nstrata)
+    for(jj in 1:nstrata)
+    {
+      possible.events=c(strata.labels[jj],events)
+      eventslist[[jj]]=possible.events[!possible.events%in%subtract.events[jj]]
+    }
+  }
   for(jjj in 1:num.events)
+  {
+    if(!is.null(use.events)) 
+    {
+      if(!is.null(subtract.stratum))
+        stratum.set=(1:nstrata)[!(1:nstrata)%in%nsubtract.stratum[jjj]]
+      else
+        stratum.set=start.stratum:(nstrata-sub.stratum)
+      
+    } else
+      stratum.set=start.stratum:(nstrata-sub.stratum)
   for(j in 1:number.of.groups)
-  for (jj in start.stratum:(nstrata-sub.stratum))
-  for(l in 1:num.sessions)
+  for (jj in stratum.set)
   {
       if(tostrata)
 	    {
@@ -153,6 +172,7 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
       else
          other.strata=1
       for(to.strata in other.strata)
+      for(l in 1:num.sessions)
       {
          if(secondary)
          {
@@ -276,7 +296,10 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
             }
 #       For Hidden Markov model pi and Delta parameters add event to data
            if(!is.null(use.events)){
-              add.design.data=cbind(add.design.data,rep(jjj,ncol))
+              if(is.null(subtract.events))
+                 add.design.data=cbind(add.design.data,rep(events[jjj],ncol))
+              else
+                add.design.data=cbind(add.design.data,rep(eventslist[[jj]][jjj],ncol))
               dd.names=c(dd.names,"event")
            }
 #
@@ -290,6 +313,7 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
               ncol=ncol-1
          }
 	     }
+     }
     }
   }
    design.data=as.data.frame(design.data,row.names=NULL)
@@ -297,19 +321,19 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
 #
 #  Add Cohort, Age and Time variables
 #
-   if(!is.null(design.data$cohort))design.data$Cohort=design.data$cohort- min(design.data$cohort)
-   if(!is.null(design.data$age))design.data$Age=design.data$age
+   if(!is.null(design.data$cohort))design.data$Cohort=as.numeric(design.data$cohort)- min(as.numeric(design.data$cohort))
+   if(!is.null(design.data$age))design.data$Age=as.numeric(design.data$age)
    if(!is.null(design.data$time))
      if(common.zero)
-        design.data$Time=design.data$time- data$begin.time     
+        design.data$Time=as.numeric(design.data$time)- data$begin.time     
      else
-        design.data$Time=design.data$time- min(design.data$time)
+        design.data$Time=as.numeric(design.data$time)- min(as.numeric(design.data$time))
    if(nstrata>1)
       design.data$stratum=as.factor(strata.labels[design.data$stratum])
       if(!is.null(design.data$tostratum))
         design.data$tostratum=as.factor(strata.labels[design.data$tostratum])
    if(!is.null(use.events))
-      design.data$event=as.factor(data$events[design.data$event])
+      design.data$event=as.factor(design.data$event)
 #
 #  Next add grouping variables
 #

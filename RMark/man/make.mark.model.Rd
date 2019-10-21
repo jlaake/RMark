@@ -10,7 +10,7 @@ make.mark.model(data, ddl, parameters = list(), title = "",
   chat = NULL, simplify = TRUE, input.links = NULL,
   parm.specific = FALSE, mlogit0 = FALSE, hessian = FALSE,
   accumulate = TRUE, icvalues = NULL, wrap = TRUE, nodes = 101,
-  useddl = FALSE)
+  useddl = FALSE, check.model = FALSE)
 }
 \arguments{
 \item{data}{Data list resulting from function \code{\link{process.data}}}
@@ -60,7 +60,9 @@ problem set to FALSE and it will run faster}
 
 \item{nodes}{number of integration nodes for individual random effects (min 15, max 505, default 101)}
 
-\item{useddl}{if TRUE and no rows of ddl are missing (deleted) then it will use ddl in place of full.ddl that is created internally.}
+\item{useddl}{This argument is no longer used.  If there are no missing rows or parameters (deleted) then it will use ddl in place of full.ddl that is created internally.}
+
+\item{check.model}{if TRUE, code does an internal consistency check between PIMs and design data when making model.}
 }
 \value{
 model: a MARK object except for the elements \code{output} and

@@ -10,7 +10,7 @@ compute.design.data(data, begin, num, type = "Triang", mix = FALSE,
   tostrata = FALSE, strata.labels = NULL,
   subtract.stratum = strata.labels, common.zero = FALSE,
   sub.stratum = 0, limits = NULL, events = NULL, use.events = NULL,
-  mscale = 1)
+  mscale = 1, subtract.events = NULL)
 }
 \arguments{
 \item{data}{data list created by \code{\link{process.data}}}
@@ -37,7 +37,7 @@ design}
 \item{strata.labels}{labels for strata as identified in capture history}
 
 \item{subtract.stratum}{for each stratum, the to.strata that is computed by
-subtraction}
+subtraction or for HidMarkov it is the strata computed by subtraction for pi parameter}
 
 \item{common.zero}{if TRUE, uses a common begin.time to set origin (0) for
 Time variable defaults to FALSE for legacy reasons but should be set to TRUE
@@ -53,6 +53,8 @@ mlogit across strata like pi and Omega for RDMSOpenMisClass}
 \item{use.events}{if TRUE, adds events to design data}
 
 \item{mscale}{scalar for multi-scale occupancy model (number of mixtures)}
+
+\item{subtract.events}{for each stratum either the stratum or event to compute by subtraction for mlogit parameter}
 }
 \value{
 design.data: a data frame containing all of the design data fields

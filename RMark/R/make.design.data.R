@@ -375,6 +375,8 @@ function(data,parameters=list(),remove.unused=FALSE,right=TRUE,common.zero=FALSE
 #                          cohort.bins      - bins for grouping cohorts
 #                          pim.type         - type of pim structure "all","time","constant"
 #                          subtract.stratum - for each stratum, the one to compute by subtraction (for Psi only)
+#                                             or for pi the stratum to compute by subtraction for each event
+#                          subtract.events  - for each stratum, either the stratum or event to be computed by subtraction
 #    remove.unused    - if TRUE, unused design data are removed; for triangular
 #                       pims, unused design data are determined based on lack of
 #                       ch for a particular row (cohort) of a group;  for square
@@ -452,6 +454,7 @@ else
           number.of.groups=dim(data$freq)[2])
   parameters=parameters[par.list]
   model.list=setup.model(data$model,data$nocc,data$mixtures)
+  subtract.events=NULL
 # If reverse, set remove.unused=TRUE  
   if(data$reverse)
   {
@@ -492,6 +495,10 @@ else
      {
         strata.labels=data$strata.labels
         nstrata=data$nstrata
+        if(data$model=="RDMSOccupancy"&names(parameters)[i]=="Psi"){
+          nstrata=nstrata+1
+          strata.labels=c(0,strata.labels)
+        }
 		    if(!is.null(parameters[[i]]$subset) && nchar(parameters[[i]]$subset)>0)
 		    {
 			      limits=strsplit(parameters[[i]]$subset,"")[[1]]
@@ -511,14 +518,28 @@ else
         }
         else
         {
-			     if(data$model%in%c("RDMSOpenMCSeas","RDMSOpenMisClass","RDMSMisClass") & names(parameters)[i]%in%c("pi","Omega"))
-			     {
-			        subtract.stratum=data$strata.labels[nstrata]
+			     if(data$model%in%c("RDMSOpenMCSeas","RDMSOpenMisClass","RDMSMisClass","HidMarkov") & names(parameters)[i]%in%c("pi","Omega","Delta"))
+			     { 
+			       if(!is.null(parameters[[i]]$subtract.stratum))
+			           subtract.stratum=parameters[[i]]$subtract.stratum
+			       else
+			       {
+			         if(names(parameters)[i]=="Delta")
+			         {
+			           subtract.stratum=NULL
+			           if(is.null(parameters[[i]]$subtract.events))
+			             subtract.events=strata.labels
+			           else
+			             subtract.events=parameters[[i]]$subtract.events
+			         }
+               else
+			           subtract.stratum=data$strata.labels[nstrata]
+			       }
 		       } else
 			     {
 			        subtract.stratum=NULL
-	          }
-            tostrata=FALSE
+	         }
+           tostrata=FALSE
         }
      } 
      else
@@ -538,7 +559,7 @@ else
 		    sub.stratum=0
 		    if(!is.null(parameters[[i]]$sub.stratum))sub.stratum=parameters[[i]]$sub.stratum
 		    # Special code for parameter Phi0 in RDMSOccRepro model
-		    if(data$model=="RDMSOccRepro" & names(parameters)[i]=="Phi0")
+		    if(data$model%in%c("RDMSOccRepro","RDMSOccupancy") & names(parameters)[i]=="Phi0")
 		    {
 			     design.data=expand.grid(stratum=data$strata.labels,group=1:ncol(data$freq))      
 			     if(ncol(data$freq)>1)
@@ -566,7 +587,7 @@ else
 		                                       parameters[[i]]$pim.type,parameters[[i]]$secondary, nstrata,
 		                                       tostrata,strata.labels,subtract.stratum,common.zero=common.zero,
 		                                       sub.stratum=sub.stratum,limits=limits,events=data$events,use.events=parameters[[i]]$events,
-		                                       mscale=mscale)
+		                                       mscale=mscale,subtract.events=subtract.events)
 		     }
         if(!is.null(parameters[[i]]$mix) && parameters[[i]]$mix)design.data$mixture=as.factor(design.data$mixture)
         if(parameters[[i]]$secondary)
@@ -615,7 +636,7 @@ else
                design.data$Time=NULL
             }
         }
-		    if(data$model=="RDMSOccRepro")
+		    if(data$model%in%c("RDMSOccRepro","RDMSOccupancy"))
 		    {
 			     if(names(parameters)[i]=="R")
 				     design.data=design.data[order(design.data$group,design.data$stratum),]

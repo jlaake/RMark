@@ -351,6 +351,7 @@ search.output.files=function(x,string)
 #' se_Nhat_MS=Psi_estimates$se[1]*Nhat_MS
 #' cat("Popan N = ",popan_N$estimate," (se = ",popan_N$se,")\n")
 #' cat("MS N = ",Nhat_MS," (se = ",se_Nhat_MS,")\n")
+#'
 #' }
 MS_popan=function(x,augment_num=100,augment_stratum="A",enter_stratum="B",strata=NULL,begin.time=1,groups=NULL,ddl=FALSE,time.intervals=NULL)
 {

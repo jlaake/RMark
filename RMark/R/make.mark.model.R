@@ -364,7 +364,8 @@
 #' @param wrap if TRUE, data lines are wrapped to be length 80; if length of a row is not a 
 #'   problem set to FALSE and it will run faster
 #' @param nodes number of integration nodes for individual random effects (min 15, max 505, default 101)
-#' @param useddl if TRUE and no rows of ddl are missing (deleted) then it will use ddl in place of full.ddl that is created internally.
+#' @param useddl This argument is no longer used.  If there are no missing rows or parameters (deleted) then it will use ddl in place of full.ddl that is created internally.
+#' @param check.model if TRUE, code does an internal consistency check between PIMs and design data when making model.
 #' @return model: a MARK object except for the elements \code{output} and
 #' \code{results}. See \code{\link{mark}} for a detailed description of the
 #' list contents.
@@ -418,7 +419,7 @@ make.mark.model <-
 function(data,ddl,parameters=list(),title="",model.name=NULL,initial=NULL,call=NULL,
 		default.fixed=TRUE,options=NULL,profile.int=FALSE,chat=NULL,simplify=TRUE,
 		input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,hessian=FALSE,accumulate=TRUE,
-           icvalues=NULL,wrap=TRUE,nodes=101,useddl=FALSE)
+           icvalues=NULL,wrap=TRUE,nodes=101,useddl=FALSE,check.model=FALSE)
 {
 
 #  *******************  INTERNAL FUNCTIONS    *********************************
@@ -748,17 +749,19 @@ else
 #  to renumber and print out the pim structure.
 #
 if(model$data$model=="RDMSOccRepro")
-	bracket=TRUE
-else
-	bracket=FALSE
-
+  bracket=rep(TRUE,length(parameters))
+else 
+  if(model$data$model=="RDMSOccupancy")
+	    bracket=c(FALSE,FALSE,TRUE)
+  else
+	    bracket=rep(FALSE,length(parameters))
 for (i in 1:length(parameters)) {
   for (j in 1:length(model$pims[[i]]))
   {
          ncol = dim(model$pims[[i]][[j]]$pim)[2]
          string=pim.header(pim[[i]][[j]]$group,param.names[i],parameters[[i]],
                    ncol,model$pims[[i]][[j]]$stratum,model$pims[[i]][[j]]$tostratum,model$strata.labels,
-				           mixtures,model$pims[[i]][[j]]$session,parameters[[i]]$socc,bracket=bracket,event=model$pims[[i]][[j]]$event,
+				           mixtures,model$pims[[i]][[j]]$session,parameters[[i]]$socc,bracket=bracket[i],event=model$pims[[i]][[j]]$event,
 				           primary=model$pims[[i]][[j]]$primary)
          write(string, file = outfile, append = TRUE)
          if(parameters[[i]]$type %in% c("Triang","STriang"))
@@ -1002,10 +1005,12 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 #  *******************  END OF INTERNAL FUNCTIONS    *********************************
 # Test to make sure that all rows of design data are there (no more deletion) and make sure they
 # are ordered
+  missing=FALSE
   for(i in 1:(length(ddl)-1))
   {
 	  if(max(ddl[[i]]$par.index) != nrow(ddl[[i]])) 
 	  {
+	    missing=TRUE
 		  warning(paste("\nMissing rows in design dataframe for parameter",names(ddl)[i],
 				  "\n Deleting rows from design data is still allowed but see warning in help for make.design.data\n"))
 	  }
@@ -1053,7 +1058,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   complete=TRUE
   for(iname in names(parameters)[names(parameters)%in%names(full.ddl)])
     if(nrow(full.ddl[[iname]])!=nrow(ddl[[iname]])) complete=FALSE
-  if(complete&useddl)full.ddl=ddl
+  if(complete&!missing)full.ddl=ddl
   data$reverse=temp.rev
   parameters=parameters[names(parameters)%in%names(full.ddl)]
   for(j in names(parameters))
@@ -1189,7 +1194,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
             {
               if(!is.null(full.ddl[[parx]]$session))
               {
-                 cov.bytime=unique(paste(xcov[[parx]][j],as.character(ddl[[parx]]$session),as.character(ddl[[parx]]$time),sep=""))
+                # This model was split off to use primary instead of time; but changed back.Could be deleted
+                 if(data$model%in%c("RDMultScalOcc"))
+                   cov.bytime=unique(paste(xcov[[parx]][j],as.character(ddl[[parx]]$session),as.character(ddl[[parx]]$time),sep=""))
+                 else
+                   cov.bytime=unique(paste(xcov[[parx]][j],as.character(ddl[[parx]]$session),as.character(ddl[[parx]]$time),sep=""))
                  if(any(!cov.bytime%in%names(data$data)))
                  {
                     session.dependent[[parx]][j]=TRUE                 
@@ -1398,16 +1407,19 @@ create.agenest.var=function(data,init.agevar,time.intervals)
      k=0
      for(j in 1:number.of.groups)
      {
-	      if(is.null(parameters[[i]]$bystratum)||!parameters[[i]]$bystratum)
-          xstrata=1
-	      else
-		    xstrata=unique(ddl[[i]]$stratum)
 	      if(is.null(parameters[[i]]$events)) 
 	        events=1 
 	      else 
 	        events=data$events
-	      
 	      for(jjj in events)
+	      {
+	        if(is.null(parameters[[i]]$bystratum)||!parameters[[i]]$bystratum)
+	          xstrata=1
+	        else
+	          if(!is.null(parameters[[i]]$events)&&parameters[[i]]$events)
+	              xstrata=unique(ddl[[i]]$stratum[ddl[[i]]$event==jjj])
+	          else
+	            xstrata=unique(ddl[[i]]$stratum)
 	      for (jj in xstrata)
 	      {
           other.strata=1
@@ -1433,9 +1445,9 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                   {
                     k=k+1
                     pim[[i]][[k]]=list()
-                    if(data$model=="RDMSOccRepro" & names(parameters)[i]=="Phi0")
+                    if(data$model%in%c("RDMSOccRepro","RDMSOccupancy") & names(parameters)[i]=="Phi0")
                     {
-                      pim[[i]][[k]]$pim=matrix(ddl[[i]]$model.index,ncol=2,byrow=TRUE)   
+                      pim[[i]][[k]]$pim=matrix(ddl[[i]]$model.index,ncol=nstrata,byrow=TRUE)   
                     } else	 
                       if(!multi.session)
                         pim[[i]][[k]]$pim=create.pim(nocc,parameters[[i]],npar,mixtures)
@@ -1473,12 +1485,47 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                     npar=max(pim[[i]][[k]]$pim)+1
                   }
                }
-           }
+            }
+	       }
        }
      }
   }
   npar=npar-1
   names(pim)=names(parameters)
+  check_model=function(pims,ddl,parameters,groups)
+  {
+    for(parx in names(parameters))
+    {
+      pim=pims[[parx]] 
+      for(i in 1:length(pim))
+      {
+        index=sort(unique(as.vector(pim[[i]]$pim)))
+        index=index[index!=0]
+        vars=names(pim[[i]])[!names(pim[[i]])%in%c("pim")]
+        df=data.frame(model.index=index)
+        for(j in vars)
+        {
+          if(j=="group"&!is.null(groups))
+            df[[j]]=paste(sapply(groups[pim[[i]][[j]], ],as.character),collapse="")
+          else
+            df[[j]]=as.character(pim[[i]][j])
+        }
+        if(i==1)
+          dfx=df
+        else
+          dfx=rbind(dfx,df)
+      }
+      vars=c("model.index",vars)
+      vars=vars[vars%in%names(ddl[[parx]])]
+      ddlvalues=apply(subset(ddl[[parx]],select=vars),1,paste,collapse="")
+      pimvalues=apply(dfx[,vars],1,paste,collapse="")
+      if(any(ddlvalues!=pimvalues))
+        stop("model not correct for parameter ",parx)
+    }
+    return(NULL)
+  }
+  if(check.model) check_model(pims=pim,full.ddl,parameters,data$group.covariates)
+  
 #
 # If there are fixed parameters output the text here
 #
@@ -1718,9 +1765,15 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                             design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=
                                 paste(xcov[[parx]][j],as.character(fullddl$session[design.matrix[[i]][,k]==1]),sep="")
                         else
-                           design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=
-                                paste(xcov[[parx]][j],as.character(fullddl$session[design.matrix[[i]][,k]==1]),
-                                  as.character(fullddl$time[design.matrix[[i]][,k]==1]),sep="")
+                           if(!data$model%in%c("RDMultScalOcc"))
+                              design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=
+                                   paste(xcov[[parx]][j],as.character(fullddl$session[design.matrix[[i]][,k]==1]),
+                                     as.character(fullddl$time[design.matrix[[i]][,k]==1]),sep="")
+                           else
+                             # This model was split off to use primary instead of time; but changed back. Could be deleted
+                             design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=
+                                    paste(xcov[[parx]][j],as.character(fullddl$session[design.matrix[[i]][,k]==1]),
+                                    as.character(fullddl$time[design.matrix[[i]][,k]==1]),sep="")
                      else   
                         design.matrix[[i]][,k][design.matrix[[i]][,k]==1]=paste(xcov[[parx]][j],as.character(fullddl$time[design.matrix[[i]][,k]==1]),sep="")
                   else
@@ -1889,50 +1942,57 @@ create.agenest.var=function(data,init.agevar,time.intervals)
                       string=c(string,paste("mlogit(",rep(logit.numbers+(j-1)*length(logit.numbers),(nstrata-1)),")",sep="")) 
 			           }
 			           max.logit.number=max.logit.number+logits.per.group*number.of.groups
-              } else {
-                 if(parx%in% c("pent","alpha"))
-                 {
-                     nsets=length(pim[[parx]])
-                     for (kk in 1:nsets)
-                     {
-                        x.indices=as.vector(t(pim[[parx]][[kk]]$pim))
-                        x.indices=x.indices[x.indices!=0]
-                        max.logit.number=max.logit.number+1
-                       string=c(string,paste("mlogit(",rep(max.logit.number,length(x.indices)),")",sep=""))
-                     }
-                 }else
-                 {
-				               if(parx %in% c("pi","Omega"))
-				               { 
-					                if(is.null(data$events)) 
-				                    number.of.events=1
-				                  else
-				                    number.of.events=length(data$events)
-				                  for(kkk in 1:number.of.events)
-					                for (kk in 1:number.of.groups)
-					                {
-					   	            logit.numbers=max.logit.number+rep(1:(nrow(full.ddl[[parx]])/(number.of.events*number.of.groups*(nstrata-1))),nstrata-1)
-						              max.logit.number=max(logit.numbers)
-						              string=c(string,paste("mlogit(",logit.numbers,")",sep=""))
-					                }			 				 
-				               } else {
-				                      if(parx=="Delta"){
-				                          if(is.null(data$events)) 
-				                            number.of.events=1
-				                          else
-				                            number.of.events=length(data$events)
-				                          for (kk in 1:number.of.groups)
-				                          {
-				                            logit.numbers=max.logit.number+rep(1:(nrow(full.ddl[[parx]])/(number.of.events*number.of.groups)),number.of.events)
-				                            max.logit.number=max(logit.numbers)
-				                            string=c(string,paste("mlogit(",logit.numbers,")",sep=""))
-				                          }			 				 
-				                        
-				                      } else  
-                                    stop(paste("Mlogit link not allowed with parameter",parx))
-			                 }
+             } 
+             if(parx%in% c("pent","alpha"))
+             {
+                nsets=length(pim[[parx]])
+                for (kk in 1:nsets)
+                {
+                   x.indices=as.vector(t(pim[[parx]][[kk]]$pim))
+                   x.indices=x.indices[x.indices!=0]
+                   max.logit.number=max.logit.number+1
+                   string=c(string,paste("mlogit(",rep(max.logit.number,length(x.indices)),")",sep=""))
                  }
               }
+              if(parx %in% c("pi","Omega"))
+              { 
+	                if(is.null(data$events)) 
+	                    number.of.events=1
+                  else
+	                    number.of.events=length(data$events)
+                  for(kkk in 1:number.of.events)
+	                for (kk in 1:number.of.groups)
+	                {
+		   	            logit.numbers=max.logit.number+rep(1:(nrow(full.ddl[[parx]])/(number.of.events*number.of.groups*(nstrata-1))),nstrata-1)
+			              max.logit.number=max(logit.numbers)
+			              string=c(string,paste("mlogit(",logit.numbers,")",sep=""))
+	                }			 				 
+               }
+				       if(parx=="Delta"){
+				              if(is.null(data$events)) 
+				                  number.of.events=1
+				              else
+				                  number.of.events=length(data$events)
+				              for (kk in 1:number.of.groups)
+				              {
+				                 logit.numbers=max.logit.number+rep(1:(nrow(full.ddl[[parx]])/(number.of.events*number.of.groups)),number.of.events)
+				                 max.logit.number=max(logit.numbers)
+				                 string=c(string,paste("mlogit(",logit.numbers,")",sep=""))
+				              }			 				 
+				       }
+               if(parx=="p" & data$model=="RDMSOccupancy")
+				       {
+				              subp=subset(full.ddl[[parx]],select=c("session","time","tostratum","group"))
+				              uniquevals=apply(unique(subp),1,paste,collapse="")
+				              allvals=apply(subp,1,paste,collapse="")
+				              new.indices=match(allvals, uniquevals)
+				              new.indices=new.indices+max.logit.number
+				              for (k in 1:length(new.indices))
+			                    string=c(string,paste("mlogit(",new.indices[k],")",sep="")) 
+				              max.logit.number=max.logit.number+max(new.indices)
+				       }
+				       if(!parx%in%c("Psi","pent","alpha","pi","Omega","Delta")&!(parx=="p" & data$model=="RDMSOccupancy"))
+				              stop(paste("Mlogit link not allowed with parameter",parx))
             } else
             {
               xstring=rep(spell(parameters[[i]]$link),dim(full.ddl[[parx]])[1])

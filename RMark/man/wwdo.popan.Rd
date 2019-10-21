@@ -112,23 +112,23 @@ wwdo.ddl=make.design.data(wwdo.proc)
 	
 	Model.1=mark(wwdo.proc, wwdo.ddl, 
    model.parameters=list(Phi=Phi.dot.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-   invisible=FALSE)
+   invisible=FALSE,threads=1)
 	Model.2=mark(wwdo.proc, wwdo.ddl, 
   model.parameters=list(Phi=Phi.time.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-   invisible=FALSE)
+   invisible=FALSE,threads=1)
 	Model.3=mark(wwdo.proc, wwdo.ddl, 
   model.parameters=list(Phi=Phi.age.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-    invisible=FALSE)
+    invisible=FALSE,threads=1)
 	Model.4=mark(wwdo.proc, wwdo.ddl, 
   model.parameters=list(Phi=Phi.timeage.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-    invisible=FALSE)
+    invisible=FALSE,threads=1)
 	Model.5=mark(wwdo.proc, wwdo.ddl,  
   model.parameters=list(Phi=Phi.timeage.fix, p=p.time, pent=pent.time.fix, N=list(formula=~group)), 
-   invisible=FALSE)
+   invisible=FALSE,threads=1)
 	Model.6=mark(wwdo.proc, wwdo.ddl, 
    model.parameters=list(Phi=Phi.timeage.fix,p=p.g.time, pent=pent.time.fix,
               N=list(formula=~group)), 
-   invisible=FALSE)
+   invisible=FALSE,threads=1)
 	collect.models()
 }
 wwdo.out=wwdo.popan()

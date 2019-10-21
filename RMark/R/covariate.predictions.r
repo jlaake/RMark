@@ -89,7 +89,8 @@
 #' @param alpha The desired lower and upper error rate.  Specifying alpha=0.025
 #' corresponds to a 95% MATA-Wald confidence interval, an' 
 #' alpha=0.05 to a 90% interval.  'alpha' must be between 0 and 0.5.
-#' Default value is alpha=0.025.
+#' Default value is alpha=0.025. This argument now works to set standard confidence interval as well using 
+#' qnorm(1-alpha) for critical value.
 #' @param normal.lm Specify normal.lm=TRUE for the normal linear model case, and 
 #' normal.lm=FALSE otherwise.  When normal.lm=TRUE, the argument 
 #' 'residual.dfs' must also be supplied.  See USAGE section, 
@@ -366,7 +367,8 @@ if(drop)
 	 
       model.indices=unique(model$simplify$pim.translation[indices])
       used.beta=which(apply(model$design.matrix[model.indices,,drop=FALSE],2,function(x)!all(x=="0")))
-      if(any(diag(model$results$beta.vcv[used.beta,used.beta])<0))
+      if(any(is.nan(model$results$beta.vcv[used.beta,used.beta])) || any(is.infinite(abs(model$results$beta.vcv[used.beta,used.beta]))) ||
+         any(diag(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])<0))
       {
          dropped.models=c(dropped.models,i)
          message("\nModel ",i,"dropped from the model averaging because one or more beta variances are not positive\n")
@@ -386,8 +388,9 @@ else
 {
 	model.indices=unique(model$simplify$pim.translation[indices])
 	used.beta=which(apply(model$design.matrix[model.indices,,drop=FALSE],2,function(x)!all(x=="0")))
-	if(any(diag(model$results$beta.vcv[used.beta,used.beta])<0))
-		message("\nModel has one or more beta variances that are not positive\n")
+	if(any(is.nan(model$results$beta.vcv[used.beta,used.beta])) || any(is.infinite(abs(model$results$beta.vcv[used.beta,used.beta]))) ||
+	   any(diag(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])<0))
+	  message("\nModel has one or more beta variances that are not positive\n")
 }
 reals=vector("list",length=number.of.models)
 firstmodel=TRUE
@@ -600,8 +603,8 @@ for (j in 1:number.of.models)
    link.values[ind][abs(real[ind]-1)<1e-7]=100
    link.values[ind][abs(real[ind]-0)<1e-7]=-100
    links[ind]="logit"
-   real.lcl=convert.link.to.real(link.values-1.96*link.se,links=links)
-   real.ucl=convert.link.to.real(link.values+1.96*link.se,links=links)
+   real.lcl=convert.link.to.real(link.values-qnorm(1-alpha)*link.se,links=links)
+   real.ucl=convert.link.to.real(link.values+qnorm(1-alpha)*link.se,links=links)
    real.lcl[fixedparms]=real[fixedparms]
    real.ucl[fixedparms]=real[fixedparms]   
 #
@@ -749,8 +752,8 @@ vcv.real=mavg.res$vcv
 if(!mata)
 {
 	link.list=compute.links.from.reals(estimates.average$estimate,model.list[[1]],parm.indices=estimates.average$par.index,vcv.real=vcv.real,use.mlogits=FALSE)
-	estimates.average$lcl=link.list$estimates-1.96*sqrt(diag(link.list$vcv))
-	estimates.average$ucl=link.list$estimates+1.96*sqrt(diag(link.list$vcv))
+	estimates.average$lcl=link.list$estimates-qnorm(1-alpha)*sqrt(diag(link.list$vcv))
+	estimates.average$ucl=link.list$estimates+qnorm(1-alpha)*sqrt(diag(link.list$vcv))
 	estimates.average$lcl=apply(data.frame(x=estimates.average$lcl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
 	estimates.average$ucl=apply(data.frame(x=estimates.average$ucl,links=link.list$links),1,function(x){inverse.link(as.numeric(x[1]),x[2])})
 	estimates.average$lcl[is.na(estimates.average$lcl)]=estimates.average$estimate[is.na(estimates.average$lcl)]

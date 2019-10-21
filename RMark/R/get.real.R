@@ -139,6 +139,11 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
 #
   if(!valid.parameters(model$model,parameter))stop()
 #
+# Warn user that if model=POPAN and parameter=N and vcv=T, results are really f0
+#
+  if(model$model=="POPAN"&parameter=="N"&vcv==TRUE)
+    message("Note: for this particular case, the estimate and confidence intervals are for f0 and not N. \nAdd group-specific number caught to estimate and lcl and ucl to get N. se is unchanged")
+#
 #  Check to see if there are any covariates used in the model.   If there
 #  are covariates used and no design is specified but data is given, then create
 #  the design matrix from data
@@ -154,7 +159,8 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
 #If se=TRUE, warn user if beta.vcv has negative variances
 #
   if(se)
-    if(any(diag(model$results$beta.vcv)<0))
+    if(any(is.nan(model$results$beta.vcv)) || any(is.infinite(abs(model$results$beta.vcv))) ||
+       any(diag(model$results$beta.vcv)<0))
        warning("\nImproper V-C matrix for beta estimates. Some variances non-positive.\n")
 #
 #  If beta vector specified, set se and vcv=F

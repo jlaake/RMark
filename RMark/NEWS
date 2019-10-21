@@ -1,14 +1,30 @@
-RMark 2.2.7 (14 June 2019)
+RMark 2.2.7 (28 September 2019)
 
-NEW
+NEW FEATURES
 
 * added Paradise_shelduck example of multistate live-dead model courtesy of Richard Barker.
+
+* added capability to set subtract.stratum for pi and subtract.events for Delta with HidMarkov models. The subtract.stratum for pi has a value for each event and subtract.events for Delta has a value for each stratum that can either be the stratum value or one of the events.
+
+* added support for RDMultScalOcc model. Thanks to Connor Wood and Gary White for providing examples to test.
+
+* added support for RDMSOccupancy model. Thanks to Wendy Lanier for help in figuring out the model parameters and providing a test example.
+
+* added a check.model argument to make.mark.model.  This argument is primarily for my use when adding models. It checks to make sure ordering of PIMs is consistent with the design data order.  I had the order incorrect initially when adding the RDMSOccupancy model and it made me realize I should have this in the code.  No problems were discovered in running all of the examples in the package.  I have set the default value to FALSE but if you want to check a model type that doesn't have an example in the package, set to TRUE.  Don't panic if it flags an error as I did when I first ran it. The code doing the testing may not be perfect and was initially giving false errors. But please do let me know if you encounter any problems. 
+
+* alpha argument in covariate.predictions was orginally intended just for mata-wald confidence intervals but it has been extended to be used with regular confidence intervals as well.  The value 1.96 has been replaced with
+qnorm(1-alpha) and the default value of alpha=0.025 will give the same(very close) result as previous use of 1.96 for 95% confidence intervals.
+
+CHANGES
+* Jay Rotella updated the mallard example to use mark.wrapper approach to fitting a set of models.
 
 BUG FIXES
 
 * in var.components a bug was fixed in cases where a non-intercept design was specified.  Thanks to Joshua Goldberg for finding error and providing fix.
 
 * if data is in tbl format, an error occurred for nest data. Now anytime a tdl_df is passed to process.data it is changed into a standard dataframe for processing.  Thanks to Carl Schwarz for bringing the problem and solution to my attention.
+
+* get.real was inconsistent about what it returned. If vcv=FALSE it returns N because it takes the results from the MARK output. If vcv=TRUE, it returns f0 because the estimated parameter is actually f0 even though MARK refers to it as N and RMark works with the actual parameters and not derived values.  I have chosen to let this problem remain because it would take some specific coding just for this parameter in get.real. To convert to N, simply add the number of animals caught to f0 when vcv=TRUE. I have added a warning message. Thanks to Carl Schwarz for bringing the problem to my attention. 
 
 RMark 2.2.6 (4 February 2019)
 

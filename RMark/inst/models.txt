@@ -83,6 +83,7 @@ MarkNumber	model	etype	robust	closed	occupancy	derived	default.mixtures	num	divi
 121	RDMSMisClass	RDMSMisClass	TRUE	TRUE	FALSE	FALSE	2	0	1	TRUE
 123	MultScalOcc	MultScalOcc	TRUE	FALSE	TRUE	FALSE	1	0	1	FALSE
 124	RDMSOccRepro	RDMSOccRepro	TRUE	FALSE	TRUE	TRUE	1	0	1	TRUE
+125	RDMSOccupancy	RDMSOccupancy	TRUE	FALSE	TRUE	TRUE	1	0	1	TRUE
 126	RDMSOpenMisClass	RDMSOpenMisClass	TRUE	FALSE	FALSE	TRUE	2	0	1	TRUE
 127	Densitypc	Densitypc	FALSE	TRUE	FALSE	TRUE	1	-1	1	FALSE
 128	DensityHet	DensityHet	FALSE	TRUE	FALSE	TRUE	1	-1	1	FALSE

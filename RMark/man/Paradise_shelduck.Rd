@@ -3,6 +3,7 @@
 \docType{data}
 \name{Paradise_shelduck}
 \alias{Paradise_shelduck}
+\alias{ps}
 \title{Mulstistate Live-Dead Paradise Shelduck Data}
 \format{A data frame with 1704 observations of 3 variables 
  \describe{ 
@@ -15,19 +16,22 @@ Paradise shelduck recapture and recovery data in multistrata provided by Richard
 }
 \examples{
 \donttest{
-# In the referenced article, there are 3 observable strata (A,B,C) and 3 unobservable strata (D,E,F). This
-# example is setup by default to use only the 3 observable strata to avoid problems with multiple modes in the likelihood.
-# Code that uses all 6 strata are provided but commented out. With unobservable strata, simulated annealing should
-# be used (options="SIMANNEAL")
+# In the referenced article, there are 3 observable strata (A,B,C) and 
+# 3 unobservable strata (D,E,F). This example is setup by default to use only  
+# the 3 observable strata to avoid problems with multiple modes in the likelihood.  
+# Code that uses all 6 strata are provided but commented out. With unobservable strata,
+# simulated annealing should be used (options="SIMANNEAL")
 data("Paradise_shelduck")
 # change sex reference level to Male to match design matrix used in MARK
 ps$sex=relevel(ps$sex,"Male")
 # Process data with MSLiveDead model using sex groups and specify only observable strata
 ps_dp=process.data(ps,model="MSLiveDead",groups="sex",strata.labels=c("A","B","C"))
-# Process data with MSLiveDead model using sex groups and specify observable and unboservable strata
-# ps_dp=process.data(ps,model="MSLiveDead",groups="sex",strata.labels=c("A","B","C","D","E","F"))
-# Make design data and specify constant PIM for Psi to reduce parameter space. No time variation was allowed in
-# Psi in the article.
+# Process data with MSLiveDead model using sex groups and
+# specify observable and unboservable strata
+# ps_dp=process.data(ps,model="MSLiveDead",groups="sex",
+#                        strata.labels=c("A","B","C","D","E","F"))
+# Make design data and specify constant PIM for Psi to reduce parameter space. No time variation
+# allowed in Psi in the article.
 ddl=make.design.data(ps_dp,parameters=list(Psi=list(pim.type="constant")))
 # Fix p to 0 for unobservable strata (only needed if they are included)
 ddl$p$fix=NA
@@ -57,7 +61,8 @@ Psi.1=list(formula=~-1+stratum:tostratum)
 # Run top model from paper but only for observable strata
 top_model=mark(ps_dp,ddl,model.parameters=list(S=S.1,p=p.1,r=r.1,Psi=Psi.1))
 # Run top model from paper for all strata using simulated annealing (commented out)
-#top_model=mark(ps_dp,ddl,model.parameters=list(S=S.1,p=p.1,r=r.1,Psi=Psi.1),options="SIMANNEAL")
+#top_model=mark(ps_dp,ddl,model.parameters=list(S=S.1,p=p.1,r=r.1,Psi=Psi.1),
+#      options="SIMANNEAL")
 }
 }
 \references{

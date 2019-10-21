@@ -217,7 +217,8 @@ if(drop)
       }
       model.indices=unique(model$simplify$pim.translation[indices])
       used.beta=which(apply(model$design.matrix[model.indices,,drop=FALSE],2,function(x)!all(x=="0")))
-      if(any(diag(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])<0))
+      if(any(is.nan(model$results$beta.vcv[used.beta,used.beta])) || any(is.infinite(abs(model$results$beta.vcv[used.beta,used.beta]))) ||
+         any(diag(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])<0))
 #      if(any(diag(model$results$beta.vcv)<0))
       {
          dropped.models=c(dropped.models,i)

@@ -18,7 +18,7 @@ mark(data, ddl = NULL, begin.time = 1, model.name = NULL,
   threads = -1, hessian = FALSE, accumulate = TRUE,
   allgroups = FALSE, strata.labels = NULL, counts = NULL,
   icvalues = NULL, wrap = TRUE, events = NULL, nodes = 101,
-  useddl = FALSE)
+  useddl = FALSE, check.model = FALSE)
 }
 \arguments{
 \item{data}{Either the raw data which is a dataframe with at least one
@@ -146,6 +146,8 @@ problem set to FALSE and it will run faster}
 \item{nodes}{number of integration nodes for individual random effects (min 15, max 505, default 101)}
 
 \item{useddl}{if TRUE and no rows of ddl are missing (deleted) then it will use ddl in place of full.ddl that is created internally.}
+
+\item{check.model}{if TRUE, code does an internal consistency check between PIMs and design data when making model.}
 }
 \value{
 model: a MARK object containing output and extracted results. It is

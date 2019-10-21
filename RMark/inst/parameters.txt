@@ -562,3 +562,6 @@ RDMultScalOcc	Theta	0	0		Square	all	logit	~1					TRUE
 RDMultScalOcc	p	0	0	0	Square	all	logit	~1					TRUE					FALSE					
 NSpeciesOcc	f	0	1		Square	all	logit	~1			TRUE	0 	
 NSpeciesOcc	p	0	0	0	Square	all	logit	~1			TRUE	0 										
+RDMSOccupancy	Phi0	1	0	0	Square	all	logit	~1			FALSE		FALSE	FALSE						
+RDMSOccupancy	Psi	1	-1	0	Square	all	mlogit	~-1+stratum:tostratum			FALSE		FALSE	TRUE	TRUE					
+RDMSOccupancy	p	0	0	0	Square	all	mlogit	~-1+stratum:tostratum			FALSE		TRUE	TRUE	TRUE				12	

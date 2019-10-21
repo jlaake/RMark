@@ -44,6 +44,7 @@ Nhat_MS=Psi_estimates$estimate[1]*sum(abs(data.list$data$data$freq))
 se_Nhat_MS=Psi_estimates$se[1]*Nhat_MS
 cat("Popan N = ",popan_N$estimate," (se = ",popan_N$se,")\\n")
 cat("MS N = ",Nhat_MS," (se = ",se_Nhat_MS,")\\n")
+
 }
 }
 \author{

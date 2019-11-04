@@ -1,4 +1,4 @@
-RMark 2.2.7 (28 September 2019)
+RMark 2.2.7 (4 November 2019)
 
 NEW FEATURES
 
@@ -12,8 +12,7 @@ NEW FEATURES
 
 * added a check.model argument to make.mark.model.  This argument is primarily for my use when adding models. It checks to make sure ordering of PIMs is consistent with the design data order.  I had the order incorrect initially when adding the RDMSOccupancy model and it made me realize I should have this in the code.  No problems were discovered in running all of the examples in the package.  I have set the default value to FALSE but if you want to check a model type that doesn't have an example in the package, set to TRUE.  Don't panic if it flags an error as I did when I first ran it. The code doing the testing may not be perfect and was initially giving false errors. But please do let me know if you encounter any problems. 
 
-* alpha argument in covariate.predictions was orginally intended just for mata-wald confidence intervals but it has been extended to be used with regular confidence intervals as well.  The value 1.96 has been replaced with
-qnorm(1-alpha) and the default value of alpha=0.025 will give the same(very close) result as previous use of 1.96 for 95% confidence intervals.
+* alpha argument in covariate.predictions was orginally intended just for mata-wald confidence intervals but it has been extended to be used with regular confidence intervals as well.  The value 1.96 has been replaced with qnorm(1-alpha) and the default value of alpha=0.025 will give the same(very close) result as previous use of 1.96 for 95% confidence intervals.
 
 CHANGES
 * Jay Rotella updated the mallard example to use mark.wrapper approach to fitting a set of models.

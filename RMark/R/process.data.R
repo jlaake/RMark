@@ -288,6 +288,12 @@ robust.occasions<-function(times)
 		      if(!is.character(strata.labels))	stop("strata.labels values must be character type")
 		      if(any(!nchar(strata.labels)==1))stop("each value of strata.labels must be a single character")
           nstrata=length(strata.labels)
+          if(model=="RDMSOccupancy"&"0"%in%strata.labels)
+          {
+             message("\nDo not include 0 in strata labels. Removing it.")
+             strata.labels=strata.labels[strata.labels!="0"]
+             nstrata=nstrata-1
+          } 
           if(!all(inp.strata.labels %in% strata.labels))
             stop(paste("Some strata labels in data",paste(inp.strata.labels,collapse=","),"are not in strata.labels"))
           if(sum(as.numeric(strata.labels %in% inp.strata.labels))< (nstrata-1))

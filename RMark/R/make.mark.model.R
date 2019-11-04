@@ -364,7 +364,7 @@
 #' @param wrap if TRUE, data lines are wrapped to be length 80; if length of a row is not a 
 #'   problem set to FALSE and it will run faster
 #' @param nodes number of integration nodes for individual random effects (min 15, max 505, default 101)
-#' @param useddl This argument is no longer used.  If there are no missing rows or parameters (deleted) then it will use ddl in place of full.ddl that is created internally.
+#' @param useddl If TRUE and there are no missing rows or parameters (deleted) then it will use ddl in place of full.ddl that is created internally.
 #' @param check.model if TRUE, code does an internal consistency check between PIMs and design data when making model.
 #' @return model: a MARK object except for the elements \code{output} and
 #' \code{results}. See \code{\link{mark}} for a detailed description of the
@@ -1058,7 +1058,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   complete=TRUE
   for(iname in names(parameters)[names(parameters)%in%names(full.ddl)])
     if(nrow(full.ddl[[iname]])!=nrow(ddl[[iname]])) complete=FALSE
-  if(complete&!missing)full.ddl=ddl
+  if(complete&!missing&useddl)full.ddl=ddl
   data$reverse=temp.rev
   parameters=parameters[names(parameters)%in%names(full.ddl)]
   for(j in names(parameters))

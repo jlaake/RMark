@@ -1,3 +1,66 @@
+#' Multi-scale dynamic occupancy models in RMark
+#' @name RDMultScalOcc
+#' @author Connor M. Wood, University of Wisconsin-Madison <cwood9 at wisc.edu> 
+#' @examples
+#' \donttest{
+#'# Study design and data structure:
+#'# two sessions (i.e., seasons) and 346 sampling sites
+#'# up to three secondary sampling periods per season
+#'# up to three survey devices per sampling site
+#'
+#'# import the sample data, RDMultScalOcc.sampledata.csv
+#'pathtodata=paste(path.package("RMark"),"extdata",sep="/")
+#'dt=read.csv(paste(pathtodata,"RDMultScalOcc.sampledata.csv",sep="/"))
+#'dt[is.na(dt)]=0 # replace NAs with 0
+#'dt$ch=as.character(dt$ch) # encounter histories (dt$ch) must be characters
+#'
+#'# note: habitat variables (amount of open forest and average slope) were collected at
+#'# two spatial scales
+#'# 'sOpen' and 'sSlope' represent the entire sampling site
+#'# 'pOpen##' and 'pSlope##' represent conditions relevant to individual devices 
+#'# at each sampling period
+#'# the p-scale variables are coded [name][session][primary]; 
+#'# dt.ddl$p$primary indicates how this should be entered
+#'# in this case the values for p$primary varied among devices and between sessions, 
+#'# but were constant between secondary sampling periods
+#'
+#'# create the Process Data MARK object
+#'dt.pr=process.data(dt,model="RDMultScalOcc",
+#'   time.intervals=c(0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0),mixtures=3)
+#'# note: time.intervals refers to seasons, not secondary sampling periods (K)
+#'# note: mixtures refers to the number of devices (L)
+#'
+#'# create the design data object
+#'dt.ddl=make.design.data(dt.pr)
+#'
+#'fit.models=function()
+#'{
+#'# Models for p 
+#'p.open=list(formula=~sOpen)
+#'p.popen=list(formula=~pOpen)
+#'p.slope=list(formula=~sSlope)
+#'p.pslope=list(formula=~pSlope)
+#' # Models for Psi
+#'Psi.open=list(formula=~sOpen)
+#'Psi.Slope=list(formula=~sSlope)
+#' #Model for Gamma
+#'Gamma.open=list(formula=~sOpen)
+#' # Model for Epsilon 
+#'Epsilon.slope=list(formula=~sSlope)
+#' # Model for Theta
+#'# note: 'time' is defined in dt.ddl$Theta (use str(dt) to see all predefined variables)
+#' Theta.time=list(formula=~time)
+#' # create all combinations of these sub-models
+#' cml=create.model.list("RDMultScalOcc")
+#'results=mark.wrapper(cml,data=dt.pr,ddl=dt.ddl,output=FALSE) 
+#'return(results)
+#'}
+#'# fit model collections and view models sorted by AICc
+#'fit.models()
+#'}
+NULL
+
+
 #' An example of the Mulstistrata (multi-state) model in which states are routes taken by migrating fish.
 #' 
 #' @name skagit
@@ -2639,23 +2702,23 @@ NULL
 #' 	
 #' 	Model.1=mark(wwdo.proc, wwdo.ddl, 
 #'    model.parameters=list(Phi=Phi.dot.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-#'    invisible=FALSE,threads=1)
+#'    invisible=FALSE,threads=1,options="SIMANNEAL")
 #' 	Model.2=mark(wwdo.proc, wwdo.ddl, 
 #'   model.parameters=list(Phi=Phi.time.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-#'    invisible=FALSE,threads=1)
+#'    invisible=FALSE,threads=1,options="SIMANNEAL")
 #' 	Model.3=mark(wwdo.proc, wwdo.ddl, 
 #'   model.parameters=list(Phi=Phi.age.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-#'     invisible=FALSE,threads=1)
+#'     invisible=FALSE,threads=1,options="SIMANNEAL")
 #' 	Model.4=mark(wwdo.proc, wwdo.ddl, 
 #'   model.parameters=list(Phi=Phi.timeage.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-#'     invisible=FALSE,threads=1)
+#'     invisible=FALSE,threads=1,options="SIMANNEAL")
 #' 	Model.5=mark(wwdo.proc, wwdo.ddl,  
 #'   model.parameters=list(Phi=Phi.timeage.fix, p=p.time, pent=pent.time.fix, N=list(formula=~group)), 
-#'    invisible=FALSE,threads=1)
+#'    invisible=FALSE,threads=1,options="SIMANNEAL")
 #' 	Model.6=mark(wwdo.proc, wwdo.ddl, 
 #'    model.parameters=list(Phi=Phi.timeage.fix,p=p.g.time, pent=pent.time.fix,
 #'               N=list(formula=~group)), 
-#'    invisible=FALSE,threads=1)
+#'    invisible=FALSE,threads=1,options="SIMANNEAL")
 #' 	collect.models()
 #' }
 #' wwdo.out=wwdo.popan()

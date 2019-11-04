@@ -60,7 +60,7 @@ problem set to FALSE and it will run faster}
 
 \item{nodes}{number of integration nodes for individual random effects (min 15, max 505, default 101)}
 
-\item{useddl}{This argument is no longer used.  If there are no missing rows or parameters (deleted) then it will use ddl in place of full.ddl that is created internally.}
+\item{useddl}{If TRUE and there are no missing rows or parameters (deleted) then it will use ddl in place of full.ddl that is created internally.}
 
 \item{check.model}{if TRUE, code does an internal consistency check between PIMs and design data when making model.}
 }

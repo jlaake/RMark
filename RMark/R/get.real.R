@@ -159,7 +159,7 @@ function(model,parameter,beta=NULL,se=FALSE,design=NULL,data=NULL,vcv=FALSE,show
 #If se=TRUE, warn user if beta.vcv has negative variances
 #
   if(se)
-    if(any(is.nan(model$results$beta.vcv)) || any(is.infinite(abs(model$results$beta.vcv))) ||
+    if(any(is.nan(model$results$beta.vcv)) || any(is.infinite(model$results$beta.vcv)) ||
        any(diag(model$results$beta.vcv)<0))
        warning("\nImproper V-C matrix for beta estimates. Some variances non-positive.\n")
 #

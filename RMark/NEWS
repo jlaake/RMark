@@ -1,3 +1,13 @@
+RMark 2.2.8 (23 November 2019)
+
+BUG FIXES
+
+* in v2.2.7 a check was added for an infinite variance-covariance element and abs was used which created error when it was infinite. Was in get.real, covariate.predictions and model.average.marklist.  abs was removed.
+
+* fix to example in utility.r for pop.est function (byrow=TRUE). Thanks to Sima Usvyatsov for finding and reporting the error.
+
+* fix to Psi parameter in RDMultScalOcc which had too few PIM values.
+
 RMark 2.2.7 (4 November 2019)
 
 NEW FEATURES

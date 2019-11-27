@@ -555,7 +555,7 @@ HidMarkov	Delta	1	-1	0	Triang	all	mlogit	~1						TRUE						TRUE
 OccupancyRE	sigmap	0	1		Square	all	log	~1															
 OccupancyRE	p	0	0	0	Square	all	logit	~1															
 OccupancyRE	Psi	0	1		Square	all	logit	~1															
-RDMultScalOcc	Psi	0	1		Square	all	logit	~1					FALSE	
+RDMultScalOcc	Psi	0	0		Square	all	logit	~1					FALSE	
 RDMultScalOcc	Epsilon	0	-1		Square	all	logit	~1	FALSE	Gamma			FALSE										
 RDMultScalOcc	Gamma	0	-1		Square	all	logit			Epsilon			FALSE										
 RDMultScalOcc	Theta	0	0		Square	all	logit	~1					TRUE										

@@ -4,10 +4,12 @@
 \name{salamander}
 \alias{salamander}
 \title{Salamander occupancy data}
-\format{A data frame with 39 observations (sites) on the following 2
+\format{
+A data frame with 39 observations (sites) on the following 2
 variables.  \describe{ \item{ch}{a character vector containing the presence
 (1) and absence (0) for each visit to the site} \item{freq}{frequency of
-sites (always 1)} }}
+sites (always 1)} }
+}
 \description{
 An occupancy data set for modelling presence/absence data for salamanders.
 }
@@ -21,11 +23,11 @@ page 99 of MacKenzie et al. (2006).
 do.salamander=function()
 {
    data(salamander)
-   occ.p.dot=mark(salamander,model="Occupancy")
+   occ.p.dot=mark(salamander,model="Occupancy",delete=TRUE)
    occ.p.time=mark(salamander,model="Occupancy",
-         model.parameters=list(p=list(formula=~time)))
+         model.parameters=list(p=list(formula=~time)),delete=TRUE)
    occ.p.mixture=mark(salamander,model="OccupHet",
-         model.parameters=list(p=list(formula=~mixture)))
+         model.parameters=list(p=list(formula=~mixture)),delete=TRUE)
    return(collect.models())
 }
 salamander.results=do.salamander()

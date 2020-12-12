@@ -96,7 +96,7 @@
 #' #
 #' # Run the list of models
 #' #
-#' mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl)
+#' mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl,delete=TRUE)
 #' #
 #' # Return model table and list of models
 #' #
@@ -124,6 +124,8 @@ TransitionMatrix=function(x,vcv.real=NULL)
     stop("\nOnly works for Psi parameter of multistrata models\n")
   if(any(rowSums(table(list(x$stratum,x$tostratum)))!=(length(levels(x$stratum))-1)))
      stop("\nx should only contain one record for each stratum/tostratum pairing\n")
+  if(length(levels(x$tostratum))!=length(levels(x$stratum)))
+    x$tostratum=factor(as.character(x$tostratum),levels=levels(x$stratum))
 #
 # Compute transition values for those estimated
 #

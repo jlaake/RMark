@@ -4,9 +4,11 @@
 \name{Poisson_twoMR}
 \alias{Poisson_twoMR}
 \title{Example of Poisson Mark-Resight model}
-\format{A data frame with 93 observations on the following 2 variables.
+\format{
+A data frame with 93 observations on the following 2 variables.
 \describe{ \item{ch}{a character vector} \item{pg}{a factor
-with levels \code{group1} \code{group2}} }}
+with levels \code{group1} \code{group2}} }
+}
 \description{
 Data and example illustrating Poisson Mark-Resight model with 2 groups and
 one occasion.
@@ -24,7 +26,7 @@ mod=mark(pois.proc,pois.ddl,
 		model.parameters=list(alpha=list(formula=~1),
 				              U=list(formula=~-1+group),
 				              sigma=list(formula=~1,fixed=0)),
-	 	                      initial=c(0.9741405 ,0.0000000 ,6., 5.),threads=2)
+	 	                      initial=c(0.9741405 ,0.0000000 ,6., 5.),threads=2,delete=TRUE)
 summary(mod)	 	                 
 }
 }

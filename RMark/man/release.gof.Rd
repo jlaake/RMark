@@ -4,8 +4,7 @@
 \alias{release.gof}
 \title{Runs RELEASE for goodness of fit test}
 \usage{
-release.gof(data, invisible = TRUE, title = "Release-gof",
-  view = FALSE)
+release.gof(data, invisible = TRUE, title = "Release-gof", view = FALSE)
 }
 \arguments{
 \item{data}{processed RMark data}
@@ -32,6 +31,8 @@ filename.
 data(dipper)
 dipper.processed=process.data(dipper,groups=("sex"))
 release.gof(dipper.processed)
+file.remove("release001.out")
+file.remove("mxxx.tmp")
 }
 }
 \author{

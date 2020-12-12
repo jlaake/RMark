@@ -5,12 +5,14 @@
 \alias{larksparrow}
 \alias{LASP}
 \title{Lark Sparrow}
-\format{A data frame with 52 observations on the following 20 variables.
+\format{
+A data frame with 52 observations on the following 20 variables.
 \describe{\item{ch}{a character vector containing the encounter history}
 \item{ceap}{a factor with two levels "Deferred" and "Grazed" corresponding to a rest rotation grazing system with pastures either rested (Deferred) or grazed (Grazed) during the spring bird breeding season.}
 \item{cwx}{a continuous covariate for primary occasion x, representing an ocular estimate of the proportion of area  covered by crested wheatgrass in a 50-m radius around the point count location.}
 \item{tdx}{ a continuous covariate for primary occasion x, representing the starting time (h) of each 6-min point count survey measured on the ratio scale (1.5 h = 1 h 30 min).}
-}}
+}
+}
 \description{
 An example of Multiple Scale Occupancy model for some lark sparrow data that was contributed by David Pavlacky 
 at Rocky Mountain bird observatory. The study design was a GRTS selection of paired "Deferred" and "Grazed" pastures.  
@@ -50,7 +52,7 @@ Psi.1=list(formula=~1)
 Psi.2=list(formula=~ceap)    
 
 cml=create.model.list("MultScalOcc")
-return(mark.wrapper(cml,data=mscale.proc,ddl=ddl,adjust=FALSE,realvcv=TRUE))
+return(mark.wrapper(cml,data=mscale.proc,ddl=ddl,adjust=FALSE,realvcv=TRUE,delete=TRUE))
 }
 
 # Run function to get results
@@ -64,12 +66,12 @@ Species.results$model.table
 Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real
 Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$beta
 
-write.csv(Species.results$model.table,file="lasp_model_selection.csv",row.names=FALSE)
+#write.csv(Species.results$model.table,file="lasp_model_selection.csv",row.names=FALSE)
 
-write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real,
- file="lasp_m1_real.csv")
-write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$beta,
- file="lasp_m1_beta.csv")
+#write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real,
+#  file="lasp_m1_real.csv")
+#write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$beta,
+#  file="lasp_m1_beta.csv")
 
 # Covariate prediction and model averaging
 
@@ -83,7 +85,8 @@ PIMS(Species.results[[1]],"p",simplified=FALSE)
 
 td <- covariate.predictions(Species.results,data=data.frame(td1=td.values),indices=c(21))
 
-write.table(td$estimates,file="lasp_cov_pred_p_td.csv",sep=",",col.names=TRUE,row.names=FALSE)
+#write.table(td$estimates,file="lasp_cov_pred_p_td.csv",sep=",",col.names=TRUE,
+#             row.names=FALSE)
 
 # Theta(crested wheatgrass cover)
 
@@ -95,7 +98,8 @@ PIMS(Species.results[[1]],"Theta",simplified=FALSE)
 
 cw <- covariate.predictions(Species.results,data=data.frame(cw1=cw.values),indices=c(3))
 
-write.table(cw$estimates,file="lasp_cov_pred_theta_cw.csv",sep=",",col.names=TRUE,row.names=FALSE)
+#write.table(cw$estimates,file="lasp_cov_pred_theta_cw.csv",sep=",",col.names=TRUE,
+# row.names=FALSE)
 
 # Psi(ceap grazing for wildlife practice)
 
@@ -106,7 +110,8 @@ PIMS(Species.results[[1]],"Psi",simplified=FALSE)
 
 ceap <- covariate.predictions(Species.results,data=data.frame(ceap=ceap.values))
 
-write.table(ceap$estimates,file="lasp_cov_pred_psi_ceap.csv",sep=",",col.names=TRUE,row.names=FALSE)
+#write.table(ceap$estimates,file="lasp_cov_pred_psi_ceap.csv",sep=",",col.names=TRUE,
+# row.names=FALSE)
 
 }
 }

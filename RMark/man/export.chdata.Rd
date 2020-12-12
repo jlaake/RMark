@@ -42,7 +42,8 @@ data(dipper)
 dipper$numeric.sex=as.numeric(dipper$sex)-1
 dipper.processed=process.data(dipper,group="sex")
 export.chdata(dipper.processed, filename="dipper", 
-         covariates="numeric.sex",replace=TRUE)
+          covariates="numeric.sex",replace=TRUE)
+file.remove("dipper.inp")
 #
 # Had sex been used in place of numeric.sex in the above command, 
 # MARK would have been unable to use it as a covariate

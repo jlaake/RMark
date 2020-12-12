@@ -53,9 +53,9 @@
 #' data(dipper)
 #' do_example=function()
 #' {
-#' mod1=mark(dipper)
-#' mod2=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
-#' mod3=mark(dipper,model="POPAN",initial=1)
+#' mod1=mark(dipper,delete=TRUE)
+#' mod2=mark(dipper,model.parameters=list(Phi=list(formula=~time)),delete=TRUE)
+#' mod3=mark(dipper,model="POPAN",initial=1,delete=TRUE)
 #' cjs.results=collect.models(type="CJS")
 #' cjs.results  # show model selection results for "CJS" models
 #' }

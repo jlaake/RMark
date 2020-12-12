@@ -4,9 +4,18 @@
 \alias{covariate.predictions}
 \title{Compute estimates of real parameters for multiple covariate values}
 \usage{
-covariate.predictions(model, data = NULL, indices = NULL,
-  drop = TRUE, revised = TRUE, mata = FALSE, normal.lm = FALSE,
-  residual.dfs = 0, alpha = 0.025, ...)
+covariate.predictions(
+  model,
+  data = NULL,
+  indices = NULL,
+  drop = TRUE,
+  revised = TRUE,
+  mata = FALSE,
+  normal.lm = FALSE,
+  residual.dfs = 0,
+  alpha = 0.025,
+  ...
+)
 }
 \arguments{
 \item{model}{MARK model object or marklist}
@@ -172,7 +181,7 @@ ind1.models=function()
   Phi.mass.plus.mass.squared=list(formula=~mass + sqmass)
   p.dot=list(formula=~1)
   cml=create.model.list("CJS")
-  results=mark.wrapper(cml,data=ind1.process,ddl=ind1.ddl,adjust=FALSE)
+  results=mark.wrapper(cml,data=ind1.process,ddl=ind1.ddl,adjust=FALSE,delete=TRUE)
   return(results)
 }
 #
@@ -260,7 +269,7 @@ ind2.models=function()
      list(formula=~time*mass + sqmass+ time:sqmass)
   p.dot=list(formula=~1)
   cml=create.model.list("CJS")
-  results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE,threads=2)
+  results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE,threads=2,delete=TRUE)
   return(results)
 }
 #

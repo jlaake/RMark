@@ -4,7 +4,8 @@
 \name{mallard}
 \alias{mallard}
 \title{Mallard nest survival example}
-\format{A data frame with 565 observations on the following 13 variables.
+\format{
+A data frame with 565 observations on the following 13 variables.
 \describe{ \item{FirstFound}{the day the nest was first found}
 \item{LastPresent}{the last day that chicks were present}
 \item{LastChecked}{the last day the nest was checked} \item{Fate}{the fate
@@ -16,7 +17,8 @@ vegetation thickness} \item{PpnGrass}{proportion grass in vicinity of nest}
 \item{Wetland}{dummy 0/1 variable; 1 if wetland vegetation}
 \item{Roadside}{dummy 0/1 variable; 1 if roadside vegetation}
 \item{AgeFound}{age of nest in days the day the nest was found}
-\item{AgeDay1}{age of nest at beginning of study} }}
+\item{AgeDay1}{age of nest at beginning of study} }
+}
 \source{
 Rotella, J.J., S. J. Dinsmore, T.L. Shaffer.  2004.  Modeling
 nest-survival data: a comparison of recently developed methods that can be
@@ -135,7 +137,7 @@ run.mallard <- function()
  
  mallard.results = mark.wrapper(mallard.model.list,
                                 data = mallard.pr,
-                                adjust = FALSE)
+                                adjust = FALSE,delete=TRUE)
 }
 
 # The next line runs the 9 models above and takes a minute or 2
@@ -146,18 +148,18 @@ mallard.results
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Examine table of model-selection results #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# next line exports files
-export.MARK(mallard.results$S.Age$data,
-           "MallDSR",
-           mallard.results,
-           replace = TRUE,
-           ind.covariates = "all")
+# next line exports files; emove # and delete=TRUE in mark.wrapper above
+#export.MARK(mallard.results$S.Age$data,
+#            "MallDSR",
+#            mallard.results,
+#            replace = TRUE,
+#            ind.covariates = "all")
 
 mallard.results                        # print model-selection table to screen
 options(width = 100)                   # set page width to 100 characters
-sink("results.table.txt")              # capture screen output to file
-print(mallard.results)                 # send output to file
-sink()                                 # return output to screen
+#sink("results.table.txt")              # capture screen output to file
+#print(mallard.results)                 # send output to file
+#sink()                                 # return output to screen
 
 # remove "#" on next line to see output in notepad in Windows             
 

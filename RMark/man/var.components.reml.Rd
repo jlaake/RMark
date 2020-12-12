@@ -4,8 +4,15 @@
 \alias{var.components.reml}
 \title{Variance components estimation using REML or maximum likelihood}
 \usage{
-var.components.reml(theta, design, vcv = NULL, rdesign = NULL,
-  initial = NULL, interval = c(-25, 10), REML = TRUE)
+var.components.reml(
+  theta,
+  design,
+  vcv = NULL,
+  rdesign = NULL,
+  initial = NULL,
+  interval = c(-25, 10),
+  REML = TRUE
+)
 }
 \arguments{
 \item{theta}{vector of parameter estimates}
@@ -57,7 +64,7 @@ dipper.proc=process.data(dipper,model="CJS")
 dipper.ddl=make.design.data(dipper.proc,
    parameters=list(Phi=list(age.bins=c(0,.5,6))))
 levels(dipper.ddl$Phi$age)=c("age0","age1+")
-md=mark(dipper,model.parameters=list(Phi=list(formula=~time+age)))
+md=mark(dipper,model.parameters=list(Phi=list(formula=~time+age)),delete=TRUE)
 # extract the estimates of Phi 
 zz=get.real(md,"Phi",vcv=TRUE)
 # assign age to use same intervals as these are not copied 

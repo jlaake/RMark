@@ -4,8 +4,13 @@
 \alias{import.chdata}
 \title{Import capture-recapture data sets from space or tab-delimited files}
 \usage{
-import.chdata(filename, header = TRUE, field.names = NULL,
-  field.types = NULL, use.comments = TRUE)
+import.chdata(
+  filename,
+  header = TRUE,
+  field.names = NULL,
+  field.types = NULL,
+  use.comments = TRUE
+)
 }
 \arguments{
 \item{filename}{file name and path for file to be imported; fields in file

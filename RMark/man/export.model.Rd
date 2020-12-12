@@ -38,8 +38,9 @@ the exported models or you can get erroneous results.
 \examples{
 
 data(dipper)
-mymodel=mark(dipper,threads=1)
-export.model(mymodel,replace=TRUE)
+mymodel=mark(dipper,threads=1,delete=TRUE)
+# remove # to use export.model
+#export.model(mymodel,replace=TRUE)
 
 }
 \seealso{

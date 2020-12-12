@@ -84,10 +84,10 @@
 #' #
 #' dipper.phisex.time.psex.time.pentsex.time=mark(dipper.processed,
 #'      dipper.ddl,model.parameters=list(Phi=Phidot,p=ptime,
-#'      pent=pentsex.time,N=Nsex),invisible=FALSE,adjust=FALSE)
+#'      pent=pentsex.time,N=Nsex),invisible=FALSE,adjust=FALSE,delete=TRUE)
 #' dipper.psex.time.pentsex.time=mark(dipper.processed,dipper.ddl,
 #'      model.parameters=list(Phi=Phitime,p=pdot,
-#'      pent=pentsex.time,N=Nsex),invisible=FALSE,adjust=FALSE)
+#'      pent=pentsex.time,N=Nsex),invisible=FALSE,adjust=FALSE,delete=TRUE)
 #' #
 #' # Return model table and list of models
 #' #

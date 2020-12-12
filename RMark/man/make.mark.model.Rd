@@ -4,13 +4,30 @@
 \alias{make.mark.model}
 \title{Create a MARK model for analysis}
 \usage{
-make.mark.model(data, ddl, parameters = list(), title = "",
-  model.name = NULL, initial = NULL, call = NULL,
-  default.fixed = TRUE, options = NULL, profile.int = FALSE,
-  chat = NULL, simplify = TRUE, input.links = NULL,
-  parm.specific = FALSE, mlogit0 = FALSE, hessian = FALSE,
-  accumulate = TRUE, icvalues = NULL, wrap = TRUE, nodes = 101,
-  useddl = FALSE, check.model = FALSE)
+make.mark.model(
+  data,
+  ddl,
+  parameters = list(),
+  title = "",
+  model.name = NULL,
+  initial = NULL,
+  call = NULL,
+  default.fixed = TRUE,
+  options = NULL,
+  profile.int = FALSE,
+  chat = NULL,
+  simplify = TRUE,
+  input.links = NULL,
+  parm.specific = FALSE,
+  mlogit0 = FALSE,
+  hessian = FALSE,
+  accumulate = TRUE,
+  icvalues = NULL,
+  wrap = TRUE,
+  nodes = 101,
+  useddl = FALSE,
+  check.model = FALSE
+)
 }
 \arguments{
 \item{data}{Data list resulting from function \code{\link{process.data}}}

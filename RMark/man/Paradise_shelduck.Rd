@@ -5,12 +5,14 @@
 \alias{Paradise_shelduck}
 \alias{ps}
 \title{Mulstistate Live-Dead Paradise Shelduck Data}
-\format{A data frame with 1704 observations of 3 variables 
+\format{
+A data frame with 1704 observations of 3 variables 
  \describe{ 
  \item{ch}{a character vector containing the capture history (each is 2 character positions LD) for 6 occasions}
  \item{freq}{capture history frequency} 
  \item{sex}{Male or Female}
- }}
+ }
+}
 \description{
 Paradise shelduck recapture and recovery data in multistrata provided by Richard Barker and Gary White.
 }
@@ -59,10 +61,10 @@ p.1=list(formula=~-1+stratum:time)
 r.1=list(formula=~-1+time+sex+site)
 Psi.1=list(formula=~-1+stratum:tostratum)
 # Run top model from paper but only for observable strata
-top_model=mark(ps_dp,ddl,model.parameters=list(S=S.1,p=p.1,r=r.1,Psi=Psi.1))
+top_model=mark(ps_dp,ddl,model.parameters=list(S=S.1,p=p.1,r=r.1,Psi=Psi.1),delete=TRUE)
 # Run top model from paper for all strata using simulated annealing (commented out)
 #top_model=mark(ps_dp,ddl,model.parameters=list(S=S.1,p=p.1,r=r.1,Psi=Psi.1),
-#      options="SIMANNEAL")
+#      options="SIMANNEAL",delete=TRUE)
 }
 }
 \references{

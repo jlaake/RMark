@@ -5,8 +5,13 @@
 \title{Collect MARK models into a list and optionally construct a table of model
 results}
 \usage{
-collect.models(lx = NULL, type = NULL, table = TRUE, adjust = TRUE,
-  external = FALSE)
+collect.models(
+  lx = NULL,
+  type = NULL,
+  table = TRUE,
+  adjust = TRUE,
+  external = FALSE
+)
 }
 \arguments{
 \item{lx}{if NULL, constructs vector of object names (\code{ls()}) from

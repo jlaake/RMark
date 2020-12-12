@@ -105,7 +105,7 @@
 #' 	cml=create.model.list("MSOccupancy")
 #' # Fit each model in the list and return the results
 #' 	return(mark.wrapper.parallel(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,
-#'     cpus=2,parallel=TRUE))
+#'     cpus=2,parallel=TRUE,delete=TRUE))
 #' }
 #' xx=do.MSOccupancy()
 #' }

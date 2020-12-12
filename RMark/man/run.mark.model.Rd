@@ -4,10 +4,18 @@
 \alias{run.mark.model}
 \title{Runs analysis with MARK model using MARK.EXE}
 \usage{
-run.mark.model(model, invisible = FALSE, adjust = TRUE,
-  filename = NULL, prefix = "mark", realvcv = FALSE,
-  delete = FALSE, external = FALSE, threads = -1,
-  ignore.stderr = FALSE)
+run.mark.model(
+  model,
+  invisible = FALSE,
+  adjust = TRUE,
+  filename = NULL,
+  prefix = "mark",
+  realvcv = FALSE,
+  delete = FALSE,
+  external = FALSE,
+  threads = -1,
+  ignore.stderr = FALSE
+)
 }
 \arguments{
 \item{model}{MARK model created by \code{\link{make.mark.model}}}
@@ -93,7 +101,7 @@ test=function()
 	  p.dot=list(formula=~1)
 	  p.time=list(formula=~time)
 	  cml=create.model.list("CJS")
-	  x.results=mark.wrapper(cml,data=x.proc,ddl=x.ddl,prefix=sex)
+	  x.results=mark.wrapper(cml,data=x.proc,ddl=x.ddl,prefix=sex,delete=TRUE)
 	  assign(paste(sex,"results",sep="."),x.results)
   }
   rm(Male.results,Female.results,x.results)

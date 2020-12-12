@@ -4,9 +4,11 @@
 \name{crdms}
 \alias{crdms}
 \title{Example data for Closed Robust Design Multistrata}
-\format{A data frame with 557 observations on the following 2 variables.
+\format{
+A data frame with 557 observations on the following 2 variables.
 \describe{ \item{ch}{a character vector of encounter histories}
-\item{freq}{a numeric vector of frequencies of each history} }}
+\item{freq}{a numeric vector of frequencies of each history} }
+}
 \source{
 This example was constructed by Andrew Paul who is with Fish and
 Wildlife Division of the Alberta Provincial Government
@@ -39,7 +41,10 @@ crdms.ddl<-make.design.data(crdms.data,
 		parameters=list(Psi=list(subtract.stratum=c("1","1"))))
 
 #create grouping index for unobserved p and c (i.e., always zero)
-up=as.numeric(row.names(crdms.ddl$p[crdms.ddl$p$stratum=="U",]))
+#up=as.numeric(row.names(crdms.ddl$p[crdms.ddl$p$stratum=="U",]))
+# changed 16 Oct 2020 - jll
+crdms.ddl$p$fix=ifelse(crdms.ddl$p$stratum=="U",0,NA)
+crdms.ddl$c$fix=ifelse(crdms.ddl$c$stratum=="U",0,NA)
 
 #create grouping index to fix Psi for unobs to unbos at time 1
 #this isn't necessary but it allows this Psi to be fixed to a value
@@ -55,8 +60,10 @@ do_example=function()
 {
 #Initial assumptions
 S.dot=list(formula=~1)  #S equal for both states and constant over time
-p.session=list(formula=~session, share=TRUE,  #p=c varies with session 
-		fixed=list(index=up,value=0)) #p set to zero for unobs
+# p.session=list(formula=~session, share=TRUE,  #p=c varies with session 
+# 		fixed=list(index=up,value=0)) #p set to zero for unobs
+# changed 16 Oct 2020 - jll
+p.session=list(formula=~session, share=TRUE)
 
 #Model 1 - Markovian movement
 Psi.markov=list(formula=~ctime+stratum,
@@ -64,21 +71,21 @@ Psi.markov=list(formula=~ctime+stratum,
 model.1=mark(crdms.data,ddl=crdms.ddl,
 	model.parameters=list(S=S.dot,
 		p=p.session,
-		Psi=Psi.markov),threads=2)
+		Psi=Psi.markov),threads=2,delete=TRUE)
 
 #Model 2 - Random movement
 Psi.rand=list(formula=~time)
 model.2=mark(crdms.data,ddl=crdms.ddl,
 	model.parameters=list(S=S.dot,
 		p=p.session,
-		Psi=Psi.rand),threads=2)
+		Psi=Psi.rand),threads=2,delete=TRUE)
 
 #Model 3 - No movement
 Psi.fix=list(formula=~1,fixed=0)
 model.3=mark(crdms.data,ddl=crdms.ddl,
 	model.parameters=list(S=S.dot,
 		p=p.session,
-		Psi=Psi.fix),threads=2)
+		Psi=Psi.fix),threads=2,delete=TRUE)
 		
 #collect and store models
 crdms.res<-collect.models()

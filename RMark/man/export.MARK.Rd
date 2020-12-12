@@ -4,8 +4,15 @@
 \alias{export.MARK}
 \title{Export data and models for import in MARK}
 \usage{
-export.MARK(x, project.name, model = NULL, replace = FALSE, chat = 1,
-  title = "", ind.covariates = "all")
+export.MARK(
+  x,
+  project.name,
+  model = NULL,
+  replace = FALSE,
+  chat = 1,
+  title = "",
+  ind.covariates = "all"
+)
 }
 \arguments{
 \item{x}{processed data list used to build models}
@@ -55,9 +62,10 @@ because the file already exists.
 # This example is excluded from testing to reduce package check time
 data(mallard)
 Dot=mark(mallard,nocc=90,model="Nest",
-	model.parameters=list(S=list(formula=~1)))
+	model.parameters=list(S=list(formula=~1)),delete=TRUE)
 mallard.proc=process.data(mallard,nocc=90,model="Nest")
-export.MARK(mallard.proc,"mallard",Dot,replace=TRUE)
+# removed # to use export.MARK
+#export.MARK(mallard.proc,"mallard",Dot,replace=TRUE)
 data(robust)
 time.intervals=c(0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0)
 S.time=list(formula=~time)
@@ -66,10 +74,11 @@ GammaDoublePrime.random=list(formula=~time,share=TRUE)
 model.1=mark(data = robust, model = "Robust",
 	time.intervals=time.intervals,
 	model.parameters=list(S=S.time,
-			GammaDoublePrime=GammaDoublePrime.random,p=p.time.session))
+			GammaDoublePrime=GammaDoublePrime.random,p=p.time.session),delete=TRUE)
 robust.proc=process.data(data = robust, model = "Robust",
 	time.intervals=time.intervals)
-export.MARK(robust.proc,"robust",	model.1,replace=TRUE)
+#remove # to use export.MARK
+#export.MARK(robust.proc,"robust",	model.1,replace=TRUE)
 }
 }
 \seealso{

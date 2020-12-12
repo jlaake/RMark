@@ -117,7 +117,7 @@
 #' #
 #' # Run and return the list of models
 #' #
-#' return(mark.wrapper(cml,data=dipper.processed,ddl=dipper.ddl))
+#' return(mark.wrapper(cml,data=dipper.processed,ddl=dipper.ddl,delete=TRUE))
 #' }
 #' dipper.results=run.dipper()
 #' Phi.estimates=model.average(dipper.results,"Phi",vcv=TRUE)
@@ -130,13 +130,13 @@
 #' #  ~weight will vary
 #' dipper$weight=rnorm(294)  
 #' mod1=mark(dipper,groups="sex",
-#'   model.parameters=list(Phi=list(formula=~sex+weight)))
+#'   model.parameters=list(Phi=list(formula=~sex+weight)),delete=TRUE)
 #' mod2=mark(dipper,groups="sex",
-#'   model.parameters=list(Phi=list(formula=~sex)))
+#'   model.parameters=list(Phi=list(formula=~sex)),delete=TRUE)
 #' mod3=mark(dipper,groups="sex",
-#'   model.parameters=list(Phi=list(formula=~weight)))
+#'   model.parameters=list(Phi=list(formula=~weight)),delete=TRUE)
 #' mod4=mark(dipper,groups="sex",
-#'   model.parameters=list(Phi=list(formula=~1)))
+#'   model.parameters=list(Phi=list(formula=~1)),delete=TRUE)
 #' dipper.list=collect.models()
 #' return(dipper.list)
 #' }

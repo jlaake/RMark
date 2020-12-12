@@ -29,7 +29,7 @@ structure or the simplified PIM structure.
 \donttest{
 # This example is excluded from testing to reduce package check time
 data(dipper)
-results=mark(dipper)
+results=mark(dipper,delete=TRUE)
 PIMS(results,"Phi")
 PIMS(results,"Phi",simplified=FALSE)
 } 

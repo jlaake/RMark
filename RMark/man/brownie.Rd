@@ -4,10 +4,12 @@
 \name{brownie}
 \alias{brownie}
 \title{San Luis Valley mallard data}
-\format{A data frame with 108 observations on the following 5 variables.
+\format{
+A data frame with 108 observations on the following 5 variables.
 \describe{ \item{ch}{a character vector containing the encounter history of
 each bird} \item{freq}{frequency of that encounter history} \item{ReleaseAge}{the age of the bird when it was
-released}}}
+released}}
+}
 \description{
 A recovery data set for mallards in San Luis Valley Colorado
 }
@@ -38,33 +40,33 @@ br=process.data(brownie,model="Recovery",groups="ReleaseAge",age.var=1,initial.a
 br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
                                            r=list(age.bins=c(0,1,10))),right=FALSE)
 mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age:time,link="sin"),
-                                           r=list(formula=~-1+age:time,link="sin")))
+                                           r=list(formula=~-1+age:time,link="sin")),delete=TRUE)
 # Brownie Recovery
 br=process.data(brownie,model="Brownie",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
 br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
                                f=list(age.bins=c(0,1,10))),right=FALSE)
 mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age:time,link="sin"),
-                               f=list(formula=~-1+age:time,link="sin")))
+                               f=list(formula=~-1+age:time,link="sin")),delete=TRUE)
 mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age,link="sin"),
-                               f=list(formula=~-1+age,link="sin")))
+                               f=list(formula=~-1+age,link="sin")),delete=TRUE)
 #Random effects Seber recovery
 br=process.data(brownie,model="REDead",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
 br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
                                        r=list(age.bins=c(0,1,10))),right=FALSE)
-mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~age),r=list(formula=~age)))
+mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~age),r=list(formula=~age)),delete=TRUE)
 #Pledger Mixture Seber recovery
 br=process.data(brownie,model="PMDead",groups="ReleaseAge",
                            mixtures=3,age.var=1,initial.ages=c(1,0))
 br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
                             r=list(age.bins=c(0,1,10))),right=FALSE)
 mod=mark(br,br.ddl,model.parameters=list(pi=list(formula=~mixture),
-                     S=list(formula=~age+mixture),r=list(formula=~age)))
+                     S=list(formula=~age+mixture),r=list(formula=~age)),delete=TRUE)
 br=process.data(brownie,model="PMDead",groups="ReleaseAge",
                      mixtures=2,age.var=1,initial.ages=c(1,0))
 br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
                       r=list(age.bins=c(0,1,10))),right=FALSE)
 mod=mark(br,br.ddl,model.parameters=list(pi=list(formula=~age),
-                      S=list(formula=~age+mixture),r=list(formula=~age)))
+                      S=list(formula=~age+mixture),r=list(formula=~age)),delete=TRUE)
 }
 }
 \keyword{datasets}

@@ -4,11 +4,13 @@
 \name{NicholsMSOccupancy}
 \alias{NicholsMSOccupancy}
 \title{Multi-state occupancy example data}
-\format{A data frame with 40 records for 54 observations (sites) on the
+\format{
+A data frame with 40 records for 54 observations (sites) on the
 following 2 variables.  \describe{ \item{ch}{a character vector containing
 the presence (state 1), presence (state 2), and absence (0) for each visit
 to the site, and a "." if the site was not visited} \item{freq}{frequency of
-sites with that history} }}
+sites with that history} }
+}
 \description{
 An occupancy data set for modelling multi-state data (0,1,2).
 }
@@ -51,7 +53,7 @@ do.MSOccupancy=function()
 # Create a list using the 4 p modls and 3 delta models (12 models total)
    cml=create.model.list("MSOccupancy")
 # Fit each model in the list and return the results
-   return(mark.wrapper(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl))
+   return(mark.wrapper(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,delete=TRUE))
 }
 # Call the function to fit the models and store it in MSOccupancy.results
 MSOccupancy.results=do.MSOccupancy()

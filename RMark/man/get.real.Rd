@@ -4,9 +4,18 @@
 \alias{get.real}
 \title{Extract or compute sets of real parameters}
 \usage{
-get.real(model, parameter, beta = NULL, se = FALSE, design = NULL,
-  data = NULL, vcv = FALSE, show.fixed = TRUE, expand = FALSE,
-  pim = TRUE)
+get.real(
+  model,
+  parameter,
+  beta = NULL,
+  se = FALSE,
+  design = NULL,
+  data = NULL,
+  vcv = FALSE,
+  show.fixed = TRUE,
+  expand = FALSE,
+  pim = TRUE
+)
 }
 \arguments{
 \item{model}{MARK model object}
@@ -91,13 +100,13 @@ data(example.data)
 pregion=list(formula=~region)
 PhiAge=list(formula=~Age)
 mod=mark(example.data,model.parameters=list(p=pregion,Phi=PhiAge),
- groups=c("sex","age","region"),age.var=2,initial.ages=c(0,1,2),threads=1)
+ groups=c("sex","age","region"),age.var=2,initial.ages=c(0,1,2),threads=1,delete=TRUE)
 # extract list of Phi parameter estimates for all groups in PIM format 
 Phi.estimates=get.real(mod,"Phi")  
 # print out parameter estimates in triangular PIM format
 for(i in 1:length(Phi.estimates))  
 {
-  cat(names(Phi.estimates)[i],"\\n")
+  cat(names(Phi.estimates)[i],"\n")
   print(Phi.estimates[[i]]$pim,na.print="")
 }
 require(plotrix)

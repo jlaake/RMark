@@ -40,7 +40,7 @@
 #' dipper.ddl=make.design.data(dipper.proc,
 #'    parameters=list(Phi=list(age.bins=c(0,.5,6))))
 #' levels(dipper.ddl$Phi$age)=c("age0","age1+")
-#' md=mark(dipper,model.parameters=list(Phi=list(formula=~time+age)))
+#' md=mark(dipper,model.parameters=list(Phi=list(formula=~time+age)),delete=TRUE)
 #' # extract the estimates of Phi 
 #' zz=get.real(md,"Phi",vcv=TRUE)
 #' # assign age to use same intervals as these are not copied 

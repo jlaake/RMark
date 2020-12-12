@@ -84,7 +84,7 @@
 #' # Return model table and list of models
 #' #
 #' cml=create.model.list("CJS")
-#' return(mark.wrapper(cml,data=dipper.processed,ddl=dipper.ddl))
+#' return(mark.wrapper(cml,data=dipper.processed,ddl=dipper.ddl,delete=TRUE))
 #' }
 #' 
 #' dipper.results=run.dipper()
@@ -104,7 +104,8 @@
 #' # Output DeltaAICc as a tab-delimited text file that can be read into Excel 
 #' # (to do that directly use RODBC or xlsreadwrite package for R)
 #' #
-#' write.table(model.DeltaAICc.matrix,"DipperDeltaAICc.txt",sep="\t")
+#' # remove # to use next line
+#' #write.table(model.DeltaAICc.matrix,"DipperDeltaAICc.txt",sep="\t")
 #' }
 model.table <-
 function(model.list=NULL,type=NULL,sort=TRUE,adjust=TRUE,ignore=TRUE,pf=1,

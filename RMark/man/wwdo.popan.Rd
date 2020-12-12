@@ -6,11 +6,13 @@
 \alias{wwdo.09}
 \alias{wwdo.10}
 \title{White-winged dove Jolly-Seber POPAN Analysis Details}
-\format{The format is 2 data frames, one for 2009 and one for 2010. 2009 has 5101 unique captures, 2010 has 3502 unique captures.
+\format{
+The format is 2 data frames, one for 2009 and one for 2010. 2009 has 5101 unique captures, 2010 has 3502 unique captures.
 \describe{ \item{Prefix}{Unique band prefix identifier (usually 0914 or 0984)}
 \item{Suffix}{Unique band suffix (numeric value)}
 \item{E0-E13}{0/1 representing whether a dove was captured (1) or not captured (0) during that (E) sampling occasion}
-\item{Age}{Age class with AHY=after-hatch year and HY=hatch year} }}
+\item{Age}{Age class with AHY=after-hatch year and HY=hatch year} }
+}
 \description{
 This dataset represents 2 years of capture-mark-recapture data collected on uniquely identifiable leg-banded (size 4) white-winged dove
 captured in Alice, Texas, USA (Latitude 27.25, Longitude -98.07) between mid-February and mid-September during 2009 and 2010.  The package was developed such that others
@@ -112,23 +114,23 @@ wwdo.ddl=make.design.data(wwdo.proc)
 	
 	Model.1=mark(wwdo.proc, wwdo.ddl, 
    model.parameters=list(Phi=Phi.dot.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-   invisible=FALSE,threads=1,options="SIMANNEAL")
+   invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 	Model.2=mark(wwdo.proc, wwdo.ddl, 
   model.parameters=list(Phi=Phi.time.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-   invisible=FALSE,threads=1,options="SIMANNEAL")
+   invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 	Model.3=mark(wwdo.proc, wwdo.ddl, 
   model.parameters=list(Phi=Phi.age.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-    invisible=FALSE,threads=1,options="SIMANNEAL")
+    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 	Model.4=mark(wwdo.proc, wwdo.ddl, 
   model.parameters=list(Phi=Phi.timeage.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-    invisible=FALSE,threads=1,options="SIMANNEAL")
+    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 	Model.5=mark(wwdo.proc, wwdo.ddl,  
   model.parameters=list(Phi=Phi.timeage.fix, p=p.time, pent=pent.time.fix, N=list(formula=~group)), 
-   invisible=FALSE,threads=1,options="SIMANNEAL")
+   invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 	Model.6=mark(wwdo.proc, wwdo.ddl, 
    model.parameters=list(Phi=Phi.timeage.fix,p=p.g.time, pent=pent.time.fix,
               N=list(formula=~group)), 
-   invisible=FALSE,threads=1,options="SIMANNEAL")
+   invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 	collect.models()
 }
 wwdo.out=wwdo.popan()

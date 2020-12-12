@@ -75,12 +75,12 @@
 #' {
 #' dipper$nsex=as.numeric(dipper$sex)-1
 #' mod1=mark(dipper,groups="sex",
-#'    model.parameters=list(Phi=list(formula=~sex)))
+#'    model.parameters=list(Phi=list(formula=~sex)),delete=TRUE)
 #' mod2=mark(dipper,groups="sex",
-#'    model.parameters=list(Phi=list(formula=~1)))
+#'    model.parameters=list(Phi=list(formula=~1)),delete=TRUE)
 #' mod3=mark(dipper,groups="sex",
 #'    model.parameters=list(p=list(formula=~time),
-#'    Phi=list(formula=~1)))
+#'    Phi=list(formula=~1)),delete=TRUE)
 #' dipper.list=collect.models()
 #' return(dipper.list)
 #' }

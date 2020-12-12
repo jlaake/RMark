@@ -4,8 +4,13 @@
 \alias{make.design.data}
 \title{Create design dataframes for MARK model specification}
 \usage{
-make.design.data(data, parameters = list(), remove.unused = FALSE,
-  right = TRUE, common.zero = FALSE)
+make.design.data(
+  data,
+  parameters = list(),
+  remove.unused = FALSE,
+  right = TRUE,
+  common.zero = FALSE
+)
 }
 \arguments{
 \item{data}{Processed data list; resulting value from process.data}
@@ -181,6 +186,7 @@ whereas \code{~time} creates a model with a different factor level for each
 \code{time} in the data (e.g. Phi(t) or p(t) in MARK) and \code{~timebin}
 creates a model with 2 factor levels 1980-1983 and 1984-1986.
 
+
 Some circumstances may require direct manipulation of the design data to
 create the needed variable when simple binning is not sufficient or when the
 design data is a variable other than one related to \code{time}, \code{age},
@@ -215,10 +221,12 @@ described in \code{\link{make.mark.model}}, there is actually a simpler way
 to add simple functions of variables to a formula without defining them in
 the design data.
 
+
 The above manipulations are sufficient if there is only one or two variables
 that need to be added to the design data.  If there are many covariates that
 are time(occasion)-specific then it may be easier to setup a dataframe with
 the covariate data and use \code{\link{merge_design.covariates}}.
+
 
 The fields that are automatically created in the design data depends on the
 model.  For example, with models such as "POPAN" or any of the "Pradel"
@@ -231,6 +239,7 @@ row within a triangular PIM for "CJS" type models. Thus, for parameters with
 field is also not created if \code{pim.type="time"} for "Triangular" PIMS,
 because that structure has the same structure for each row (cohort) and
 adding cohort effects would be inappropriate.
+
 
 For models with "Square" PIMS or \code{pim.type="time"} for "Triangular"
 PIMS, it is possible to create a cohort variable by defining the cohort
@@ -329,7 +338,7 @@ and the strata label (e.g., toA, toB etc). Some examples of using these
 variables to create models for "Psi" are given in
 \code{\link{make.mark.model}}.
 
-\preformatted{
+\preformatted{ 
 
 ######WARNING######## 
 Deleting design data for mlogit parameters like Psi in the multistate
@@ -344,13 +353,13 @@ dp=process.data(mstrata,model="Multistrata")
 ddl=make.design.data(dp)
 ddl$Psi=ddl$Psi[!(ddl$Psi$stratum=="A" & ddl$Psi$tostratum=="B"),]
 ddl$Psi
-summary(mark(dp,ddl,output=FALSE),show.fixed=TRUE)
+summary(mark(dp,ddl,output=FALSE,delete=TRUE),show.fixed=TRUE)
 #new approach using fix to set Phi=1 for time 2 (USE this approach)
 ddl=make.design.data(dp)
 ddl$Psi$fix=NA
 ddl$Psi$fix[ddl$Psi$stratum=="A" & ddl$Psi$tostratum=="B"]=0
 ddl$Psi
-summary(mark(dp,ddl,output=FALSE),show.fixed=TRUE)
+summary(mark(dp,ddl,output=FALSE,delete=TRUE),show.fixed=TRUE)
 }
 }
 \examples{

@@ -104,7 +104,7 @@ the string.
 # Example of computing N-hat for occasions 2 to 7 for the p=~time model
 data(dipper)
 md=mark(dipper,model.parameters=list(p=list(formula=~time),
-       Phi=list(formula=~1)))
+       Phi=list(formula=~1)),delete=TRUE)
 # Create a matrix from the capture history strings 
 xmat=matrix(as.numeric(unlist(strsplit(dipper$ch,""))),
       ncol=nchar(dipper$ch[1]),byrow=TRUE)

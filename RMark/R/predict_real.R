@@ -64,7 +64,7 @@
 #' data(dipper)
 #' dp=process.data(dipper)
 #' ddl=make.design.data(dp)
-#' model=mark(dp,ddl,model.parameters=list(Phi=list(formula=~Time)))
+#' model=mark(dp,ddl,model.parameters=list(Phi=list(formula=~Time)),delete=TRUE)
 #' predict_real(model,ddl$Phi[1,,drop=FALSE],"Phi",replicate=TRUE,data=data.frame(Time=-12:12))
 #' 
 predict_real <-

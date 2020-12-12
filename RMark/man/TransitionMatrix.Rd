@@ -104,7 +104,7 @@ model.list=rbind(model.list,c(S="S.stratumxtime",p="p.stratumxtime.fixed",
 #
 # Run the list of models
 #
-mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl)
+mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl,delete=TRUE)
 #
 # Return model table and list of models
 #

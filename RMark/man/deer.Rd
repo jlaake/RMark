@@ -4,7 +4,8 @@
 \name{deer}
 \alias{deer}
 \title{White-tailed deer double observer spotlight capture-recapture analysis}
-\format{The format is a data frame with 4508 observations on the following 7 variables.
+\format{
+The format is a data frame with 4508 observations on the following 7 variables.
 \describe{ \item{SL (spotlight)}{0/1 whether deer was missed/seen by the spotlight observer}
 \item{TI (thermal imager)}{0/1 whether deer was missed/seen by the thermal imager observer}
 \item{Group}{Factor with 79 levels representing each unique paired (TI-SL) survey conducted}
@@ -13,7 +14,8 @@
 for bootstrapp analysis in MARK, not used in bfdeeR package}
 \item{Cluster}{Value assigning each deer to a specific observation cluster, only needed
 for bootstrapp analysis in MARK, not used in bfdeeR package}
-\item{MgmtUnit}{Management unit identification} }}
+\item{MgmtUnit}{Management unit identification} }
+}
 \description{
 This data represents a set of independent double observer road-transect survey data of white-tailed deer
 on Brosnan Forest, South Carolina surveyed in August, 2005-2009.  The primary reason for
@@ -68,37 +70,38 @@ x.ddl=make.design.data(x.proc)
 
 #Silly Null model, constant p & c sharing 1 parameter (one detection estimate)
 p.shared=list(formula=~1,share=TRUE)
-mod.1=mark(x.proc, x.ddl, model.parameters=list(p=p.shared), invisible=FALSE)
+mod.1=mark(x.proc, x.ddl, model.parameters=list(p=p.shared), invisible=FALSE,delete=TRUE)
  
 #2 Parameter Null Model, constant p, constant c, different p and c (one estimate for each; p ne c)
 #p(time), c(-), share=TRUE, detection is time dependent, with recapture parameter shared
 p.sharetime=list(formula=~time, share=TRUE)
-mod.2=mark(x.proc, x.ddl, model.parameters=list(p=p.sharetime), invisible=FALSE)
+mod.2=mark(x.proc, x.ddl, model.parameters=list(p=p.sharetime), invisible=FALSE,delete=TRUE)
 
 #2a Parameter Null Model, constant p, constant c,
 # different p and c (one estimate for each; p ne c) not using share
-mod.2a=mark(x.proc, x.ddl, model.parameters=list(p=list(formula=~1), c=list(formula=~1)))
+mod.2a=mark(x.proc, x.ddl, model.parameters=list(p=list(formula=~1), c=list(formula=~1)),
+            delete=TRUE)
 
 #Fully parameterized model, different p and c for each survey transect replicate, 
 # management unit, method (TI or SL) and any observers
 p.survey=list(formula=~Survey*time, share=TRUE)
-mod.3=mark(x.proc, x.ddl, model.parameters=list(p=p.survey), invisible=FALSE)
+mod.3=mark(x.proc, x.ddl, model.parameters=list(p=p.survey), invisible=FALSE,delete=TRUE)
 
 #p(MU), c(MU), initial detection and recapture differ and are management unit dependent
 p.mu=list(formula=~MgtUnit*time, share=TRUE)
-mod.4=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE)
+mod.4=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE,delete=TRUE)
 
 #p(MU) detection is management unit dependent
 p.mu=list(formula=~MgtUnit, share=TRUE)
-mod.5=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE)
+mod.5=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE,delete=TRUE)
 
 #p(Yr + MgtUnit),  detection is year + MgtUnit
 p.yearMgtUnit=list(formula=~Year*time+MgtUnit, share=TRUE)
-mod.6=mark(x.proc, x.ddl, model.parameters=list(p=p.yearMgtUnit), invisible=FALSE)
+mod.6=mark(x.proc, x.ddl, model.parameters=list(p=p.yearMgtUnit), invisible=FALSE,delete=TRUE)
 
 #p(Year), initial detection and recapture are year dependent
 p.year=list(formula=~Year*time, share=TRUE)
-mod.7=mark(x.proc, x.ddl, model.parameters=list(p=p.year), invisible=FALSE)
+mod.7=mark(x.proc, x.ddl, model.parameters=list(p=p.year), invisible=FALSE,delete=TRUE)
 
 return(collect.models())
 }

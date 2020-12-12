@@ -4,11 +4,13 @@
 \name{example.data}
 \alias{example.data}
 \title{Simulated data from Cormack-Jolly-Seber model}
-\format{A data frame with 6000 observations on the following 5 variables.
+\format{
+A data frame with 6000 observations on the following 5 variables.
 \describe{ \item{ch}{a character vector} \item{weight}{a numeric vector}
 \item{age}{a factor with levels \code{1} \code{2} \code{3}} \item{sex}{a
 factor with levels \code{F} \code{M}} \item{region}{a factor with levels
-\code{1} \code{2} \code{3} \code{4}} }}
+\code{1} \code{2} \code{3} \code{4}} }
+}
 \description{
 A simulated data set from CJS model to demonstrate use of grouping variables
 and individual covariates in an analysis of a \code{mark} model. The true
@@ -34,21 +36,21 @@ Phidot=list(formula=~1)
 PhiweightTime=list(formula=~weight+time)
 PhiTimeAge=list(formula=~time+age)
 mod1=mark(example.data,groups=c("sex","age","region"),
-                           initial.ages=c(0,1,2))
+                           initial.ages=c(0,1,2),delete=TRUE)
 mod2=mark(example.data,model.parameters=list(p=pTimec,Phi=PhiTime),
-          groups=c("sex","age","region"),initial.ages=c(0,1,2))
+          groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 mod3=mark(example.data,model.parameters=list(Phi=Phidot,p=pTime),
-          groups=c("sex","age","region"),initial.ages=c(0,1,2))
+          groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 mod4=mark(example.data,model.parameters=list(Phi=PhiTime),
-          groups=c("sex","age","region"),initial.ages=c(0,1,2))
+          groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 mod5=mark(example.data,model.parameters=list(Phi=PhiTimeAge),
-          groups=c("sex","age","region"),initial.ages=c(0,1,2))
+          groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 mod6=mark(example.data,model.parameters=list(Phi=PhiAge,p=pTime),
-          groups=c("sex","age","region"),initial.ages=c(0,1,2))
+          groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 mod7=mark(example.data,model.parameters=list(p=pTime,Phi=PhiweightTime),
-          groups=c("sex","age","region"),initial.ages=c(0,1,2))
+          groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 mod8=mark(example.data,model.parameters=list(Phi=PhiTimeAge,p=pTime),
-          groups=c("sex","age","region"),initial.ages=c(0,1,2))
+          groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 return(collect.models())
 }
 example.results=run.example()

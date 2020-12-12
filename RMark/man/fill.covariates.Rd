@@ -37,7 +37,7 @@ dipper$nsex=as.numeric(dipper$sex)-1
 dipper$weight=rnorm(294)   
 #NOTE:  This generates random valules for the weights so the answers using 
 # ~weight will vary each time it is run
-mod=mark(dipper,model.parameters=list(Phi=list(formula=~nsex+weight)))
+mod=mark(dipper,model.parameters=list(Phi=list(formula=~nsex+weight)),delete=TRUE)
 # Show approach using individual calls to find.covariates, fill.covariates 
 # and compute.real
 fc=find.covariates(mod,dipper)
@@ -58,7 +58,7 @@ male.survival
 # Fit model using sex as a group/factor variable and 
 # compute v-c matrix for estimates
 mod=mark(dipper,groups="sex",
-     model.parameters=list(Phi=list(formula=~sex+weight)))
+     model.parameters=list(Phi=list(formula=~sex+weight)),delete=TRUE)
 survival.by.sex=compute.real(mod,data=dipper,vcv=TRUE)
 survival.by.sex$real[1:2]  # estimates
 survival.by.sex$se.real[1:2] # std errors

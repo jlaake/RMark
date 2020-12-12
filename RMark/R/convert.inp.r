@@ -71,7 +71,7 @@
 #' @seealso \code{\link{process.data}}
 #' @keywords utility
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # This example is excluded from testing to reduce package check time
 #' # MARK example input file
 #' pathtodata=paste(path.package("RMark"),"extdata",sep="/")

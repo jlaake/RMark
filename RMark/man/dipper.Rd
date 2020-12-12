@@ -4,10 +4,12 @@
 \name{dipper}
 \alias{dipper}
 \title{Dipper capture-recapture data}
-\format{A data frame with 294 observations on the following 2 variables.
+\format{
+A data frame with 294 observations on the following 2 variables.
 \describe{ \item{ch}{a character vector containing the encounter history of
 each bird} \item{sex}{the sex of the bird: a factor with levels
-\code{Female} \code{Male}} }}
+\code{Female} \code{Male}} }
+}
 \source{
 Lebreton, J.-D., K. P. Burnham, J. Clobert, and D. R. Anderson.
 1992. Modeling survival and testing biological hypotheses using marked
@@ -61,7 +63,7 @@ MARK with sex being used to describe groups and a numeric sex covariate.
 \donttest{
 # This example is excluded from testing to reduce package check time
 data(dipper)
-dipper.model=mark(dipper)
+dipper.model=mark(dipper,delete=TRUE)
 run.dipper=function()
 {
 #
@@ -101,43 +103,43 @@ pFlood=list(formula=~Flood)
 # Run assortment of models
 #
 dipper.phidot.pdot          =mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phidot,p=pdot))
+                 model.parameters=list(Phi=Phidot,p=pdot),delete=TRUE)
 dipper.phidot.pFlood      	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phidot,p=pFlood))
+                 model.parameters=list(Phi=Phidot,p=pFlood),delete=TRUE)
 dipper.phidot.psex        	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phidot,p=psex))
+                 model.parameters=list(Phi=Phidot,p=psex),delete=TRUE)
 dipper.phidot.ptime       	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phidot,p=ptime))
+                 model.parameters=list(Phi=Phidot,p=ptime),delete=TRUE)
 dipper.phidot.psex.time		=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phidot,p=psex.time))
+                 model.parameters=list(Phi=Phidot,p=psex.time),delete=TRUE)
 dipper.phitime.ptime      	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phitime, p=ptime))
+                 model.parameters=list(Phi=Phitime, p=ptime),delete=TRUE)
 dipper.phitime.pdot       	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phitime,p=pdot))
+                 model.parameters=list(Phi=Phitime,p=pdot),delete=TRUE)
 dipper.phitime.psex		=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phitime,p=psex))
+                 model.parameters=list(Phi=Phitime,p=psex),delete=TRUE)
 dipper.phitime.psex.time	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phitime,p=psex.time))
+                 model.parameters=list(Phi=Phitime,p=psex.time),delete=TRUE)
 dipper.phiFlood.pFlood    	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=PhiFlood, p=pFlood))
+                 model.parameters=list(Phi=PhiFlood, p=pFlood),delete=TRUE)
 dipper.phisex.pdot        	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phisex,p=pdot))
+                 model.parameters=list(Phi=Phisex,p=pdot),delete=TRUE)
 dipper.phisex.psex        	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phisex,p=psex))
+                 model.parameters=list(Phi=Phisex,p=psex),delete=TRUE)
 dipper.phisex.psex.time        	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phisex,p=psex.time))
+                 model.parameters=list(Phi=Phisex,p=psex.time),delete=TRUE)
 dipper.phisex.ptime       	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phisex,p=ptime))
+                 model.parameters=list(Phi=Phisex,p=ptime),delete=TRUE)
 dipper.phisextime.psextime	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phisextime,p=psextime))
+                 model.parameters=list(Phi=Phisextime,p=psextime),delete=TRUE)
 dipper.phisex.time.psex.time	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phisex.time,p=psex.time))
+                 model.parameters=list(Phi=Phisex.time,p=psex.time),delete=TRUE)
 dipper.phisex.time.psex 	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phisex.time,p=psex))
+                 model.parameters=list(Phi=Phisex.time,p=psex),delete=TRUE)
 dipper.phisex.time.pdot		=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phisex.time,p=pdot))
+                 model.parameters=list(Phi=Phisex.time,p=pdot),delete=TRUE)
 dipper.phisex.time.ptime	=mark(dipper.processed,dipper.ddl,
-                 model.parameters=list(Phi=Phisex.time,p=ptime))
+                 model.parameters=list(Phi=Phisex.time,p=ptime),delete=TRUE)
 #
 # Return model table and list of models
 #
@@ -188,43 +190,43 @@ pFlood=list(formula=~Flood)
 # Run assortment of models
 #
 dipper.phidot.pdot          =mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phidot,p=pdot))
+                  model.parameters=list(Phi=Phidot,p=pdot),delete=TRUE)
 dipper.phidot.pFlood      	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phidot,p=pFlood))
+                  model.parameters=list(Phi=Phidot,p=pFlood),delete=TRUE)
 dipper.phidot.psex        	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phidot,p=psex))
+                  model.parameters=list(Phi=Phidot,p=psex),delete=TRUE)
 dipper.phidot.ptime       	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phidot,p=ptime))
+                  model.parameters=list(Phi=Phidot,p=ptime),delete=TRUE)
 dipper.phidot.psex.time		=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phidot,p=psex.time))
+                  model.parameters=list(Phi=Phidot,p=psex.time),delete=TRUE)
 dipper.phitime.ptimec      	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phitime, p=ptimec))
+                  model.parameters=list(Phi=Phitime, p=ptimec),delete=TRUE)
 dipper.phitime.pdot       	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phitime,p=pdot))
+                  model.parameters=list(Phi=Phitime,p=pdot),delete=TRUE)
 dipper.phitime.psex		=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phitime,p=psex))
+                  model.parameters=list(Phi=Phitime,p=psex),delete=TRUE)
 dipper.phitimec.psex.time	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phitimec,p=psex.time))
+                  model.parameters=list(Phi=Phitimec,p=psex.time),delete=TRUE)
 dipper.phiFlood.pFlood    	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=PhiFlood, p=pFlood))
+                  model.parameters=list(Phi=PhiFlood, p=pFlood),delete=TRUE)
 dipper.phisex.pdot        	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phisex,p=pdot))
+                  model.parameters=list(Phi=Phisex,p=pdot),delete=TRUE)
 dipper.phisex.psex        	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phisex,p=psex))
+                  model.parameters=list(Phi=Phisex,p=psex),delete=TRUE)
 dipper.phisex.psex.time        	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phisex,p=psex.time))
+                  model.parameters=list(Phi=Phisex,p=psex.time),delete=TRUE)
 dipper.phisex.ptime       	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phisex,p=ptime))
+                  model.parameters=list(Phi=Phisex,p=ptime),delete=TRUE)
 dipper.phisextime.psextime	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phisextime,p=psextime),adjust=FALSE)
+                  model.parameters=list(Phi=Phisextime,p=psextime),adjust=FALSE,delete=TRUE)
 dipper.phisex.time.psex.timec	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phisex.time,p=psex.timec))
+                  model.parameters=list(Phi=Phisex.time,p=psex.timec),delete=TRUE)
 dipper.phisex.time.psex 	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phisex.time,p=psex))
+                  model.parameters=list(Phi=Phisex.time,p=psex),delete=TRUE)
 dipper.phisex.time.pdot		=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phisex.time,p=pdot))
+                  model.parameters=list(Phi=Phisex.time,p=pdot),delete=TRUE)
 dipper.phisex.time.ptimec	=mark(dipper.processed,dipper.ddl,
-                  model.parameters=list(Phi=Phisex.time,p=ptimec))
+                  model.parameters=list(Phi=Phisex.time,p=ptimec),delete=TRUE)
 #
 # Return model table and list of models
 #
@@ -291,10 +293,10 @@ Nsex=list(formula=~sex)
 #
 dipper.phisex.time.psex.time.pentsex.time=mark(dipper.processed,dipper.ddl,
 model.parameters=list(Phi=Phisex.time,p=psex.time,pent=pentsex.time,N=Nsex),
-invisible=FALSE,adjust=FALSE)
+invisible=FALSE,adjust=FALSE,delete=TRUE)
 dipper.phisex.time.psex.pentsex.time=mark(dipper.processed,dipper.ddl,
 model.parameters=list(Phi=Phisex.time,p=psex,pent=pentsex.time,N=Nsex),
-invisible=FALSE,adjust=FALSE)
+invisible=FALSE,adjust=FALSE,delete=TRUE)
 #
 # Return model table and list of models
 #
@@ -319,7 +321,7 @@ dipper.popan.results=run.dipper.popan()
 # assign those links to log
  input.links[log.indices]="Log"
 # Now these can be used with any call to mark
- mymodel=mark(dipper.proc,dipper.ddl,input.links=input.links)
+ mymodel=mark(dipper.proc,dipper.ddl,input.links=input.links,delete=TRUE)
  summary(mymodel)
 }
 }

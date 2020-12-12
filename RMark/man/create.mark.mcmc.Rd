@@ -4,8 +4,16 @@
 \alias{create.mark.mcmc}
 \title{Create mcmc object for analysis with coda}
 \usage{
-create.mark.mcmc(filename, ncovs, nmeans, ndesigns, nsigmas, nrhos, nlogit,
-  include = F)
+create.mark.mcmc(
+  filename,
+  ncovs,
+  nmeans,
+  ndesigns,
+  nsigmas,
+  nrhos,
+  nlogit,
+  include = F
+)
 }
 \arguments{
 \item{filename}{name of file containing mcmc values}

@@ -4,12 +4,14 @@
 \name{Blackduck}
 \alias{Blackduck}
 \title{Black duck known fate data}
-\format{A data frame with 48 observations on the following 5 variables.
+\format{
+A data frame with 48 observations on the following 5 variables.
 \describe{ \item{ch}{a character vector containing the encounter history of
 each bird} \item{BirdAge}{the age of the bird: a factor with levels \code{0}
 \code{1} for young and adult} \item{Weight}{the weight of the bird at time
 of marking} \item{Wing_Len}{the wing-length of the bird at time of marking}
-\item{condix}{the condition index of the bird at time of marking} }}
+\item{condix}{the condition index of the bird at time of marking} }
+}
 \description{
 A known fate data set on Black ducks that accompanies MARK as an example
 analysis using the Known model.
@@ -71,7 +73,7 @@ S.BirdAge.Weight=list(formula=~BirdAge+Weight)
 #
 model.list=create.model.list("Known")
 bduck.results=mark.wrapper(model.list,data=bduck.processed,ddl=bduck.ddl,
-               invisible=FALSE,threads=1)
+               invisible=FALSE,threads=1,delete=TRUE)
 
 #
 # Return model table and list of models

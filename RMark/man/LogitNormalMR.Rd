@@ -4,8 +4,10 @@
 \name{LogitNormalMR}
 \alias{LogitNormalMR}
 \title{Example of LogitNormal Mark-Resight model}
-\format{A data frame with 35 observations on the following variable.
-\describe{ \item{ch}{a character vector} }}
+\format{
+A data frame with 35 observations on the following variable.
+\describe{ \item{ch}{a character vector} }
+}
 \description{
 Data and example illustrating LogitNormal Mark-Resight model.
 }
@@ -24,7 +26,7 @@ logitNor.ddl=make.design.data(logitNor.proc)
 # reasonable values.
 mod=mark(logitNor.proc,logitNor.ddl,
  model.parameters=list(N=list(formula=~-1+session,link="sin"),
- sigma=list(formula=~-1+session,link="sin"),p=list(formula=~1,link="sin")))
+ sigma=list(formula=~-1+session,link="sin"),p=list(formula=~1,link="sin")),delete=TRUE)
 summary(mod)
 
 }

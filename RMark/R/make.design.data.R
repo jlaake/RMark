@@ -309,13 +309,13 @@
 #' ddl=make.design.data(dp)
 #' ddl$Psi=ddl$Psi[!(ddl$Psi$stratum=="A" & ddl$Psi$tostratum=="B"),]
 #' ddl$Psi
-#' summary(mark(dp,ddl,output=FALSE),show.fixed=TRUE)
+#' summary(mark(dp,ddl,output=FALSE,delete=TRUE),show.fixed=TRUE)
 #' #new approach using fix to set Phi=1 for time 2 (USE this approach)
 #' ddl=make.design.data(dp)
 #' ddl$Psi$fix=NA
 #' ddl$Psi$fix[ddl$Psi$stratum=="A" & ddl$Psi$tostratum=="B"]=0
 #' ddl$Psi
-#' summary(mark(dp,ddl,output=FALSE),show.fixed=TRUE)
+#' summary(mark(dp,ddl,output=FALSE,delete=TRUE),show.fixed=TRUE)
 #' }
 #' @param data Processed data list; resulting value from process.data
 #' @param parameters Optional list containing a list for each type of parameter

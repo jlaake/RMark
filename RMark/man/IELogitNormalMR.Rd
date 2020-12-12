@@ -4,8 +4,10 @@
 \name{IELogitNormalMR}
 \alias{IELogitNormalMR}
 \title{Example of Immigration-Emigration LogitNormal Mark-Resight model}
-\format{A data frame with 34 observations on the following variable.
-\describe{ \item{ch}{a character vector} }}
+\format{
+A data frame with 34 observations on the following variable.
+\describe{ \item{ch}{a character vector} }
+}
 \description{
 Data and example illustrating Immigration-Emigration LogitNormal
 Mark-Resight model
@@ -25,7 +27,7 @@ mod1=mark(IElogitNor.proc,IElogitNor.ddl,
 				              sigma=list(formula=~session),
 							  alpha=list(formula=~-1+session:time),
 							  Nstar=list(formula=~session),
-							  Nbar=list(formula=~session)))
+							  Nbar=list(formula=~session)),delete=TRUE)
 summary(mod1)
 # You can use the initial value to get a better estimate.
  mod2=mark(IElogitNor.proc,IElogitNor.ddl,
@@ -34,7 +36,7 @@ summary(mod1)
 							  alpha=list(formula=~-1+session:time),
 							  Nstar=list(formula=~session),
 							  Nbar=list(formula=~session)),
-							  initial=mod1)
+							  initial=mod1,delete=TRUE)
  summary(mod2)			  
 }
 }

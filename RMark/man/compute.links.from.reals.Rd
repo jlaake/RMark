@@ -4,8 +4,13 @@
 \alias{compute.links.from.reals}
 \title{Compute link values from real parameters}
 \usage{
-compute.links.from.reals(x, model, parm.indices = NULL,
-  vcv.real = NULL, use.mlogits = TRUE)
+compute.links.from.reals(
+  x,
+  model,
+  parm.indices = NULL,
+  vcv.real = NULL,
+  use.mlogits = TRUE
+)
 }
 \arguments{
 \item{x}{vector of real estimates to be converted to link values}

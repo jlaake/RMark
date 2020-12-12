@@ -22,7 +22,7 @@ An example of the Burnham live-dead model using simulated data LD1.inp from Chap
 # young, and "A" for individuals marked as adults
 # NOTE: the "LD1.inp" file is found in the zipped folder downloaded when you
 # click on "Example data files" in the drop-down menu of the MARK book webpage
-#  \\url{http://www.phidot.org/software/mark/docs/book/}
+#  \url{http://www.phidot.org/software/mark/docs/book/}
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 LD=convert.inp(paste(pathtodata,"ld1",sep="/"),
            group.df=data.frame(age_marked=c("Y","A")))
@@ -64,7 +64,7 @@ LD.ddl=add.design.data(data = LD.proc,
 PIMS(mark(data = LD.proc,
 			ddl = LD.ddl,
 			model.parameters=list(S=list(formula=~age)),
-			output=FALSE,
+			delete=TRUE,
 			model = "Burnham"),
 	"S")
 
@@ -82,9 +82,9 @@ LD.model.age.F.S=mark(data = LD.proc,
 	model.parameters = list(S = S.age, p = p.dot, 
 			F =F.age, r = r.dot), 
 	invisible = FALSE, 
-	model = "Burnham")
+	model = "Burnham",delete=TRUE)
 
-# Check the paramter estimates, they should be the same as those generated
+# Check the parameter estimates, they should be the same as those generated
 # when doing the tutorial in chapter 9.3 of the in MARK Book (table on pg 9-8)
 LD.model.age.F.S$results$real
 

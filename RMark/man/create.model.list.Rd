@@ -96,7 +96,7 @@ run.dipper=function()
      #
      dipper.model.list=create.model.list("CJS")
      dipper.results=mark.wrapper(dipper.model.list,
-              data=dipper.processed,ddl=dipper.ddl)
+              data=dipper.processed,ddl=dipper.ddl,delete=TRUE)
      #
      # Return model table and list of models
      #

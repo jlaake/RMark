@@ -3,6 +3,8 @@
 #' @author Connor M. Wood, University of Wisconsin-Madison <cwood9 at wisc.edu> 
 #' @examples
 #' \donttest{
+#'## Multi-scale dynamic occupancy models in RMark: a worked example ##
+#'
 #'# Study design and data structure:
 #'# two sessions (i.e., seasons) and 346 sampling sites
 #'# up to three secondary sampling periods per season
@@ -14,54 +16,90 @@
 #'dt[is.na(dt)]=0 # replace NAs with 0
 #'dt$ch=as.character(dt$ch) # encounter histories (dt$ch) must be characters
 #'
-#'# note: habitat variables (amount of open forest and average slope) were collected at
+#'# note: habitat variables (amount of open forest and average slope) were collected at 
 #'# two spatial scales
 #'# 'sOpen' and 'sSlope' represent the entire sampling site
-#'# 'pOpen##' and 'pSlope##' represent conditions relevant to individual devices 
-#'# at each sampling period
-#'# the p-scale variables are coded [name][session][primary]; 
-#'# dt.ddl$p$primary indicates how this should be entered
-#'# in this case the values for p$primary varied among devices and between sessions, 
-#'# but were constant between secondary sampling periods
+#'# 'pOpen##' and 'pSlope##' represent conditions relevant to individual devices at each 
+#'#  sampling period
+#'#  the p-scale variables are coded [name][session][primary]; 
+#'#  dt.ddl$p$primary indicates how this should be entered
+#'#  in this case the values for p$primary varied among devices and between sessions, 
+#'#  but were constant between secondary sampling periods
 #'
 #'# create the Process Data MARK object
 #'dt.pr=process.data(dt,model="RDMultScalOcc",
-#'   time.intervals=c(0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0),mixtures=3)
-#'# note: time.intervals refers to seasons, not secondary sampling periods (K)
-#'# note: mixtures refers to the number of devices (L)
+#'     time.intervals=c(0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0),mixtures=3)
+#'# note: time.intervals refers to seasons, not secondary sampling periods
+#'# note: mixtures refers to the number of devices
 #'
 #'# create the design data object
 #'dt.ddl=make.design.data(dt.pr)
+#'# Examine the built-in covariates for each parameter
+#'str(dt.ddl)
 #'
+#'### Approach 1: Manually create (a somewhat arbitrary) set of models #######################
+#'# Name variables for simplicity 
 #'fit.models=function()
 #'{
-#'# Models for p 
-#'p.open=list(formula=~sOpen)
-#'p.popen=list(formula=~pOpen)
-#'p.slope=list(formula=~sSlope)
-#'p.pslope=list(formula=~pSlope)
-#' # Models for Psi
-#'Psi.open=list(formula=~sOpen)
-#'Psi.Slope=list(formula=~sSlope)
-#' #Model for Gamma
-#'Gamma.open=list(formula=~sOpen)
-#' # Model for Epsilon 
-#'Epsilon.slope=list(formula=~sSlope)
-#' # Model for Theta
-#'# note: 'time' is defined in dt.ddl$Theta (use str(dt) to see all predefined variables)
-#' Theta.time=list(formula=~time)
-#' # create all combinations of these sub-models
-#' cml=create.model.list("RDMultScalOcc")
-#'results=mark.wrapper(cml,data=dt.pr,ddl=dt.ddl,output=FALSE) 
-#'return(results)
+#'Open=list(formula=~sOpen)
+#'pOpen=list(formula=~pOpen)
+#'Slope=list(formula=~sSlope)
+#'pSlope=list(formula=~pSlope)
+#'Time=list(formula=~Time) #use carefully because different covariates use 'Time' in different ways
+#'
+#'null.model=mark(dt.pr,dt.ddl,delete=TRUE)
+#'mod1=mark(dt.pr,dt.ddl,model.parameters=list(p=Open),delete=TRUE)
+#'#'mod2=mark(dt.pr,dt.ddl,model.parameters=list(p=pOpen),delete=TRUE)
+#'mod3=mark(dt.pr,dt.ddl,model.parameters=list(p=Slope),delete=TRUE)
+#'mod4=mark(dt.pr,dt.ddl,model.parameters=list(p=pSlope),delete=TRUE)
+#'mod5=mark(dt.pr,dt.ddl,model.parameters=list(Psi=Open),delete=TRUE)
+#'mod6=mark(dt.pr,dt.ddl,model.parameters=list(Psi=Slope),delete=TRUE)
+#'mod7=mark(dt.pr,dt.ddl,model.parameters=list(Psi=Time),delete=TRUE)
+#'mod8=mark(dt.pr,dt.ddl,model.parameters=list(Gamma=Open),delete=TRUE)
+#'mod9=mark(dt.pr,dt.ddl,model.parameters=list(Epsilon=Slope),delete=TRUE)
+#'mod10=mark(dt.pr,dt.ddl,model.parameters=list(Theta=list(formula=~time)),delete=TRUE) 
+#'
+#'return(collect.models()) # View results sorted by AICc
 #'}
-#'# fit model collections and view models sorted by AICc
-#'fit.models()
+#'results=fit.models()
+#'###########################################################################################
+#'
+#'### Approach 2: use mark.wrapper to create your models ####################################
+#'fit.models=function()
+#'{
+#'  # Models for p 
+#'  p.null=list(formula=~1)
+#'  p.open=list(formula=~sOpen)
+#'  p.popen=list(formula=~pOpen)
+#'  p.slope=list(formula=~sSlope)
+#'  p.pslope=list(formula=~pSlope)
+#'  # Models for Psi
+#'  Psi.null=list(formula=~1)
+#'  Psi.open=list(formula=~sOpen)
+#'  Psi.Slope=list(formula=~sSlope)
+#'  #Model for Gamma
+#'  Gamma.null=list(formula=~1)
+#'  Gamma.open=list(formula=~sOpen)
+#'  # Model for Epsilon 
+#'  Epsilon.null=list(formula=~1)
+#'  Epsilon.slope=list(formula=~sSlope)
+#'  # Model for Theta
+#'  # note: 'time' is defined in dt.ddl$Theta (use str(dt) to see all predefined variables)
+#'  Theta.null=list(formula=~1)
+#'  Theta.time=list(formula=~time)
+#'  # create all combinations of these sub-models
+#'  cml=create.model.list("RDMultScalOcc")
+#'  results=mark.wrapper(cml,data=dt.pr,ddl=dt.ddl,delete=TRUE) 
+#'  return(results)
+#'}
+#'
+#'fit.models() # creates all combinations of variables and prints AICc table
+#'results
 #'}
 NULL
 
 
-#' An example of the Mulstistrata (multi-state) model in which states are routes taken by migrating fish.
+#' An example of the Multistrata (multi-state) model in which states are routes taken by migrating fish.
 #' 
 #' @name skagit
 #' @author Megan Moore <megan.moore at noaa.gov> 
@@ -136,7 +174,7 @@ NULL
 #'S.stratumxtime=list(formula=~-1+stratum:time)
 #'#
 #'S.timexstratum.p.timexstratum.Psi.sxtime=mark(skagit.processed,skagit.ddl,
-#'  model.parameters=list(S=S.stratumxtime,p= p.timexstratum.tag,Psi=Psi.sxtime))
+#'  model.parameters=list(S=S.stratumxtime,p= p.timexstratum.tag,Psi=Psi.sxtime),delete=TRUE)
 #'# calculation of cummulative survival for entire route
 #'Sest=plogis(coef(S.timexstratum.p.timexstratum.Psi.sxtime)$estimate)
 #'# A
@@ -213,7 +251,7 @@ NULL
 #'PIMS(mark(data = LD.proc,
 #'				ddl = LD.ddl,
 #'				model.parameters=list(S=list(formula=~age)),
-#'				output=FALSE,
+#'				delete=TRUE,
 #'				model = "Burnham"),
 #'		"S")
 #'
@@ -231,9 +269,9 @@ NULL
 #'		model.parameters = list(S = S.age, p = p.dot, 
 #'				F =F.age, r = r.dot), 
 #'		invisible = FALSE, 
-#'		model = "Burnham")
+#'		model = "Burnham",delete=TRUE)
 #'
-#'# Check the paramter estimates, they should be the same as those generated
+#'# Check the parameter estimates, they should be the same as those generated
 #'# when doing the tutorial in chapter 9.3 of the in MARK Book (table on pg 9-8)
 #'LD.model.age.F.S$results$real
 #'
@@ -293,7 +331,7 @@ NULL
 #'	Psi.2=list(formula=~ceap)    
 #'	
 #'	cml=create.model.list("MultScalOcc")
-#'	return(mark.wrapper(cml,data=mscale.proc,ddl=ddl,adjust=FALSE,realvcv=TRUE))
+#'	return(mark.wrapper(cml,data=mscale.proc,ddl=ddl,adjust=FALSE,realvcv=TRUE,delete=TRUE))
 #'}
 #'
 #'# Run function to get results
@@ -307,12 +345,12 @@ NULL
 #'Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real
 #'Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$beta
 #'
-#'write.csv(Species.results$model.table,file="lasp_model_selection.csv",row.names=FALSE)
+#'#write.csv(Species.results$model.table,file="lasp_model_selection.csv",row.names=FALSE)
 #'
-#'write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real,
-#'  file="lasp_m1_real.csv")
-#'write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$beta,
-#'  file="lasp_m1_beta.csv")
+#'#write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$real,
+#'#  file="lasp_m1_real.csv")
+#'#write.csv(Species.results[[as.numeric(rownames(Species.results$model.table[1,]))]]$results$beta,
+#'#  file="lasp_m1_beta.csv")
 #'
 #'# Covariate prediction and model averaging
 #'
@@ -326,7 +364,8 @@ NULL
 #'
 #'td <- covariate.predictions(Species.results,data=data.frame(td1=td.values),indices=c(21))
 #'
-#'write.table(td$estimates,file="lasp_cov_pred_p_td.csv",sep=",",col.names=TRUE,row.names=FALSE)
+#'#write.table(td$estimates,file="lasp_cov_pred_p_td.csv",sep=",",col.names=TRUE,
+#'#             row.names=FALSE)
 #'
 #'# Theta(crested wheatgrass cover)
 #'
@@ -338,7 +377,8 @@ NULL
 #'
 #'cw <- covariate.predictions(Species.results,data=data.frame(cw1=cw.values),indices=c(3))
 #'
-#'write.table(cw$estimates,file="lasp_cov_pred_theta_cw.csv",sep=",",col.names=TRUE,row.names=FALSE)
+#'#write.table(cw$estimates,file="lasp_cov_pred_theta_cw.csv",sep=",",col.names=TRUE,
+#'# row.names=FALSE)
 #'
 #'# Psi(ceap grazing for wildlife practice)
 #'
@@ -349,7 +389,8 @@ NULL
 #'
 #'ceap <- covariate.predictions(Species.results,data=data.frame(ceap=ceap.values))
 #'
-#'write.table(ceap$estimates,file="lasp_cov_pred_psi_ceap.csv",sep=",",col.names=TRUE,row.names=FALSE)
+#'#write.table(ceap$estimates,file="lasp_cov_pred_psi_ceap.csv",sep=",",col.names=TRUE,
+#'# row.names=FALSE)
 #'
 #' }
 
@@ -392,33 +433,33 @@ NULL
 #' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
 #'                                            r=list(age.bins=c(0,1,10))),right=FALSE)
 #' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age:time,link="sin"),
-#'                                            r=list(formula=~-1+age:time,link="sin")))
+#'                                            r=list(formula=~-1+age:time,link="sin")),delete=TRUE)
 #' # Brownie Recovery
 #' br=process.data(brownie,model="Brownie",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
 #' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
 #'                                f=list(age.bins=c(0,1,10))),right=FALSE)
 #' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age:time,link="sin"),
-#'                                f=list(formula=~-1+age:time,link="sin")))
+#'                                f=list(formula=~-1+age:time,link="sin")),delete=TRUE)
 #' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age,link="sin"),
-#'                                f=list(formula=~-1+age,link="sin")))
+#'                                f=list(formula=~-1+age,link="sin")),delete=TRUE)
 #' #Random effects Seber recovery
 #' br=process.data(brownie,model="REDead",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
 #' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
 #'                                        r=list(age.bins=c(0,1,10))),right=FALSE)
-#' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~age),r=list(formula=~age)))
+#' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~age),r=list(formula=~age)),delete=TRUE)
 #' #Pledger Mixture Seber recovery
 #' br=process.data(brownie,model="PMDead",groups="ReleaseAge",
 #'                            mixtures=3,age.var=1,initial.ages=c(1,0))
 #' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
 #'                             r=list(age.bins=c(0,1,10))),right=FALSE)
 #' mod=mark(br,br.ddl,model.parameters=list(pi=list(formula=~mixture),
-#'                      S=list(formula=~age+mixture),r=list(formula=~age)))
+#'                      S=list(formula=~age+mixture),r=list(formula=~age)),delete=TRUE)
 #' br=process.data(brownie,model="PMDead",groups="ReleaseAge",
 #'                      mixtures=2,age.var=1,initial.ages=c(1,0))
 #' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
 #'                       r=list(age.bins=c(0,1,10))),right=FALSE)
 #' mod=mark(br,br.ddl,model.parameters=list(pi=list(formula=~age),
-#'                       S=list(formula=~age+mixture),r=list(formula=~age)))
+#'                       S=list(formula=~age+mixture),r=list(formula=~age)),delete=TRUE)
 #' }
 
 NULL
@@ -493,7 +534,7 @@ NULL
 #' #
 #' model.list=create.model.list("Known")
 #' bduck.results=mark.wrapper(model.list,data=bduck.processed,ddl=bduck.ddl,
-#'                invisible=FALSE,threads=1)
+#'                invisible=FALSE,threads=1,delete=TRUE)
 #' 
 #' #
 #' # Return model table and list of models
@@ -577,37 +618,38 @@ NULL
 #' 
 #' #Silly Null model, constant p & c sharing 1 parameter (one detection estimate)
 #' p.shared=list(formula=~1,share=TRUE)
-#' mod.1=mark(x.proc, x.ddl, model.parameters=list(p=p.shared), invisible=FALSE)
+#' mod.1=mark(x.proc, x.ddl, model.parameters=list(p=p.shared), invisible=FALSE,delete=TRUE)
 #'  
 #' #2 Parameter Null Model, constant p, constant c, different p and c (one estimate for each; p ne c)
 #' #p(time), c(-), share=TRUE, detection is time dependent, with recapture parameter shared
 #' p.sharetime=list(formula=~time, share=TRUE)
-#' mod.2=mark(x.proc, x.ddl, model.parameters=list(p=p.sharetime), invisible=FALSE)
+#' mod.2=mark(x.proc, x.ddl, model.parameters=list(p=p.sharetime), invisible=FALSE,delete=TRUE)
 #' 
 #' #2a Parameter Null Model, constant p, constant c,
 #' # different p and c (one estimate for each; p ne c) not using share
-#' mod.2a=mark(x.proc, x.ddl, model.parameters=list(p=list(formula=~1), c=list(formula=~1)))
+#' mod.2a=mark(x.proc, x.ddl, model.parameters=list(p=list(formula=~1), c=list(formula=~1)),
+#'             delete=TRUE)
 #' 
 #' #Fully parameterized model, different p and c for each survey transect replicate, 
 #' # management unit, method (TI or SL) and any observers
 #' p.survey=list(formula=~Survey*time, share=TRUE)
-#' mod.3=mark(x.proc, x.ddl, model.parameters=list(p=p.survey), invisible=FALSE)
+#' mod.3=mark(x.proc, x.ddl, model.parameters=list(p=p.survey), invisible=FALSE,delete=TRUE)
 #' 
 #' #p(MU), c(MU), initial detection and recapture differ and are management unit dependent
 #' p.mu=list(formula=~MgtUnit*time, share=TRUE)
-#' mod.4=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE)
+#' mod.4=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE,delete=TRUE)
 #' 
 #' #p(MU) detection is management unit dependent
 #' p.mu=list(formula=~MgtUnit, share=TRUE)
-#' mod.5=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE)
+#' mod.5=mark(x.proc, x.ddl, model.parameters=list(p=p.mu), invisible=FALSE,delete=TRUE)
 #' 
 #' #p(Yr + MgtUnit),  detection is year + MgtUnit
 #' p.yearMgtUnit=list(formula=~Year*time+MgtUnit, share=TRUE)
-#' mod.6=mark(x.proc, x.ddl, model.parameters=list(p=p.yearMgtUnit), invisible=FALSE)
+#' mod.6=mark(x.proc, x.ddl, model.parameters=list(p=p.yearMgtUnit), invisible=FALSE,delete=TRUE)
 #' 
 #' #p(Year), initial detection and recapture are year dependent
 #' p.year=list(formula=~Year*time, share=TRUE)
-#' mod.7=mark(x.proc, x.ddl, model.parameters=list(p=p.year), invisible=FALSE)
+#' mod.7=mark(x.proc, x.ddl, model.parameters=list(p=p.year), invisible=FALSE,delete=TRUE)
 #' 
 #' return(collect.models())
 #' }
@@ -663,7 +705,10 @@ NULL
 #' 		parameters=list(Psi=list(subtract.stratum=c("1","1"))))
 #' 
 #' #create grouping index for unobserved p and c (i.e., always zero)
-#' up=as.numeric(row.names(crdms.ddl$p[crdms.ddl$p$stratum=="U",]))
+#' #up=as.numeric(row.names(crdms.ddl$p[crdms.ddl$p$stratum=="U",]))
+#' # changed 16 Oct 2020 - jll
+#' crdms.ddl$p$fix=ifelse(crdms.ddl$p$stratum=="U",0,NA)
+#' crdms.ddl$c$fix=ifelse(crdms.ddl$c$stratum=="U",0,NA)
 #' 
 #' #create grouping index to fix Psi for unobs to unbos at time 1
 #' #this isn't necessary but it allows this Psi to be fixed to a value
@@ -679,8 +724,10 @@ NULL
 #' {
 #' #Initial assumptions
 #' S.dot=list(formula=~1)  #S equal for both states and constant over time
-#' p.session=list(formula=~session, share=TRUE,  #p=c varies with session 
-#' 		fixed=list(index=up,value=0)) #p set to zero for unobs
+#'# p.session=list(formula=~session, share=TRUE,  #p=c varies with session 
+#'# 		fixed=list(index=up,value=0)) #p set to zero for unobs
+#'# changed 16 Oct 2020 - jll
+#' p.session=list(formula=~session, share=TRUE)
 #' 
 #' #Model 1 - Markovian movement
 #' Psi.markov=list(formula=~ctime+stratum,
@@ -688,21 +735,21 @@ NULL
 #' model.1=mark(crdms.data,ddl=crdms.ddl,
 #' 	model.parameters=list(S=S.dot,
 #' 		p=p.session,
-#' 		Psi=Psi.markov),threads=2)
+#' 		Psi=Psi.markov),threads=2,delete=TRUE)
 #' 
 #' #Model 2 - Random movement
 #' Psi.rand=list(formula=~time)
 #' model.2=mark(crdms.data,ddl=crdms.ddl,
 #' 	model.parameters=list(S=S.dot,
 #' 		p=p.session,
-#' 		Psi=Psi.rand),threads=2)
+#' 		Psi=Psi.rand),threads=2,delete=TRUE)
 #' 
 #' #Model 3 - No movement
 #' Psi.fix=list(formula=~1,fixed=0)
 #' model.3=mark(crdms.data,ddl=crdms.ddl,
 #' 	model.parameters=list(S=S.dot,
 #' 		p=p.session,
-#' 		Psi=Psi.fix),threads=2)
+#' 		Psi=Psi.fix),threads=2,delete=TRUE)
 #' 		
 #' #collect and store models
 #' crdms.res<-collect.models()
@@ -773,7 +820,7 @@ NULL
 #' \donttest{
 #' # This example is excluded from testing to reduce package check time
 #' data(dipper)
-#' dipper.model=mark(dipper)
+#' dipper.model=mark(dipper,delete=TRUE)
 #' run.dipper=function()
 #' {
 #' #
@@ -813,43 +860,43 @@ NULL
 #' # Run assortment of models
 #' #
 #' dipper.phidot.pdot          =mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phidot,p=pdot))
+#'                  model.parameters=list(Phi=Phidot,p=pdot),delete=TRUE)
 #' dipper.phidot.pFlood      	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phidot,p=pFlood))
+#'                  model.parameters=list(Phi=Phidot,p=pFlood),delete=TRUE)
 #' dipper.phidot.psex        	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phidot,p=psex))
+#'                  model.parameters=list(Phi=Phidot,p=psex),delete=TRUE)
 #' dipper.phidot.ptime       	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phidot,p=ptime))
+#'                  model.parameters=list(Phi=Phidot,p=ptime),delete=TRUE)
 #' dipper.phidot.psex.time		=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phidot,p=psex.time))
+#'                  model.parameters=list(Phi=Phidot,p=psex.time),delete=TRUE)
 #' dipper.phitime.ptime      	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phitime, p=ptime))
+#'                  model.parameters=list(Phi=Phitime, p=ptime),delete=TRUE)
 #' dipper.phitime.pdot       	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phitime,p=pdot))
+#'                  model.parameters=list(Phi=Phitime,p=pdot),delete=TRUE)
 #' dipper.phitime.psex		=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phitime,p=psex))
+#'                  model.parameters=list(Phi=Phitime,p=psex),delete=TRUE)
 #' dipper.phitime.psex.time	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phitime,p=psex.time))
+#'                  model.parameters=list(Phi=Phitime,p=psex.time),delete=TRUE)
 #' dipper.phiFlood.pFlood    	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=PhiFlood, p=pFlood))
+#'                  model.parameters=list(Phi=PhiFlood, p=pFlood),delete=TRUE)
 #' dipper.phisex.pdot        	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phisex,p=pdot))
+#'                  model.parameters=list(Phi=Phisex,p=pdot),delete=TRUE)
 #' dipper.phisex.psex        	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phisex,p=psex))
+#'                  model.parameters=list(Phi=Phisex,p=psex),delete=TRUE)
 #' dipper.phisex.psex.time        	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phisex,p=psex.time))
+#'                  model.parameters=list(Phi=Phisex,p=psex.time),delete=TRUE)
 #' dipper.phisex.ptime       	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phisex,p=ptime))
+#'                  model.parameters=list(Phi=Phisex,p=ptime),delete=TRUE)
 #' dipper.phisextime.psextime	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phisextime,p=psextime))
+#'                  model.parameters=list(Phi=Phisextime,p=psextime),delete=TRUE)
 #' dipper.phisex.time.psex.time	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phisex.time,p=psex.time))
+#'                  model.parameters=list(Phi=Phisex.time,p=psex.time),delete=TRUE)
 #' dipper.phisex.time.psex 	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phisex.time,p=psex))
+#'                  model.parameters=list(Phi=Phisex.time,p=psex),delete=TRUE)
 #' dipper.phisex.time.pdot		=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phisex.time,p=pdot))
+#'                  model.parameters=list(Phi=Phisex.time,p=pdot),delete=TRUE)
 #' dipper.phisex.time.ptime	=mark(dipper.processed,dipper.ddl,
-#'                  model.parameters=list(Phi=Phisex.time,p=ptime))
+#'                  model.parameters=list(Phi=Phisex.time,p=ptime),delete=TRUE)
 #' #
 #' # Return model table and list of models
 #' #
@@ -900,43 +947,43 @@ NULL
 #' # Run assortment of models
 #' #
 #' dipper.phidot.pdot          =mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phidot,p=pdot))
+#'                   model.parameters=list(Phi=Phidot,p=pdot),delete=TRUE)
 #' dipper.phidot.pFlood      	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phidot,p=pFlood))
+#'                   model.parameters=list(Phi=Phidot,p=pFlood),delete=TRUE)
 #' dipper.phidot.psex        	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phidot,p=psex))
+#'                   model.parameters=list(Phi=Phidot,p=psex),delete=TRUE)
 #' dipper.phidot.ptime       	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phidot,p=ptime))
+#'                   model.parameters=list(Phi=Phidot,p=ptime),delete=TRUE)
 #' dipper.phidot.psex.time		=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phidot,p=psex.time))
+#'                   model.parameters=list(Phi=Phidot,p=psex.time),delete=TRUE)
 #' dipper.phitime.ptimec      	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phitime, p=ptimec))
+#'                   model.parameters=list(Phi=Phitime, p=ptimec),delete=TRUE)
 #' dipper.phitime.pdot       	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phitime,p=pdot))
+#'                   model.parameters=list(Phi=Phitime,p=pdot),delete=TRUE)
 #' dipper.phitime.psex		=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phitime,p=psex))
+#'                   model.parameters=list(Phi=Phitime,p=psex),delete=TRUE)
 #' dipper.phitimec.psex.time	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phitimec,p=psex.time))
+#'                   model.parameters=list(Phi=Phitimec,p=psex.time),delete=TRUE)
 #' dipper.phiFlood.pFlood    	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=PhiFlood, p=pFlood))
+#'                   model.parameters=list(Phi=PhiFlood, p=pFlood),delete=TRUE)
 #' dipper.phisex.pdot        	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phisex,p=pdot))
+#'                   model.parameters=list(Phi=Phisex,p=pdot),delete=TRUE)
 #' dipper.phisex.psex        	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phisex,p=psex))
+#'                   model.parameters=list(Phi=Phisex,p=psex),delete=TRUE)
 #' dipper.phisex.psex.time        	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phisex,p=psex.time))
+#'                   model.parameters=list(Phi=Phisex,p=psex.time),delete=TRUE)
 #' dipper.phisex.ptime       	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phisex,p=ptime))
+#'                   model.parameters=list(Phi=Phisex,p=ptime),delete=TRUE)
 #' dipper.phisextime.psextime	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phisextime,p=psextime),adjust=FALSE)
+#'                   model.parameters=list(Phi=Phisextime,p=psextime),adjust=FALSE,delete=TRUE)
 #' dipper.phisex.time.psex.timec	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phisex.time,p=psex.timec))
+#'                   model.parameters=list(Phi=Phisex.time,p=psex.timec),delete=TRUE)
 #' dipper.phisex.time.psex 	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phisex.time,p=psex))
+#'                   model.parameters=list(Phi=Phisex.time,p=psex),delete=TRUE)
 #' dipper.phisex.time.pdot		=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phisex.time,p=pdot))
+#'                   model.parameters=list(Phi=Phisex.time,p=pdot),delete=TRUE)
 #' dipper.phisex.time.ptimec	=mark(dipper.processed,dipper.ddl,
-#'                   model.parameters=list(Phi=Phisex.time,p=ptimec))
+#'                   model.parameters=list(Phi=Phisex.time,p=ptimec),delete=TRUE)
 #' #
 #' # Return model table and list of models
 #' #
@@ -1003,10 +1050,10 @@ NULL
 #' #
 #' dipper.phisex.time.psex.time.pentsex.time=mark(dipper.processed,dipper.ddl,
 #' model.parameters=list(Phi=Phisex.time,p=psex.time,pent=pentsex.time,N=Nsex),
-#' invisible=FALSE,adjust=FALSE)
+#' invisible=FALSE,adjust=FALSE,delete=TRUE)
 #' dipper.phisex.time.psex.pentsex.time=mark(dipper.processed,dipper.ddl,
 #' model.parameters=list(Phi=Phisex.time,p=psex,pent=pentsex.time,N=Nsex),
-#' invisible=FALSE,adjust=FALSE)
+#' invisible=FALSE,adjust=FALSE,delete=TRUE)
 #' #
 #' # Return model table and list of models
 #' #
@@ -1031,7 +1078,7 @@ NULL
 #'# assign those links to log
 #'  input.links[log.indices]="Log"
 #'# Now these can be used with any call to mark
-#'  mymodel=mark(dipper.proc,dipper.ddl,input.links=input.links)
+#'  mymodel=mark(dipper.proc,dipper.ddl,input.links=input.links,delete=TRUE)
 #'  summary(mymodel)
 #' }
 NULL
@@ -1064,9 +1111,9 @@ NULL
 #' # Estimates from following agree with estimates on website but the
 #' # log-likelihood values do not agree.  Maybe a difference in whether the
 #' # constant binomial coefficients are included.
-#'   Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE,threads=1)
+#'   Donovan.7.poisson=mark(Donovan.7,model="OccupRNPoisson",invisible=FALSE,threads=1,delete=TRUE)
 #' # THe following model was not in exercise 7.
-#'   Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE,threads=1)
+#'   Donovan.7.negbin=mark(Donovan.7,model="OccupRNNegBin",invisible=FALSE,threads=1,delete=TRUE)
 #'   return(collect.models())
 #' }
 #' exercise.7=do.exercise.7()
@@ -1107,11 +1154,11 @@ NULL
 #' {
 #'   data(Donovan.8)
 #' # Results agree with the values on the website.
-#'   Donovan.8.poisson=mark(Donovan.8,model="OccupRPoisson",invisible=FALSE,threads=2)
+#'   Donovan.8.poisson=mark(Donovan.8,model="OccupRPoisson",invisible=FALSE,threads=2,delete=TRUE)
 #' # The following model was not in exercise 8. The NegBin model does 
 #' # better if it is initialized with the r and lambda from the poisson.
 #'   Donovan.8.negbin=mark(Donovan.8,model="OccupRNegBin",
-#'     initial=Donovan.8.poisson,invisible=FALSE,threads=2)
+#'     initial=Donovan.8.poisson,invisible=FALSE,threads=2,delete=TRUE)
 #'   return(collect.models())
 #' }
 #' exercise.8=do.exercise.8()
@@ -1176,41 +1223,41 @@ NULL
 #' #
 #' #  constant p=c
 #' ee.closed.m0=mark(edwards.eberhardt,model="Closed",
-#'                    model.parameters=list(p=pdotshared))
+#'                    model.parameters=list(p=pdotshared),delete=TRUE)
 #' #  constant p and constant c but different
-#' ee.closed.m0c=mark(edwards.eberhardt,model="Closed")
+#' ee.closed.m0c=mark(edwards.eberhardt,model="Closed",delete=TRUE)
 #' #  time varying p=c
 #' ee.closed.mt=mark(edwards.eberhardt,model="Closed",
-#'                    model.parameters=list(p=ptimeshared))
+#'                    model.parameters=list(p=ptimeshared),delete=TRUE)
 #' #
 #' #  Closed heterogeneity models
 #' #
 #' #  2 mixtures Mh2
 #' ee.closed.Mh2=mark(edwards.eberhardt,model="HetClosed",
-#'                    model.parameters=list(p=pmixture))
+#'                    model.parameters=list(p=pmixture),delete=TRUE)
 #' #  Closed Mth2 - p different for time; mixture additive
 #' ee.closed.Mth2.additive=mark(edwards.eberhardt,model="FullHet",
-#'                    model.parameters=list(p=ptimemixtureshared),adjust=TRUE)
+#'                    model.parameters=list(p=ptimemixtureshared),adjust=TRUE,delete=TRUE)
 #' #
 #' #    Huggins models
 #' #
 #' # p=c constant over time
 #' ee.huggins.m0=mark(edwards.eberhardt,model="Huggins",
-#'                    model.parameters=list(p=pdotshared))
+#'                    model.parameters=list(p=pdotshared),delete=TRUE)
 #' # p constant c constant but different; this is default model for Huggins
-#' ee.huggins.m0.c=mark(edwards.eberhardt,model="Huggins")
+#' ee.huggins.m0.c=mark(edwards.eberhardt,model="Huggins",delete=TRUE)
 #' # Huggins Mt
 #' ee.huggins.Mt=mark(edwards.eberhardt,model="Huggins",
-#'                    model.parameters=list(p=ptimeshared),adjust=TRUE)
+#'                    model.parameters=list(p=ptimeshared),adjust=TRUE,delete=TRUE)
 #' #
 #' #    Huggins heterogeneity models
 #' #
 #' #  Mh2 - p different for mixture
 #' ee.huggins.Mh2=mark(edwards.eberhardt,model="HugHet",
-#'                    model.parameters=list(p=pmixture))
+#'                    model.parameters=list(p=pmixture),delete=TRUE)
 #' #  Huggins Mth2 - p different for time; mixture additive
 #' ee.huggins.Mth2.additive=mark(edwards.eberhardt,model="HugFullHet",
-#'                    model.parameters=list(p=ptimemixtureshared),adjust=TRUE)
+#'                    model.parameters=list(p=ptimemixtureshared),adjust=TRUE,delete=TRUE)
 #' #
 #' # Return model table and list of models
 #' #
@@ -1260,21 +1307,21 @@ NULL
 #' PhiweightTime=list(formula=~weight+time)
 #' PhiTimeAge=list(formula=~time+age)
 #' mod1=mark(example.data,groups=c("sex","age","region"),
-#'                            initial.ages=c(0,1,2))
+#'                            initial.ages=c(0,1,2),delete=TRUE)
 #' mod2=mark(example.data,model.parameters=list(p=pTimec,Phi=PhiTime),
-#'           groups=c("sex","age","region"),initial.ages=c(0,1,2))
+#'           groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 #' mod3=mark(example.data,model.parameters=list(Phi=Phidot,p=pTime),
-#'           groups=c("sex","age","region"),initial.ages=c(0,1,2))
+#'           groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 #' mod4=mark(example.data,model.parameters=list(Phi=PhiTime),
-#'           groups=c("sex","age","region"),initial.ages=c(0,1,2))
+#'           groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 #' mod5=mark(example.data,model.parameters=list(Phi=PhiTimeAge),
-#'           groups=c("sex","age","region"),initial.ages=c(0,1,2))
+#'           groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 #' mod6=mark(example.data,model.parameters=list(Phi=PhiAge,p=pTime),
-#'           groups=c("sex","age","region"),initial.ages=c(0,1,2))
+#'           groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 #' mod7=mark(example.data,model.parameters=list(p=pTime,Phi=PhiweightTime),
-#'           groups=c("sex","age","region"),initial.ages=c(0,1,2))
+#'           groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 #' mod8=mark(example.data,model.parameters=list(Phi=PhiTimeAge,p=pTime),
-#'           groups=c("sex","age","region"),initial.ages=c(0,1,2))
+#'           groups=c("sex","age","region"),initial.ages=c(0,1,2),delete=TRUE)
 #' return(collect.models())
 #' }
 #' example.results=run.example()
@@ -1311,7 +1358,7 @@ NULL
 #' 				              sigma=list(formula=~session),
 #' 							  alpha=list(formula=~-1+session:time),
 #' 							  Nstar=list(formula=~session),
-#' 							  Nbar=list(formula=~session)))
+#' 							  Nbar=list(formula=~session)),delete=TRUE)
 #' summary(mod1)
 #' # You can use the initial value to get a better estimate.
 #'  mod2=mark(IElogitNor.proc,IElogitNor.ddl,
@@ -1320,7 +1367,7 @@ NULL
 #' 							  alpha=list(formula=~-1+session:time),
 #' 							  Nstar=list(formula=~session),
 #' 							  Nbar=list(formula=~session)),
-#' 							  initial=mod1)
+#' 							  initial=mod1,delete=TRUE)
 #'  summary(mod2)			  
 #' }
 NULL
@@ -1386,14 +1433,15 @@ NULL
 #' # between the occasions.
 #' run.killdeer=function()
 #' {
-#'    Sdot=mark(killdeer,model="Nest",nocc=40)
+#'    Sdot=mark(killdeer,model="Nest",nocc=40,delete=TRUE)
 #'    STime=mark(killdeer,model="Nest",
-#'        model.parameters=list(S=list(formula=~I(Time+1))),nocc=40,threads=2)
+#'        model.parameters=list(S=list(formula=~I(Time+1))),nocc=40,threads=2,delete=TRUE)
 #'    STimesq=mark(killdeer,model="Nest",
-#'        model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40,threads=2)
+#'        model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40,threads=2,
+#'             delete=TRUE)
 #'    STime3=mark(killdeer,model="Nest",
 #'       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)^3))),
-#'                    nocc=40,threads=2)
+#'                    nocc=40,threads=2,delete=TRUE)
 #'    return(collect.models())
 #' }
 #' # run defined models
@@ -1430,7 +1478,7 @@ NULL
 #' # reasonable values.
 #' mod=mark(logitNor.proc,logitNor.ddl,
 #'  model.parameters=list(N=list(formula=~-1+session,link="sin"),
-#'  sigma=list(formula=~-1+session,link="sin"),p=list(formula=~1,link="sin")))
+#'  sigma=list(formula=~-1+session,link="sin"),p=list(formula=~1,link="sin")),delete=TRUE)
 #' summary(mod)
 #' 
 NULL
@@ -1570,7 +1618,7 @@ NULL
 #'  
 #'  mallard.results = mark.wrapper(mallard.model.list,
 #'                                 data = mallard.pr,
-#'                                 adjust = FALSE)
+#'                                 adjust = FALSE,delete=TRUE)
 #'}
 #'
 #'# The next line runs the 9 models above and takes a minute or 2
@@ -1581,18 +1629,18 @@ NULL
 #'#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #'# Examine table of model-selection results #
 #'#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#'# next line exports files
-#'export.MARK(mallard.results$S.Age$data,
-#'            "MallDSR",
-#'            mallard.results,
-#'            replace = TRUE,
-#'            ind.covariates = "all")
+#'# next line exports files; emove # and delete=TRUE in mark.wrapper above
+#'#export.MARK(mallard.results$S.Age$data,
+#'#            "MallDSR",
+#'#            mallard.results,
+#'#            replace = TRUE,
+#'#            ind.covariates = "all")
 #'
 #'mallard.results                        # print model-selection table to screen
 #'options(width = 100)                   # set page width to 100 characters
-#'sink("results.table.txt")              # capture screen output to file
-#'print(mallard.results)                 # send output to file
-#'sink()                                 # return output to screen
+#'#sink("results.table.txt")              # capture screen output to file
+#'#print(mallard.results)                 # send output to file
+#'#sink()                                 # return output to screen
 #'
 #'# remove "#" on next line to see output in notepad in Windows             
 #'
@@ -1759,7 +1807,8 @@ NULL
 #' #
 #' # Run the list of models
 #' #
-#' mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl,threads=2)
+#' mstrata.results=mark.wrapper(model.list,data=mstrata.processed,ddl=mstrata.ddl,threads=2,
+#'                             delete=TRUE)
 #' #
 #' # Return model table and list of models
 #' #
@@ -1770,8 +1819,8 @@ NULL
 #'
 #' # Example of reverse Multistratum model
 #' data(mstrata)
-#' mod=mark(mstrata,model="Multistrata")
-#' mod.rev=mark(mstrata,model="Multistrata",reverse=TRUE)
+#' mod=mark(mstrata,model="Multistrata",delete=TRUE)
+#' mod.rev=mark(mstrata,model="Multistrata",reverse=TRUE,delete=TRUE)
 #' Psilist=get.real(mod,"Psi",vcv=TRUE)
 #' Psilist.rev=get.real(mod.rev,"Psi",vcv=TRUE)
 #' Psivalues=Psilist$estimates
@@ -1838,7 +1887,7 @@ NULL
 #' # Create a list using the 4 p modls and 3 delta models (12 models total)
 #'    cml=create.model.list("MSOccupancy")
 #' # Fit each model in the list and return the results
-#'    return(mark.wrapper(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl))
+#'    return(mark.wrapper(cml,data=NicholsMS.proc,ddl=NicholsMS.ddl,delete=TRUE))
 #' }
 #' # Call the function to fit the models and store it in MSOccupancy.results
 #' MSOccupancy.results=do.MSOccupancy()
@@ -1886,7 +1935,7 @@ NULL
 #' 		model.parameters=list(alpha=list(formula=~1),
 #' 				              U=list(formula=~-1+group),
 #' 				              sigma=list(formula=~1,fixed=0)),
-#' 	 	                      initial=c(0.9741405 ,0.0000000 ,6., 5.),threads=2)
+#' 	 	                      initial=c(0.9741405 ,0.0000000 ,6., 5.),threads=2,delete=TRUE)
 #' summary(mod)	 	                 
 #' }
 NULL
@@ -1920,7 +1969,7 @@ NULL
 #' 			      alpha=list(formula=~-1+time,link="log"),
 #' 				  U=list(formula=~-1+time,link="log"),
 #' 				  sigma=list(formula=~-1+time,link="log")),
-#' 		          initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2)
+#' 		          initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2,delete=TRUE)
 #' summary(mod)
 #' }
 NULL
@@ -2069,7 +2118,8 @@ NULL
 #' test_ddl$Gamma$eps=1
 #' p.dot=list(formula=~1)
 #' Epsilon.random.shared=list(formula=~-1+eps, share=TRUE)
-#' model=mark(test_proc,test_ddl,model.parameters=list(Epsilon=Epsilon.random.shared, p=p.dot))
+#' model=mark(test_proc,test_ddl,model.parameters=list(Epsilon=Epsilon.random.shared, p=p.dot),
+#'             delete=TRUE)
 #' #
 #' # A self-contained function for evaluating a set of user-defined candidate models
 #' run.RDExample=function()
@@ -2118,41 +2168,41 @@ NULL
 #'
 #' model.p.dot.Psi.dot.gam.dot<-mark(RD_process, RD_ddl,
 #' model.parameters=list(p=p.dot, Psi=Psi.dot, Gamma=gam.dot),
-#' invisible=TRUE)
+#' invisible=TRUE,delete=TRUE)
 #'
 #' # 2. Occupancy varies by time, detection is constant,
 #' # colonization is constant
 #'
 #' model.p.dot.Psi.time.gam.dot<-mark(RD_process, RD_ddl,
 #' model.parameters=list(p=p.dot, Psi=Psi.time, Gamma=gam.dot),
-#' invisible=TRUE)
+#' invisible=TRUE,delete=TRUE)
 #'
 #' # 3. Occupancy varies by area, detection is constant,
 #' # colonization varies by area
 #'
 #' model.p.dot.Psi.area.gam.area<-mark(RD_process,
 #' RD_ddl, model.parameters=list(p=p.dot, Psi=Psi.area,
-#' Gamma=gam.area), invisible=TRUE)
+#' Gamma=gam.area), invisible=TRUE,delete=TRUE)
 #'
 #' # 4. Occupancy varies by cover, detection is constant,
 #' # colonization varies by area
 #'
 #' model.p.dot.Psi.cover.gam.area<-mark(RD_process, RD_ddl,
 #' model.parameters=list(p=p.dot, Psi=Psi.cover, Gamma=gam.area),
-#' invisible=TRUE)
+#' invisible=TRUE,delete=TRUE)
 #'
 #' # 5. Occupancy is constant, detection is session dependent,
 #' # colonization is constant
 #'
 #' model.p.occ.Psi.dot.gam.dot<-mark(RD_process, RD_ddl,
 #' model.parameters=list(p=p.occ, Psi=Psi.dot, Gamma=gam.dot),
-#' invisible=TRUE)
+#' invisible=TRUE,delete=TRUE)
 #'
 #' # 6. Occupancy varied by area, detection is session
 #' # dependent, colonization is constant
 #' model.p.occ.Psi.area.gam.dot<-mark(RD_process, RD_ddl,
 #' model.parameters=list(p=p.occ, Psi=Psi.area, Gamma=gam.dot),
-#' invisible=TRUE)
+#' invisible=TRUE,delete=TRUE)
 #' #
 #' # Return model table and list of models
 #' #
@@ -2166,12 +2216,12 @@ NULL
 #'
 #' # Outputting model selection results
 #' robustexample 	# This will print selection results
-#' options(width=150)	# Sets page width to 100 characters
-#' sink("results.table.txt") # Captures screen output to file
+#' #options(width=150)	# Sets page width to 100 characters
+#' #sink("results.table.txt") # Captures screen output to file
 #'
 #' # Remove comment to see output
 #' #print(robustexample) # Sends output to file
-#' sink() # Returns output to screen
+#' #sink() # Returns output to screen
 #' #
 #' # Allows you to view results in notepad;remove # to see output
 #' # system("notepad results.table.txt", invisible=FALSE, wait=FALSE)
@@ -2272,15 +2322,15 @@ NULL
 #'    data(RDSalamander)
 #'    occ.p.time.eg=mark(RDSalamander,model="RDOccupEG",
 #'       time.intervals=c(rep(0,47),1,rep(0,30)),
-#'       model.parameters=list(p=list(formula=~session)),threads=2)
+#'       model.parameters=list(p=list(formula=~session)),threads=2,delete=TRUE)
 #'    occ.p.time.pg=mark(RDSalamander,model="RDOccupPG",
 #'       time.intervals=c(rep(0,47),1,rep(0,30)),
 #'       model.parameters=list(Psi=list(formula=~time),
-#'       p=list(formula=~session)),threads=2)
+#'       p=list(formula=~session)),threads=2,delete=TRUE)
 #'    occ.p.time.pe=mark(RDSalamander,model="RDOccupPE",
 #'       time.intervals=c(rep(0,47),1,rep(0,30)),
 #'       model.parameters=list(Psi=list(formula=~time),
-#'       p=list(formula=~session)),threads=2)
+#'       p=list(formula=~session)),threads=2,delete=TRUE)
 #' return(collect.models())
 #' }
 #' RDOcc=fit.RDOccupancy()
@@ -2340,7 +2390,7 @@ NULL
 #' model.1=mark(data = robust, model = "Robust", 
 #'             time.intervals=time.intervals,
 #'             model.parameters=list(S=S.time,
-#'             GammaDoublePrime=GammaDoublePrime.random,p=p.time.session),threads=2)
+#'             GammaDoublePrime=GammaDoublePrime.random,p=p.time.session),threads=2,delete=TRUE)
 #' #
 #' # Random emigration, p varies by session, uses Mh but pi fixed to 1, 
 #' # S by time.This model is in the example Robust with MARK but it is
@@ -2354,7 +2404,7 @@ NULL
 #'             time.intervals=time.intervals,
 #'             model.parameters=list(S=S.time,
 #'             GammaDoublePrime=GammaDoublePrime.random,
-#'             p=p.session,pi=pi.fixed),threads=2)
+#'             p=p.session,pi=pi.fixed),threads=2,delete=TRUE)
 #' #
 #' # Random emigration, p varies by session, uses Mh and in this 
 #' # case pi varies and so does p across
@@ -2366,7 +2416,7 @@ NULL
 #'             time.intervals=time.intervals,
 #'             model.parameters=list(S=S.time,
 #'             GammaDoublePrime=GammaDoublePrime.random,
-#'             p=p.session.mixture,pi=pi.dot),threads=2)
+#'             p=p.session.mixture,pi=pi.dot),threads=2,delete=TRUE)
 #' #
 #' # Markov constant emigration rates, pi varies by session, 
 #' # p=c varies by session, S constant
@@ -2387,7 +2437,7 @@ NULL
 #'             model.parameters=list(S=S.dot,
 #'             GammaPrime=GammaPrime.dot,
 #'             GammaDoublePrime=GammaDoublePrime.dot,
-#'             p=p.session,pi=pi.session),threads=2)
+#'             p=p.session,pi=pi.session),threads=2,delete=TRUE)
 #' #
 #' # Markov constant emigration rates, pi varies by session, 
 #' # p=c varies by session+mixture, S constant. This is model.3.a 
@@ -2402,7 +2452,7 @@ NULL
 #'             model.parameters=list(S=S.dot,
 #'             GammaPrime=GammaPrime.dot,
 #'             GammaDoublePrime=GammaDoublePrime.dot,
-#'             p=p.session.mixture,pi=pi.session),threads=2)
+#'             p=p.session.mixture,pi=pi.session),threads=2,delete=TRUE)
 #' #
 #' # Huggins Random emigration, p=c varies by time and session, 
 #' # S by time
@@ -2434,7 +2484,7 @@ NULL
 #'         list(GammaDoublePrime=list(time.bins=c(1,2,5))),
 #'         right=FALSE, model.parameters=
 #'         list(S=S.time,GammaDoublePrime=GammaDoublePrime.random,
-#'         p=p.time.session),threads=2)
+#'         p=p.time.session),threads=2,delete=TRUE)
 #' 
 #' return(collect.models())
 #' }
@@ -2479,11 +2529,11 @@ NULL
 #' do.salamander=function()
 #' {
 #'    data(salamander)
-#'    occ.p.dot=mark(salamander,model="Occupancy")
+#'    occ.p.dot=mark(salamander,model="Occupancy",delete=TRUE)
 #'    occ.p.time=mark(salamander,model="Occupancy",
-#'          model.parameters=list(p=list(formula=~time)))
+#'          model.parameters=list(p=list(formula=~time)),delete=TRUE)
 #'    occ.p.mixture=mark(salamander,model="OccupHet",
-#'          model.parameters=list(p=list(formula=~mixture)))
+#'          model.parameters=list(p=list(formula=~mixture)),delete=TRUE)
 #'    return(collect.models())
 #' }
 #' salamander.results=do.salamander()
@@ -2560,7 +2610,7 @@ NULL
 #' # Create model list
 #'    cml=create.model.list("Occupancy")
 #' # Run and return marklist of models
-#'    return(mark.wrapper(cml,data=weta.process,ddl=weta.ddl))
+#'    return(mark.wrapper(cml,data=weta.process,ddl=weta.ddl,delete=TRUE))
 #' }
 #' weta.models=fit.weta.models()
 #' # Modify the model table to show -2lnl and use AIC rather than AICc
@@ -2702,23 +2752,23 @@ NULL
 #' 	
 #' 	Model.1=mark(wwdo.proc, wwdo.ddl, 
 #'    model.parameters=list(Phi=Phi.dot.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-#'    invisible=FALSE,threads=1,options="SIMANNEAL")
+#'    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 #' 	Model.2=mark(wwdo.proc, wwdo.ddl, 
 #'   model.parameters=list(Phi=Phi.time.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-#'    invisible=FALSE,threads=1,options="SIMANNEAL")
+#'    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 #' 	Model.3=mark(wwdo.proc, wwdo.ddl, 
 #'   model.parameters=list(Phi=Phi.age.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-#'     invisible=FALSE,threads=1,options="SIMANNEAL")
+#'     invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 #' 	Model.4=mark(wwdo.proc, wwdo.ddl, 
 #'   model.parameters=list(Phi=Phi.timeage.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-#'     invisible=FALSE,threads=1,options="SIMANNEAL")
+#'     invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 #' 	Model.5=mark(wwdo.proc, wwdo.ddl,  
 #'   model.parameters=list(Phi=Phi.timeage.fix, p=p.time, pent=pent.time.fix, N=list(formula=~group)), 
-#'    invisible=FALSE,threads=1,options="SIMANNEAL")
+#'    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 #' 	Model.6=mark(wwdo.proc, wwdo.ddl, 
 #'    model.parameters=list(Phi=Phi.timeage.fix,p=p.g.time, pent=pent.time.fix,
 #'               N=list(formula=~group)), 
-#'    invisible=FALSE,threads=1,options="SIMANNEAL")
+#'    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
 #' 	collect.models()
 #' }
 #' wwdo.out=wwdo.popan()
@@ -2777,22 +2827,22 @@ NULL
 #' #Run model p(.)p~(.) from p. 20-9, 20-10. View results.
 #' p_dot <- list(formula = ~1, share=TRUE)
 #' ptilde_dot <- list(formula = ~1)
-#' model1 <- mark(data_proc,data_ddl,model.parameters=list(p=p_dot,ptilde=ptilde_dot))
-#' model1
+#' model1 <- mark(data_proc,data_ddl,model.parameters=list(p=p_dot,ptilde=ptilde_dot),delete=TRUE)
 #'
 #' #Run models p(site)p~(.) and p(.)p~(site) as indicated on p. 20-11. View results.
 #' p_site <- list(formula = ~1 + Site, share=TRUE)
 #' ptilde_site <- list(formula = ~1 + Site)
-#' model2 <- mark(data_proc, data_ddl, model.parameters=list(p=p_dot, ptilde=ptilde_site))
-#' model3 <- mark(data_proc, data_ddl, model.parameters=list(p=p_site, ptilde=ptilde_dot))
-#' model2
+#' model2 <- mark(data_proc, data_ddl, model.parameters=list(p=p_dot, ptilde=ptilde_site),
+#'                   delete=TRUE)
+#' model3 <- mark(data_proc, data_ddl, model.parameters=list(p=p_site, ptilde=ptilde_dot),
+#'                     delete=TRUE)
 #'
 #'
 #' #Run model p(DTE)p~(DTE) as indicated on p. 20-12. View results.
 #' p_DTE <- list(formula = ~1 + DTE, share=TRUE)
 #' ptilde_DTE <- list(formula= ~1 + DTE)
-#' model4 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE, ptilde=ptilde_DTE))
-#' model4
+#' model4 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE, ptilde=ptilde_DTE),
+#'                   delete=TRUE)
 #'
 #'
 #' #Compute Model Selection Table that appears on p. 20-12. View results.
@@ -2802,8 +2852,10 @@ NULL
 #' #Run Threshhold models from p. 20-15.
 #' p_DTE_Thresh15 <- list(formula = ~1 + Thresh15, share=TRUE)
 #' p_DTE_Thresh25 <- list(formula = ~1 + Thresh25, share=TRUE)
-#' model5 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE_Thresh15, ptilde=ptilde_DTE))
-#' model6 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE_Thresh25, ptilde=ptilde_DTE))
+#' model5 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE_Thresh15, ptilde=ptilde_DTE)
+#'                ,delete=TRUE)
+#' model6 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE_Thresh25, ptilde=ptilde_DTE)
+#'                ,delete=TRUE)
 #'
 #'
 #' #Re-compute Model Selection Table that appears on p. 20-16    
@@ -2833,7 +2885,7 @@ NULL
 #'# make design data and fit model used to generate the data
 #'ddl=make.design.data(dp)
 #'model=mark(dp,ddl,model.parameters=list(f=list(formula=~-1+mixture,link="sin"),
-#'p=list(formula=~1,link="sin")))
+#'p=list(formula=~1,link="sin")),delete=TRUE)
 #'}
 NULL
 
@@ -2898,10 +2950,10 @@ NULL
 #' r.1=list(formula=~-1+time+sex+site)
 #' Psi.1=list(formula=~-1+stratum:tostratum)
 #' # Run top model from paper but only for observable strata
-#' top_model=mark(ps_dp,ddl,model.parameters=list(S=S.1,p=p.1,r=r.1,Psi=Psi.1))
+#' top_model=mark(ps_dp,ddl,model.parameters=list(S=S.1,p=p.1,r=r.1,Psi=Psi.1),delete=TRUE)
 #' # Run top model from paper for all strata using simulated annealing (commented out)
 #' #top_model=mark(ps_dp,ddl,model.parameters=list(S=S.1,p=p.1,r=r.1,Psi=Psi.1),
-#' #      options="SIMANNEAL")
+#' #      options="SIMANNEAL",delete=TRUE)
 #'}
 NULL
 

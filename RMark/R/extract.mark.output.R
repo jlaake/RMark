@@ -241,9 +241,9 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   if(!is.factor(real$note))real$note=""
   if(file.exists(vcvfile))
      if(os=="mingw32")
-        param=read.mark.binary(vcvfile,derived_labels)
+        suppressWarnings(param<-read.mark.binary(vcvfile,derived_labels))
      else
-        param=read.mark.binary.linux(vcvfile,derived_labels)
+       suppressWarnings(param<-read.mark.binary.linux(vcvfile,derived_labels))
   else
   {
      param=NULL

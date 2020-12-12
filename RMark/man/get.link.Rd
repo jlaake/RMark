@@ -4,8 +4,14 @@
 \alias{get.link}
 \title{Compute sets of link values for real parameters}
 \usage{
-get.link(model, parameter, beta = NULL, design = NULL, data = NULL,
-  vcv = FALSE)
+get.link(
+  model,
+  parameter,
+  beta = NULL,
+  design = NULL,
+  data = NULL,
+  vcv = FALSE
+)
 }
 \arguments{
 \item{model}{MARK model object}

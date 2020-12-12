@@ -4,8 +4,16 @@
 \alias{predict_real}
 \title{Compute estimates of real parameters with individual and design covariates}
 \usage{
-predict_real(model, df, parameter, replicate = FALSE, beta = NULL,
-  data = NULL, se = TRUE, vcv = FALSE)
+predict_real(
+  model,
+  df,
+  parameter,
+  replicate = FALSE,
+  beta = NULL,
+  data = NULL,
+  se = TRUE,
+  vcv = FALSE
+)
 }
 \arguments{
 \item{model}{MARK model object}
@@ -47,13 +55,13 @@ whereas covariate.predictions allows simultaneous estimation of multiple paramet
 Second, if the row from df is a fixed parameter that will only be identified if it uses the fix
 parameter in the design data. It will not work with the original approach of using index and fixed as
 arguments. This should be a minor restrictioin because it doesn't make sense to compute a range of
-real parameter values for a fixed parameter.
+real parameter values for a fixed parameter. 
 
 The primary arguments are model which is a fitted mark model object and df which is one of 
 the design dataframes from the design data list (ddl) used to fit the model. The value of
 df can be a subset of the original design dataframe but do NOT create an arbitrary dataframe
 for use as df because if you don't get the indices correct or you don't construct the factor
-variables correctly, it will likely fail or the results could be bogus.
+variables correctly, it will likely fail or the results could be bogus.  
 
 The argument parameter is just the character name for the parameter ("Phi"). It is only used 
 to extract the correct formula from the fitted model.
@@ -79,7 +87,7 @@ The arguments se and vcv control computation of the std errors and v-c matrix.
 data(dipper)
 dp=process.data(dipper)
 ddl=make.design.data(dp)
-model=mark(dp,ddl,model.parameters=list(Phi=list(formula=~Time)))
+model=mark(dp,ddl,model.parameters=list(Phi=list(formula=~Time)),delete=TRUE)
 predict_real(model,ddl$Phi[1,,drop=FALSE],"Phi",replicate=TRUE,data=data.frame(Time=-12:12))
 
 }

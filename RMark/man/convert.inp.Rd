@@ -4,8 +4,12 @@
 \alias{convert.inp}
 \title{Convert MARK input file to RMark dataframe}
 \usage{
-convert.inp(inp.filename, group.df = NULL, covariates = NULL,
-  use.comments = FALSE)
+convert.inp(
+  inp.filename,
+  group.df = NULL,
+  covariates = NULL,
+  use.comments = FALSE
+)
 }
 \arguments{
 \item{inp.filename}{name of input file; inp extension is assumed and does
@@ -83,14 +87,14 @@ line /* */.  In the latter case, the /* must begin the line and the */ must
 end the line with no extra characters (blanks included) in before or after.
 }
 \examples{
-\donttest{
+\dontrun{
 # This example is excluded from testing to reduce package check time
 # MARK example input file
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")
 dipper=convert.inp(paste(pathtodata,"dipper",sep="/"),
                     group.df=data.frame(sex=c("M","F")))
 # Example input files that accompany the MARK electronic book 
-#  \\url{http://www.phidot.org/software/mark/docs/book/}
+#  \url{http://www.phidot.org/software/mark/docs/book/}
 bd=convert.inp(paste(pathtodata,"blckduck",sep="/"),
          covariates=c("age","weight","winglen","ci"),use.comments=TRUE)
 aa=convert.inp(paste(pathtodata,"aa",sep="/"),

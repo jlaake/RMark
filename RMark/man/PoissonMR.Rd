@@ -4,8 +4,10 @@
 \name{PoissonMR}
 \alias{PoissonMR}
 \title{Example of Poisson Mark-Resight model}
-\format{A data frame with 68 observations on the following 1 variables.
-\describe{ \item{ch}{a character vector} }}
+\format{
+A data frame with 68 observations on the following 1 variables.
+\describe{ \item{ch}{a character vector} }
+}
 \description{
 Data and example illustrating Poisson Mark-Resight model.
 }
@@ -24,7 +26,7 @@ mod=mark(pois.proc,pois.ddl,
 			      alpha=list(formula=~-1+time,link="log"),
 				  U=list(formula=~-1+time,link="log"),
 				  sigma=list(formula=~-1+time,link="log")),
-		          initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2)
+		          initial=c(1,1,1,1,-1.4,-.8,-.9,-.6,6,6,6,6,2,-1),threads=2,delete=TRUE)
 summary(mod)
 }
 }

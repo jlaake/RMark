@@ -1,6 +1,7 @@
-RMark 2.2.8 (23 November 2019)
+RMark 2.2.8 (13 October 2020)
 
 BUG FIXES
+* extract.mark.output uses the readChar function which gives a warning message if an embedded NULL is encountered while reading starting with R4.0. Oddly, the documentation says that this should have occurred starting with >R2.8 but it is now just occurring with R4.0.  I have suppressed the warnings since readChar values are not used.
 
 * in v2.2.7 a check was added for an infinite variance-covariance element and abs was used which created error when it was infinite. Was in get.real, covariate.predictions and model.average.marklist.  abs was removed.
 
@@ -8,7 +9,15 @@ BUG FIXES
 
 * fix to Psi parameter in RDMultScalOcc which had too few PIM values.
 
-RMark 2.2.7 (4 November 2019)
+* in version 2.2.2 a test was added for an identity design matrix in make.mark.model.  The logical condition was not correctly specified and was causing large problems (mostly multistate models with lots of groups and occasions) to fail due to lack of memory.  The error has been corrected here. Thanks to Ellen Robertson for bringing this to my attention.
+
+* if all subtracted strata were the same in a multi-state model, this caused an error to occur in TransitionMatrix.  This has been fixed.
+
+CHANGES
+
+* error trap added in make.mark.model which stops you from using share=TRUE with the fixed argument set because it will not work. An example is given to specify fixed in this case with shared parameters. This affected the crdms example.
+
+RMark 2.2.7 (4 November 2019) 
 
 NEW FEATURES
 

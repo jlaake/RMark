@@ -37,7 +37,7 @@
 #' # It is not a realistic analysis.
 #' #
 #'   data(dipper)
-#'   mod=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
+#'   mod=mark(dipper,model.parameters=list(Phi=list(formula=~time)),delete=TRUE)
 #'   rr=get.real(mod,"Phi",se=TRUE,vcv=TRUE)
 #'   deltamethod.special("prod",rr$estimates$estimate[1:6],rr$vcv.real)
 #'   deltamethod.special("cumprod",rr$estimates$estimate[1:6],rr$vcv.real,ses=FALSE)

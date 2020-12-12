@@ -91,7 +91,7 @@
 #' # Example of computing N-hat for occasions 2 to 7 for the p=~time model
 #' data(dipper)
 #' md=mark(dipper,model.parameters=list(p=list(formula=~time),
-#'        Phi=list(formula=~1)))
+#'        Phi=list(formula=~1)),delete=TRUE)
 #' # Create a matrix from the capture history strings 
 #' xmat=matrix(as.numeric(unlist(strsplit(dipper$ch,""))),
 #'       ncol=nchar(dipper$ch[1]),byrow=TRUE)
@@ -342,10 +342,10 @@ search.output.files=function(x,string)
 #' \donttest{
 #' data(dipper)
 #' popan_N=summary(mark(dipper,model="POPAN",
-#'         model.parameters=list(pent=list(formula=~time))),se=TRUE)$reals$N
+#'         model.parameters=list(pent=list(formula=~time)),delete=TRUE),se=TRUE)$reals$N
 #' data.list=MS_popan(dipper,ddl=TRUE,augment_num=30)
 #' modMS=mark(data.list$data,data.list$ddl,
-#'         model.parameters=list(Psi=list(formula=~B:toB:time)),brief=TRUE)
+#'         model.parameters=list(Psi=list(formula=~B:toB:time)),brief=TRUE,delete=TRUE)
 #' Psi_estimates=summary(modMS,se=TRUE)$reals$Psi
 #' Nhat_MS=Psi_estimates$estimate[1]*sum(abs(data.list$data$data$freq))
 #' se_Nhat_MS=Psi_estimates$se[1]*Nhat_MS

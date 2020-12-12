@@ -802,7 +802,7 @@ else
 if(!is.null(model$fixed))
 	for (i in 1:num.fixed)
 	complete.design.matrix[fixed.parms$index[i],]="0"
-					#
+#
 # Find any columns that are all 0; left from mlogit0 fix
 #
 dm=complete.design.matrix
@@ -860,7 +860,7 @@ if(!is.null(icvalues))
 #
 # Write out the design matrix into the MARK input file
 #
-if(nrow(complete.design.matrix)==ncol(complete.design.matrix)&all(complete.design.matrix==diag(nrow(complete.design.matrix))))
+if(nrow(complete.design.matrix)==ncol(complete.design.matrix)&&all(complete.design.matrix==diag(nrow(complete.design.matrix))))
 {
 	string=paste("design matrix constraints=",nrow(complete.design.matrix), " covariates=",nrow(complete.design.matrix)," identity;",sep="")
 	write(string, file = outfile, append = TRUE)
@@ -1082,13 +1082,17 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 	  if(!is.null(parameters[[i]]$share))
 	  {
 		  if(!parameters[[i]]$share)
-          {
+      {
 		      shared_par=parameters[[i]]$pair
-	          if(is.null(parameters[[shared_par]]$formula))parameters[[shared_par]]$formula=~1
-	      }else
+	        if(is.null(parameters[[shared_par]]$formula))parameters[[shared_par]]$formula=~1
+	    }else
 		  {
 			  shared_par=parameters[[i]]$pair
-			  parameters[[shared_par]]$link=parameters[[i]]$link	  
+			  parameters[[shared_par]]$link=parameters[[i]]$link
+			  if(!is.null(parameters[[i]]$fixed))
+			    stop(paste("Cannot use fixed with share=TRUE; If you are using mark.wrapper, \n",
+			    "use formulas within a list as in the following example\n",
+			    "GammaDoublePrime.dot=list(GammaDoublePrime=list(formula=~1,fixed=0),GammaPrime=list(formula=~1,fixed=0))"))
 		  }
 	  }
 #
@@ -2099,6 +2103,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 	  if(length(mlogit.indices)>0 & length(fixedvalue)>0)
 		  model$links[fixedvalue[fixedvalue%in%mlogit.indices]]="Logit"
   }
+
 # Simplify the pim structure
   if(simplify) model=simplify.pim.structure(model)
 #

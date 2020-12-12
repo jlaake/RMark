@@ -4,8 +4,14 @@
 \alias{var.components}
 \title{Variance components estimation}
 \usage{
-var.components(theta, design, vcv, alpha = 0.05, upper = 10 * max(vcv),
-  LAPACK = TRUE)
+var.components(
+  theta,
+  design,
+  vcv,
+  alpha = 0.05,
+  upper = 10 * max(vcv),
+  LAPACK = TRUE
+)
 }
 \arguments{
 \item{theta}{vector of parameter estimates}
@@ -37,7 +43,7 @@ Computes estimated effects, standard errors and process variance for a set
 of estimates using the method of moments estimator described by Burnham and
 White (2002). The \code{design} matrix specifies the manner in which the
 estimates (\code{theta}) are combined.  The number of rows of the design
-matrix must match the length of \code{theta}.
+matrix must match the length of \code{theta}. 
 
 If you select specific values
 of theta, you must select the equivalent sub-matrix of the variance-covariance
@@ -58,7 +64,7 @@ The process variance is returned as \code{sigma}.
 \donttest{
 # This example is excluded from testing to reduce package check time
 data(dipper)
-md=mark(dipper,model.parameters=list(Phi=list(formula=~time)))
+md=mark(dipper,model.parameters=list(Phi=list(formula=~time)),delete=TRUE)
 md$results$AICc
 zz=get.real(md,"Phi",vcv=TRUE)
 z=zz$estimates$estimate[1:6]
@@ -68,7 +74,7 @@ df=md$design.data$Phi
 shrinkest=data.frame(time=1:6,value=varc$betarand$estimate)
 df=merge(df,shrinkest,by="time")
 md=mark(dipper,model.parameters=list(Phi=list(formula=~time,
-  fixed=list(index=df$par.index,value=df$value))),adjust=FALSE)
+  fixed=list(index=df$par.index,value=df$value))),adjust=FALSE,delete=TRUE)
 npar=md$results$npar+varc$GTrace
 md$results$lnl+2*(npar + (npar*(npar+1))/(md$results$n-npar-1))
 }

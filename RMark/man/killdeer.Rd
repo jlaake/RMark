@@ -4,12 +4,14 @@
 \name{killdeer}
 \alias{killdeer}
 \title{Killdeer nest survival example data}
-\format{A data frame with 18 observations on the following 6 variables.
+\format{
+A data frame with 18 observations on the following 6 variables.
 \describe{ \item{id}{a MARK comment field with a nest id}
 \item{FirstFound}{the day the nest was first found} \item{LastPresent}{the
 last day that chicks were present} \item{LastChecked}{the last day the nest
 was checked} \item{Fate}{the fate of the nest; 0=hatch and 1 depredated}
-\item{Freq}{the frequency of nests with this data; usually 1} }}
+\item{Freq}{the frequency of nests with this data; usually 1} }
+}
 \description{
 A data set on killdeer that accompanies MARK as an example analysis for the
 nest survival model.
@@ -42,7 +44,7 @@ is easier to create a time-dependent covariate to do the same thing.
 # This example is excluded from testing to reduce package check time
 # EXAMPLE CODE FOR CONVERSION OF .INP TO NECESSARY DATA STRUCTURE
 # read in killdeer.inp file
-#killdeer=scan("killdeer.inp",what="character",sep="\\n")
+#killdeer=scan("killdeer.inp",what="character",sep="\n")
 # strip out ; and write out all but first 2 lines which contain comments
 #write(sub(";","",killdeer[3:20]),"killdeer.txt")
 # read in as a dataframe and assign names
@@ -58,14 +60,15 @@ summary(killdeer)
 # between the occasions.
 run.killdeer=function()
 {
-   Sdot=mark(killdeer,model="Nest",nocc=40)
+   Sdot=mark(killdeer,model="Nest",nocc=40,delete=TRUE)
    STime=mark(killdeer,model="Nest",
-       model.parameters=list(S=list(formula=~I(Time+1))),nocc=40,threads=2)
+       model.parameters=list(S=list(formula=~I(Time+1))),nocc=40,threads=2,delete=TRUE)
    STimesq=mark(killdeer,model="Nest",
-       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40,threads=2)
+       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2))),nocc=40,threads=2,
+            delete=TRUE)
    STime3=mark(killdeer,model="Nest",
       model.parameters=list(S=list(formula=~I(Time+1)+I((Time+1)^2)+I((Time+1)^3))),
-                   nocc=40,threads=2)
+                   nocc=40,threads=2,delete=TRUE)
    return(collect.models())
 }
 # run defined models

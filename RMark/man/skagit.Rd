@@ -2,9 +2,9 @@
 % Please edit documentation in R/RMark-package.R
 \name{skagit}
 \alias{skagit}
-\title{An example of the Mulstistrata (multi-state) model in which states are routes taken by migrating fish.}
+\title{An example of the Multistrata (multi-state) model in which states are routes taken by migrating fish.}
 \description{
-An example of the Mulstistrata (multi-state) model in which states are routes taken by migrating fish.
+An example of the Multistrata (multi-state) model in which states are routes taken by migrating fish.
 }
 \examples{
 # There are just two states which correspond to route A and route B. There are 6 occasions
@@ -19,13 +19,13 @@ An example of the Mulstistrata (multi-state) model in which states are routes ta
 #       1A
 #        |
 #        2A
-#      /     \\
+#      /     \
 #    3A        3B
-#   /  \\      /  \\ 
+#   /  \      /  \ 
 # 4A   4B    4A  4B       
-#  |     \\    /   |
+#  |     \    /   |
 #   5A    5B  5A   5B
-#      \\   \\   /    /
+#      \   \   /    /
 #            6
 # 
 # from 3A and 3B they can branch to either 4A or 4B; branches merge at 6  
@@ -77,7 +77,7 @@ Psi.sxtime=list(formula=~-1+stratum:time)
 S.stratumxtime=list(formula=~-1+stratum:time)
 #
 S.timexstratum.p.timexstratum.Psi.sxtime=mark(skagit.processed,skagit.ddl,
- model.parameters=list(S=S.stratumxtime,p= p.timexstratum.tag,Psi=Psi.sxtime))
+ model.parameters=list(S=S.stratumxtime,p= p.timexstratum.tag,Psi=Psi.sxtime),delete=TRUE)
 # calculation of cummulative survival for entire route
 Sest=plogis(coef(S.timexstratum.p.timexstratum.Psi.sxtime)$estimate)
 # A

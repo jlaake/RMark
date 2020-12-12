@@ -153,7 +153,7 @@
 #'   Phi.mass.plus.mass.squared=list(formula=~mass + sqmass)
 #'   p.dot=list(formula=~1)
 #'   cml=create.model.list("CJS")
-#'   results=mark.wrapper(cml,data=ind1.process,ddl=ind1.ddl,adjust=FALSE)
+#'   results=mark.wrapper(cml,data=ind1.process,ddl=ind1.ddl,adjust=FALSE,delete=TRUE)
 #'   return(results)
 #' }
 #' #
@@ -241,7 +241,7 @@
 #'      list(formula=~time*mass + sqmass+ time:sqmass)
 #'   p.dot=list(formula=~1)
 #'   cml=create.model.list("CJS")
-#'   results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE,threads=2)
+#'   results=mark.wrapper(cml,data=ind2.process,ddl=ind2.ddl,adjust=FALSE,threads=2,delete=TRUE)
 #'   return(results)
 #' }
 #' #

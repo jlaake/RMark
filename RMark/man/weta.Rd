@@ -4,7 +4,8 @@
 \name{weta}
 \alias{weta}
 \title{Occupancy data for Mahoenui Giant Weta}
-\format{A data frame with 72 observations (sites) on the following 7
+\format{
+A data frame with 72 observations (sites) on the following 7
 variables.  \describe{ \item{ch}{a character vector containing the presence
 (1) and absence (0), or (.) not visited for each of 5 visits to the site}
 \item{Browse}{0/1 dummy variable to indicate browsing} \item{Obs1}{observer
@@ -12,7 +13,8 @@ number for visit 1; . used when site not visited} \item{Obs2}{observer
 number for visit 2; . used when site not visited} \item{Obs3}{observer
 number for visit 3; . used when site not visited} \item{Obs4}{observer
 number for visit 4; . used when site not visited} \item{Obs5}{observer
-number for visit 5; . used when site not visited} }}
+number for visit 5; . used when site not visited} }
+}
 \description{
 An occupancy data set for modelling presence/absence data for salamanders.
 }
@@ -66,7 +68,7 @@ fit.weta.models=function()
 # Create model list
    cml=create.model.list("Occupancy")
 # Run and return marklist of models
-   return(mark.wrapper(cml,data=weta.process,ddl=weta.ddl))
+   return(mark.wrapper(cml,data=weta.process,ddl=weta.ddl,delete=TRUE))
 }
 weta.models=fit.weta.models()
 # Modify the model table to show -2lnl and use AIC rather than AICc

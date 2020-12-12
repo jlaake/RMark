@@ -8,6 +8,8 @@ Multi-scale dynamic occupancy models in RMark
 }
 \examples{
 \donttest{
+## Multi-scale dynamic occupancy models in RMark: a worked example ##
+
 # Study design and data structure:
 # two sessions (i.e., seasons) and 346 sampling sites
 # up to three secondary sampling periods per season
@@ -19,49 +21,85 @@ dt=read.csv(paste(pathtodata,"RDMultScalOcc.sampledata.csv",sep="/"))
 dt[is.na(dt)]=0 # replace NAs with 0
 dt$ch=as.character(dt$ch) # encounter histories (dt$ch) must be characters
 
-# note: habitat variables (amount of open forest and average slope) were collected at
+# note: habitat variables (amount of open forest and average slope) were collected at 
 # two spatial scales
 # 'sOpen' and 'sSlope' represent the entire sampling site
-# 'pOpen##' and 'pSlope##' represent conditions relevant to individual devices 
-# at each sampling period
-# the p-scale variables are coded [name][session][primary]; 
-# dt.ddl$p$primary indicates how this should be entered
-# in this case the values for p$primary varied among devices and between sessions, 
-# but were constant between secondary sampling periods
+# 'pOpen##' and 'pSlope##' represent conditions relevant to individual devices at each 
+#  sampling period
+#  the p-scale variables are coded [name][session][primary]; 
+#  dt.ddl$p$primary indicates how this should be entered
+#  in this case the values for p$primary varied among devices and between sessions, 
+#  but were constant between secondary sampling periods
 
 # create the Process Data MARK object
 dt.pr=process.data(dt,model="RDMultScalOcc",
-  time.intervals=c(0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0),mixtures=3)
-# note: time.intervals refers to seasons, not secondary sampling periods (K)
-# note: mixtures refers to the number of devices (L)
+    time.intervals=c(0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0),mixtures=3)
+# note: time.intervals refers to seasons, not secondary sampling periods
+# note: mixtures refers to the number of devices
 
 # create the design data object
 dt.ddl=make.design.data(dt.pr)
+# Examine the built-in covariates for each parameter
+str(dt.ddl)
 
+### Approach 1: Manually create (a somewhat arbitrary) set of models #######################
+# Name variables for simplicity 
 fit.models=function()
 {
-# Models for p 
-p.open=list(formula=~sOpen)
-p.popen=list(formula=~pOpen)
-p.slope=list(formula=~sSlope)
-p.pslope=list(formula=~pSlope)
-# Models for Psi
-Psi.open=list(formula=~sOpen)
-Psi.Slope=list(formula=~sSlope)
-#Model for Gamma
-Gamma.open=list(formula=~sOpen)
-# Model for Epsilon 
-Epsilon.slope=list(formula=~sSlope)
-# Model for Theta
-# note: 'time' is defined in dt.ddl$Theta (use str(dt) to see all predefined variables)
-Theta.time=list(formula=~time)
-# create all combinations of these sub-models
-cml=create.model.list("RDMultScalOcc")
-results=mark.wrapper(cml,data=dt.pr,ddl=dt.ddl,output=FALSE) 
-return(results)
+Open=list(formula=~sOpen)
+pOpen=list(formula=~pOpen)
+Slope=list(formula=~sSlope)
+pSlope=list(formula=~pSlope)
+Time=list(formula=~Time) #use carefully because different covariates use 'Time' in different ways
+
+null.model=mark(dt.pr,dt.ddl,delete=TRUE)
+mod1=mark(dt.pr,dt.ddl,model.parameters=list(p=Open),delete=TRUE)
+#'mod2=mark(dt.pr,dt.ddl,model.parameters=list(p=pOpen),delete=TRUE)
+mod3=mark(dt.pr,dt.ddl,model.parameters=list(p=Slope),delete=TRUE)
+mod4=mark(dt.pr,dt.ddl,model.parameters=list(p=pSlope),delete=TRUE)
+mod5=mark(dt.pr,dt.ddl,model.parameters=list(Psi=Open),delete=TRUE)
+mod6=mark(dt.pr,dt.ddl,model.parameters=list(Psi=Slope),delete=TRUE)
+mod7=mark(dt.pr,dt.ddl,model.parameters=list(Psi=Time),delete=TRUE)
+mod8=mark(dt.pr,dt.ddl,model.parameters=list(Gamma=Open),delete=TRUE)
+mod9=mark(dt.pr,dt.ddl,model.parameters=list(Epsilon=Slope),delete=TRUE)
+mod10=mark(dt.pr,dt.ddl,model.parameters=list(Theta=list(formula=~time)),delete=TRUE) 
+
+return(collect.models()) # View results sorted by AICc
 }
-# fit model collections and view models sorted by AICc
-fit.models()
+results=fit.models()
+###########################################################################################
+
+### Approach 2: use mark.wrapper to create your models ####################################
+fit.models=function()
+{
+ # Models for p 
+ p.null=list(formula=~1)
+ p.open=list(formula=~sOpen)
+ p.popen=list(formula=~pOpen)
+ p.slope=list(formula=~sSlope)
+ p.pslope=list(formula=~pSlope)
+ # Models for Psi
+ Psi.null=list(formula=~1)
+ Psi.open=list(formula=~sOpen)
+ Psi.Slope=list(formula=~sSlope)
+ #Model for Gamma
+ Gamma.null=list(formula=~1)
+ Gamma.open=list(formula=~sOpen)
+ # Model for Epsilon 
+ Epsilon.null=list(formula=~1)
+ Epsilon.slope=list(formula=~sSlope)
+ # Model for Theta
+ # note: 'time' is defined in dt.ddl$Theta (use str(dt) to see all predefined variables)
+ Theta.null=list(formula=~1)
+ Theta.time=list(formula=~time)
+ # create all combinations of these sub-models
+ cml=create.model.list("RDMultScalOcc")
+ results=mark.wrapper(cml,data=dt.pr,ddl=dt.ddl,delete=TRUE) 
+ return(results)
+}
+
+fit.models() # creates all combinations of variables and prints AICc table
+results
 }
 }
 \author{

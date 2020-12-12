@@ -4,7 +4,8 @@
 \name{RDOccupancy}
 \alias{RDOccupancy}
 \title{Robust Design occupancy example data}
-\format{A data frame with 35 observations on the following 12 variables
+\format{
+A data frame with 35 observations on the following 12 variables
 \describe{ \item{ch}{A character vector containing the presence (1) and
 absence (0) or (.) not visited for each of 3 visits (secondary occasions)
 over 3 years (primary occasions)} \item{cover}{percentage canopy cover at
@@ -32,7 +33,8 @@ the secondary session number} \item{occ33}{one of 9 session-dependent
 variables occ11 to occ33 containing the week the survey was conducted; p is
 the primary session number and s is the secondary session number}
 \item{samplearea}{continuous variable indicating area size (ha) of the
-sampled habitat} }}
+sampled habitat} }
+}
 \description{
 A simulated data set on a breeding bird as an example of robust design
 occupancy modeling.
@@ -140,7 +142,8 @@ test_ddl$Epsilon$eps=-1
 test_ddl$Gamma$eps=1
 p.dot=list(formula=~1)
 Epsilon.random.shared=list(formula=~-1+eps, share=TRUE)
-model=mark(test_proc,test_ddl,model.parameters=list(Epsilon=Epsilon.random.shared, p=p.dot))
+model=mark(test_proc,test_ddl,model.parameters=list(Epsilon=Epsilon.random.shared, p=p.dot),
+            delete=TRUE)
 #
 # A self-contained function for evaluating a set of user-defined candidate models
 run.RDExample=function()
@@ -189,41 +192,41 @@ RD_ddl=make.design.data(RD_process)
 
 model.p.dot.Psi.dot.gam.dot<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.dot, Psi=Psi.dot, Gamma=gam.dot),
-invisible=TRUE)
+invisible=TRUE,delete=TRUE)
 
 # 2. Occupancy varies by time, detection is constant,
 # colonization is constant
 
 model.p.dot.Psi.time.gam.dot<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.dot, Psi=Psi.time, Gamma=gam.dot),
-invisible=TRUE)
+invisible=TRUE,delete=TRUE)
 
 # 3. Occupancy varies by area, detection is constant,
 # colonization varies by area
 
 model.p.dot.Psi.area.gam.area<-mark(RD_process,
 RD_ddl, model.parameters=list(p=p.dot, Psi=Psi.area,
-Gamma=gam.area), invisible=TRUE)
+Gamma=gam.area), invisible=TRUE,delete=TRUE)
 
 # 4. Occupancy varies by cover, detection is constant,
 # colonization varies by area
 
 model.p.dot.Psi.cover.gam.area<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.dot, Psi=Psi.cover, Gamma=gam.area),
-invisible=TRUE)
+invisible=TRUE,delete=TRUE)
 
 # 5. Occupancy is constant, detection is session dependent,
 # colonization is constant
 
 model.p.occ.Psi.dot.gam.dot<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.occ, Psi=Psi.dot, Gamma=gam.dot),
-invisible=TRUE)
+invisible=TRUE,delete=TRUE)
 
 # 6. Occupancy varied by area, detection is session
 # dependent, colonization is constant
 model.p.occ.Psi.area.gam.dot<-mark(RD_process, RD_ddl,
 model.parameters=list(p=p.occ, Psi=Psi.area, Gamma=gam.dot),
-invisible=TRUE)
+invisible=TRUE,delete=TRUE)
 #
 # Return model table and list of models
 #
@@ -237,12 +240,12 @@ robustexample<-run.RDExample() #This runs the 6 models above
 
 # Outputting model selection results
 robustexample 	# This will print selection results
-options(width=150)	# Sets page width to 100 characters
-sink("results.table.txt") # Captures screen output to file
+#options(width=150)	# Sets page width to 100 characters
+#sink("results.table.txt") # Captures screen output to file
 
 # Remove comment to see output
 #print(robustexample) # Sends output to file
-sink() # Returns output to screen
+#sink() # Returns output to screen
 #
 # Allows you to view results in notepad;remove # to see output
 # system("notepad results.table.txt", invisible=FALSE, wait=FALSE)

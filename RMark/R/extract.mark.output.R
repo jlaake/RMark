@@ -76,7 +76,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
 	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
-  n=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])))
+  n=type.convert(substr(out[x],regexpr("=",out[x])+1,nchar(out[x])),as.is=TRUE)
   x=grep("-2logL {",out,fixed=TRUE)
   if(length(x)==0)
   {
@@ -84,35 +84,35 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
 	  return(NULL)
   }
   #  x=grep("-2logL {",out,ignore.case=TRUE, extended=FALSE)
-  lnl=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))
+  lnl=type.convert(substr(out[x],locate(x)+4,nchar(out[x])),as.is=TRUE)
   x=grep("Number of Estimated",out,ignore.case=TRUE)
   if(length(x)==0)
   {
 	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
-  npar=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))
+  npar=type.convert(substr(out[x],locate(x)+4,nchar(out[x])),as.is=TRUE)
   x=grep("DEVIANCE ",out,ignore.case=TRUE)
   if(length(x)==0)
   {
 	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
-  deviance=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))[1]
+  deviance=type.convert(substr(out[x],locate(x)+4,nchar(out[x])),as.is=TRUE)[1]
   x = grep("DEVIANCE Degrees of Freedom ", out, ignore.case = TRUE)
   if(length(x)==0)
   {
 	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
-  deviance.df = type.convert(substr(out[x], locate(x)+4, nchar(out[x])))[1]
+  deviance.df = type.convert(substr(out[x], locate(x)+4, nchar(out[x])),as.is=TRUE)[1]
   x=grep("AICc",out,ignore.case=TRUE)
   if(length(x)==0)
   {
 	  message(paste("MARK did not run properly.  If error message was not shown, look at most recent .out file"))
 	  return(NULL)
   }
-  AICc=type.convert(substr(out[x],locate(x)+4,nchar(out[x])))
+  AICc=type.convert(substr(out[x],locate(x)+4,nchar(out[x])),as.is=TRUE)
   if(length(links)==1)
      x1=grep(paste(links,"link"),out,ignore.case=TRUE)
   else 

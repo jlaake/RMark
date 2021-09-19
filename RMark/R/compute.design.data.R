@@ -329,9 +329,9 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
      else
         design.data$Time=as.numeric(design.data$time)- min(as.numeric(design.data$time))
    if(nstrata>1)
-      design.data$stratum=as.factor(strata.labels[design.data$stratum])
+      design.data$stratum=as.factor(strata.labels[as.numeric(design.data$stratum)])
       if(!is.null(design.data$tostratum))
-        design.data$tostratum=as.factor(strata.labels[design.data$tostratum])
+        design.data$tostratum=as.factor(strata.labels[as.numeric(design.data$tostratum)])
    if(!is.null(use.events))
       design.data$event=as.factor(design.data$event)
 #
@@ -354,7 +354,7 @@ function(data,begin,num,type="Triang",mix=FALSE,rows=0,pim.type="all",
    }
 #
 #  Finally if there are stratum variables, add dummy variables for each
-#
+# 
    if(!is.null(design.data$stratum))
       for (label in strata.labels)
       {

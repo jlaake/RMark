@@ -1407,6 +1407,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   npar=1
   for(i in 1:length(parameters))
   {
+     if(data$model=="MSJollySeber"&names(parameters)[i]=="pi")parameters[[i]]$num=parameters[[i]]$num+nstrata-2
      pim[[i]]=list()
      k=0
      for(j in 1:number.of.groups)
@@ -1417,7 +1418,7 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 	        events=data$events
 	      for(jjj in events)
 	      {
-	        if(is.null(parameters[[i]]$bystratum)||!parameters[[i]]$bystratum)
+	        if(is.null(parameters[[i]]$bystratum)||!parameters[[i]]$bystratum||(data$model=="MSJollySeber"&names(parameters)[i]=="pi"))
 	          xstrata=1
 	        else
 	          if(!is.null(parameters[[i]]$events)&&parameters[[i]]$events)

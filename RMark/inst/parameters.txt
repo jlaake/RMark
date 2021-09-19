@@ -565,3 +565,8 @@ NSpeciesOcc	p	0	0	0	Square	all	logit	~1			TRUE	0
 RDMSOccupancy	Phi0	1	0	0	Square	all	logit	~1			FALSE		FALSE	FALSE						
 RDMSOccupancy	Psi	1	-1	0	Square	all	mlogit	~-1+stratum:tostratum			FALSE		FALSE	TRUE	TRUE					
 RDMSOccupancy	p	0	0	0	Square	all	mlogit	~-1+stratum:tostratum			FALSE		TRUE	TRUE	TRUE				12	
+MSJollySeber	S	0	-1	1	Triang	all	logit	~stratum						TRUE						
+MSJollySeber	p	0	0	0	Triang	all	logit	~stratum						TRUE						
+MSJollySeber	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE					
+MSJollySeber	pent	1	-1	0	Square	all	mlogit	~1						TRUE						
+MSJollySeber	pi	0	1		Square	all	mlogit	~stratum						TRUE		1				

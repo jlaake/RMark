@@ -1,3 +1,21 @@
+RMark 2.2.9 (13 Sept 2021)
+
+NEW FEATURES
+
+* added model MSJollySeber with example of simulated data courtesy of Gary White.
+
+* added example of HidMarkov model courtesy of Chris Oosthuizen which he posted to phidot forum.
+
+BUG FIXES
+* in extract.mark.output a warning message started to appear with version R4.1.0 about specifying as.is in type.convert.  This is now specified so the warning will no longer appear.  This was not affecting any results.
+
+* another problem occurred with R4.0 in compute.design.data for some models with parameters like pi in HidMarkov for the strata.labels. Previously R translated a number represented as a character as a number when used as an index. Presumably this no longer works. The value was wrapped in as.numeric to avoid the error. This also fixed the problem whereby use of subtract.stratum was not working for pi.
+
+* code added for mata confidence intervals in model.average.marklist never worked for parameters other than the one listed first in the model because of incorrect indexing to vcv.real.  It would thrown an error and stop. Thanks to Nathan Bendik for pointing out this error. Sorry it took me a year to get to it Nate.
+
+* another issue Nate pointed out was that with mata=TRUE, confidence intervals could exceed 1 from covariate.predictions. This occurred because the code was using model.average.list which does not have any assumptions about links.  The code in covariate.predictions was modified to compute mata intervals on the link space (as done in model.average.marklist) inside the function rather than with model.average.list.
+
+
 RMark 2.2.8 (13 October 2020)
 
 BUG FIXES

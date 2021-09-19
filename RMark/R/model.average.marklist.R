@@ -385,6 +385,7 @@ if(!vcv)
 #
 else
 {
+   browser()
    if(is.null(parameter)&!is.null(indices))
       result=cbind(data.frame(par.index=indices,estimate=estimates.average,se=se.average))
    else
@@ -416,7 +417,7 @@ else
 		   {
 			   if(!is.null(reals[[j]]))
 			   {
-				   link.list=compute.links.from.reals(reals[[j]]$estimate[i],model.list[[1]],parm.indices=result$par.index[i],vcv.real=vcv.real[result$par.index[i],result$par.index[i]],use.mlogits=FALSE)
+			     link.list=compute.links.from.reals(reals[[j]]$estimate[i],model.list[[1]],parm.indices=result$par.index[i],vcv.real=vcv.real[i,i],use.mlogits=FALSE)
 				   link.estimate=c(link.estimate,link.list$estimates)
 				   link.se=c(link.se,sqrt(diag(link.list$vcv)))
 			   }	   

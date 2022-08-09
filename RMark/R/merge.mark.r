@@ -39,7 +39,7 @@ merge.mark=function(...,table=TRUE)
 #
 #    If the object is a single mark object add it to the list
 #
-     if((class(args[[i]])[1])=="mark")
+     if(inherits(args[[i]],"mark"))
      {
         newnames=c(names(newlist),names(args)[i])
         newlist=c(newlist,args[i])
@@ -49,7 +49,7 @@ merge.mark=function(...,table=TRUE)
 #    If it is a marklist, add each of the models in the list
 #
      else
-        if(class(args[[i]])[1]=="marklist")
+        if(inherits(args[[i]],"marklist"))
         {
            if(!is.null(args[[i]]$model.table))
               args[[i]]$model.table=NULL

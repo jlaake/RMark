@@ -51,7 +51,7 @@ function(model,replace=FALSE)
 #
 #
   model=load.model(model)
-  if(class(model)[1]=="marklist")
+  if(inherits(model,"marklist"))
      for(i in 1:(length(model)-1))
         export.model(model[[i]],replace=replace)
   else

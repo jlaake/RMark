@@ -305,7 +305,7 @@ covariate.predictions <- function(model,data=NULL,indices=NULL,drop=TRUE, revise
 #   vcv              - variance-covariance matrix of real estimates
 #
 # ------------------------------------------------------------------------------------------------
-   if(class(model)[1]!="marklist")
+   if(!inherits(model,"marklist"))
    {
      number.of.models=1
      model=load.model(model)

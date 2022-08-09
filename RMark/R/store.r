@@ -17,7 +17,7 @@
 #' @keywords utility
 store=function(x)
 {
-  if(class(x)!="marklist") stop("\nThis function only works on a marklist\n")
+  if(!inherits(x,"marklist")) stop("\nThis function only works on a marklist\n")
   for (i in 1:(length(x)-1))
   {
     model=x[[i]]
@@ -32,7 +32,7 @@ return(x)
 restore=function(x)
 {
   model=NULL
-  if(class(x)!="marklist") stop("\nThis function only works on a marklist\n")
+  if(!inherits(x,"marklist")) stop("\nThis function only works on a marklist\n")
   for (i in 1:(length(x)-1))
   {
     load(file=x[[i]])

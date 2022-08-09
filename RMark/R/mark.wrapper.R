@@ -86,7 +86,7 @@ function(model.list,silent=FALSE,run=TRUE,use.initial=FALSE,initial=NULL,...)
 #
 # -----------------------------------------------------------------------------------------------------------------------
 initiallist=NULL
-if(class(initial)[1]=="marklist")
+if(inherits(initial,"marklist"))
 	if(nrow(initial$model.table)!=nrow(model.list))
 		stop("marklist specified for initial argument does not contain same number of models")
 	else
@@ -138,7 +138,7 @@ for (i in 1:nrow(model.list))
      mymodel=try(make.mark.model(parameters=model.parameters,initial=initial,...),silent=silent)
 	 list.of.models[[i]]<-mymodel
   }
-  if(class(mymodel)[1]!="try-error")
+  if(!inherits(mymodel,"try-error"))
   {
     eval(parse(text=paste(model.name,"=mymodel")))
 	model.names[i]=model.name

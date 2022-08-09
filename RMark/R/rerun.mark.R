@@ -172,7 +172,7 @@ while(i<=retry & !converge)
 # Run model
 #
    runmodel<-try(run.mark.model(model,invisible=invisible,adjust=adjust,filename=filename,prefix=prefix,realvcv=realvcv,threads=threads),silent=silent)
-   if(class(runmodel)[1]=="try-error")
+   if(inherits(runmodel,"try-error"))
      stop("\n\n********Following model failed to run :",model$model.name,"**********\n\n")
    else
    {

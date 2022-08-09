@@ -26,7 +26,7 @@ remove.mark=function(marklist,model.numbers)
 #
 # Check validity of arguments
 #
-  if(class(marklist)[1]!="marklist")
+  if(!inherits(marklist,"marklist"))
      stop(paste("\n",substitute(marklist), "is not a marklist object\n"))
   if(!is.null(marklist$model.table))
      marklist$model.table=NULL

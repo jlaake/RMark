@@ -148,7 +148,7 @@ function(data,begin.time=1,model="CJS",mixtures=1,groups=NULL,allgroups=FALSE,ag
 initial.ages=c(0),age.unit=1,time.intervals=NULL,nocc=NULL,strata.labels=NULL,counts=NULL,reverse=FALSE,areas=NULL,events=NULL)
 {
 # if tbl change to data.frame
-if(class(data)[1]=="tbl_df")data=as.data.frame(data)
+if(inherits(data,"tbl_df"))data=as.data.frame(data)
 robust.occasions<-function(times)
 {
    if(times[1] !=0 | times[length(times)]!=0)

@@ -182,7 +182,7 @@ nat.surv=function(model,df)
 #           Sn  - a vector of estimates for natural survival; one for each entry in df
 #           vcv - a var-cov matrix for the estimates of natural survival
 #
-   if(class(model)[1]!="mark" | !(class(model)[2]=="Burnham" | class(model)[2]=="Barker"))
+   if(!inherits(model,"mark") | !(inherits(model,"Burnham") | inherits(model=="Barker")))
      stop("This function only works with Burnham or Barker model for RMark")
    r.indices=extract.indices(model,"r",df)
    S.indices=extract.indices(model,"S",df)

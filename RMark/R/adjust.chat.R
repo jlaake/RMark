@@ -90,7 +90,7 @@ adjust.value <- function(field="n",value,model.list)
 #
 if(!missing(model.list))
 {
-   if(class(model.list)=="marklist")
+   if(inherits(model.list,"marklist"))
    {
       if(names(model.list)[length(model.list)]=="model.table")
          model.list=model.list[1:(length(model.list)-1)]

@@ -135,7 +135,7 @@ popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=
    compute.popan.derived=function(x,model,revised=TRUE,N=TRUE,NGross=TRUE,drop)
    {
 #     Check to make sure it is of type POPAN
-      if(class(model)[2]!="POPAN") stop("\nNot a POPAN model\n")
+      if(!inherits(model,"POPAN")) stop("\nNot a POPAN model\n")
 #     Set up indices for Phi, pent, N parameters depending on number of groups
       model=load.model(model)
       ng=model$number.of.groups
@@ -210,15 +210,15 @@ popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=
       if(N&!NGross) return(list(N=N.ests,N.vcv=N.list$vcv, Nbyocc=Nbyocc, Nbyocc.vcv=Nbyocc.vcv) )
    }
 #  First check that x is a processed data list of type POPAN
-   if(class(x)!="list" | is.null(x$model)) stop(paste(substitute(x)," is not a processed data frame\n"))
+   if(!inherits(x,"list") | is.null(x$model)) stop(paste(substitute(x)," is not a processed data frame\n"))
    if(x$model!="POPAN") stop(paste(substitute(x)," is not for a POPAN model\n"))
 #  If model is a single mark model then call compute.popan.derived and return results list
-   if(class(model)[1]=="mark")
+   if(inherits(model,"mark"))
       return(compute.popan.derived(x,model,drop=drop))
    else
 #     If model is marklist then call compute.popan.derived for each model and model average the
 #     results and return tbe model averaged results list.
-      if(class(model)[1]=="marklist")
+      if(inherits(model,"marklist"))
       {
          nmodels=nrow(model$model.table)
          model.nums=as.numeric(row.names(model$model.table))

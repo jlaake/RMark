@@ -219,7 +219,7 @@ delete=FALSE,external=FALSE,threads=-1,ignore.stderr=FALSE)
 #
   model$output=basefile
   model$input=NULL
-  if(class(results)=="try-error")
+  if(inherits(results,"try-error"))
   {
 	  if(!ignore.stderr) 
 	  {

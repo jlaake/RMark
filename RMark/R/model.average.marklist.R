@@ -169,7 +169,7 @@ model.average.marklist<- function(x,parameter=NULL,data=NULL,vcv=FALSE,drop=TRUE
 #
 model.list=x
 model=load.model(model.list[[1]])
-if(class(model.list)!="marklist")
+if(!inherits(model.list,"marklist"))
   stop("\nArgument for model.average must be a marklist created by collect.models\n")
 if(is.null(model.list$model.table))
    stop("\nmarklist created by collect.models must contain a model.table to use model.average\n")
@@ -385,7 +385,6 @@ if(!vcv)
 #
 else
 {
-   browser()
    if(is.null(parameter)&!is.null(indices))
       result=cbind(data.frame(par.index=indices,estimate=estimates.average,se=se.average))
    else

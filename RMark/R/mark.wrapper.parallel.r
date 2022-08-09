@@ -156,7 +156,7 @@ mark.wrapper.parallel<-
 		stop("you've tried to use more cores than you have, try to combine threads and cpus to make ", 
 				parallel::detectCores(), " or less as a product\n")
 	initiallist=NULL
-	if(class(initial)[1]=="marklist")
+	if(inherits(initial,"marklist"))
 		if(nrow(initial$model.table)!=nrow(model.list))
 			stop("marklist specified for initial argument does not contain same number of models")
 		else
@@ -248,7 +248,7 @@ make.run.mark.model.apply.int<-function(x) {
 # removed code for !run which doesn't work and not needed.
 #	if(run) {
 	mymodel<-try(do.call(mark, x), silent=silent)
-	if(class(mymodel)[1]=="try-error") mymodel<-"error"
+	if(inherits(mymodel,"try-error")) mymodel<-"error"
 	if (length(mymodel)>1)
 		if(is.null(mymodel$results))
 			mymodel<-"error"

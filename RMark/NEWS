@@ -1,3 +1,14 @@
+RMark 3.0.0 (10 August 2022)
+
+NEW FEATURES
+
+* not exactly a new feature but the default value for mlogit0 argument to mark function is now TRUE and cannot be set to FALSE. This is a departure from previous versions and one of the reasons I incremented the major version number.  This probably should have been set as TRUE all along because it will make the code faster because it pulls the fixed 0 mlogit values out of the mlogit sum.  This change was brought about because of a problem identified by a user in the way MARK was calculating mlogit sums with fixed values (http://www.phidot.org/forum/viewtopic.php?f=21&t=4255). MARK has been corrected but I think it wise to set mlogit0=TRUE anyhow because the execution time can be reduced substantially. Also, if you have many 0 mlogit values it can make large multistrata models use less memory because it reduces the number of real parameters through PIM simplification which is not possible if the mlogit fixed values are maintained in the mlogit sum. 
+
+* likewise, remove.unused=TRUE is no longer allowed and is forced to be FALSE. Also, I'm not allowing deletion of design data which in retrospect was a bad idea. While it can still work for some situations, deleting design data can cause problems with mlogit parameters which are summed over a set. The reason for deleting design data was to quickly set those parameter values to the default fixed values for any deleted design records. This is just as easily handled by using a fix value in the design data. In previous versions, I just warned the user about the problem but I think it best to simply remove this option. This is a departure from previous versions and one of the reasons I incremented the major version number.  As a result, the argument reverse for multistrata models is no longer allowed because it required deleting design data.
+
+BUG FIXES
+* importing the binary file (markxxx.vcv) from MARK began to fail under R version 4 and above due to changes in R. Jim Hines very kindly provided the code in function readMarkVcv as a replacement for read.mark.binary. I modified slightly to include labels on derived parameters.
+
 RMark 2.2.9 (13 Sept 2021)
 
 NEW FEATURES
@@ -170,16 +181,13 @@ CHANGES
 
 * MARK 8.1 no longer accepts variable names greater than 10 characters in the design matrix.  Thus RMark will fail if you use a model with an individual covariate name with more than 10 characters.
 
-* If the design matrix is diagonal, then RMark will use MARK's shorthand notation for the DM.  This was necessary to achieve good starting values from the 
-LogitNormalMR with the sin link.  See ?LogitNormalMR.
+* If the design matrix is diagonal, then RMark will use MARK's shorthand notation for the DM.  This was necessary to achieve good starting values from the LogitNormalMR with the sin link. See help("LogitNormalMR").
 
 RMark 2.2.0 (23 June 2016)
 
 NEW FEATURES
 
-* I added the long requested feature that enables modification of design data as well as individual
-covariate values for real parameter estimates.  See ?predict_real.  Any help testing this function would
-be much appreciated.  
+* I added the long requested feature that enables modification of design data as well as individual covariate values for real parameter estimates. See help("predict_real"). Any help testing this function would be much appreciated.
 
 CHANGES 
 * Modified mark.wrapper.parallel to use parallel instead of snow/snowfall to avoid dependency
@@ -196,9 +204,9 @@ RMark 2.1.14 (14 Dec 2015)
 
 NEW FEATURES
 
-* Added Burnham live-dead model example provided by Luke Eberhart-Phillips (?Burnham)
+* Added Burnham live-dead model example provided by Luke Eberhart-Phillips (help("Burnham")")
 
-* Added example of MS fish route data and code provided by Megan Moore (?skagit).
+* Added example of MS fish route data and code provided by Megan Moore (help("skagit")").
 
 * Added Huggins model with random effects (#145), RD version (#146), RD2SpGEConOcc (#141) and relaxed Occupancy model (#144)
 
@@ -441,7 +449,7 @@ NEW FEATURES
 
 * In make.design.data, par.index and model.index are now added to the design data. par.index is a numeric row number within the parameter and model.index is the unique index across all parameters. par.index can be used in place of as.numeric(row.names(ddl[[parameter]]) in the various examples.
 
-* In concert with above change two new arguments parm.specific and input.links were added to make.mark.model and mark.  These are useful for user specified link functions vary within a parameter. See end of help for ?dipper for an example.
+* In concert with above change two new arguments parm.specific and input.links were added to make.mark.model and mark.  These are useful for user specified link functions vary within a parameter. See end of help for help("dipper")" for an example.
 
 * Added code to make.mark.model that sets link to Logit for Mlogit parameters that are fixed to 0. This should make these types of models run far more quickly because the number of real parameters will be reduced. This code will only run if the argument mlogit0 is set to TRUE.  Some beta values of the mlogit parameters may change but the real estimates should remain the same. Thanks to Gary White, Glenn Stauffer and Bret Collier with their help. 
  

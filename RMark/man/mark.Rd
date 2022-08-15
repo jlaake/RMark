@@ -42,7 +42,7 @@ mark(
   run = TRUE,
   input.links = NULL,
   parm.specific = FALSE,
-  mlogit0 = FALSE,
+  mlogit0 = TRUE,
   threads = -1,
   hessian = FALSE,
   accumulate = TRUE,
@@ -145,7 +145,7 @@ parameter; or you can specify a vector of real parameter indices}
 \item{chat}{value of chat used for profile intervals}
 
 \item{reverse}{if set to TRUE, will reverse timing of transition (Psi) and
-survival (S) in Multistratum models}
+survival (S) in Multistratum models(starting with version 3.0.0 setting reverse=TRUE is not allowed)}
 
 \item{run}{if FALSE does not run model after creation}
 
@@ -217,8 +217,7 @@ links} \item{simplify}{list containing \code{pim.translation} which
 translate between all different and simplified pims, \code{real.labels}
 which are labels for real parameters for full (non-simplified) pim structure
 and \code{links} the link function names for the full parameter structure}
-\item{output}{base portion of filenames for input,output, vc and residual
-files output from MARK.EXE} \item{results}{List of values extracted from
+ \item{results}{List of values extracted from
 MARK ouput} \tabular{lll}{ \tab \code{lnl} \tab -2xLog Likelihood value \cr
 \tab \code{npar} \tab Number of parameters (always the number of columns in
 design matrix) \cr \tab \code{npar.unadjusted} \tab number of estimated
@@ -238,6 +237,8 @@ real parameter \cr \tab \tab estimates in the MARK output\cr \tab
 a boundary \cr \tab \code{real.vcv} \tab variance-covariance matrix for real
 parameters (simplified) if realvcv=TRUE \cr } \item{chat}{over-dispersion
 constant; if not present assumed to be 1}
+\item{output}{base portion of filenames for input,output, vc and residual
+files output from MARK.EXE}
 }
 \description{
 Fits user specified models to various types of capture-recapture data by
@@ -300,9 +301,11 @@ parameters that are "singular" are stored in \code{results$singular}.
 }
 \note{
 It is assumed that MARK.EXE is located in directory "C:/Program
-Files/Mark".  If it is in a different location set the variable MarkPath to
+Files/Mark".  There are now mark32.exe and mark64.exe files and the 32 or 64 bit versions
+of R determine which is used.  You can force one or the other by naming the file mark.exe
+but probably no reason to do so. If it is in a different location set the variable MarkPath to
 the directory location. For example, seting MarkPath="C:/Mark/" at the R
-prompt will assign run "c:/mark/mark.exe" to do the analysis.  If you have
+prompt will assign run "c:/mark/markxx.exe" where xx is 32 or 64 to do the analysis.  If you have
 chosen a non-default path for Mark.exe, MarkPath needs to be defined for
 each R session.  It is easiest to do this assignment automatically by
 putting the MarkPath assignment into your .First function which is run each

@@ -5,10 +5,14 @@
 \title{A beginners introduction and guide to RMark}
 \description{
 The RMark package is a collection of R functions that can be used as an
-interface to MARK for analysis of capture-recapture data.
+interface to MARK for analysis of capture-recapture data. Some initial ideas
+are described here but you are strongly encouraged to read use the help files with
+this package and to read the documentation at
+http://www.phidot.org/software/mark/rmark/RMarkDocumentation.zip 
+The above link appears the first time you enter library(RMark) in an R session.
 }
 \details{
-The library contains various functions that import/export capture data,
+The RMark package contains various functions that import/export capture data,
 build capture-recapture models, run the FORTRAN program MARK.EXE, and
 extract and display output.  Program MARK has its own user interface;
 however, model development can be rather tedious and error-prone because the
@@ -56,7 +60,7 @@ the \code{RMark} library into the R library directory.  Once done with those
 tasks, run R and enter library(RMark) (or put it in your .First function) to
 attach the library of functions.
 
-The following is a categorical listing of the functions in the library with
+The following is a categorical listing of the functions in the package with
 a link to the help for each function. To start, read the help for functions
 \code{\link{import.chdata}} and \code{\link{mark}} to learn how to import
 your data and fit a simple model.  The text files for the examples shown in
@@ -77,7 +81,7 @@ Input/Output data & results
 
 Exporting Models to MARK interface
 
-\code{\link{export.chdata}}, \code{\link{export.model}}
+\code{\link{export.MARK}}
 
 Model Fitting
 
@@ -110,11 +114,11 @@ Real Parameter computation
 
 Utility and internal functions
 
-\code{\link{collect.model.names}}, \code{\link{compute.design.data}},
+\code{\link{mark.wrapper}},\code{\link{collect.model.names}}, \code{\link{compute.design.data}},
 \code{\link{extract.mark.output}}, \code{\link{inverse.link}},
 \code{\link{deriv.inverse.link}}, \code{\link{setup.model}},
 \code{\link{setup.parameters}}, \code{\link{valid.parameters}},
-\code{\link{cleanup}}
+\code{\link{cleanup}},\code{\link{TransitionMatrix}},
 
 For examples, see \code{\link{dipper}} for CJS and POPAN, see
 \code{\link{example.data}} for CJS with multiple grouping variables, see

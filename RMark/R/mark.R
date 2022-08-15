@@ -111,7 +111,7 @@
 #' parameter; or you can specify a vector of real parameter indices
 #' @param chat value of chat used for profile intervals
 #' @param reverse if set to TRUE, will reverse timing of transition (Psi) and
-#' survival (S) in Multistratum models
+#' survival (S) in Multistratum models(starting with version 3.0.0 setting reverse=TRUE is not allowed)
 #' @param run if FALSE does not run model after creation 
 #' @param input.links specifies set of link functions for parameters with non-simplified structure
 #' @param parm.specific if TRUE, forces a link to be specified for each parameter
@@ -165,8 +165,7 @@
 #' translate between all different and simplified pims, \code{real.labels}
 #' which are labels for real parameters for full (non-simplified) pim structure
 #' and \code{links} the link function names for the full parameter structure}
-#' \item{output}{base portion of filenames for input,output, vc and residual
-#' files output from MARK.EXE} \item{results}{List of values extracted from
+#'  \item{results}{List of values extracted from
 #' MARK ouput} \tabular{lll}{ \tab \code{lnl} \tab -2xLog Likelihood value \cr
 #' \tab \code{npar} \tab Number of parameters (always the number of columns in
 #' design matrix) \cr \tab \code{npar.unadjusted} \tab number of estimated
@@ -186,10 +185,14 @@
 #' a boundary \cr \tab \code{real.vcv} \tab variance-covariance matrix for real
 #' parameters (simplified) if realvcv=TRUE \cr } \item{chat}{over-dispersion
 #' constant; if not present assumed to be 1}
+#' \item{output}{base portion of filenames for input,output, vc and residual
+#' files output from MARK.EXE}
 #' @note It is assumed that MARK.EXE is located in directory "C:/Program
-#' Files/Mark".  If it is in a different location set the variable MarkPath to
+#' Files/Mark".  There are now mark32.exe and mark64.exe files and the 32 or 64 bit versions
+#' of R determine which is used.  You can force one or the other by naming the file mark.exe
+#' but probably no reason to do so. If it is in a different location set the variable MarkPath to
 #' the directory location. For example, seting MarkPath="C:/Mark/" at the R
-#' prompt will assign run "c:/mark/mark.exe" to do the analysis.  If you have
+#' prompt will assign run "c:/mark/markxx.exe" where xx is 32 or 64 to do the analysis.  If you have
 #' chosen a non-default path for Mark.exe, MarkPath needs to be defined for
 #' each R session.  It is easiest to do this assignment automatically by
 #' putting the MarkPath assignment into your .First function which is run each
@@ -215,9 +218,11 @@ mark <-
 function(data,ddl=NULL,begin.time=1,model.name=NULL,model="CJS",title="",model.parameters=list(),initial=NULL,
 design.parameters=list(), right=TRUE, groups = NULL, age.var = NULL, initial.ages = 0, age.unit = 1, time.intervals = NULL,nocc=NULL,output=TRUE,
 invisible=TRUE,adjust=TRUE,mixtures=1,se=FALSE,filename=NULL,prefix="mark",default.fixed=TRUE,silent=FALSE,retry=0,options=NULL,brief=FALSE,
-realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=FALSE,threads=-1,hessian=FALSE,accumulate=TRUE,
+realvcv=FALSE,delete=FALSE,external=FALSE,profile.int=FALSE,chat=NULL,reverse=FALSE,run=TRUE,input.links=NULL,parm.specific=FALSE,mlogit0=TRUE,threads=-1,hessian=FALSE,accumulate=TRUE,
 allgroups=FALSE,strata.labels=NULL,counts=NULL,icvalues=NULL,wrap=TRUE,events=NULL,nodes=101,useddl=FALSE,check.model=FALSE)
 {
+# in 3.0.0 8/2022 - reverse no longer allowed because it requires deleting design data
+  if(reverse) stop("reverse can no longer be set to TRUE. It required deleting design data which is no longer allowed.")
 #
 #  If the data haven't been processed (data$data is NULL) do it now with specified or default arguments
 # 
@@ -269,13 +274,13 @@ while(i<=retry & !converge)
              model.name=model.name,options=options,profile.int=profile.int,chat=chat,
 			 input.links=input.links,parm.specific=parm.specific,mlogit0=mlogit0,hessian=hessian,
 			 accumulate=accumulate,icvalues=icvalues,wrap=wrap,nodes=nodes,useddl=useddl,check.model=check.model))
-      if(class(model)[1]=="try-error")
-	  {
-		  stop("Misspecification of model or internal error in code")
-	  }
-	  else
+      if(inherits(model,"try-error"))
+	    {
+		    stop("Misspecification of model or internal error in code")
+	    }
+	    else
          model$model.parameters=model.parameters
-	  if(!run)return(model)
+	    if(!run)return(model)
    }
    else
       stop("Model parameters must be specified as a list")

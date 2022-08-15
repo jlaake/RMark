@@ -49,11 +49,11 @@ mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age:time,link="sin")
                                f=list(formula=~-1+age:time,link="sin")),delete=TRUE)
 mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age,link="sin"),
                                f=list(formula=~-1+age,link="sin")),delete=TRUE)
-#Random effects Seber recovery
-br=process.data(brownie,model="REDead",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
-br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
-                                       r=list(age.bins=c(0,1,10))),right=FALSE)
-mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~age),r=list(formula=~age)),delete=TRUE)
+#Random effects Seber recovery (not run to save computation time)
+#br=process.data(brownie,model="REDead",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
+#br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
+#                                       r=list(age.bins=c(0,1,10))),right=FALSE)
+#mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~age),r=list(formula=~age)),delete=TRUE)
 #Pledger Mixture Seber recovery
 br=process.data(brownie,model="PMDead",groups="ReleaseAge",
                            mixtures=3,age.var=1,initial.ages=c(1,0))

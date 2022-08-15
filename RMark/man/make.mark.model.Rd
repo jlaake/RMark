@@ -19,7 +19,7 @@ make.mark.model(
   simplify = TRUE,
   input.links = NULL,
   parm.specific = FALSE,
-  mlogit0 = FALSE,
+  mlogit0 = TRUE,
   hessian = FALSE,
   accumulate = TRUE,
   icvalues = NULL,
@@ -229,7 +229,11 @@ design matrix.  The typical default values are assigned to each parameter
 so in most cases it will not be necessary to specify a link function.
 
 The second is \code{fixed} which allows real parameters to be set at fixed
-values.  The values for \code{fixed} can be either a single value or a list
+values.  While this is still allowed, if parameters are to be fixed for all models,
+it is best to assign the field fix in the design dataframe and use NA for the values
+to be estimated and the real fixed value for those values to be fixed. But if the 
+values are only to be fixed for a few models then you can still use the fixed approach 
+described here. The values for \code{fixed} can be either a single value or a list
 with 5 alternate forms for ease in specifying the fixed parameters.
 Specifying \code{fixed=value} will set all parameters of that type to the
 specified value.  For example, \code{Phi=list(fixed=1)} will set all Phi to
@@ -283,6 +287,11 @@ argument in \code{\link{process.data}}.  The index-format will be dependent
 on the group structure because the indexing of the PIMS will most likely
 change with changes in the group structure.
 
+Starting with version 3.0.0 deleting design data as deacribed in this 
+paragraph is no longer allowed. Instead, add a fix field to the design data
+and set the fixed values as described above. 
+
+#### No longer supported###
 Parameters can also be fixed at default values by deleting the specific rows
 of the design data. See \code{\link{make.design.data}} and material below.
 The default value for fixing parameters for deleted design data can be
@@ -290,11 +299,11 @@ changed with the \code{default=value} in the parameter list.
 
 Another useful element of the parameter list is the
 \code{remove.intercept} argument.  It is set to TRUE to forcefully remove
-the intercept.  In R notation this can be done by specifiying the formula
+the intercept.  In R notation this can be done by specifying the formula
 notation ~-1+... but in formula with nested interactions of factor variables
 and additive factor variables the -1 notation will not remove the intercept.
 It will simply adjust the column definitions but will keep the same number
-of columns and the model will be overparameterized.  The problem occurs with
+of columns and the model will be over-parameterized.  The problem occurs with
 nested factor variables like tostratum within stratum for multistrata
 designs (see \code{\link{mstrata}}).  As shown in that example, you can
 build a formula -1+stratum:tostratum to have transitions that are
@@ -329,7 +338,7 @@ that the simplification was working and produced the same likelihood and
 real parameter estimates with and without simplification. It only adjust the
 rows of the design matrix and not the columns.  There are some restrictions
 for simplification.  Real parameters that are given a fixed value are
-maintained in the design matrix although it does simplify amongst the fixed
+maintained in the design matrix although it does simplify among the fixed
 parameters.  For example, if there are 50 real parameters all fixed to a
 value of 1 and 30 all fixed to a value of 0, they are reduced to 2 real
 parameters fixed to 1 and 0. Also, real parameters such as Psi in
@@ -343,48 +352,11 @@ the all-different PIM structure.  This is not a problem with the labels in R
 because the real parameter estimates are translated back to the
 all-different PIM structure with the proper labels.
 
-The argument \code{default.fixed} is related to deletion of design data (see
-\code{\link{make.design.data}}).  If design data are deleted and
-\code{default.fixed=T} the missing real parameters are fixed at a reasonable
-default to represent structural "zeros".  For example, p is set to 0, Phi is
-set to 1, pent is set to 0, etc.  For some parameters there are no
-reasonable values (e.g., N in POPAN), so not all parameters will have
-defaults.  If a parameter does not have a default or if
-\code{default.fixed=F} then the row in the design matrix for that parameter
-is all zeroes and its real value will depend on the link function.  For
-example, with "logit" link the real parameter value will be 0.5 and for the
-log link it will be 1.  As long as the inverse link is defined for 0 it will
-not matter in those cases in which the real parameter is not used because it
-represents data that do not exist.  For example, in a "CJS" model if initial
-captures (releases) only occur every other occasion, but recaptures
-(resightings) occurred every occasion, then every other cohort (row) in the
-PIM would have no data.  Those rows (cohorts) could be deleted from the
-design data and it would not matter if the real parameter was fixed.
-However, for the case of a Jolly-Seber type model (eg POPAN or Pradel
-models) in which the likelihood includes a probability for the leading
-zeroes and first 1 in a capture history (a likelihood component for the
-first capture of unmaked animals), and groups represent cohorts that enter
-through time, you must fix the real parameters for the unused portion of the
-PIM (ie for occasions prior to time of birth for the cohort) such that the
-estimated probability of observing the structural 0 is 1.  This is easily
-done by setting the pent (probability of entry) to 0 or by setting the
-probability of capture to 0 or both.  In that case if
-\code{default.fixed=F}, the probabilities for all those parameters would be
-incorrectly set to 0.5 for p and something non-zero but not predetermined
-for pent because of the multinomial logit.  Now it may be possible that the
-model would correctly estimate these as 0 if the real parameters were kept
-in the design, but we know what those values are in that case and they need
-not be estimated. If it is acceptable to set \code{default.fixed=F}, the
-functions such as \code{\link{summary.mark}} recognize the non-estimated
-real parameters and they are not shown in the summaries because in essence
-they do not exist.  If \code{default.fixed=T} the parameters are displayed
-with their fixed value and for \code{summary.mark(mymodel,se=TRUE)}, they
-are listed as "Fixed".
 
-Missing design data does have implications for specifying formula but only
-when interactions are specified.  With missing design data various factors
-may not be fully crossed.  For example, with 2 factors A and B, each with 2
-levels, the data are fully crossed if there are data with values A1&B1,
+Be careful specifying interactions and make sure that all combinations are
+present when interacting 2 or more factor variables. For example, with 2 
+factors A and B, each with 2 levels, the data are fully crossed 
+if there are data with values A1&B1,
 A1&B2, A2&B1 and A2&B2.  If data exist for each of the 4 combinations then
 you can described the interaction model as ~A*B and it will estimate 4
 values.  However, if data are missing for one of more of the 4 cells then
@@ -392,8 +364,11 @@ the "interaction" formula should be specified as ~-1+A:B or ~-1+B:A or
 ~-1+A%in%B or ~-1+B%in%A to estimate all of the parameters represented by
 the combinations with data.  An example of this could be a marking program
 with multiple sites which resighted at all occasions but which only marked
-at sites on alternating occasions.  In that case time is nested within site
-and time-site interaction models would be specified as ~-1+time:site.
+at sites on alternating occasions. In that case time is nested within site
+and time-site interaction models would be specified as ~-1+time:site. Another 
+example is age*time when you only mark young of the year. In that case, the first
+occasion only contains young, the second occasion newly marked young and age 1 if occasions
+are a year apart. In that case, using something like above ~-1+time:age is useful.
 
 The argument \code{title} supplies a character string that is used to label
 the output. The argument \code{model.name} is a descriptor for the model

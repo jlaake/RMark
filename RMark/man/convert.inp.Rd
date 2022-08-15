@@ -87,7 +87,7 @@ line /* */.  In the latter case, the /* must begin the line and the */ must
 end the line with no extra characters (blanks included) in before or after.
 }
 \examples{
-\dontrun{
+\donttest{
 # This example is excluded from testing to reduce package check time
 # MARK example input file
 pathtodata=paste(path.package("RMark"),"extdata",sep="/")

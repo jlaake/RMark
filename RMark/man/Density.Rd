@@ -6,28 +6,28 @@
 \title{Density Estimation with Telemetry}
 \format{
 A data frame with 32 observations of 5 variables
- \describe{ 
+ \describe{
  \item{ch}{a character vector containing the capture history for 5 occasions}
- \item{TotalLocations}{The total number of telemetry locations if telemetered; otherwise a .} 
+ \item{TotalLocations}{The total number of telemetry locations if telemetered; otherwise a .}
  \item{TotalIn}{total number of locations in the original site if telemetered; otherwise a .}
  \item{Site}{the original site A or B}
- \item{DTE}{distance to the edge of the site when originally caught} 
+ \item{DTE}{distance to the edge of the site when originally caught}
  }
 }
 \description{
-The annotated code below is a companion to A Gentle Introduction to Program MARK, Chapter 20:     
- Density Estimation (\url{http://www.phidot.org/software/mark/docs/book/pdf/chap20.pdf}).  It requires   
- the file "Density.txt", which is the RMark analog to the  
- example Density Estimation input file distributed with MARK.  These are simulated data intended   
- to mimic a study of small mammals, such as deer mice, sampled at 2 sites (habitat types), A and   
- B. Each habitat type was sampled with a (10 x 10) live-trapping grid (10m trap spacing). There    
- are 5 occasions. In addition to marking each mouse with an individually identifiable ear tag,     
- 50 percent of the individuals captured were fitted with a small VHF transmitter. These radio-tagged      
- individuals were located once during the day and once at night for 5 days immediately after       
- mark-recapture sampling (n = 10 locations total per animal) and each location was recorded as     
- in or out of the study site.  The single covariate we recorded is the distance to the             
- edge (DTE) of the of the site from the mean trap location of each individual (i.e., compute the   
- mean trap location for each individual captured >1 time, then compute the minimum distance from   
+The annotated code below is a companion to A Gentle Introduction to Program MARK, Chapter 20:
+ Density Estimation (\url{http://www.phidot.org/software/mark/docs/book/pdf/chap20.pdf}).  It requires
+ the file "Density.txt", which is the RMark analog to the
+ example Density Estimation input file distributed with MARK.  These are simulated data intended
+ to mimic a study of small mammals, such as deer mice, sampled at 2 sites (habitat types), A and
+ B. Each habitat type was sampled with a (10 x 10) live-trapping grid (10m trap spacing). There
+ are 5 occasions. In addition to marking each mouse with an individually identifiable ear tag,
+ 50 percent of the individuals captured were fitted with a small VHF transmitter. These radio-tagged
+ individuals were located once during the day and once at night for 5 days immediately after
+ mark-recapture sampling (n = 10 locations total per animal) and each location was recorded as
+ in or out of the study site.  The single covariate we recorded is the distance to the
+ edge (DTE) of the of the site from the mean trap location of each individual (i.e., compute the
+ mean trap location for each individual captured >1 time, then compute the minimum distance from
  this mean location to the edge of the site).
 }
 \examples{
@@ -35,18 +35,18 @@ The annotated code below is a companion to A Gentle Introduction to Program MARK
 #Read in Density Estimation input file specific to RMark
 
 #Add 2 covariates that will be used for threshhold models - see below & p. 20-14, 20-15
-#Specify data type - use "Densitypc" for this example, which is "Density Estimation with 
-# Huggins p and c". Could also use "DensityRanpc" (Huggins p and c with random effects), 
+#Specify data type - use "Densitypc" for this example, which is "Density Estimation with
+# Huggins p and c". Could also use "DensityRanpc" (Huggins p and c with random effects),
 #"DensityHet" (Huggins heterogeniety with pi and p), "DensityFHet" (Huggins full
 #heterogeneity with pi and p) and DensityFHet (Huggins Full heterogeniety with pi, p, and c).
-#Be sure to specify areas argument in process.data for this model. It will not run if you don't 
+#Be sure to specify areas argument in process.data for this model. It will not run if you don't
 # give it the area of each study site
 
 data(Density)
 #Create variables for threshhold model - see below & p. 20-14, 20-15
-Density$Thresh15 <- ifelse(Density$DTE<15, Density$DTE, 15)  
+Density$Thresh15 <- ifelse(Density$DTE<15, Density$DTE, 15)
 #Create variables for threshhold model - see below & p. 20-14, 20-15
-Density$Thresh25 <- ifelse(Density$DTE<25, Density$DTE, 25)  
+Density$Thresh25 <- ifelse(Density$DTE<25, Density$DTE, 25)
 data_proc <- process.data(Density, model="Densitypc", groups = c("Site"), areas=rep(0.81,2))
 data_ddl <- make.design.data(data_proc)
 
@@ -84,7 +84,7 @@ model6 <- mark(data_proc, data_ddl, model.parameters = list(p=p_DTE_Thresh25, pt
                ,delete=TRUE)
 
 
-#Re-compute Model Selection Table that appears on p. 20-16    
+#Re-compute Model Selection Table that appears on p. 20-16
 ModSelTable <- collect.models(type="Densitypc")
 ModSelTable
 }

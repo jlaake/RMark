@@ -237,13 +237,9 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
      row.names(real) = row.names(design.matrix)
   else
      row.names(real)=row.names(model$simplify$design.matrix)
-#  if(!is.factor(real$fixed))real$fixed=""
   if(!is.factor(real$note))real$note=""
   if(file.exists(vcvfile))
-     if(os=="mingw32")
-        suppressWarnings(param<-read.mark.binary(vcvfile,derived_labels))
-     else
-       suppressWarnings(param<-read.mark.binary.linux(vcvfile,derived_labels))
+     suppressWarnings(param<-readMarkVcv(vcvfile,derived_labels))
   else
   {
      param=NULL

@@ -119,7 +119,7 @@ pent.ageclass.plus.EN=list(formula=~ageclass+EN)
 pent.ageclass.plus.diffEN=list(formula=~ageclass+EN92+EN97+EN02)
 cml=create.model.list("POPAN")
 nat=mark.wrapper(cml,data=zc.proc,ddl=zc.ddl,
-  invisible=FALSE,initial=1,retry=2)
+  invisible=FALSE,initial=1,retry=2,delete=TRUE)
 return(nat)
 }
 nat=do.nat()
@@ -145,17 +145,17 @@ nat=do.nat()
 #18      Phi.dot    p.timebin.x.area     pent.ageclass.plus.EN
 #
 # use model 9 as starting values for model 7
-nat[[7]]= rerun.mark(nat[[7]],data=zc.proc,ddl=zc.ddl,initial=nat[[9]])
+nat[[7]]= rerun.mark(nat[[7]],data=zc.proc,ddl=zc.ddl,initial=nat[[9]],delete=TRUE)
 # use model 3 as starting values for model 1
-nat[[1]]= rerun.mark(nat[[1]],data=zc.proc,ddl=zc.ddl,initial=nat[[3]])
+nat[[1]]= rerun.mark(nat[[1]],data=zc.proc,ddl=zc.ddl,initial=nat[[3]],delete=TRUE)
 # use model 14 as starting values for model 15
-nat[[15]]= rerun.mark(nat[[15]],data=zc.proc,ddl=zc.ddl,initial=nat[[14]])
+nat[[15]]= rerun.mark(nat[[15]],data=zc.proc,ddl=zc.ddl,initial=nat[[14]],delete=TRUE)
 # use model 5 as starting values for model 6
-nat[[6]]= rerun.mark(nat[[6]],data=zc.proc,ddl=zc.ddl,initial=nat[[5]])
+nat[[6]]= rerun.mark(nat[[6]],data=zc.proc,ddl=zc.ddl,initial=nat[[5]],delete=TRUE)
 # use model 10 as starting values for model 11
-nat[[11]]= rerun.mark(nat[[11]],data=zc.proc,ddl=zc.ddl,initial=nat[[10]])
+nat[[11]]= rerun.mark(nat[[11]],data=zc.proc,ddl=zc.ddl,initial=nat[[10]],delete=TRUE)
 # use model 10 as starting values for model 12
-nat[[12]]= rerun.mark(nat[[12]],data=zc.proc,ddl=zc.ddl,initial=nat[[10]])
+nat[[12]]= rerun.mark(nat[[12]],data=zc.proc,ddl=zc.ddl,initial=nat[[10]],delete=TRUE)
 # reconstruct model table with new results
 nat$model.table=model.table(nat[1:18])
 # show new model table

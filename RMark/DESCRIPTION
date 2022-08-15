@@ -1,9 +1,9 @@
 Package: RMark
-Version: 2.2.9
-Date: 2021-09-13
+Version: 3.0.0
+Date: 2022-08-12
 Title: R Code for Mark Analysis
 Author: Jeff Laake <jefflaake@gmail.com> with code contributions from Eldar
-    Rakhimberdiev, Ben Augustine, Daniel Turek and Brett McClintock and example data and analysis
+    Rakhimberdiev, Ben Augustine, Daniel Turek, Brett McClintock, and Jim Hines and example data and analysis
     from Bret Collier, Jay Rotella, David Pavlacky, Andrew Paul, Luke Eberhart-
     Phillips, Jake Ivan, and Connor Wood.
 Description: An interface to the software package MARK that constructs input
@@ -28,4 +28,4 @@ LazyLoad: yes
 License: GPL (>=2)
 Maintainer: Jeff Laake <jefflaake@gmail.com>
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1

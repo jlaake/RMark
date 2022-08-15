@@ -27,7 +27,7 @@ binning times\cr \code{cohort.bins} \tab bins for binning cohorts\cr
 structure, or \cr \tab "constant" for all values the same within the PIM\cr}}
 
 \item{remove.unused}{If TRUE, unused design data are deleted; see details
-below}
+below (as of v3.0.0 this argument is no longer used)}
 
 \item{right}{If TRUE, bin intervals are closed on the right}
 
@@ -110,13 +110,20 @@ there are 16 groups and each group has 21 Phi parameters and 21 p
 parameters. Thus, there are 336 rows (parameters) in the design data frame
 for both Phi and p and thus a total of 772 parameters.
 
-The default fields in each dataframe are \code{group}, \code{cohort},
+The default fields in each dataframe are typically \code{group}, \code{cohort},
 \code{age}, \code{time}, \code{Cohort}, \code{Age}, and \code{Time}. The
 first 4 fields are factor variables, whereas \code{Cohort}, \code{Age} and
 \code{Time} are numeric covariate versions of \code{cohort}, \code{age}, and
-\code{time} shifted so the first value is always zero. In addition, for
-closed capture heterogeneity models a factor variable \code{mixture} is
-included. If \code{groups} were created in the call to
+\code{time} shifted so the first value is always zero. However, there are
+additional fields that are added depending on the capture-recapture model and 
+the parameter in the model. For example, in multistrata models the default data 
+include stratum in survival(S) and stratum and tostratum in Psi, the transition 
+probabilities.  Also, for closed capture heterogeneity models a factor variable 
+\code{mixture} is included. It is always best to examine the design data after 
+creating them because those fields are your "data" for building models in 
+addition to individual covariates in the capture history data.
+
+If \code{groups} were created in the call to
 \code{\link{process.data}}, then the factor variables used to create the
 \code{groups} are also included in the design data for each type of
 parameter.  If one of the grouping variables is an age variable it is named
@@ -289,7 +296,7 @@ were no capture history data that started with 0 and had a 1 in the second
 position ("01.....") that would mean that there were no releases on occasion
 2 and row 2 in the PIM would not be needed so it would be removed from the
 design data.  If \code{remove.unused=TRUE} the design data are removed for
-any missig cohorts within each group. For models with "Square" PIMS, cohort
+any missing cohorts within each group. For models with "Square" PIMS, cohort
 structure is defined by a grouping variable.  If there is a field named
 "cohort" within the design data, then unused design data are defined to
 occur when time < cohort.  This is particularly useful for age structured
@@ -342,7 +349,8 @@ variables to create models for "Psi" are given in
 
 ######WARNING######## 
 Deleting design data for mlogit parameters like Psi in the multistate
-model can fail if you do things like delete certain transitions.  It is better
+model can fail if you do things like delete certain transitions.  Deleting
+design data is no longer allowed. It is better
 to add the field fix. It should be assigned the value NA for parameters that
 are estimated and a fixed real value for those that are fixed. Here is an example
 with the mstrata data example:

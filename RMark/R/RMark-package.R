@@ -442,11 +442,11 @@ NULL
 #'                                f=list(formula=~-1+age:time,link="sin")),delete=TRUE)
 #' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~-1+age,link="sin"),
 #'                                f=list(formula=~-1+age,link="sin")),delete=TRUE)
-#' #Random effects Seber recovery
-#' br=process.data(brownie,model="REDead",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
-#' br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
-#'                                        r=list(age.bins=c(0,1,10))),right=FALSE)
-#' mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~age),r=list(formula=~age)),delete=TRUE)
+#' #Random effects Seber recovery (not run to save computation time)
+#' #br=process.data(brownie,model="REDead",groups="ReleaseAge",age.var=1,initial.ages=c(1,0))
+#' #br.ddl=make.design.data(br,parameters=list(S=list(age.bins=c(0,1,10)),
+#' #                                       r=list(age.bins=c(0,1,10))),right=FALSE)
+#' #mod=mark(br,br.ddl,model.parameters=list(S=list(formula=~age),r=list(formula=~age)),delete=TRUE)
 #' #Pledger Mixture Seber recovery
 #' br=process.data(brownie,model="PMDead",groups="ReleaseAge",
 #'                            mixtures=3,age.var=1,initial.ages=c(1,0))
@@ -1091,7 +1091,7 @@ NULL
 #' developed by Donovan and Hines.
 #' 
 #' This is a data set from exercise 7 of Donovan and Hines occupancy web site
-#' (\url{http://www.uvm.edu/rsenr/vtcfwru/spreadsheets/?Page=occupancy/occupancy.htm}).
+#' (\url{https://blog.uvm.edu/tdonovan-vtcfwru/occupancy-estimation-and-modeling-ebook/}).
 #' 
 #' @name Donovan.7
 #' @docType data
@@ -1134,7 +1134,7 @@ NULL
 #' developed by Donovan and Hines.
 #' 
 #' This is a data set from exercise 8 of Donovan and Hines occupancy web site
-#' (\url{http://www.uvm.edu/rsenr/vtcfwru/spreadsheets/?Page=occupancy/occupancy.htm}).
+#' (\url{https://blog.uvm.edu/tdonovan-vtcfwru/occupancy-estimation-and-modeling-ebook/}).
 #' In MARK, it uses 2 digits to allow a count of 0 to 99 at each site, so the
 #' history has 10 digits for 5 visits (occasions).
 #' 
@@ -1818,15 +1818,15 @@ NULL
 #' mstrata.results
 #'
 #' # Example of reverse Multistratum model
-#' data(mstrata)
-#' mod=mark(mstrata,model="Multistrata",delete=TRUE)
-#' mod.rev=mark(mstrata,model="Multistrata",reverse=TRUE,delete=TRUE)
-#' Psilist=get.real(mod,"Psi",vcv=TRUE)
-#' Psilist.rev=get.real(mod.rev,"Psi",vcv=TRUE)
-#' Psivalues=Psilist$estimates
-#' Psivalues.rev=Psilist.rev$estimates
-#' TransitionMatrix(Psivalues[Psivalues$time==1,])
-#' TransitionMatrix(Psivalues.rev[Psivalues.rev$occ==1,])
+#' #data(mstrata)
+#' #mod=mark(mstrata,model="Multistrata",delete=TRUE)
+#' #mod.rev=mark(mstrata,model="Multistrata",reverse=TRUE,delete=TRUE)
+#' #Psilist=get.real(mod,"Psi",vcv=TRUE)
+#' #Psilist.rev=get.real(mod.rev,"Psi",vcv=TRUE)
+#' #Psivalues=Psilist$estimates
+#' #Psivalues.rev=Psilist.rev$estimates
+#' #TransitionMatrix(Psivalues[Psivalues$time==1,])
+#' #TransitionMatrix(Psivalues.rev[Psivalues.rev$occ==1,])
 #' }
 NULL
 
@@ -2693,6 +2693,9 @@ NULL
 #' 
 #' \donttest{
 #' # This example is excluded from testing to reduce package check time
+#' # Starting with R version 4, examples wrapped in donttest are still run. Therefore,
+#' # I have commented out the model runs below because this example takes a lot of computing
+#' # time. If you want to run, you can copy to an editor and remove the # to run this example
 #' data(wwdo.09)
 #' wwdo=wwdo.09
 #' wwdo.popan=function(){
@@ -2750,57 +2753,58 @@ NULL
 #' #Entry Process-always time dependent, otherwise makes no sense in my situation
 #' 	pent.time.fix=list(formula=~time, fixed=list(index=hy.pent.fix, value=c(0,0,0,0,0,0)))
 #' 	
-#' 	Model.1=mark(wwdo.proc, wwdo.ddl, 
-#'    model.parameters=list(Phi=Phi.dot.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-#'    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
-#' 	Model.2=mark(wwdo.proc, wwdo.ddl, 
-#'   model.parameters=list(Phi=Phi.time.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
-#'    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
-#' 	Model.3=mark(wwdo.proc, wwdo.ddl, 
-#'   model.parameters=list(Phi=Phi.age.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-#'     invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
-#' 	Model.4=mark(wwdo.proc, wwdo.ddl, 
-#'   model.parameters=list(Phi=Phi.timeage.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
-#'     invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
-#' 	Model.5=mark(wwdo.proc, wwdo.ddl,  
-#'   model.parameters=list(Phi=Phi.timeage.fix, p=p.time, pent=pent.time.fix, N=list(formula=~group)), 
-#'    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
-#' 	Model.6=mark(wwdo.proc, wwdo.ddl, 
-#'    model.parameters=list(Phi=Phi.timeage.fix,p=p.g.time, pent=pent.time.fix,
-#'               N=list(formula=~group)), 
-#'    invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
-#' 	collect.models()
+#' 	#Model.1=mark(wwdo.proc, wwdo.ddl, 
+#'  #  model.parameters=list(Phi=Phi.dot.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
+#'  #  invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
+#' 	#Model.2=mark(wwdo.proc, wwdo.ddl, 
+#'  # model.parameters=list(Phi=Phi.time.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)),
+#'  #  invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
+#' 	#Model.3=mark(wwdo.proc, wwdo.ddl, 
+#'  # model.parameters=list(Phi=Phi.age.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
+#'  #   invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
+#' 	#Model.4=mark(wwdo.proc, wwdo.ddl, 
+#'  # model.parameters=list(Phi=Phi.timeage.fix, p=p.dot, pent=pent.time.fix, N=list(formula=~group)), 
+#'  #   invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
+#' 	#Model.5=mark(wwdo.proc, wwdo.ddl,  
+#'  # model.parameters=list(Phi=Phi.timeage.fix, p=p.time, pent=pent.time.fix, N=list(formula=~group)), 
+#'  #  invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
+#' 	#Model.6=mark(wwdo.proc, wwdo.ddl, 
+#'  #  model.parameters=list(Phi=Phi.timeage.fix,p=p.g.time, pent=pent.time.fix,
+#'  #             N=list(formula=~group)), 
+#'  #  invisible=FALSE,threads=1,options="SIMANNEAL",delete=TRUE)
+#' 	#collect.models()
 #' }
 #' wwdo.out=wwdo.popan()
 #' wwdo.out
 #' }
 NULL
 
+
 #'  Density Estimation with Telemetry
-#'  
+#'
 #' @name Density
 #' @docType data
-#' @description The annotated code below is a companion to A Gentle Introduction to Program MARK, Chapter 20:     
-#'  Density Estimation (\url{http://www.phidot.org/software/mark/docs/book/pdf/chap20.pdf}).  It requires   
-#'  the file "Density.txt", which is the RMark analog to the  
-#'  example Density Estimation input file distributed with MARK.  These are simulated data intended   
-#'  to mimic a study of small mammals, such as deer mice, sampled at 2 sites (habitat types), A and   
-#'  B. Each habitat type was sampled with a (10 x 10) live-trapping grid (10m trap spacing). There    
-#'  are 5 occasions. In addition to marking each mouse with an individually identifiable ear tag,     
-#'  50 percent of the individuals captured were fitted with a small VHF transmitter. These radio-tagged      
-#'  individuals were located once during the day and once at night for 5 days immediately after       
-#'  mark-recapture sampling (n = 10 locations total per animal) and each location was recorded as     
-#'  in or out of the study site.  The single covariate we recorded is the distance to the             
-#'  edge (DTE) of the of the site from the mean trap location of each individual (i.e., compute the   
-#'  mean trap location for each individual captured >1 time, then compute the minimum distance from   
-#'  this mean location to the edge of the site).     
+#' @description The annotated code below is a companion to A Gentle Introduction to Program MARK, Chapter 20:
+#'  Density Estimation (\url{http://www.phidot.org/software/mark/docs/book/pdf/chap20.pdf}).  It requires
+#'  the file "Density.txt", which is the RMark analog to the
+#'  example Density Estimation input file distributed with MARK.  These are simulated data intended
+#'  to mimic a study of small mammals, such as deer mice, sampled at 2 sites (habitat types), A and
+#'  B. Each habitat type was sampled with a (10 x 10) live-trapping grid (10m trap spacing). There
+#'  are 5 occasions. In addition to marking each mouse with an individually identifiable ear tag,
+#'  50 percent of the individuals captured were fitted with a small VHF transmitter. These radio-tagged
+#'  individuals were located once during the day and once at night for 5 days immediately after
+#'  mark-recapture sampling (n = 10 locations total per animal) and each location was recorded as
+#'  in or out of the study site.  The single covariate we recorded is the distance to the
+#'  edge (DTE) of the of the site from the mean trap location of each individual (i.e., compute the
+#'  mean trap location for each individual captured >1 time, then compute the minimum distance from
+#'  this mean location to the edge of the site).
 #' @format  A data frame with 32 observations of 5 variables
-#'  \describe{ 
+#'  \describe{
 #'  \item{ch}{a character vector containing the capture history for 5 occasions}
-#'  \item{TotalLocations}{The total number of telemetry locations if telemetered; otherwise a .} 
+#'  \item{TotalLocations}{The total number of telemetry locations if telemetered; otherwise a .}
 #'  \item{TotalIn}{total number of locations in the original site if telemetered; otherwise a .}
 #'  \item{Site}{the original site A or B}
-#'  \item{DTE}{distance to the edge of the site when originally caught} 
+#'  \item{DTE}{distance to the edge of the site when originally caught}
 #'  }
 #' @keywords datasets
 #' @author Jake Ivan
@@ -2809,18 +2813,18 @@ NULL
 #'#Read in Density Estimation input file specific to RMark
 #'
 #'#Add 2 covariates that will be used for threshhold models - see below & p. 20-14, 20-15
-#'#Specify data type - use "Densitypc" for this example, which is "Density Estimation with 
-#'# Huggins p and c". Could also use "DensityRanpc" (Huggins p and c with random effects), 
+#'#Specify data type - use "Densitypc" for this example, which is "Density Estimation with
+#'# Huggins p and c". Could also use "DensityRanpc" (Huggins p and c with random effects),
 #'#"DensityHet" (Huggins heterogeniety with pi and p), "DensityFHet" (Huggins full
 #'#heterogeneity with pi and p) and DensityFHet (Huggins Full heterogeniety with pi, p, and c).
-#'#Be sure to specify areas argument in process.data for this model. It will not run if you don't 
+#'#Be sure to specify areas argument in process.data for this model. It will not run if you don't
 #'# give it the area of each study site
 #'
 #' data(Density)
 #' #Create variables for threshhold model - see below & p. 20-14, 20-15
-#' Density$Thresh15 <- ifelse(Density$DTE<15, Density$DTE, 15)  
+#' Density$Thresh15 <- ifelse(Density$DTE<15, Density$DTE, 15)
 #' #Create variables for threshhold model - see below & p. 20-14, 20-15
-#' Density$Thresh25 <- ifelse(Density$DTE<25, Density$DTE, 25)  
+#' Density$Thresh25 <- ifelse(Density$DTE<25, Density$DTE, 25)
 #' data_proc <- process.data(Density, model="Densitypc", groups = c("Site"), areas=rep(0.81,2))
 #' data_ddl <- make.design.data(data_proc)
 #'
@@ -2858,7 +2862,7 @@ NULL
 #'                ,delete=TRUE)
 #'
 #'
-#' #Re-compute Model Selection Table that appears on p. 20-16    
+#' #Re-compute Model Selection Table that appears on p. 20-16
 #' ModSelTable <- collect.models(type="Densitypc")
 #' ModSelTable
 #'}
@@ -4264,9 +4268,13 @@ NULL
 #' A beginners introduction and guide to RMark
 #' 
 #' The RMark package is a collection of R functions that can be used as an
-#' interface to MARK for analysis of capture-recapture data.
+#' interface to MARK for analysis of capture-recapture data. Some initial ideas
+#' are described here but you are strongly encouraged to read use the help files with
+#' this package and to read the documentation at
+#' http://www.phidot.org/software/mark/rmark/RMarkDocumentation.zip 
+#' The above link appears the first time you enter library(RMark) in an R session.
 #' 
-#' The library contains various functions that import/export capture data,
+#' The RMark package contains various functions that import/export capture data,
 #' build capture-recapture models, run the FORTRAN program MARK.EXE, and
 #' extract and display output.  Program MARK has its own user interface;
 #' however, model development can be rather tedious and error-prone because the
@@ -4314,7 +4322,7 @@ NULL
 #' tasks, run R and enter library(RMark) (or put it in your .First function) to
 #' attach the library of functions.
 #' 
-#' The following is a categorical listing of the functions in the library with
+#' The following is a categorical listing of the functions in the package with
 #' a link to the help for each function. To start, read the help for functions
 #' \code{\link{import.chdata}} and \code{\link{mark}} to learn how to import
 #' your data and fit a simple model.  The text files for the examples shown in
@@ -4335,7 +4343,7 @@ NULL
 #' 
 #' Exporting Models to MARK interface
 #' 
-#' \code{\link{export.chdata}}, \code{\link{export.model}}
+#' \code{\link{export.MARK}}
 #' 
 #' Model Fitting
 #' 
@@ -4368,11 +4376,11 @@ NULL
 #' 
 #' Utility and internal functions
 #' 
-#' \code{\link{collect.model.names}}, \code{\link{compute.design.data}},
+#' \code{\link{mark.wrapper}},\code{\link{collect.model.names}}, \code{\link{compute.design.data}},
 #' \code{\link{extract.mark.output}}, \code{\link{inverse.link}},
 #' \code{\link{deriv.inverse.link}}, \code{\link{setup.model}},
 #' \code{\link{setup.parameters}}, \code{\link{valid.parameters}},
-#' \code{\link{cleanup}}
+#' \code{\link{cleanup}},\code{\link{TransitionMatrix}},
 #' 
 #' For examples, see \code{\link{dipper}} for CJS and POPAN, see
 #' \code{\link{example.data}} for CJS with multiple grouping variables, see

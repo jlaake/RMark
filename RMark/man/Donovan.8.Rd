@@ -16,7 +16,7 @@ developed by Donovan and Hines.
 }
 \details{
 This is a data set from exercise 8 of Donovan and Hines occupancy web site
-(\url{http://www.uvm.edu/rsenr/vtcfwru/spreadsheets/?Page=occupancy/occupancy.htm}).
+(\url{https://blog.uvm.edu/tdonovan-vtcfwru/occupancy-estimation-and-modeling-ebook/}).
 In MARK, it uses 2 digits to allow a count of 0 to 99 at each site, so the
 history has 10 digits for 5 visits (occasions).
 }

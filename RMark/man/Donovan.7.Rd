@@ -16,7 +16,7 @@ developed by Donovan and Hines.
 }
 \details{
 This is a data set from exercise 7 of Donovan and Hines occupancy web site
-(\url{http://www.uvm.edu/rsenr/vtcfwru/spreadsheets/?Page=occupancy/occupancy.htm}).
+(\url{https://blog.uvm.edu/tdonovan-vtcfwru/occupancy-estimation-and-modeling-ebook/}).
 }
 \examples{
 

@@ -40,17 +40,20 @@ See \code{\link{make.design.data}} for a description of the list structure.
 \description{
 Creates new design data fields in (\code{ddl}) that bin the fields
 \code{cohort}, \code{age} or \code{time}. Other fields (e.g., effort value
-for time) can be added to \code{ddl} with R commands.
+for time) can be added to \code{ddl} with R commands. Also see 
+\code{\link{merge_design.covariates}} to merge data like environmental variables
+or any other data that is common to all animals or group/time specific values.
 }
 \details{
 Design data can be added to the parameter specific design dataframes with R
-commands.  Often the additional fields will be functions of \code{cohort},
+commands and this function does NOT have to be used to add design data. However,
+often the additional fields will be functions of \code{cohort},
 \code{age} or \code{time}.  \code{add.design.data} provides an easy way to
 add fields that bin (put into intervals) the original values of
 \code{cohort}, \code{age} or \code{time}.  For example, \code{age} may have
 levels from 0 to 10 which means the formula \code{~age} will have 11
 parameters, one for each level of the factor.  It might be more desirable
-and more parimonious to have a simpler 2 age class model of young and
+and more parsimonious to have a simpler 2 age class model of young and
 adults.  This can be done easily by adding a new design data field that bins
 \code{age} into 2 intervals (age 0 and 1+) as in the following example:
 

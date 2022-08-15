@@ -119,15 +119,15 @@ release.gof <-
       x3=grep("TEST 3)",out,ignore.case=TRUE)
       x4=grep("TOTAL",out[(x3+4):length(out)],ignore.case=TRUE)[1]
     }
-    TEST3=data.frame(Chi.square=type.convert(substr(out[x1],28,39))[1],
-                     df=type.convert(substr(out[x1],39,43))[1],
-                     P=type.convert(substr(out[x1],44,54))[1] )
-    TEST2=data.frame(Chi.square=type.convert(substr(out[x2],28,39))[1],
-                     df=type.convert(substr(out[x2],39,43))[1],
-                     P=type.convert(substr(out[x2],44,54))[1] )
-    TEST2Plus3=data.frame(Chi.square=type.convert(substr(out[x3+x4+3],31,41))[1],
-                     df=type.convert(substr(out[x3+x4+3],42,47))[1],
-                     P=type.convert(substr(out[x3+x4+3],48,57))[1] )
+    TEST3=data.frame(Chi.square=type.convert(substr(out[x1],28,39),as.is=TRUE)[1],
+                     df=type.convert(substr(out[x1],39,43),as.is=TRUE)[1],
+                     P=type.convert(substr(out[x1],44,54),as.is=TRUE)[1] )
+    TEST2=data.frame(Chi.square=type.convert(substr(out[x2],28,39),as.is=TRUE)[1],
+                     df=type.convert(substr(out[x2],39,43),as.is=TRUE)[1],
+                     P=type.convert(substr(out[x2],44,54),as.is=TRUE)[1] )
+    TEST2Plus3=data.frame(Chi.square=type.convert(substr(out[x3+x4+3],31,41),as.is=TRUE)[1],
+                     df=type.convert(substr(out[x3+x4+3],42,47),as.is=TRUE)[1],
+                     P=type.convert(substr(out[x3+x4+3],48,57),as.is=TRUE)[1] )
     results=rbind(TEST2,TEST3,TEST2Plus3)
     row.names(results)=c("TEST2","TEST3","Total")
     return(results)

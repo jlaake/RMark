@@ -1,4 +1,4 @@
-RMark 3.0.1 (21 October 2022)
+RMark 3.0.1 (16 December 2023)
 
 BUG FIXES/CHANGES
 * parameters.txt file was changed so that R and Rprime in Barker model can be shared parameters.  Also, length of Fprime in that model was reduced by 1 to have the correct length.  This didn't affect model runs but precluded importing models into MARK interface. 

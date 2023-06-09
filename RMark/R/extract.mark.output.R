@@ -249,6 +249,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
     real.vcv=param$real.vcv
   else
     real.vcv=NULL
+  if(!is.matrix(param$beta.vcv))param$beta.vcv=as.matrix(param$beta.vcv)
   if(is.null(npar.unadjusted))
      return(list(lnl=lnl,deviance=deviance,deviance.df=deviance.df,npar=npar,n=n,AICc=AICc,beta=beta,real=real,beta.vcv=param$beta.vcv,derived=param$derived,derived.vcv=param$derived.vcv,
                  covariate.values=covariate.values,singular=singular,real.vcv=real.vcv))

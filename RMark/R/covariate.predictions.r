@@ -367,7 +367,7 @@ if(drop)
 	 
       model.indices=unique(model$simplify$pim.translation[indices])
       used.beta=which(apply(model$design.matrix[model.indices,,drop=FALSE],2,function(x)!all(x=="0")))
-      if(any(is.nan(model$results$beta.vcv[used.beta,used.beta])) || any(is.infinite(model$results$beta.vcv[used.beta,used.beta])) ||
+      if(any(is.nan(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])) || any(is.infinite(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])) ||
          any(diag(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])<0))
       {
          dropped.models=c(dropped.models,i)
@@ -388,7 +388,7 @@ else
 {
 	model.indices=unique(model$simplify$pim.translation[indices])
 	used.beta=which(apply(model$design.matrix[model.indices,,drop=FALSE],2,function(x)!all(x=="0")))
-	if(any(is.nan(model$results$beta.vcv[used.beta,used.beta])) || any(is.infinite(model$results$beta.vcv[used.beta,used.beta])) ||
+	if(any(is.nan(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])) || any(is.infinite(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])) ||
 	   any(diag(model$results$beta.vcv[used.beta,used.beta,drop=FALSE])<0))
 	  message("\nModel has one or more beta variances that are not positive\n")
 }

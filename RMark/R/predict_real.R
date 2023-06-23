@@ -154,15 +154,15 @@ predict_real <-
 #
 #  create links value
 #
-    if(length(model$links)==1)
+  if(length(model$links)==1)
 		links=model$links
 	else
-        links=model$simplify$links[df$model.index]
+    links=model$simplify$links[df$model.index]
 #
 #   create design matrix with formula and design data
 #
-    design=model.matrix(model$model.parameters[[parameter]]$formula,df)
-	design = design[,paste(parameter,":",colnames(design),sep="")%in%colnames(model$design.matrix)]
+  design=model.matrix(model$model.parameters[[parameter]]$formula,df)
+	design = design[,paste(parameter,":",colnames(design),sep="")%in%colnames(model$design.matrix),drop=FALSE]
 	
 #  Compute real parameters; if neither se or vcv then return vector of real parameters
 #
@@ -248,8 +248,8 @@ predict_real <-
 #    bottom is either 1 for non-mlogits and the sum for mlogits
 #    pbottom is partial with respect to zi
 #
-		if(length(model$links)==1)
-			links=rep(model$links,length(pseudo.real))
+		if(length(links)==1)
+			links=rep(links,length(pseudo.real))
 		mlogits=outer(links,links,function(x,y)as.numeric(x==y))*as.numeric(substr(links,1,6)=="mlogit"|substr(links,1,6)=="MLogit")
 		pbottom=matrix(0,nrow=dim(vcv.pseudo)[1],ncol=dim(vcv.pseudo)[1]) + mlogits
 		bottom=diag(nrow=dim(vcv.pseudo)[1])*(1-as.numeric(substr(links,1,6)=="mlogit"|substr(links,1,6)=="MLogit"))+
@@ -268,7 +268,7 @@ predict_real <-
 	link.se[is.na(link.se)]=0
 	if(length(model$links)==1)
 		links=rep(model$links,length(real))
-	ind=unique(c(grep("mlogit",model$links,ignore.case=TRUE),which(links%in%c("sin","Sin","LogLog","loglog","CLogLog","cloglog"))))
+	ind=unique(c(grep("mlogit",links,ignore.case=TRUE),which(links%in%c("sin","Sin","LogLog","loglog","CLogLog","cloglog"))))
 	linkse=suppressWarnings(sqrt(diag(vcv.real)[ind])/(real[ind]*(1-real[ind])))
 	linkse[is.na(linkse)]=0
 	linkse[is.infinite(linkse)]=0

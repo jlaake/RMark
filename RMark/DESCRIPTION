@@ -1,6 +1,6 @@
 Package: RMark
-Version: 3.0.0
-Date: 2022-08-12
+Version: 3.0.1
+Date: 2023-06-22
 Title: R Code for Mark Analysis
 Author: Jeff Laake <jefflaake@gmail.com> with code contributions from Eldar
     Rakhimberdiev, Ben Augustine, Daniel Turek, Brett McClintock, and Jim Hines and example data and analysis

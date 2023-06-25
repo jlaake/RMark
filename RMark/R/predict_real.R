@@ -73,7 +73,7 @@ predict_real <-
 	model=load.model(model)
 	if(is.null(beta)) 
 	{
-		which.beta=grep(paste(parameter,":",sep=""),rownames(model$results$beta))
+		which.beta=grep(paste("^",parameter,":",sep=""),rownames(model$results$beta))
 #		if(length(which.beta)!=length(model$results$beta$estimate)) stop("beta vector not the correct length")
 		beta=model$results$beta$estimate[which.beta]
 	} else{

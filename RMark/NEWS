@@ -5,7 +5,7 @@ BUG FIXES/CHANGES
 
 * drop=FALSE was added to two places for beta.vcv in model.average.marklist to handle single parameter models. Further changes were needed and thanks to Samuel Vassallo for bringing this to my attention.
 
-* changes were made to predict_real to handle models with more than one link type (e.g. multistrata) and a variety of conditions that were not anticipated.  THanks to Nathan Bendik for bring the problems to my attention.
+* changes were made to predict_real to handle models with more than one link type (e.g. multistrata) and a variety of conditions that were not anticipated.  Thanks to Nathan Bendik for bring the problems to my attention.
 
 
 RMark 3.0.0 (10 August 2022)

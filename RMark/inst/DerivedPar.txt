@@ -303,4 +303,7 @@ MarkNumber	dpar_label
 183	N_TSA(t)
 183	N(s*t)
 183	N(t)
+184	Method 1 Individual Residency Time
+184	Method 1 Attribute Duration Time
+184	Method 2 Attribute Duration Time
 

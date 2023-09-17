@@ -131,7 +131,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   x3=length(out)
   if(length(grep("proc stop",out,ignore.case=TRUE))==0)
      message("\nWarning: output from MARK was not complete\n")
-  x4=grep("Variable   Value",out,ignore.case=FALSE)+1
+  x4=grep("Variable[ ]*Value",out,ignore.case=FALSE)+1
   if(length(x4)==0)x4=x2
 #
 # Extract average covariate values used in real parameter calculation
@@ -140,7 +140,7 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   {
      ff <- tempfile()
      cat(file=ff, out[(x4+1):(x4+length(model$covariates))],sep="\n")
-     covariate.values=read.fwf(file=ff,widths=c(20,15),col.names=c("Variable","Value"))
+     covariate.values=read.fwf(file=ff,widths=c(20,30),col.names=c("Variable","Value"))
   }
   else
      covariate.values=NULL

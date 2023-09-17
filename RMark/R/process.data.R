@@ -273,7 +273,7 @@ robust.occasions<-function(times)
         if(is.null(events))stop("events must be specified for Hidden Markov model")
         exclude=c(exclude,events)
       }
-      if(model%in%c("RDMSOpenMisClass","RDMSMisClass","RDMS2MisClass","RDMSOpenMCSeas"))exclude=c(exclude,"u")
+      if(model%in%c("RDMSOpenMisClass","RDMSMisClass","RDMS2MisClass","RDMSOpenMCSeas","RDMSOpenMCSeas2"))exclude=c(exclude,"u")
       inp.strata.labels=sort(ch.values[!(ch.values %in% exclude)])
       nstrata = length(inp.strata.labels) 
       # If this is a multistrata model do some checks

@@ -1422,11 +1422,11 @@ create.agenest.var=function(data,init.agevar,time.intervals)
 				          multi.session=FALSE
 			         }
                nprimary=1
-               if(data$model=="RDMultScalOcc" & names(parameters)[i]=="p")
-                 nprimary=nocc.secondary[l]/data$mixtures
                for (l in 1:num.sessions)
                {
-                  for(m in 1:nprimary)
+                 if(data$model=="RDMultScalOcc" & names(parameters)[i]=="p")
+                   nprimary=nocc.secondary[l]/data$mixtures
+                 for(m in 1:nprimary)
                   {
                     k=k+1
                     pim[[i]][[k]]=list()

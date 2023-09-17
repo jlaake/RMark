@@ -520,7 +520,7 @@ else
         }
         else
         {
-			     if(data$model%in%c("RDMSOpenMCSeas","RDMSOpenMisClass","RDMSMisClass","HidMarkov") & names(parameters)[i]%in%c("pi","Omega","Delta"))
+			     if(data$model%in%c("RDMSOpenMCSeas","RDMSOpenMCSeas2","RDMSOpenMisClass","RDMSMisClass","HidMarkov") & names(parameters)[i]%in%c("pi","Omega","Delta"))
 			     { 
 			       if(!is.null(parameters[[i]]$subtract.stratum))
 			           subtract.stratum=parameters[[i]]$subtract.stratum
@@ -658,10 +658,17 @@ else
    null.design.data=sapply(full.design.data,is.null)
    parameters=parameters[!null.design.data]
    full.design.data=full.design.data[!null.design.data]
-#  For MultiScaleOcc models add primary field for p parameter
-   if(data$model%in%c("MultScalOcc","RDMultScalOcc"))
+#  For MultiScalOcc and RDMultScalOcc models, add primary field for p parameter
+   if(data$model%in%c("MultScalOcc"))
      full.design.data[["p"]]=cbind(full.design.data[["p"]],primary=rep(rep(1:(nrow(full.design.data[["p"]])/(data$mixtures*data$nocc)),each=data$mixtures),times=data$nocc))
-#  add model indices
+   if(data$model%in%c("RDMultScalOcc"))
+   {
+     primary=NULL
+     for(i in 1:data$nocc)
+       primary=c(primary,rep(1:(data$nocc.secondary[i]/data$mixtures),each=data$mixtures))
+       full.design.data[["p"]]=cbind(full.design.data[["p"]],primary=primary)
+   }
+   #  add model indices
    prev=0
    for(i in 1:length(full.design.data))
    {

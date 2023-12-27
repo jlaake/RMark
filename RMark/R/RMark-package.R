@@ -54,10 +54,9 @@
 #'mod4=mark(dt.pr,dt.ddl,model.parameters=list(p=pSlope),delete=TRUE)
 #'mod5=mark(dt.pr,dt.ddl,model.parameters=list(Psi=Open),delete=TRUE)
 #'mod6=mark(dt.pr,dt.ddl,model.parameters=list(Psi=Slope),delete=TRUE)
-#'mod7=mark(dt.pr,dt.ddl,model.parameters=list(Psi=Time),delete=TRUE)
-#'mod8=mark(dt.pr,dt.ddl,model.parameters=list(Gamma=Open),delete=TRUE)
-#'mod9=mark(dt.pr,dt.ddl,model.parameters=list(Epsilon=Slope),delete=TRUE)
-#'mod10=mark(dt.pr,dt.ddl,model.parameters=list(Theta=list(formula=~time)),delete=TRUE) 
+#'mod7=mark(dt.pr,dt.ddl,model.parameters=list(Gamma=Open),delete=TRUE)
+#'mod8=mark(dt.pr,dt.ddl,model.parameters=list(Epsilon=Slope),delete=TRUE)
+#'mod9=mark(dt.pr,dt.ddl,model.parameters=list(Theta=list(formula=~time)),delete=TRUE) 
 #'
 #'return(collect.models()) # View results sorted by AICc
 #'}

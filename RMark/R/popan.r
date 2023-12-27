@@ -138,6 +138,8 @@ popan.derived=function(x,model,revised=TRUE,normal=TRUE,N=TRUE,NGross=TRUE,drop=
       if(!inherits(model,"POPAN")) stop("\nNot a POPAN model\n")
 #     Set up indices for Phi, pent, N parameters depending on number of groups
       model=load.model(model)
+#     Check to see if there are any loss on captures
+      if(any(model$data$freq<0)) stop("this function does not support data with loss on captures freq=-1. Use model$results$derived")
       ng=model$number.of.groups
       k=model$nocc-1
       index=NULL

@@ -1,8 +1,20 @@
-RMark 3.0.3 (28 August 2023)
+RMark 3.0.5 (15 November 2023)
+
+BUG FIXES/CHANGES
+
+* added check to popan.derived to stop function if there are any losses on capture (freq=-1) because the code does not support it and results will not match that of MARK. Use derived parameter results instead from MARK.
+
+RMark 3.0.4 (3 October 2023)
 
 NEW FEATURES
 
-* added model RDMSOpenMCSeas2 which has same structure as RDMSOpenMCSeas and at the same time corrected parameter from d to Phi and its structure for both models.
+* added model RDMSOpenMCSeas2 which has same structure as RDMSOpenMCSeas and at the same time corrected parameter Phi to have a single PIM value rather than time dependent.
+
+RMark 3.0.3 (28 August 2023)
+
+BUG FIXES/CHANGES
+
+* Modified Psi parameter in parameters.txt file for RDMultScalOcc model so it only produces a PIM with only one value instead of time dependent.
 
 
 RMark 3.0.2 (28 August 2023)

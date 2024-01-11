@@ -733,6 +733,7 @@ else
 for (i in 1:length(parameters)) {
   for (j in 1:length(model$pims[[i]]))
   {
+         if(model$model=="MSJollySeber" &i==5)model$pims[[i]][[j]]$stratum=NULL
          ncol = dim(model$pims[[i]][[j]]$pim)[2]
          string=pim.header(pim[[i]][[j]]$group,param.names[i],parameters[[i]],
                    ncol,model$pims[[i]][[j]]$stratum,model$pims[[i]][[j]]$tostratum,model$strata.labels,

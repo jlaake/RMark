@@ -1,8 +1,12 @@
-RMark 3.0.5 (15 November 2023)
+RMark 3.0.5 (10 January 2024)
 
 BUG FIXES/CHANGES
 
 * added check to popan.derived to stop function if there are any losses on capture (freq=-1) because the code does not support it and results will not match that of MARK. Use derived parameter results instead from MARK.
+
+* added examples for MSJollySeber (?MSJollySeber) and Hidden Markov (?HidMarkov) which were promised in v2.2.9 but for some reason were not included.
+
+* fixed pim header construction for pi in make.mark.model for MSJollySeber model. Was not working in all situations.
 
 RMark 3.0.4 (3 October 2023)
 

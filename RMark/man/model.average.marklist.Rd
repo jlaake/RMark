@@ -29,8 +29,9 @@ of the argument is to trim the list of parameters in computing a vcv matrix
 of the real parameters which can get too big to be computed with the
 available memory}
 
-\item{revised}{if TRUE, uses revised variance formula (eq 6.12 from Burnham
-and Anderson) for model averaged estimates and eq 6.11 when FALSE}
+\item{revised}{if TRUE, uses revised variance formula (eq 4 from Burnham
+and Anderson(2004)) for model averaged estimates and eq 1 from Burnham
+and Anderson(2004) when revised=FALSE. The latter eq is what is used in B&A books.}
 
 \item{mata}{if TRUE, create model averaged tail area confidence intervals as described by Turek and Fletcher}
 
@@ -177,9 +178,9 @@ model.average(dipper.results,vcv=TRUE,indices=c(1,43))
 
 }
 \references{
-Burnham, K. P. and D. R. Anderson. 2002. Model Selection and
-Multimodel Inference: A Practical Information-Theoretic Approach, Second
-edition. Springer, New York.
+Burnham,K.P.,and Anderson,D.R.(2004)
+Multimodel inference-understanding AIC and BIC in model selection.
+Sociological Methods & Research,33,261-304.
 }
 \seealso{
 \code{\link{collect.models}}, \code{\link{covariate.predictions}},

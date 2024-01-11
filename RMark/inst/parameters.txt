@@ -569,7 +569,7 @@ MSJollySeber	S	0	-1	1	Triang	all	logit	~stratum						TRUE
 MSJollySeber	p	0	0	0	Triang	all	logit	~stratum						TRUE						
 MSJollySeber	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum						TRUE	TRUE					
 MSJollySeber	pent	1	-1	0	Square	all	mlogit	~1						TRUE						
-MSJollySeber	pi	0	1		Square	all	mlogit	~stratum						TRUE		1				
+MSJollySeber	pi	0	1		Square	all	mlogit	~1						TRUE		1				
 RDMSOpenMCSeas2	S	0	-1	1	Triang	all	logit	~stratum					FALSE	TRUE									
 RDMSOpenMCSeas2	Psi	0	-1	0	Triang	all	mlogit	~-1+stratum:tostratum					FALSE	TRUE	TRUE								
 RDMSOpenMCSeas2	pi	1	-2		Square	all	mlogit	~1					FALSE	TRUE		1							

@@ -1,3 +1,365 @@
+#' Multistate Jolly Seber
+#' @name MSJollySeber
+#' @author Jeff Laake (simulated data from Gary White) 
+#' @examples
+#' \donttest{
+# three state example provided by Gary White
+#'# import the sample data
+#'pathtodata=paste(path.package("RMark"),"extdata",sep="/")
+#'msjs3=convert.inp(paste(pathtodata,"MSJS3state.inp",sep="/"))
+#'# process with MSJollySeber model and strata labels
+#'dp=process.data(msjs3,model="MSJollySeber",strata.labels=c("E","F","G"))
+#'# create design data and use time pims for Psi and pent because global model used
+#'# to simulate data only had time/strata effects
+#'ddl=make.design.data(dp,parameters=list(Psi=list(pim.type="time"),pent=list(pim.type="time")))
+#'# p for first occasion is confounded because pent since it is time dependent
+#'# p for last occasion is confounded because survival is time dependent
+#'# Thus times 1 and 2 are combined as 1 and times 3 and 4 are combined as time 2
+#'ddl$p$time[ddl$p$time==2]=1
+#'ddl$p$time[ddl$p$time==3]=2
+#'ddl$p$time[ddl$p$time==4]=2
+#'ddl$p=droplevels(ddl$p)
+#'# run global model that was used to generate the data. These results match what was produced in 
+#'# MARK .dbf that Gary provided to me.
+#'model=mark(dp,ddl=ddl,model.parameters=list(S=list(formula=~-1+stratum:time,link="sin"),
+#'                          Psi=list(formula=~-1+stratum:tostratum:time),pent=list(formula=~stratum*time),
+#'                          p=list(formula=~-1+stratum:time,link="sin"),pi=list(formula=~-1+stratum)))
+#'# Examine derived abundance estimates
+#'model$results$derived
+#'#$`N*`
+#'# estimate       se    lcl      ucl
+#'#1     1200 22.88454 1159.6 1249.699
+#'#
+#'#$`N_TSA(s*t)`
+#'#estimate        se       lcl      ucl
+#'#1  180.00027  55.22876 126.98046 381.1247
+#'#2  249.59448  73.28850 177.32650 511.2946
+#'#3  377.20653  92.15176 276.37043 681.2139
+#'#4  422.14994 105.74592 307.97920 774.6687
+#'#5  119.99866  38.18683  84.16549 261.3716
+#'#6  193.39459  57.72862 137.03323 401.0494
+#'#7  296.19950  71.38362 217.52522 530.3700
+#'#8  350.09106  86.97180 255.76981 639.0182
+#'#9   60.00109  21.23089  41.40889 142.5095
+#'#10 120.99888  38.29786  84.93901 262.4367
+#'#11 194.19013  45.93703 143.06755 343.7371
+#'#12 248.60043  61.37312 181.81724 451.9540
+#'msjs3$grp=factor(as.numeric(runif(1686)<0.5))
+#'dp=process.data(msjs3,model="MSJollySeber",strata.labels=c("E","F","G"),groups="grp")
+#'# create design data and use time pims for Psi and pent because global model used
+#'# to simulate data only had time/strata effects
+#'ddl=make.design.data(dp,parameters=list(Psi=list(pim.type="time"),pent=list(pim.type="time")))
+#'# p for first occasion is confounded because pent since it is time dependent
+#'# p for last occasion is confounded because survival is time dependent
+#'# Thus times 1 and 2 are combined as 1 and times 3 and 4 are combined as time 2
+#'ddl$p$time[ddl$p$time==2]=1
+#'ddl$p$time[ddl$p$time==3]=2
+#'ddl$p$time[ddl$p$time==4]=2
+#'ddl$p=droplevels(ddl$p)
+#'model=mark(dp,ddl=ddl,model.parameters=list(S=list(formula=~-1+stratum:time,link="sin"),
+#'                          Psi=list(formula=~-1+stratum:tostratum:time),pent=list(formula=~stratum*time),
+#'                          p=list(formula=~-1+stratum:time,link="sin"),pi=list(formula=~-1+stratum)))
+#'# Note that I don't have groups separated out; probably need to add these but first 12 are for group 1 and
+#'# second 12 are for group 2
+#'model$results$derived
+#'#$`N*`
+#'#estimate       se      lcl      ucl
+#'#1 576.5519 10.99515 557.1415 600.4303
+#'#2 623.4481 11.88948 602.4589 649.2687
+#'#
+#'#$`N_TSA(s*t)`
+#'#estimate       se       lcl       ucl
+#'#1   86.48235 26.53543  59.74870 179.73562
+#'#2  119.91930 35.21259  87.08794 250.88028
+#'#3  181.23323 44.27568 158.25938 412.81875
+#'#4  202.82678 50.80719 138.39582 351.52314
+#'#5   57.65490 18.34742  40.00284 124.36399
+#'#6   92.91895 27.73659  69.10044 202.16049
+#'#7  142.31136 34.29734 108.00098 263.47936
+#'#8  168.20397 41.78690 132.40312 333.04237
+#'#9   28.82821 10.20072  22.06997  76.00783
+#'#10  58.13528 18.40095  45.08338 139.96467
+#'#11  93.30069 22.07105  72.55341 174.90726
+#'#12 119.44262 29.48746  89.82760 223.31249
+#'#13  93.51673 28.69379  67.33555 201.88406
+#'#14 129.67341 38.07675  90.39324 261.12212
+#'#15 195.97456 47.87702 131.43369 328.98380
+#'#16 219.32450 54.93979 175.00065 444.87035
+#'#17  62.34450 19.83979  44.17969 137.09149
+#'#18 100.47688 29.99266  68.46238 201.34980
+#'#19 153.88682 37.08705 110.11103 269.06238
+#'#20 181.88551 45.18580 126.26801 317.46649
+#'#21  31.17307 11.03043  19.84077  69.37125
+#'#22  62.86395 19.89767  40.98810 128.26377
+#'#23 100.88968 23.86628  71.50113 172.47586
+#'#24 129.15797 31.88594  92.33709 229.95112
+#'#
+#'#$`N_TSA(t)`
+#'#estimate       se      lcl      ucl
+#'#1 172.9655 17.57292 146.1440 216.6946
+#'#2 270.9735 17.86549 242.2069 313.2976
+#'#3 416.8453 21.54149 382.6336 468.5324
+#'#4 490.4734 29.73746 440.1191 557.6749
+#'#5 187.0343 19.00228 158.0680 234.3750
+#'#6 293.0142 19.31866 260.1141 336.4346
+#'#7 450.7511 23.29365 409.1688 500.7981
+#'#8 530.3680 32.15627 476.2905 603.5088
+#'#
+#'#$`N(s*t)`
+#'#estimate        se       lcl       ucl
+#'#1   81.67410 23.937921  58.04354 167.08272
+#'#2  126.83858 37.175211  90.14070 259.47682
+#'#3  259.54924 63.478782 190.12917 469.06140
+#'#4  148.55131 36.331666 108.81919 268.46423
+#'#5   56.08549 16.675093  39.76587 115.96055
+#'#6  104.09903 30.950270  73.80855 215.23180
+#'#7  157.41243 37.901060 115.62023 281.69787
+#'#8  204.11663 49.146288 149.92471 365.27751
+#'#9   34.90008 10.950259  24.53295  75.18089
+#'#10  71.01092 22.280408  49.91700 152.96997
+#'#11 109.13438 25.654572  80.49076 192.43787
+#'#12 130.02727 30.565932  95.90006 229.27854
+#'#13  98.32499 28.818144  69.87688 201.14587
+#'#14 122.75425 35.978133  87.23809 251.12141
+#'#15 117.65857 28.776129  86.18914 212.63438
+#'#16 273.60001 66.915223 200.42187 494.45417
+#'#17  63.91392 19.002608  45.31640 132.14636
+#'#18  89.29676 26.549323  63.31340 184.62710
+#'#19 138.78578 33.416218 101.93886 248.36450
+#'#20 145.97290 35.146702 107.21784 261.22623
+#'#21  25.10117  7.875752  17.64482  54.07233
+#'#22  49.98828 15.684338  35.13917 107.68352
+#'#23  85.05591 19.994369  62.73197 149.98004
+#'#24 118.57332 27.873415  87.45234 209.08166
+#'#
+#'#$`N(t)`
+#'#estimate       se      lcl      ucl
+#'#1 172.6597 12.84355 151.7126 202.7258
+#'#2 301.9485 20.11213 268.5098 348.1893
+#'#3 526.0961 35.72379 466.8913 608.4782
+#'#4 482.6952 31.12914 430.6676 553.9137
+#'#5 187.3401 16.99719 160.7135 228.6425
+#'#6 262.0393 19.37969 230.3986 307.3613
+#'#7 341.5003 20.10434 307.4281 386.8953
+#'#8 538.1462 38.90093 474.3711 628.7710
+#'#
+#'# For better labels and interpretation see MARK output
+#'#Total Abundance Estimates 
+#'#Grp.      N*-hat        Standard Error      Lower           Upper
+#'#----    --------------  --------------  --------------  --------------
+#'#1     576.55192       10.995146       557.14154       600.43028    
+#'#2     623.44807       11.889480       602.45888       649.26868    
+#'#
+#'#Abundance Estimates 
+#'#Grp. Str. Occ.    Abundance      Standard Error      Lower           Upper
+#'#---- ---- ----   --------------  --------------  --------------  --------------
+#'#1    E    1    86.482346       26.535427       59.748702       179.73562    
+#'#1    E    2    119.91930       35.212594       87.087938       250.88028    
+#'#1    E    3    181.23323       44.275677       158.25938       412.81875    
+#'#1    E    4    202.82678       50.807187       138.39582       351.52314    
+#'#1    F    1    57.654903       18.347425       40.002836       124.36399    
+#'#1    F    2    92.918950       27.736591       69.100442       202.16049    
+#'#1    F    3    142.31136       34.297342       108.00098       263.47936    
+#'#1    F    4    168.20397       41.786899       132.40312       333.04237    
+#'#1    G    1    28.828208       10.200716       22.069972       76.007829    
+#'#1    G    2    58.135284       18.400953       45.083379       139.96467    
+#'#1    G    3    93.300695       22.071048       72.553406       174.90726    
+#'#1    G    4    119.44262       29.487455       89.827598       223.31249    
+#'#2    E    1    93.516733       28.693792       67.335545       201.88406    
+#'#2    E    2    129.67341       38.076751       90.393237       261.12212    
+#'#2    E    3    195.97456       47.877016       131.43369       328.98380    
+#'#2    E    4    219.32450       54.939793       175.00065       444.87035    
+#'#2    F    1    62.344496       19.839786       44.179691       137.09149    
+#'#2    F    2    100.47688       29.992658       68.462381       201.34980    
+#'#2    F    3    153.88682       37.087053       110.11103       269.06238    
+#'#2    F    4    181.88551       45.185803       126.26801       317.46649    
+#'#2    G    1    31.173066       11.030432       19.840768       69.371247    
+#'#2    G    2    62.863950       19.897668       40.988101       128.26377    
+#'#2    G    3    100.88968       23.866285       71.501133       172.47586    
+#'#2    G    4    129.15797       31.885935       92.337089       229.95112    
+#'#
+#'#Summed Abundance Estimates 
+#'#Grp. Occ.    Abundance      Standard Error      Lower           Upper
+#'#---- ----   --------------  --------------  --------------  --------------
+#'#1    1    172.96546       17.572916       146.14398       216.69465    
+#'#1    2    270.97353       17.865494       242.20692       313.29762    
+#'#1    3    416.84528       21.541486       382.63361       468.53243    
+#'#1    4    490.47337       29.737455       440.11912       557.67492    
+#'#2    1    187.03430       19.002280       158.06800       234.37501    
+#'#2    2    293.01425       19.318655       260.11406       336.43459    
+#'#2    3    450.75106       23.293649       409.16876       500.79814    
+#'#2    4    530.36798       32.156270       476.29049       603.50885    
+#'#
+#'#Abundance Estimates without TSA 
+#'#Grp. Str. Occ.    Abundance      Standard Error      Lower           Upper
+#'#---- ---- ----   --------------  --------------  --------------  --------------
+#'#1    E    1    81.674097       23.937921       58.043545       167.08272    
+#'#1    E    2    126.83858       37.175211       90.140704       259.47682    
+#'#1    E    3    259.54924       63.478782       190.12917       469.06140    
+#'#1    E    4    148.55131       36.331666       108.81919       268.46423    
+#'#1    F    1    56.085487       16.675093       39.765869       115.96055    
+#'#1    F    2    104.09903       30.950270       73.808547       215.23180    
+#'#1    F    3    157.41243       37.901060       115.62023       281.69787    
+#'#1    F    4    204.11663       49.146288       149.92471       365.27751    
+#'#1    G    1    34.900079       10.950259       24.532949       75.180890    
+#'#1    G    2    71.010918       22.280408       49.917000       152.96997    
+#'#1    G    3    109.13438       25.654572       80.490758       192.43787    
+#'#1    G    4    130.02727       30.565932       95.900063       229.27854    
+#'#2    E    1    98.324993       28.818144       69.876881       201.14587    
+#'#2    E    2    122.75425       35.978133       87.238086       251.12141    
+#'#2    E    3    117.65857       28.776129       86.189140       212.63438    
+#'#2    E    4    273.60001       66.915223       200.42187       494.45417    
+#'#2    F    1    63.913917       19.002608       45.316401       132.14636    
+#'#2    F    2    89.296755       26.549323       63.313404       184.62710    
+#'#2    F    3    138.78578       33.416218       101.93886       248.36450    
+#'#2    F    4    145.97290       35.146702       107.21784       261.22623    
+#'#2    G    1    25.101172       7.8757515       17.644825       54.072326    
+#'#2    G    2    49.988280       15.684338       35.139173       107.68352    
+#'#2    G    3    85.055913       19.994369       62.731974       149.98004    
+#'#2    G    4    118.57332       27.873415       87.452338       209.08166    
+#'#
+#'#Summed Abundance Estimates without TSA 
+#'#Grp. Occ.    Abundance      Standard Error      Lower           Upper
+#'#---- ----   --------------  --------------  --------------  --------------
+#'#1    1    172.65966       12.843549       151.71260       202.72578    
+#'#1    2    301.94852       20.112126       268.50983       348.18933    
+#'#1    3    526.09605       35.723790       466.89129       608.47820    
+#'#1    4    482.69521       31.129138       430.66757       553.91371    
+#'#2    1    187.34008       16.997192       160.71347       228.64245    
+#'#2    2    262.03929       19.379689       230.39863       307.36128    
+#'#2    3    341.50026       20.104344       307.42812       386.89528    
+#'#2    4    538.14624       38.900929       474.37108       628.77101    
+#'#
+#'#Expected Ingress, Egress, and Residence Times 1&2 
+#'#Grp.    Estimate        Standard Error      Lower           Upper
+#'#----    --------------  --------------  --------------  --------------
+#'#1     2.4000144       0.0650048       2.2726051       2.5274237    
+#'#1     3.7437021       0.0583736       3.6292898       3.8581145    
+#'#1     2.3436877       0.0811437       2.1846461       2.5027293    
+#'#1     3.4389990       0.1604949       3.1244290       3.7535689    
+#'#2     2.4000144       0.0650048       2.2726051       2.5274237    
+#'#2     3.7437021       0.0583736       3.6292898       3.8581145    
+#'#2     2.3436877       0.0811437       2.1846461       2.5027293    
+#'#2     3.4389990       0.1604949       3.1244290       3.7535689    
+#'}
+NULL
+
+
+#' Hidden Markov Model
+#' @name HidMarkov
+#' @author Chris Oosthuizen  
+#' @examples
+#' \donttest{
+#'# posted by Chris on phidot 15 Sept 2021
+#'# ----------------------------------------------------------------------------------
+#'# Fit HMM model with 2 unobservable states
+#'# 5 states:
+#'# 1 = successful breeder
+#'# 2 = failed breeder
+#'# 3 = post-successful breeder (unobservable)
+#'# 4 = post-failed breeder (unobservable)
+#'# 5 = dead
+#'
+#'# 4 field observations:
+#'# 0 = not seen
+#'# 1 = seen as successful breeder
+#'# 2 = seen as failed breeder
+#'# 5 = seen with uncertain breeding state (** this is an event in MARK terms)
+#'
+#'#-----------------------------------------------------------------------------------
+#'
+#'# Add a few uncertainty events (event = '5') to the above input data
+#'df = c('1010001',
+#'       '1050000', '1010000', '1010000', '1010100', '1000000', '1000001', '1000001',
+#'       '1000001', '1010105', '1050101', '1010101', '1050101', '1010101', '1010101',
+#'       '1010101', '1010101', '1010001', '1000001', '1000001', '1000001', '1010101',
+#'       '1010101', '1010101', '1050101', '1010101', '1010101', '1010201', '1010201',
+#'       '1010201', '1010201', '1010201', '1010201', '1010201', '1010201', '1010201',
+#'       '1010201', '1010201', '1010201', '1010201', '1010201', '1050201', '1010205',
+#'       '2010201', '2010000', '2000000', '2000000', '2000000', '2000000', '2000000',
+#'       '2050220', '2010221', '2010221', '2050221', '2010221', '2010221', '2010221',
+#'       '2010221', '2010521', '2010251', '2012221', '2012222', '2012222', '2012222',
+#'       '2012251', '5012221', '2012020', '2022010', '2025010', '2022010', '2022010',
+#'       '2052010', '2022010', '2022010', '2022010', '2022010', '2021010', '2021010',
+#'       '2021010', '2051010', '2051010', '5021010', '2001000', '2025010', '2021010',
+#'       '2021010')
+#'
+#'df=as.data.frame(df); names(df) = "ch"; df$freq = 1; df$ch = as.character(df$ch)
+#'head(df)
+#'
+#'# 'event' is only for the uncertain observation - not the 'state' observations!
+#'# Error in process.data: unused argument (events) if package marked is loaded in session
+#'# states 3 & 4 = unobservable
+#'
+#'# Bill Kendall: For pi, MARK defaults to deriving the probability of the last state listed by subtraction.
+#'# Since we like to fix pi for states 3 and 4 to 0, the solution is to list states 1 or 2
+#'# last when you specify the states.
+#'
+#'dp = process.data(df, model = "HidMarkov", strata.labels = c("3", "4","1", "2"),
+#'                  events = c("5")) 
+#'
+#'## create design data
+#'ddl = make.design.data(dp)
+#'
+#'# Set movement parameters (PSI) to 0
+#'ddl$Psi$fix[ddl$Psi$stratum=="1" & ddl$Psi$tostratum=="4"]=0
+#'ddl$Psi$fix[ddl$Psi$stratum=="2" & ddl$Psi$tostratum=="3"]=0
+#'
+#'ddl$Psi$fix[ddl$Psi$stratum=="3" & ddl$Psi$tostratum=="4"]=0
+#'ddl$Psi$fix[ddl$Psi$stratum=="4" & ddl$Psi$tostratum=="3"]=0
+#'
+#'# Set unobservable p to 0
+#'ddl$p$fix[ddl$p$stratum=="3"]=0
+#'ddl$p$fix[ddl$p$stratum=="4"]=0
+#'
+#'# animals can only enter as breeders, not as post-breeders (unobservable)
+#'# In HMMs, the pi parameter is the probability of the event on the first capture.
+#'# Note: P(event)! and not as in ESurge, where it is P(state on first capture)!
+#'
+#'# Set unobservable pi to 0
+#'ddl$pi$fix[ddl$pi$stratum=="3"]=0
+#'ddl$pi$fix[ddl$pi$stratum=="4"]=0
+#'
+#'# The Delta parameters are the probability of determining the state given detection
+#'# with probability p (MARK defaults to obtaining the probability of correctly assigning
+#'# the state by subtraction)
+#'ddl$Delta$fix[ddl$Delta$stratum=="3"]=0
+#'ddl$Delta$fix[ddl$Delta$stratum=="4"]=0
+#'
+#'
+#'# define a model to fit
+#'# make a survival class (successful = post-successful != failed = post-failed)
+#'ddl$S$class = ifelse(ddl$S$`3`=="1" |ddl$S$`1`=="1" , 1, 0)
+#'
+#'Phi.ct = list(formula=~class)
+#'p.ct = list(formula=~stratum)
+#'Psi.class =list(formula =~ -1+stratum:tostratum)   # see page 918 C.17. Multi-strata example in Mark book
+#'pi.ct = list(formula=~stratum) 
+#'Delta.class  = list(formula=~stratum)
+#'
+#'table(ddl$Psi[,c("stratum","tostratum")])
+#'table(ddl$pi[,c("stratum")])
+#'table(ddl$Delta[,c("event")])
+#'
+#'
+#'# Aim: run a HMM where uncertain events (=5) could be successful breeders or unsuccesful breeders
+#'
+#'Model.4 = mark(dp, ddl, model.parameters=list(S = Phi.ct,
+#'                                              p = p.ct,
+#'                                              Psi = Psi.class,
+#'                                              pi = pi.ct,
+#'                                              Delta = Delta.class),
+#'               output = FALSE,delete=T, model ="HidMarkov", mlogit0 = T) 
+#'
+#'summary(Model.4)
+#'
+#'
+#'Psilist=get.real(Model.4,"Psi",vcv=T)
+#'Psivalues=Psilist$estimates
+#'TransitionMatrix(Psivalues[Psivalues$time==1,],vcv.real=Psilist$vcv.real)
+#'}
+NULL
+
 #' Multi-scale dynamic occupancy models in RMark
 #' @name RDMultScalOcc
 #' @author Connor M. Wood, University of Wisconsin-Madison <cwood9 at wisc.edu> 

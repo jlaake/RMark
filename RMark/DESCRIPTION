@@ -1,11 +1,11 @@
 Package: RMark
 Version: 3.0.5
-Date: 2023-11-15
+Date: 2024-01-10
 Title: R Code for Mark Analysis
 Author: Jeff Laake <jefflaake@gmail.com> with code contributions from Eldar
     Rakhimberdiev, Ben Augustine, Daniel Turek, Brett McClintock, and Jim Hines and example data and analysis
     from Bret Collier, Jay Rotella, David Pavlacky, Andrew Paul, Luke Eberhart-
-    Phillips, Jake Ivan, and Connor Wood.
+    Phillips, Jake Ivan, Connor Wood and Chris Oosthuizen.
 Description: An interface to the software package MARK that constructs input
     files for MARK and extracts the output. MARK was developed by Gary White
     and is freely available at <http://www.phidot.org/software/mark/downloads/>

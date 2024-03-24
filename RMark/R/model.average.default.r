@@ -1,3 +1,4 @@
+#' @export
 model.average.default=function(x,...)
 {
 #  A dead-end function 

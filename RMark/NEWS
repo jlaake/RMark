@@ -1,4 +1,4 @@
-RMark 3.0.5 (10 January 2024)
+RMark 3.0.5 (24 March 2024)
 
 BUG FIXES/CHANGES
 
@@ -7,6 +7,10 @@ BUG FIXES/CHANGES
 * added examples for MSJollySeber (?MSJollySeber) and Hidden Markov (?HidMarkov) which were promised in v2.2.9 but for some reason were not included.
 
 * fixed pim header construction for pi in make.mark.model for MSJollySeber model. Was not working in all situations.
+
+* removed limit of 10 character covariate names because it was removed from MARK
+
+* modified model.average.list to set NaN estimates in vcv to 0 and issue a warning. Previously this would cause the code to give an error message and stop.
 
 RMark 3.0.4 (3 October 2023)
 

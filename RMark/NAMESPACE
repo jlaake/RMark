@@ -2,6 +2,7 @@
 
 S3method(coef,mark)
 S3method(merge,mark)
+S3method(model.average,default)
 S3method(model.average,list)
 S3method(model.average,marklist)
 S3method(print,mark)

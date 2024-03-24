@@ -1,4 +1,4 @@
-print.RMark.version <- function()
+print_RMark.version <- function()
 { library(help=RMark)$info[[1]] -> version
 	version <- version[pmatch("Version",version)]
 	if(!is.null(version))
@@ -11,7 +11,7 @@ print.RMark.version <- function()
 }
 
 .onAttach <- function(...) { 
-	print.RMark.version()
+	print_RMark.version()
 	checkForMark()
 }
 

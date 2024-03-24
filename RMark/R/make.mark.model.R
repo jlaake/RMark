@@ -1259,8 +1259,8 @@ create.agenest.var=function(data,init.agevar,time.intervals)
   if(model.list$strata)string=paste(string," strata=",data$nstrata,sep="")
   if(!is.null(covariates))
   {
-	 if(any(nchar(covariates)>10))
-	    stop(paste("\nThe following covariates are longer than 10 characters which is the max length for MARK\n",paste(covariates[nchar(covariates)>10]),collapse=","))	 
+#	 if(any(nchar(covariates)>10))
+#	    stop(paste("\nThe following covariates are longer than 10 characters which is the max length for MARK\n",paste(covariates[nchar(covariates)>10]),collapse=","))	 
 #	 covar10=covariates[duplicated((substr(covariates,1,10)))]
 #	 if(length(covar10)>0) stop(paste("\nFollowing covariates are duplicates of another covariate within the first 10 characters\n",paste(covar10,collapse=", ")))
      string=paste(string," icovar = ",length(covariates))

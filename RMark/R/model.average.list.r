@@ -193,6 +193,11 @@ model.average.list=function(x,revised=TRUE, mata=FALSE, normal.lm=FALSE, residua
   {
 	  for (i in 1:length(x$vcv))
 	  {
+	    if(any(diag(is.nan(x$vcv[[i]]))))
+	    {
+	      warning("NaN variances for parameters ",paste((1:ncol(x$vcv[[i]]))[diag(is.nan(x$vcv[[i]]))],collapse=", ")," for model ",i,". Setting those variances to 0")
+	      diag(x$vcv[[i]])[diag(is.nan(x$vcv[[i]]))]=0
+	    }
 		  if(any(diag(x$vcv[[i]])<0)) 
 	      {
 		      warning("Negative variances for parameters ",paste((1:ncol(x$vcv[[i]]))[diag(x$vcv[[i]])<0],collapse=", ")," for model ",i,". Setting those variances to 0")

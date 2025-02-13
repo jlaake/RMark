@@ -1276,8 +1276,12 @@ create.agenest.var=function(data,init.agevar,time.intervals)
      string=paste(string," mixtures =",mixtures)
   time.int=data$time.intervals
   if(!is.null(data$reverse) &&(data$reverse | data$model=="MultScalOcc")) time.int[time.int==0]=1
-  string=paste(string," ICMeans NoHist hist=",nrow(zz),
+  if(length(time.int)>0) 
+    string=paste(string," ICMeans NoHist hist=",nrow(zz),
            ";\n time interval ",paste(time.int,collapse=" "),";\n")
+  else
+    string=paste(string," ICMeans NoHist hist=",nrow(zz),
+                 ";\n")
   if(model.list$strata)
     if(is.null(data$events))
       string=paste(string,"strata=",paste(data$strata.labels[1:data$nstrata],collapse=" "),";\n",sep="")

@@ -26,8 +26,10 @@ ddl$p=droplevels(ddl$p)
 # run global model that was used to generate the data. These results match what was produced in 
 # MARK .dbf that Gary provided to me.
 model=mark(dp,ddl=ddl,model.parameters=list(S=list(formula=~-1+stratum:time,link="sin"),
-                         Psi=list(formula=~-1+stratum:tostratum:time),pent=list(formula=~stratum*time),
-                         p=list(formula=~-1+stratum:time,link="sin"),pi=list(formula=~-1+stratum)))
+                         Psi=list(formula=~-1+stratum:tostratum:time),
+                         pent=list(formula=~stratum*time),
+                         p=list(formula=~-1+stratum:time,link="sin"),
+                         pi=list(formula=~-1+stratum)),delete=TRUE)
 # Examine derived abundance estimates
 model$results$derived
 #$`N*`
@@ -61,10 +63,12 @@ ddl$p$time[ddl$p$time==3]=2
 ddl$p$time[ddl$p$time==4]=2
 ddl$p=droplevels(ddl$p)
 model=mark(dp,ddl=ddl,model.parameters=list(S=list(formula=~-1+stratum:time,link="sin"),
-                         Psi=list(formula=~-1+stratum:tostratum:time),pent=list(formula=~stratum*time),
-                         p=list(formula=~-1+stratum:time,link="sin"),pi=list(formula=~-1+stratum)))
-# Note that I don't have groups separated out; probably need to add these but first 12 are for group 1 and
-# second 12 are for group 2
+                         Psi=list(formula=~-1+stratum:tostratum:time),
+                         pent=list(formula=~stratum*time),
+                         p=list(formula=~-1+stratum:time,link="sin"),
+                         pi=list(formula=~-1+stratum)),delete=TRUE)
+# Note that I don't have groups separated out; probably need to add these but 
+# first 12 are for group 1 and second 12 are for group 2
 model$results$derived
 #$`N*`
 #estimate       se      lcl      ucl

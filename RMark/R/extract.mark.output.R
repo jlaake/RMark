@@ -140,7 +140,9 @@ function(out,model,adjust,realvcv=FALSE,vcvfile)
   {
      ff <- tempfile()
      cat(file=ff, out[(x4+1):(x4+length(model$covariates))],sep="\n")
-     covariate.values=read.fwf(file=ff,widths=c(20,30),col.names=c("Variable","Value"))
+     clength=nchar(out[(x4 + 1):(x4 + length(model$covariates))])[1]
+     covariate.values=read.fwf(file = ff, widths = c(clength-15,clength),col.names = c("Variable", "Value"))
+     ##covariate.values=read.fwf(file=ff,widths=c(20,30),col.names=c("Variable","Value"))
   }
   else
      covariate.values=NULL

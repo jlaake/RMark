@@ -49,9 +49,9 @@ head(df)
 # Error in process.data: unused argument (events) if package marked is loaded in session
 # states 3 & 4 = unobservable
 
-# Bill Kendall: For pi, MARK defaults to deriving the probability of the last state listed by subtraction.
-# Since we like to fix pi for states 3 and 4 to 0, the solution is to list states 1 or 2
-# last when you specify the states.
+# Bill Kendall: For pi, MARK defaults to deriving the probability of the last state listed by
+# subtraction. Since we like to fix pi for states 3 and 4 to 0, the solution is to list 
+# states 1 or 2 last when you specify the states.
 
 dp = process.data(df, model = "HidMarkov", strata.labels = c("3", "4","1", "2"),
                  events = c("5")) 
@@ -91,7 +91,8 @@ ddl$S$class = ifelse(ddl$S$`3`=="1" |ddl$S$`1`=="1" , 1, 0)
 
 Phi.ct = list(formula=~class)
 p.ct = list(formula=~stratum)
-Psi.class =list(formula =~ -1+stratum:tostratum)   # see page 918 C.17. Multi-strata example in Mark book
+Psi.class =list(formula =~ -1+stratum:tostratum)   
+# see page 918 C.17. Multi-strata example in Mark book
 pi.ct = list(formula=~stratum) 
 Delta.class  = list(formula=~stratum)
 
@@ -100,19 +101,19 @@ table(ddl$pi[,c("stratum")])
 table(ddl$Delta[,c("event")])
 
 
-# Aim: run a HMM where uncertain events (=5) could be successful breeders or unsuccesful breeders
+# Aim: run a HMM where uncertain events(=5) could be successful breeders or unsuccessful breeders
 
 Model.4 = mark(dp, ddl, model.parameters=list(S = Phi.ct,
                                              p = p.ct,
                                              Psi = Psi.class,
                                              pi = pi.ct,
                                              Delta = Delta.class),
-              output = FALSE,delete=T, model ="HidMarkov", mlogit0 = T) 
+              output = FALSE,delete=TRUE, model ="HidMarkov", mlogit0 = TRUE) 
 
 summary(Model.4)
 
 
-Psilist=get.real(Model.4,"Psi",vcv=T)
+Psilist=get.real(Model.4,"Psi",vcv=TRUE)
 Psivalues=Psilist$estimates
 TransitionMatrix(Psivalues[Psivalues$time==1,],vcv.real=Psilist$vcv.real)
 }

@@ -1,10 +1,12 @@
-RMark 3.0.6 (21 January 2025)
+RMark 3.0.6 (12 January 2026)
 
 BUG FIXES/CHANGES
 
 * patched extract.mark.output which was not handling reading covariate names and values in the MARK output file where the covariate name was longer than 10 characters.  Thanks to Joe Ceradini for bringing this to my attention.
 
 * patched make.mark.model to exclude time intervals unless they were specified for the model. When there were no time intervals including time interval; was causing MARK to fail on some of the mark-resight models and possibly others that I'm unaware of. Thanks to Adrian Schiavani and Jesse Lewis for bringing this problem to my attention. 
+
+* run of mark in NSpeciesOcc was commented out so it would pass test on Linux for CRAN. My guess is that the Linux version of MARK on CRAN is old.
 
 RMark 3.0.5 (24 March 2024)
 

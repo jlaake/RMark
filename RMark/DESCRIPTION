@@ -2,10 +2,47 @@ Package: RMark
 Version: 3.0.6
 Date: 2025-02-12
 Title: R Code for Mark Analysis
-Author: Jeff Laake <jefflaake@gmail.com> with code contributions from Eldar
-    Rakhimberdiev, Ben Augustine, Daniel Turek, Brett McClintock, and Jim Hines and example data and analysis
-    from Bret Collier, Jay Rotella, David Pavlacky, Andrew Paul, Luke Eberhart-
-    Phillips, Jake Ivan, Connor Wood and Chris Oosthuizen.
+Authors@R: c(person(given = "Jeff",
+                        family = "Laake",
+                        role = c("cre","aut"),
+                        email = "jefflaake@gmail.com"),
+                        person(given = "Eldar",
+                        family = "Rakhimberdiev",
+                        role = "ctb",
+                        email = "jefflaake@gmail.com"),
+                 person(given = "Ben",
+                        family = "Augustine",
+                        role = "ctb"),
+                 person(given = "Daniel",
+                        family = "Turek",
+                        role = "ctb"),
+                 person(given = "Brett",
+                        family = "McClintock",
+                        role = "ctb"),
+                 person(given = "Jim",
+                        family = "Hines",
+                        role = "ctb"),
+                 person(given = c("analysis", "from", "Bret"),
+                        family = "Collier",
+                        role = "ctb"),
+                 person(given = "Jay",
+                        family = "Rotella",
+                        role = "ctb"),
+                 person(given = "David",
+                        family = "Pavlacky",
+                        role = "ctb"),
+                 person(given = "Andrew",
+                        family = "Paul",
+                        role = "aut"),
+                 person(given = c("Luke", "Eberhart-"),
+                        family = "Phillips",
+                        role = "ctb"),
+                 person(given = "Jake",
+                        family = "Ivan",
+                        role = "ctb"),
+                 person(given = "Connor",
+                        family = "Wood.",
+                        role = "ctb"))
 Description: An interface to the software package MARK that constructs input
     files for MARK and extracts the output. MARK was developed by Gary White
     and is freely available at <http://www.phidot.org/software/mark/downloads/>
@@ -28,4 +65,4 @@ LazyLoad: yes
 License: GPL (>=2)
 Maintainer: Jeff Laake <jefflaake@gmail.com>
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3

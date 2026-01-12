@@ -3254,8 +3254,10 @@ NULL
 #'dp=process.data(NSpeciesOcc,model="NSpeciesOcc",mixtures=5)
 #'# make design data and fit model used to generate the data
 #'ddl=make.design.data(dp)
-#'model=mark(dp,ddl,model.parameters=list(f=list(formula=~-1+mixture,link="sin"),
-#'p=list(formula=~1,link="sin")),delete=TRUE)
+#' # The following has been commented out because it would not work on CRAN Linux version
+#' # Remove comment to run
+#'#model=mark(dp,ddl,model.parameters=list(f=list(formula=~-1+mixture,link="sin"),
+#'#p=list(formula=~1,link="sin")),delete=TRUE)
 #'}
 NULL
 

@@ -1,3 +1,12 @@
+RMark 3.0.7 (28 January 2026)
+
+CHANGE
+
+* System requirements and readme.txt changed to indicate that version 11.2 posted 25 January 2026 is needed to obtain version number from MARK.
+
+* in loading package, it will check to see if version number is provided by MARK. If it is an older version it will simply request that you update MARK but will load. In the future it will stop if reported version number is less than required version.
+
+
 RMark 3.0.6 (12 January 2026)
 
 BUG FIXES/CHANGES

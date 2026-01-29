@@ -1,6 +1,6 @@
 Package: RMark
-Version: 3.0.6
-Date: 2026-01-12
+Version: 3.0.7
+Date: 2026-01-28
 Title: R Code for Mark Analysis
 Authors@R: c(person(given = "Jeff",
                         family = "Laake",
@@ -47,8 +47,7 @@ Description: An interface to the software package MARK that constructs input
     files for MARK and extracts the output. MARK was developed by Gary White
     and is freely available at <http://www.phidot.org/software/mark/downloads/>
     but is not open source.
-SystemRequirements: notepad.exe, mark.exe (>= 8.0) (or mark32.exe and
-    mark64.exe) and rel_32.exe (see README.txt)
+SystemRequirements: notepad.exe, mark32.exe or mark64.exe on Windows and only mark on Linux (>= 11.2) (see README.txt in package directory)
 Depends:
     R (>= 2.13.0),
 Imports:

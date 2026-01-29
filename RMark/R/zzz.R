@@ -21,7 +21,7 @@ create_markpath=function()
 	if(markpath!="")
 	{
 		markpath="mark.exe"
-        return(markpath)
+    return(markpath)
 	}
 	if(!exists("MarkPath"))
 	{
@@ -86,6 +86,19 @@ create_markpath=function()
 return(markpath)
 }
 
+checkMarkVersion <- function(markpath=markpath)
+{
+  x=system2(markpath,args="-v",stdout=TRUE,stderr=TRUE)
+  if(length(grep(" No input file",x[1]))>0)
+    cat("Please update MARK to current version posted 25 January 2026 to obtain MARK version number\n")
+  else
+  {
+    suppressWarnings(x<-as.numeric(strsplit(x[1]," ")[[1]]))
+    if(x[!is.na(x)][1]<11.2)
+      stop("Reported MARK version is less than required")
+  }
+  return(NULL)
+}
 
 
 checkForMark<-function()
@@ -97,22 +110,31 @@ checkForMark<-function()
 	   {
 		   cat("Warning: Software mark.exe,mark32.exe or mark64.exe not found in path or in c:/Program Files/mark or c:/Program Files (x86)/mark\n. It is available at http://www.phidot.org/software/mark/\n")
 	       cat('         If you have mark.exe, you will need to set MarkPath object to its location (e.g. MarkPath="C:/Users/Jeff Laake/Desktop"')
-       }
+	   }
+	   else
+	   {
+	     checkMarkVersion(markpath=substring(markpath,2,nchar(markpath)-1))
+	   }
    }else
 	   if(exists("MarkPath")) 
-       {
+     {
 	      isep="/"
 	      if(substr(MarkPath,nchar(MarkPath),nchar(MarkPath))%in%c("\\","/")) isep=""
   		  MarkPath=paste(MarkPath,"mark",sep=isep)
 	      if(!file.exists(MarkPath)) 
-		     cat(paste("mark executable cannot be found at specified MarkPath location:",MarkPath,"\n"))		
-        } else
+		       stop(paste("mark executable cannot be found at specified MarkPath location:",MarkPath,"\n"))	
+  		  else
+  		     checkMarkVersion(markpath=MarkPath)
+      } else
         {
  	       if(Sys.which("mark")=="")
 	       {
 		       cat("Warning: Software mark not found in path.\n")
-		       cat('         If you have mark executable, you will need to set MarkPath object to its location (e.g. MarkPath="C:/Users/Jeff Laake/Desktop"')
-	       }  
+		       stop('         If you have mark executable, you will need to set MarkPath object to its location.')
+ 	       } else
+ 	       {
+ 	         checkMarkVersion(markpath="mark")
+ 	       }
 	    }
 	invisible()
 }

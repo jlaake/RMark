@@ -1,7 +1,7 @@
 System Requirements
 
 Windows:
-RMark requires installation of MARK version 6.2 or higher which is available at http://www.phidot.org/software/mark/download/.
+RMark requires installation of MARK version 11.2 or higher posted 25 January 2026 or later which is available at http://www.phidot.org/software/mark/download/.
 You only need mark32.exe or mark64.exe  and rel_32.exe from the installation unless you are going to use the MARK interface as well.  If you 
 run RMark from 32 bit R it will run mark32.exe by default and likewise for 64 bit. You can override which is used by naming one of them
 mark.exe and it will always use it. RMark will search in c:/Program Files/Mark and c:/Program Files (x86)/Mark.  If your markxx.exe are

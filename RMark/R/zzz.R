@@ -106,7 +106,7 @@ checkForMark<-function()
 	if(R.Version()$os=="mingw32")
 	{
 	   markpath=create_markpath()
-	   if(is.null(markpath))
+	   if(is.null(markpath) || length(markpath)==0)
 	   {
 	     packageStartupMessage("Warning: Software mark.exe,mark32.exe or mark64.exe not found in path or in c:/Program Files/mark or c:/Program Files (x86)/mark\n. It is available at http://www.phidot.org/software/mark/\n")
 	     packageStartupMessage('         If you have mark.exe, you will need to set MarkPath object to its location (e.g. MarkPath="C:/Users/Jeff Laake/Desktop"')

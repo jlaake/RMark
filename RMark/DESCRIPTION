@@ -1,6 +1,6 @@
 Package: RMark
-Version: 3.0.7
-Date: 2026-01-28
+Version: 3.0.8
+Date: 2026-06-12
 Title: R Code for Mark Analysis
 Authors@R: c(person(given = "Jeff",
                         family = "Laake",
@@ -60,6 +60,8 @@ Suggests:
     splines,
     nlme,
     plotrix
+URL: https://github.com/jlaake/RMark/RMark
+BugReports: https://github.com/jlaake/RMark/issues
 LazyLoad: yes
 License: GPL (>=2)
 Maintainer: Jeff Laake <jefflaake@gmail.com>

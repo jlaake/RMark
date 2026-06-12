@@ -1,3 +1,11 @@
+RMark 3.0.8 (12 June 2026)
+
+CHANGE
+
+* URL and BugReports added to Description
+
+* In prior version, if MARK executable was not found then it would stop which prevented building the package. Now it uses packageStartupMessage and continues.
+
 RMark 3.0.7 (28 January 2026)
 
 CHANGE

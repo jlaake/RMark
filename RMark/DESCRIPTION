@@ -1,10 +1,14 @@
 Package: RMark
-Version: 3.0.8
-Date: 2026-06-12
+Version: 3.1.0
+Date: 2026-7-24
 Title: R Code for Mark Analysis
-Authors@R: c(person(given = "Jeff",
+Authors@R: c(person(given = "Simon",
+                        family = "Bonner",
+                        role = c("cre"),
+                        email = "simon.bonner@uwo.ca"),
+                        person(given = "Jeff",
                         family = "Laake",
-                        role = c("cre","aut"),
+                        role = c("aut"),
                         email = "jefflaake@gmail.com"),
                         person(given = "Eldar",
                         family = "Rakhimberdiev",
@@ -22,7 +26,7 @@ Authors@R: c(person(given = "Jeff",
                  person(given = "Jim",
                         family = "Hines",
                         role = "ctb"),
-                 person(given = c("analysis", "from", "Bret"),
+                 person(given = "Bret",
                         family = "Collier",
                         role = "ctb"),
                  person(given = "Jay",
@@ -33,7 +37,7 @@ Authors@R: c(person(given = "Jeff",
                         role = "ctb"),
                  person(given = "Andrew",
                         family = "Paul",
-                        role = "aut"),
+                        role = "ctb"),
                  person(given = c("Luke", "Eberhart-"),
                         family = "Phillips",
                         role = "ctb"),
@@ -60,10 +64,9 @@ Suggests:
     splines,
     nlme,
     plotrix
-URL: https://github.com/jlaake/RMark/RMark
-BugReports: https://github.com/jlaake/RMark/issues
+URL: https://github.com/sjbonner/RMark
+BugReports: https://github.com/sjbonner/RMark/issues
 LazyLoad: yes
 License: GPL (>=2)
-Maintainer: Jeff Laake <jefflaake@gmail.com>
 Encoding: UTF-8
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.0.0

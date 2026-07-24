@@ -82,7 +82,7 @@
 #' @param nocc number of occasions for Nest model; either time.intervals or
 #' nocc must be specified for this model
 #' @param output If TRUE produces summary of model input and model output
-#' @param invisible If TRUE, window for running MARK is hidden
+#' @param invisible If TRUE, window for running MARK is hidden; if TRUE output set to FALSE
 #' @param adjust If TRUE, adjusts npar to number of cols in design matrix,
 #' modifies AIC and records both
 #' @param mixtures number of mixtures for heterogeneity model or number of secondary samples for MultScaleOcc model
@@ -201,10 +201,8 @@
 #' \code{\link{print.mark}}).
 #' @author Jeff Laake
 #' @export
-#' @importFrom stats as.formula coef formula median model.matrix optim 
-#'            optimize plogis pnorm pt qchisq qnorm terms uniroot
-#' @importFrom utils read.delim read.fwf read.table
-#'              type.convert write.table
+#' @importFrom stats as.formula coef formula median model.matrix optim optimize plogis pnorm pt qchisq qnorm terms uniroot
+#' @importFrom utils read.delim read.fwf read.table type.convert write.table
 #' @seealso \code{\link{make.mark.model}}, \code{\link{run.mark.model}},
 #' \code{\link{make.design.data}}, \code{\link{process.data}},
 #' \code{\link{summary.mark}}
@@ -226,6 +224,7 @@ allgroups=FALSE,strata.labels=NULL,counts=NULL,icvalues=NULL,wrap=TRUE,events=NU
 #
 #  If the data haven't been processed (data$data is NULL) do it now with specified or default arguments
 # 
+if(invisible) output=FALSE
 simplify=TRUE
 if(is.null(data$data))
 {

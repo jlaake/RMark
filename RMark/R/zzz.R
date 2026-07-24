@@ -6,7 +6,8 @@ print_RMark.version <- function()
 		um <- strsplit(version," ")[[1]]
   	    version <- um[nchar(um)>0][2]
 	}
-	hello <- paste("This is RMark ",version,"\n"," Documentation available at http://www.phidot.org/software/mark/rmark/RMarkDocumentation.zip\n",sep="")
+	hello <- paste("This is RMark ",version,"\n"," Documentation for RMark is available at https://github.com/jlaake/RMark/blob/master/RMarkDocumentation.zip\n",
+	               " Documentation for MARK and capture-recapture models is available at https://ecooch.github.io/markbook.github.io/",sep="")
 	packageStartupMessage(hello)
 }
 

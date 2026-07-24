@@ -177,15 +177,15 @@ delete=FALSE,external=FALSE,threads=-1,ignore.stderr=FALSE)
 		 {
 			 if(invisible)
 				 system(paste(markpath, " i=",inputfile," o=", outfile,
-								 " v=",vcvfile, " r=",resfile, " threads=", threads,sep = ""),ignore.stdout=TRUE,ignore.stderr=TRUE)
+								 " v=",vcvfile, " r=",resfile, " batch threads=", threads,sep = ""),ignore.stdout=TRUE,ignore.stderr=TRUE)
 			 else
 				 system(paste(markpath, " i=",inputfile," o=", outfile,
 								 " v=",vcvfile, " r=",resfile, " threads=", threads,sep = ""),ignore.stderr=ignore.stderr)
 			 
 		 }else
 		 {
-			 system(paste(markpath, " i=",inputfile," o=", outfile,
-								 " v=",vcvfile, " r=",resfile, " threads=", threads,sep = ""),invisible=TRUE,ignore.stderr=ignore.stderr)
+ 	     system(paste(markpath, " i=",inputfile," o=", outfile,
+								 " v=",vcvfile, " r=",resfile, " batch threads=", threads,sep = ""),invisible=TRUE,ignore.stderr=ignore.stderr)
 			 if(file.exists("fort.0"))unlink("fort.0")
 		 }
   } else
@@ -193,8 +193,13 @@ delete=FALSE,external=FALSE,threads=-1,ignore.stderr=FALSE)
   {
     if(!exists("MarkPath"))MarkPath=""
     if(RunMark)
-       system(paste("mark i=",inputfile," o=", outfile,
-            " v=", vcvfile," r=",resfile, " threads=", threads,sep = ""),ignore.stderr=ignore.stderr)
+      if(invisible)
+         system(paste("mark i=",inputfile," o=", outfile,
+            " v=", vcvfile," r=",resfile, "batch threads=", threads,sep = ""),ignore.stderr=ignore.stderr)
+      else
+         system(paste("mark i=",inputfile," o=", outfile,
+                     " v=", vcvfile," r=",resfile, " threads=", threads,sep = ""),ignore.stderr=ignore.stderr)
+    
   }
 #
 # Read in the output file

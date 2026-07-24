@@ -34,6 +34,8 @@ release.gof <-
 	}
   if(is.null(data$nocc)) stop("\ndata argument must be a processed data list\n")
   nocc=data$nocc
+  if(nocc<4) 
+    stop("\nAt least 4 occasions are needed to run release goodness of fit test\n")
   number.of.groups=dim(data$freq)[2]
 # mxxx.tmp is used as input file for release
   outfile="mxxx.tmp"

@@ -1,3 +1,14 @@
+RMark 3.1.0 (1 August 2026)
+
+CHANGE
+
+* Check was added to release.gof which will stop if number of occasions is 3 or less.
+
+* if invisible==TRUE as run option, then batch is added to mark.exe execution and output window is not opened and output set to FALSE.
+
+* Maintainer for RMark has been changed from Jeff Laake (jefflaake@gmail.com) to Simon Bonner(simon.bonner@uwo.ca) and URL and BugReports are set to his RMark repository on GitHub.
+
+
 RMark 3.0.8 (12 June 2026)
 
 CHANGE

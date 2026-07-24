@@ -1,8 +1,10 @@
-RMark 3.1.0 (1 August 2026)
+RMark 3.1.0 (24 July 2026)
 
 CHANGE
 
 * Check was added to release.gof which will stop if number of occasions is 3 or less.
+
+* Locations of documentation were added and changed that are given when package is loaded with library function.
 
 * if invisible==TRUE as run option, then batch is added to mark.exe execution and output window is not opened and output set to FALSE.
 
